@@ -147,6 +147,7 @@ export class SpecificAccessDurationComponent implements OnInit {
   }
 
   public getPeriod(duration: DurationType): Period {
+    // tslint:disable-next-line:switch-default
     switch (duration) {
       case DurationType.SEVEN_DAYS: {
         return {

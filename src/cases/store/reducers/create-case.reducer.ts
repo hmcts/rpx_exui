@@ -23,6 +23,7 @@ export function reducerCreateCase(
   state = initialState,
   action: fromCases.CreateCasesAction
 ): CasesState {
+  // tslint:disable-next-line:switch-default
   switch (action.type) {
     case fromCases.CREATE_CASE_APPLY: {
       return {

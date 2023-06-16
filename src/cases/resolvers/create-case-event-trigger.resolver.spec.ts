@@ -57,6 +57,7 @@ describe('CreateCaseFieldsResolver', () => {
     });
 
     route.queryParamMap.get.and.callFake((key) => {
+      // tslint:disable-next-line:switch-default
       switch (key) {
         case QUERY_PARAM_IGNORE_WARNINGS:
           return IGNORE_WARNINGS;

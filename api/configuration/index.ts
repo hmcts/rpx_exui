@@ -1,5 +1,6 @@
 import * as propertiesVolume from '@hmcts/properties-volume';
 import * as config from 'config';
+import { proxiedReferences } from './references';
 
 /**
  * Allows us to integrate the Azure key-vault flex volume, so that we are able to access Node configuration values.
@@ -28,3 +29,5 @@ export const getConfigValue = <T = string>(reference: string): T => config.get<T
  * @return boolean
  */
 export const showFeature = (feature: string): boolean => config.get<boolean>(`feature.${feature}`);
+
+export { proxiedReferences };

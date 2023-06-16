@@ -1,4 +1,3 @@
-
 import { CaseState, CaseType, Jurisdiction, PaginationMetadata, SearchResultView } from '@hmcts/ccd-case-ui-toolkit';
 import * as fromCases from '../actions/case-list.action';
 
@@ -50,6 +49,7 @@ export function caselistReducer(
   state = initialCaselistState,
   action: fromCases.CaselistAction
 ): CaselistState {
+  // tslint:disable-next-line:switch-default
   switch (action.type) {
     case fromCases.APPLY_CASELIST_FILTER:
     case fromCases.APPLY_CASELIST_FILTER_FOR_ES: {
@@ -71,8 +71,8 @@ export function caselistReducer(
       return {
         ...state,
         paginationMetadata: {
-          totalPagesCount: action.payload.total_pages_count,
-          totalResultsCount: action.payload.total_results_count
+          totalPagesCount: action.payload.totalPagesCount,
+          totalResultsCount: action.payload.totalResultsCount
         },
         loading: true,
         loaded: false

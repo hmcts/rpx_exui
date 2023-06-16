@@ -68,22 +68,17 @@ describe('nodeApp endpoint', () => {
   });
 
   // it('api/user/details role-assignment case allocator *****(to be enabled: localtionInfo on access-management integration)****', async () => {
-
   //   const matchingUsers = testUsers.users['aat'].filter(user => user.userIdentifier === 'IAC_Judge_WA_R2_CaseAllocator');
   //   if (matchingUsers.length === 0) {
   //     throw new Error(`Users details with identfier "IAC_Judge_WA_R2_CaseAllocator" not found in test user config`);
   //   }
-
   //   await Request.withSession(matchingUsers[0].email, 'Welcome01');
-
   //   const response = await Request.get('api/user/details', null, 200);
   //   expect(response.status).to.equal(200);
   //   const actualLocationObjKeys = response.data;
   //   const expectedUserDetailsObj_oidc = nodeAppDataModels.getUserDetails_oidc();
   //   expect(actualLocationObjKeys).to.have.all.keys(Object.keys(expectedUserDetailsObj_oidc));
-
   //   expect(actualLocationObjKeys.roleAssignmentInfo[0].isCaseAllocator).to.be.true;
-
   // });
 
   it('api/user/details without session', async () => {

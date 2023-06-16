@@ -32,8 +32,8 @@
   },
   "services": {
     "ccd": {
-      "componentApi": "SERVICES_CCD_COMPONENT_API",
-      "activityApi": "SERVICES_CCD_ACTIVITY_API",
+      "componentApi": "SERVICES_CCD_COMPONENT_API_PATH",
+      "activityApi": "SERVICES_CCD_ACTIVITY_API_PATH",
       "dataApi": "SERVICES_CCD_DATA_STORE_API",
       "caseAssignmentApi": "SERVICES_CCD_CASE_ASSIGNMENT_API"
     },

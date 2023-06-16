@@ -49,6 +49,7 @@ export function reducer(
   state = initialSearchState,
   action: fromCases.CaseSearchAction
 ): SearchState {
+  // tslint:disable-next-line:switch-default
   switch (action.type) {
     case fromCases.APPLY_SEARCH_FILTER:
     case fromCases.APPLY_SEARCH_FILTER_FOR_ES: {
@@ -70,8 +71,8 @@ export function reducer(
       return {
         ...state,
         paginationMetadata: {
-          totalPagesCount: action.payload.total_pages_count,
-          totalResultsCount: action.payload.total_results_count
+          totalPagesCount: action.payload.totalPagesCount,
+          totalResultsCount: action.payload.totalResultsCount
         },
         loading: true,
         loaded: false

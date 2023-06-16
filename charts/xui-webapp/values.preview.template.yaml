@@ -5,6 +5,7 @@ nodejs:
      NODE_TLS_REJECT_UNAUTHORIZED: 0
      SERVICES_IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
      SERVICES_IDAM_LOGIN_URL: https://idam-web-public.aat.platform.hmcts.net
+     SERVICES_CCD_ACTIVITY_API_PATH: http://ccd-case-activity-api-pr-276-nodejs.ccd
      REDISCLOUD_URL: redis://${SERVICE_NAME}-redis-master:6379
      LAUNCH_DARKLY_CLIENT_ID: 5de6610b23ce5408280f2268
      HEALTH_CCD_COMPONENT_API: https://gateway-ccd.aat.platform.hmcts.net/health
