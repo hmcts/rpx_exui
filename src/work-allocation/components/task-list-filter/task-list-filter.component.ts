@@ -382,7 +382,7 @@ export class TaskListFilterComponent implements OnInit, OnDestroy {
               .map((service) => {
                 return {
                   key: service,
-                  label: servicesMap[service] || service
+                  label: servicesMap[service]? servicesMap[service] : service
                 };
               })
           ],
