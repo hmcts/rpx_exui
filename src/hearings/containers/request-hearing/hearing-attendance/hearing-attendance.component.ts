@@ -74,7 +74,7 @@ export class HearingAttendanceComponent extends RequestHearingPageFlow implement
             individualDetails: partyDetail.individualDetails,
             organisationDetails: partyDetail.organisationDetails,
             unavailabilityDOW: partyDetail.unavailabilityDOW,
-            unavailabilityRanges: partyDetail.unavailabilityRanges
+            unavailabilityRange: partyDetail.unavailabilityRange
           } as PartyDetailsModel) as FormGroup);
         });
 
@@ -123,7 +123,7 @@ export class HearingAttendanceComponent extends RequestHearingPageFlow implement
         partyName: control.value.partyName,
         individualDetails: control.value.individualDetails,
         unavailabilityDOW: control.value.unavailabilityDOW,
-        unavailabilityRanges: control.value.unavailabilityRanges
+        unavailabilityRange: control.value.unavailabilityRange
       };
       individualParties.push(partyDetail);
     });
@@ -189,7 +189,7 @@ export class HearingAttendanceComponent extends RequestHearingPageFlow implement
       ...individualDetails && ({ individualDetails }),
       ...organisationDetails && ({ organisationDetails }),
       unavailabilityDOW: [party.unavailabilityDOW],
-      unavailabilityRanges: [party.unavailabilityRanges]
+      unavailabilityRange: [party.unavailabilityRange]
     });
   }
 

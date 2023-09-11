@@ -106,7 +106,7 @@ describe('Hearing Values Effects', () => {
           partyName: 'Jane and Smith',
           partyType: PartyType.IND,
           partyRole: 'appellant',
-          unavailabilityRanges: [
+          unavailabilityRange: [
             {
               unavailableFromDate: '2021-12-10T09:00:00.000Z',
               unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -119,7 +119,7 @@ describe('Hearing Values Effects', () => {
           partyName: 'DWP',
           partyType: PartyType.ORG,
           partyRole: 'claimant',
-          unavailabilityRanges: [
+          unavailabilityRange: [
             {
               unavailableFromDate: '2021-12-20T09:00:00.000Z',
               unavailableToDate: '2021-12-31T09:00:00.000Z',

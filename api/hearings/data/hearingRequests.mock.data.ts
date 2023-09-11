@@ -116,7 +116,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
         },
         organisationDetails: {},
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-10T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -145,7 +145,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
           cftOrganisationID: 'O100000'
         },
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-20T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -191,7 +191,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -220,7 +220,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -336,7 +336,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
         },
         organisationDetails: {},
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-10T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -365,7 +365,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
           cftOrganisationID: 'O100000'
         },
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-20T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -411,7 +411,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -440,7 +440,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -545,7 +545,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
         },
         organisationDetails: {},
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-10T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -574,7 +574,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
           cftOrganisationID: 'O100000'
         },
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-20T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -620,7 +620,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -649,7 +649,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -754,7 +754,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
         },
         organisationDetails: {},
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-10T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -783,7 +783,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
           cftOrganisationID: 'O100000'
         },
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-20T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -829,7 +829,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -858,7 +858,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -963,7 +963,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
         },
         organisationDetails: {},
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-10T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -992,7 +992,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
           cftOrganisationID: 'O100000'
         },
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-20T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1038,7 +1038,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1067,7 +1067,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1172,7 +1172,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
         },
         organisationDetails: {},
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-10T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1201,7 +1201,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
           cftOrganisationID: 'O100000'
         },
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-20T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1248,7 +1248,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1277,7 +1277,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1382,7 +1382,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
         },
         organisationDetails: {},
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-10T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1411,7 +1411,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
           cftOrganisationID: 'O100000'
         },
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-20T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1457,7 +1457,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1486,7 +1486,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1591,7 +1591,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
         },
         organisationDetails: {},
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-10T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1620,7 +1620,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
           cftOrganisationID: 'O100000'
         },
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-20T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1666,7 +1666,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1695,7 +1695,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1800,7 +1800,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
         },
         organisationDetails: {},
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-10T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1829,7 +1829,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
           cftOrganisationID: 'O100000'
         },
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-20T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1875,7 +1875,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
             },
             organisationDetails: null,
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1904,7 +1904,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -2282,7 +2282,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
         },
         organisationDetails: {},
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-10T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -2310,7 +2310,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
           cftOrganisationID: 'O100000'
         },
         unavailabilityDOW: null,
-        unavailabilityRanges: [
+        unavailabilityRange: [
           {
             unavailableFromDate: '2021-12-20T09:00:00.000Z',
             unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -2355,7 +2355,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -2383,7 +2383,7 @@ export const HEARING_REQUEST_RESULTS: HearingRequestMainModel[] = [
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',

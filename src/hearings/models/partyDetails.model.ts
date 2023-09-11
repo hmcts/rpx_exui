@@ -12,6 +12,6 @@ export interface PartyDetailsModel {
   individualDetails?: IndividualDetailsModel;
   organisationDetails?: OrganisationDetailsModel;
   unavailabilityDOW?: UnavailabilityDOWModel[];
-  unavailabilityRanges?: UnavailabilityRangeModel[];
+  unavailabilityRange?: UnavailabilityRangeModel[];
   hearingSubChannel?: string;
 }

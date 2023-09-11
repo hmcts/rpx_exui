@@ -93,7 +93,7 @@ export const SERVICE_HEARING_VALUES: ServiceHearingValuesModel = {
         lastName: 'Smith',
         preferredHearingChannel: 'INTER'
       },
-      unavailabilityRanges: [
+      unavailabilityRange: [
       ]
     },
     {
@@ -107,7 +107,7 @@ export const SERVICE_HEARING_VALUES: ServiceHearingValuesModel = {
         lastName: 'Representative',
         preferredHearingChannel: 'INTER'
       },
-      unavailabilityRanges: [
+      unavailabilityRange: [
       ]
     }],
   caseFlags: {

@@ -94,7 +94,7 @@ describe('ParticipantAttendenceAnswerConverter', () => {
                 lastName: 'Smith',
                 preferredHearingChannel: 'inPerson'
               },
-              unavailabilityRanges: [
+              unavailabilityRange: [
                 {
                   unavailableFromDate: '2021-12-10T09:00:00.000Z',
                   unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -118,7 +118,7 @@ describe('ParticipantAttendenceAnswerConverter', () => {
                 organisationType: 'GOV',
                 cftOrganisationID: 'O100000'
               },
-              unavailabilityRanges: [
+              unavailabilityRange: [
                 {
                   unavailableFromDate: '2021-12-20T09:00:00.000Z',
                   unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -243,7 +243,7 @@ describe('ParticipantAttendenceAnswerConverter', () => {
                 lastName: 'Smith',
                 preferredHearingChannel: 'inPerson'
               },
-              unavailabilityRanges: [
+              unavailabilityRange: [
                 {
                   unavailableFromDate: '2021-12-10T09:00:00.000Z',
                   unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -267,7 +267,7 @@ describe('ParticipantAttendenceAnswerConverter', () => {
                 organisationType: 'GOV',
                 cftOrganisationID: 'O100000'
               },
-              unavailabilityRanges: [
+              unavailabilityRange: [
                 {
                   unavailableFromDate: '2021-12-20T09:00:00.000Z',
                   unavailableToDate: '2021-12-31T09:00:00.000Z',

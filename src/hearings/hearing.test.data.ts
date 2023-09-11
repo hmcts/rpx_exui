@@ -1650,7 +1650,7 @@ export const serviceHearingValuesModel: ServiceHearingValuesModel = {
         lastName: 'Smith',
         preferredHearingChannel: 'inPerson'
       },
-      unavailabilityRanges: [
+      unavailabilityRange: [
         {
           unavailableFromDate: '2021-12-10T09:00:00.000Z',
           unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -1674,7 +1674,7 @@ export const serviceHearingValuesModel: ServiceHearingValuesModel = {
         organisationType: 'GOV',
         cftOrganisationID: 'O100000'
       },
-      unavailabilityRanges: [
+      unavailabilityRange: [
         {
           unavailableFromDate: '2021-12-20T09:00:00.000Z',
           unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -2358,7 +2358,7 @@ export const initialState = {
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -2386,7 +2386,7 @@ export const initialState = {
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -2541,7 +2541,7 @@ export const initialState = {
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -2567,7 +2567,7 @@ export const initialState = {
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -3040,7 +3040,7 @@ export const initialStateImmutable = {
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -3068,7 +3068,7 @@ export const initialStateImmutable = {
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -3223,7 +3223,7 @@ export const initialStateImmutable = {
             },
             organisationDetails: {},
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-10T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
@@ -3249,7 +3249,7 @@ export const initialStateImmutable = {
               cftOrganisationID: 'O100000'
             },
             unavailabilityDOW: null,
-            unavailabilityRanges: [
+            unavailabilityRange: [
               {
                 unavailableFromDate: '2021-12-20T09:00:00.000Z',
                 unavailableToDate: '2021-12-31T09:00:00.000Z',
