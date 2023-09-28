@@ -202,7 +202,7 @@
     "cucumber": "5.1.0",
     "cucumber-html-report": "0.6.5",
     "cucumber-html-reporter": "^7.1.1",
-    "cucumber-pretty": "1.5.0",
+    "cucumber-pretty": "1.5.2",
     "cucumberjs-allure-reporter": "1.0.3",
     "eslint": "^8.37.0",
     "jasmine-core": "~3.4.0",
