@@ -21,20 +21,20 @@ class CustomHelper extends Helper {
     }
 
     _beforeStep(){
-        // const page = this.getPuppeteerPage();
+        const page = this.getPuppeteerPage();
 
-        // if (!this.pageOnListener && page){
+        if (!this.pageOnListener && page){
            
-        //     page.on('console', (msg) => {
-        //         const type = msg.type();
-        //         if (type === 'error') {
-        //             // console.log(msg);
-        //             // this.attachBrowserLog(msg)
-        //             this.browserErrorLogs.push(msg)
-        //         }
-        //     });
-        //     this.pageOnListener = true;
-        // }
+            page.on('console', (msg) => {
+                const type = msg.type();
+                if (type === 'error') {
+                    // console.log(msg);
+                    // this.attachBrowserLog(msg)
+                    this.browserErrorLogs.push(msg)
+                }
+            });
+            this.pageOnListener = true;
+        }
     }
 
 
@@ -89,8 +89,8 @@ class CustomHelper extends Helper {
     }
     
     _getHelper(){
-        const { WebDriver, Puppeteer, Playwright } = this.helpers;
-        return Playwright;
+        const { WebDriver, Puppeteer } = this.helpers;
+        return Puppeteer;
     }
 
 
@@ -98,12 +98,8 @@ class CustomHelper extends Helper {
         return this._getHelper();
     }
 
-    getPlaywrightPage() {
-        return this.helpers.Playwright.page
-    }
-
     getPuppeteerPage(){
-        return this.helpers.Puppeteer.page;
+        return this._getHelper().page;
     }
 
     async isVisible(selector) {

@@ -1,7 +1,7 @@
 
 const report = require("multiple-cucumber-html-reporter");
-// const { merge } = require('mochawesome-merge')
-// const marge = require('mochawesome-report-generator')
+const { merge } = require('mochawesome-merge')
+const marge = require('mochawesome-report-generator')
 const fs = require('fs')
 const path = require('path')
 
@@ -11,6 +11,8 @@ import applicationServer from '../localServer'
 var spawn = require('child_process').spawn;
 const backendMockApp = require('../backendMock/app');
 const statsReporter = require('./statsReporter')
+
+let executionResult = 'passed';
 
 let appWithMockBackend = null;
 const testType = process.env.TEST_TYPE
@@ -41,9 +43,9 @@ if (testType === 'e2e' || testType === 'smoke'){
 
 
 
-const functional_output_dir = path.resolve(`${__dirname}/../../functional-output/tests/codecept-${testType}`);
+const functional_output_dir = path.resolve(`${__dirname}/../../functional-output/tests/codecept-${testType}`)
 
-const cucumber_functional_output_dir = path.resolve(`${__dirname}/../../functional-output/tests/cucumber-codecept-${testType}`);
+const cucumber_functional_output_dir = path.resolve(`${__dirname}/../../functional-output/tests/cucumber-codecept-${testType}`)
 
 exports.config = {
   timeout: 600,
@@ -52,9 +54,7 @@ exports.config = {
     "steps": "../**/*.steps.js"
   },
   output: functional_output_dir,
-  // disableScreenshots: false,
-  // fullPageScreenshots: true,
-  // uniqueScreenshotNames: true,
+ 
   helpers: {
     CustomHelper:{
       require:"./customHelper.js"
@@ -62,45 +62,44 @@ exports.config = {
     "Mochawesome": {
       "uniqueScreenshotNames": "true"
     },
-    // Puppeteer: {
-    //   url: 'https://manage-case.aat.platform.hmcts.net/',
-    //   show: true,
-    //   waitForNavigation: ['domcontentloaded'],
-    //   restart: true,
-    //   keepCookies: false,
-    //   keepBrowserState: false,
-    //   smartWait: 50000,
-    //   waitForTimeout: 90000,
-    //   chrome: {
-    //     ignoreHTTPSErrors: true,
-    //     defaultViewport: {
-    //       width: 1280,
-    //       height: 960
-    //     },
-    //     args: [
-    //       `${head ? '' : '--headless'}`,
-    //       '—disable-notifications',
-    //       '--smartwait',
-    //       '--disable-gpu',
-    //       '--no-sandbox',
-    //       '--allow-running-insecure-content',
-    //       '--ignore-certificate-errors',
-    //       '--window-size=1440,1400',
-    //       '--viewport-size=1440,1400',
+    Puppeteer: {
+      url: 'https://manage-case.aat.platform.hmcts.net/',
+      show: true,
+      waitForNavigation: ['domcontentloaded'],
+      restart: true,
+      keepCookies: false,
+      keepBrowserState: false,
+      smartWait: 50000,
+      waitForTimeout: 90000,
+      chrome: {
+        ignoreHTTPSErrors: true,
+        defaultViewport: {
+          width: 1280,
+          height: 960
+        },
+        args: [
+          `${head ? '' : '--headless'}`,
+          '—disable-notifications',
+          '--smartwait',
+          '--disable-gpu',
+          '--no-sandbox',
+          '--allow-running-insecure-content',
+          '--ignore-certificate-errors',
+          '--window-size=1440,1400',
+          '--viewport-size=1440,1400',
 
-    //        '--disable-setuid-sandbox', '--no-zygote ', '--disableChecks'
-    //     ]
-    //   }
+           '--disable-setuid-sandbox', '--no-zygote ', '--disableChecks'
+        ]
+      }
       
-    // },
-    Playwright: {
-      url: "https://manage-case.aat.platform.hmcts.net",
-      restart: false,
-      show: head ? true : false,
-      waitForNavigation: "domcontentloaded",
-      waitForAction: 500,
-      browser: 'chromium'
-    }
+    },
+    // Playwright: {
+    //   url: "https://manage-case.aat.platform.hmcts.net",
+    //   restart: false,
+    //   show:true,
+    //   waitForNavigation: "domcontentloaded",
+    //   waitForAction: 500
+    // }
     // WebDriver:{
     //   url: 'https://manage-case.aat.platform.hmcts.net/',
     //   browser: 'chrome',
@@ -157,7 +156,7 @@ exports.config = {
   plugins:{
     screenshotOnFail: {
       enabled: true,
-      fullPageScreenshots: true
+      fullPageScreenshots: 'true'
     },
    
     "myPlugin": {
@@ -216,9 +215,12 @@ exports.config = {
 }
 
 
-async function exitWithStatus() {
-  const status = 'PASS'
-  process.exit(status === 'PASS' ? 0 : 1)
+function exitWithStatus() {
+  // const status = await mochawesomeGenerateReport()
+  console.log(`*************** executionResult: ${executionResult}  *************** `)
+  process.exit(executionResult === 'passed' ? 0 : 1)
+
+
 
 }
 
@@ -232,13 +234,14 @@ async function setup(){
 }
 
 async function teardown(){
+  console.log('Tests execution completed')
   if (!debugMode && (testType === 'ngIntegration' || testType === 'a11y')) {
     await backendMockApp.stopServer();
     await applicationServer.stop()
   }
   statsReporter.run();
   await generateCucumberReport();
-  await exitWithStatus()
+
 
   // process.exit(1);
 }
@@ -259,15 +262,19 @@ async function mochawesomeGenerateReport(){
 }
 
 async function generateCucumberReport(){
+  console.log('Generating cucumber report')
+
   await new Promise((resolve,reject) => {
     setTimeout(() => {
-        cucumberReportUpdateEmbeddings();
+        processCucumberJsonReports();
         resolve(true)
     }, 2000);
   });
    report.generate({
       jsonDir: functional_output_dir + '',
       reportPath: functional_output_dir + '',
+      displayDuration:true,
+      // durationInMS: true,
       metadata: {
         browser: {
           name: "chrome",
@@ -280,12 +287,17 @@ async function generateCucumberReport(){
         },
       }
     });
+  console.log('completed cucumber report')
+  
+
 }
 
-async function cucumberReportUpdateEmbeddings() {
+function processCucumberJsonReports() {
+  const executionOutcomes = {}
   const files = fs.readdirSync(functional_output_dir);
   for (const f of files) {
     if (f.startsWith('cucumber_output') && f.endsWith('.json')) {
+      console.log(`processing cucumber-json-report : ${f}`);
       const jsonString = fs.readFileSync(functional_output_dir + '/' + f, 'utf-8');
       const json = JSON.parse(jsonString);
 
@@ -294,6 +306,10 @@ async function cucumberReportUpdateEmbeddings() {
         const obj = json[i]
         for (const element of obj.elements) {
           for (const step of element.steps) {
+            executionOutcomes[step.result.status] = step.result.status
+            if (executionResult === 'passed'){
+              executionResult = step.result.status;
+            }
             for (const embedd of step.embeddings) {
               if (embedd.mime_type === 'text/plain' && !embedd.data.startsWith('=>')){
                 embedd.data = new Buffer(embedd.data, 'base64').toString('ascii')
@@ -302,13 +318,11 @@ async function cucumberReportUpdateEmbeddings() {
           }
         }
       }
-      // console.log(json)
       fs.writeFileSync(functional_output_dir + '/' + f, JSON.stringify(json, null, 2))
-
-
     }
-
-
   }
+  console.log(executionOutcomes)
 
+
+  return executionResult;
 }

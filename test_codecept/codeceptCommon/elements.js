@@ -218,17 +218,13 @@ class Element {
             if (selectorType === 'css'){
                 return document.querySelector(selector).checked;
             }else{
-                const ele = document.evaluate(
+                return document.evaluate(
                     selector,
                     document,
                     null,
                     XPathResult.FIRST_ORDERED_NODE_TYPE,
                     null
-                );
-                if(ele === null){
-                    throw Error(`Element with selector not found : ${selector}`);
-                }
-                return ele.singleNodeValue.checked;
+                ).singleNodeValue.checked;
             }
             
         }, selectorType, this.selector[selectorType]);
@@ -304,31 +300,20 @@ class Element {
         return new ElementCollection(locator)
     }
 
-
-    
-
     async wait(waitInSec){
-        await getActor().waitForElement(this.selector, 20)
-    }
-
-    async playwrightWait(){
-
-    }
-
-    async puppeteerWait(){
-        reportLogger.AddMessage("ELEMENT_WAIT: " + JSON.stringify(this.selector) + " at " + this.__getCallingFunctionName());
+        reportLogger.AddMessage("ELEMENT_WAIT: " + JSON.stringify(this.selector) +" at "+this.__getCallingFunctionName());
 
         return new Promise((resolve, reject) => {
             const startTime = Date.now();
             const thisElement = this;
             const interval = setInterval(async () => {
-                const elapsedTime = (Date.now() - startTime) / 1000;
+                const elapsedTime = (Date.now() - startTime)/1000;
                 const isPresent = await thisElement.isPresent()
                 // reportLogger.AddMessage(`WAIT elapsed time : ${elapsedTime}`)
                 if (isPresent) {
                     clearInterval(interval)
                     resolve(true)
-                }
+                } 
                 // else if (elapsedTime > 30){
                 //     clearInterval(interval);
                 //     reportLogger.AddMessage(`ELEMENT_WAIT_FAILED: not present ${JSON.stringify(this.selector)} at ${this.__getCallingFunctionName()} `);
@@ -339,8 +324,8 @@ class Element {
             setTimeout(() => {
                 clearInterval(interval);
                 reject(false);
-            }, 30 * 1000)
-
+            }, 30*1000)
+         
         });
     }
 
