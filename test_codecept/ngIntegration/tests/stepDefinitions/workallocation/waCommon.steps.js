@@ -97,9 +97,17 @@ async function loginattemptCheckAndRelogin(username, password, world) {
 }
 
 
-    async function mockLoginWithRoles(roles){
-        idamLogin.withCredentials('lukesuperuserxui@mailnesia.com','Monday01')
-
+    async function mockLoginWithRoles(roles, userIdentifier){
+        const testUser = testData.users['aat'].filter(testUser => testUser.userIdentifier === userIdentifier)[0];
+        let loginUser = '';
+        if (userIdentifier){
+            idamLogin.withCredentials(testUser.email, testUser.key)
+            loginUser = testUser.email
+        }else{
+            idamLogin.withCredentials('lukesuperuserxui@mailnesia.com', 'Monday01')
+            loginUser = 'lukesuperuserxui@mailnesia.com'
+        }
+        
 
         await browser.get('http://localhost:3000/get-help');
         let userDetails = null;
@@ -108,7 +116,7 @@ async function loginattemptCheckAndRelogin(username, password, world) {
             await idamLogin.do();
             userDetails = idamLogin.userDetailsResponse.details.data;
             const sessionUserName = userDetails.userInfo ? userDetails.userInfo.email : '';
-            if (sessionUserName !== 'lukesuperuserxui@mailnesia.com' ){
+            if (sessionUserName !== loginUser ){
                 throw new Error('session not updated with user, retrying');
             }
 
@@ -226,6 +234,24 @@ async function loginattemptCheckAndRelogin(username, password, world) {
         CucumberReporter.reportDatatable(datatable)
         const rowsHash = datatable.parse().rowsHash()
         const userDetails = await mockLoginWithRoles(rowsHash.roles.split(','))
+        const properties = rowsHash;
+        for (const key of Object.keys(properties)) {
+            if(key === 'roles'){
+                userDetails.userInfo[key] = properties[key].split(',').map(v => v.trim())
+            }else{
+                userDetails.userInfo[key] = properties[key]
+            }
+            
+        }
+        const auth = await browser.driver.manage().getCookie('__auth__')
+        await mockClient.updateAuthSessionWithUserInfo(auth.value, userDetails.userInfo);
+    });
+
+
+     Given('I set MOCK with user details with user identifier {string}', async function (userIdentifier, datatable) {
+        CucumberReporter.reportDatatable(datatable)
+        const rowsHash = datatable.parse().rowsHash()
+         const userDetails = await mockLoginWithRoles(rowsHash.roles.split(','), userIdentifier)
         const properties = rowsHash;
         for (const key of Object.keys(properties)) {
             if(key === 'roles'){

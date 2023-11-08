@@ -27,7 +27,7 @@
         },
         "waWorkflowApi": "http://localhost:8080",
         "documentsv2": {
-            "api": "http://localhost:8080/cases/documents"
+            "api": "http://localhost:8080/"
         },
         "prd": {
             "api": "http://localhost:8080",

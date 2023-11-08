@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AbstractAppConfig, CaseEditorConfig } from '@hmcts/ccd-case-ui-toolkit';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
+import { AppConstants } from '../../../app/app.constants';
 import { WAFeatureConfig } from '../../../work-allocation/models/common/service-config.model';
 import { EnvironmentService } from '../../shared/services/environment.service';
 import { AppConfigService } from '../config/configuration.services';
@@ -51,6 +52,13 @@ export class AppConfig extends AbstractAppConfig {
       next: (val) => this.config = {
         ...this.config,
         access_management_basic_view_mock: val
+      }
+    });
+
+    this.featureToggleService.getValue(AppConstants.FEATURE_NAMES.enableCaseFileViewVersion1_1, false).subscribe({
+      next: (val) => this.config = {
+        ...this.config,
+        enable_case_file_view_version_1_1: val
       }
     });
   }
@@ -233,5 +241,9 @@ export class AppConfig extends AbstractAppConfig {
 
   public getCaseDataStoreApiUrl(): string {
     return this.config.case_data_store_api_url;
+  }
+
+  public getEnableCaseFileViewVersion1_1(): boolean {
+    return this.config.enable_case_file_view_version_1_1;
   }
 }

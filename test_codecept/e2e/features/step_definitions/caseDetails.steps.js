@@ -60,6 +60,10 @@ const { I } = inject();
     When('I click tab with label {string} in case details page, to see element with css selector {string}', async function (tabLabel, cssSelector) {
         await BrowserWaits.retryWithActionCallback(async () => {
             await caseDetailsPage.clickTabWithLabel(tabLabel) 
+            await BrowserWaits.waitForSeconds(2)
+            await caseDetailsPage.clickTabWithLabel(tabLabel) 
+
+            await BrowserWaits.waitForElement($(cssSelector))
             expect(await $(cssSelector).isDisplayed()).to.be.true
         });
 
