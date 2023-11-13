@@ -85,13 +85,17 @@ export async function handleCaseWorkersForServicesPost(path: string, payloads: C
 export async function handlePostCaseWorkersRefData(path: string, userIdsByJurisdiction: any, req: EnhancedRequest): Promise<any> {
   const data = new Array<any>();
   for (const userIdList of userIdsByJurisdiction) {
-    const payload = {
-      userIds: userIdList.userIds
-    };
-    const headers = setHeaders(req);
-    const response: AxiosResponse = await http.post(path, payload, { headers });
-    const userListByService = { jurisdiction: userIdList.jurisdiction, data: response.data };
-    data.push(userListByService);
+    if (userIdList.userIds && userIdList.userIds.length > 0) {
+      const payload = {
+        userIds: userIdList.userIds
+      };
+      const headers = setHeaders(req);
+      const response: AxiosResponse = await http.post(path, payload, { headers });
+      const userListByService = { jurisdiction: userIdList.jurisdiction, data: response.data };
+      data.push(userListByService);
+    } else {
+      console.warn('Jurisdiction ' + userIdList.jurisdiction + ' user list is empty');
+    }
   }
   return data;
 }

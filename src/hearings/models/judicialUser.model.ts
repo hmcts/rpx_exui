@@ -8,7 +8,7 @@ export interface JudicialUserModel {
   initials: string;
   postNominals: string;
   personalCode: string;
-  isJudge: string;
-  isMagistrate: string;
-  isPanelMember: string;
+  isJudge?: string;
+  isMagistrate?: string;
+  isPanelMember?: string;
 }
