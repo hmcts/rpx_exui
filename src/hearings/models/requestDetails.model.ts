@@ -1,7 +1,7 @@
 export interface ResponseDetailsModel {
   hearingRequestID?: string;
   status?: string;
-  timestamp: string;
+  timestamp?: string;
   versionNumber: number;
 }
 

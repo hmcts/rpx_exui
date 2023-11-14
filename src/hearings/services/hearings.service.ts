@@ -14,6 +14,7 @@ import {
 import { LovRefDataByServiceModel, LovRefDataModel } from '../models/lovRefData.model';
 import { ResponseDetailsModel } from '../models/requestDetails.model';
 import { ServiceHearingValuesModel } from '../models/serviceHearingValues.model';
+import * as _ from 'lodash';
 
 @Injectable()
 export class HearingsService {
@@ -117,17 +118,14 @@ export class HearingsService {
   }
 
   public prepareHearingRequestModel(hearingRequestMainModel: HearingRequestMainModel): HearingRequestMainModel {
-    let model = hearingRequestMainModel;
-    const newModel: HearingRequestMainModel = {
-      ...hearingRequestMainModel,
-      hearingDetails: {
-        ...hearingRequestMainModel.hearingDetails,
-        hearingWindow: null
-      }
-    };
+    let updatedModel = _.cloneDeep(hearingRequestMainModel);
     if (hearingRequestMainModel.hearingDetails.hearingWindow && Object.keys(hearingRequestMainModel.hearingDetails.hearingWindow).length === 0) {
-      model = newModel;
+      updatedModel.hearingDetails.hearingWindow = null;
     }
-    return model;
+    updatedModel.hearingResponse && delete updatedModel.hearingResponse;
+    updatedModel.requestDetails.timestamp && delete updatedModel.requestDetails.timestamp;
+    updatedModel.requestDetails.status && delete updatedModel.requestDetails.status;
+    updatedModel.requestDetails.hearingRequestID && delete updatedModel.requestDetails.hearingRequestID;
+    return updatedModel;
   }
 }
