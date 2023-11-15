@@ -64,7 +64,7 @@ should only ever be three files within this folder:
 Through the Jenkins pipelines they are overwritten by values.*.template.yaml files for the Preview and AAT enviroments.
 On AKS they are only overwritten by the values.yaml file
 `default.json` - Should contain Production configuration values as per Reform standards.
-`local-development.json` - Is used for local development
+`local-development.json` - Is used for local development 
 
 Adding new files into /config should be avoided, as it increases complexity.
 
