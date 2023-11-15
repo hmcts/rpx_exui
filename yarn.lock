@@ -2591,12 +2591,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/ccd-case-ui-toolkit@npm:6.19.13":
-  version: 6.19.13
-  resolution: "@hmcts/ccd-case-ui-toolkit@npm:6.19.13"
+"@hmcts/ccd-case-ui-toolkit@npm:6.19.14-prerelease-datetime-picker-fix":
+  version: 6.19.14-prerelease-datetime-picker-fix
+  resolution: "@hmcts/ccd-case-ui-toolkit@npm:6.19.14-prerelease-datetime-picker-fix"
   dependencies:
     tslib: ^2.0.0
-  checksum: 72f10e1caa5ab786442b20f64327386e88e0de8c66f9f5db3e4479dee36e9deca58f0f2b1f3b5e27479504ba4b817f7e8c5c5db0cb62d3af3a86c0c82336e520
+  checksum: 480dcbcbabda2c58b0cf172e9d230d8b17c83f1d0388cc20427d18ba8e003b50c2c720cfa1689f1d3e1ea19620065bef1df487ba840b4b812febbe28b4b43936
   languageName: node
   linkType: hard
 
@@ -19225,7 +19225,7 @@ __metadata:
     "@angular/platform-browser-dynamic": ^11.2.14
     "@angular/router": ^11.2.14
     "@edium/fsm": ^2.1.2
-    "@hmcts/ccd-case-ui-toolkit": 6.19.13
+    "@hmcts/ccd-case-ui-toolkit": 6.19.14-prerelease-datetime-picker-fix
     "@hmcts/ccpay-web-component": 5.2.8
     "@hmcts/frontend": 0.0.50-alpha
     "@hmcts/media-viewer": 2.9.5
