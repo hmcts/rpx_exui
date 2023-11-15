@@ -59,6 +59,9 @@ const caseManager = new CaseManager()
         await browserWaits.retryWithActionCallback(async () => {
             try{
                 await headerPage.clickPrimaryNavigationWithLabel(headerTabLabel);
+                await browserWaits.waitForSeconds(2)
+                await headerPage.clickPrimaryNavigationWithLabel(headerTabLabel);
+
                 await browserWaits.retryWithActionCallback(async () => {
                     expect(await headerPage.isPrimaryTabPageDisplayed(headerTabLabel)).to.be.true
                 })

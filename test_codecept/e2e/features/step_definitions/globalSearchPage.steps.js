@@ -56,7 +56,7 @@ const { DataTableArgument } = require('codeceptjs');
     When('I input field {string} with value {string} in global search Page', async function(fieldName,fieldValue){
         switch(fieldName.toLowerCase()){
             case '16-digit case reference':
-                await globalSearchPage.caseReference.inputText(fieldValue);
+                await globalSearchPage.caseReference.sendKeys(fieldValue);
                 break;
             case 'other reference':
                 await globalSearchPage.otherReference.inputText(fieldValue);

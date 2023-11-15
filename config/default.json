@@ -146,7 +146,11 @@
     "EMPLOYMENT": {
       "caseTypes": "ET_EnglandWales,ET_EnglandWales_Listings,ET_EnglandWales_Multiple,ET_Scotland,ET_Scotland_Listings,ET_Scotland_Multiple",
       "releaseVersion": "4.0"
-      }
+      },
+    "ST_CIC": {
+      "caseTypes": "CriminalInjuriesCompensation",
+      "releaseVersion": "4.0"
+    }
   },
   "wildcardSearchFields": {
     "Benefit": [

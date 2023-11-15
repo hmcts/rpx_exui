@@ -1,3 +1,4 @@
+const caseFileViewTabConfig = require('./caseFileViewTabConfig')
 
 class CaseDetailsData{
     constructor(){
@@ -5,9 +6,11 @@ class CaseDetailsData{
         this.defaultCase = JSON.parse(JSON.stringify(this.data));
         this.hearingCase = JSON.parse(JSON.stringify(this.data));
         this.qmCase = JSON.parse(JSON.stringify(this.data));
+        this.caseFileViewCase = JSON.parse(JSON.stringify(this.data));
 
         this.setupHearingCase()
         this.setupDefaultCase()
+        this.setupCaseFileViewCase();
         this.setupQMCase()
     }
 
@@ -43,6 +46,17 @@ class CaseDetailsData{
         })
       
     }
+
+    setupCaseFileViewCase() {
+        this.setCaseTypeProperties(this.caseFileViewCase, {
+            id: 'PRLAPPS',
+            name: 'Immigration & Asylum',
+            "jurisdiction.id": 'PRIVATELAW'
+        })
+
+        this.caseFileViewCase.tabs.push(caseFileViewTabConfig);
+    }
+
 
     setupDefaultCase(){
         this.setCaseTypeProperties(this.defaultCase,{

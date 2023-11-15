@@ -10,6 +10,8 @@ const CucumberReporter = require('../../../codeceptCommon/reportLogger');
 const BrowserWaits = require('../../../e2e/support/customWaits');
 const headerpage = require('../../../e2e/features/pageObjects/headerPage');
 
+const serviceMock = require('../../../backendMock/client/serviceMock')
+
 const { getTestJurisdiction } = require('../../mockData/ccdCaseMock');
 
 // const ccdApi = require('../../../nodeMock/ccd/ccdApi');
@@ -34,3 +36,11 @@ const { getTestJurisdiction } = require('../../mockData/ccdCaseMock');
         
     });
 
+
+
+      Given('I set error response code {int} on api method {string}', async function(responseCode, apiMethod){
+          await serviceMock.updateMockServer(apiMethod, {
+            status: responseCode, data: {}
+          })
+        
+    });

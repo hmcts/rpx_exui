@@ -12,7 +12,7 @@ const userApiData = require('../userApiData')
 router.get('/data/internal/cases/:caseId', (req, res) => {
     const caseId = req.params['caseId'];
    
-    userApiData.sendResponse(req, res, "OnCaseDetails", () => ccdMockData.caseDetailsResponse.hearingCase)
+    userApiData.sendResponse(req, res, "OnCaseDetails", () => ccdMockData.caseDetailsResponse.caseFileViewCase)
 
 });
 

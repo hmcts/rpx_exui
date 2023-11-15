@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap, take } from 'rxjs/operators';
+import { catchError, switchMap, take } from 'rxjs/operators';
 import { JudicialUserModel } from '../models/judicialUser.model';
 import { JudicialRefDataService } from '../services/judicial-ref-data.service';
 import * as fromHearingStore from '../store';
+import { getHearingJudgeIds } from '../store/selectors/hearing-judges.selectors';
 
 @Injectable({
   providedIn: 'root'
@@ -23,24 +24,13 @@ export class JudicialUserSearchResponseResolver implements Resolve<JudicialUserM
           return of(judicialMemberIds);
         }), take(1),
         switchMap((judicialMemberIds) => {
-          return judicialMemberIds && judicialMemberIds.length ? this.getUsersData$(judicialMemberIds) : of([]);
+          return judicialMemberIds && judicialMemberIds.length && judicialMemberIds[0] ? this.getUsersData$(judicialMemberIds) : of([]);
         })
       );
   }
 
   public getUsersByPanelRequirements$(): Observable<string[]> {
-    return this.hearingStore.pipe(select(fromHearingStore.getHearingRequest)).pipe(
-      map((hearingRequest) => {
-        const hearingJudgeIds: string[] = [];
-        if (hearingRequest.hearingRequestMainModel?.hearingResponse?.hearingDaySchedule?.length) {
-          const hearingJudgeId = hearingRequest.hearingRequestMainModel.hearingResponse.hearingDaySchedule[0].hearingJudgeId;
-          if (hearingJudgeId?.trim().length > 0) {
-            hearingJudgeIds.push(hearingJudgeId);
-          }
-        }
-        return hearingJudgeIds;
-      })
-    );
+    return this.hearingStore.select(getHearingJudgeIds);
   }
 
   public getUsersData$(judgePersonalCodesList: string[]): Observable<JudicialUserModel[]> {

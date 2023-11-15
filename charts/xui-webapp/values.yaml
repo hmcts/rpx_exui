@@ -8,7 +8,6 @@ redis:
     enabled: false
 
 nodejs:
-  aadIdentityName: xui
   applicationPort: 3000
   cpuRequests: 250m
   cpuLimits: 2000m

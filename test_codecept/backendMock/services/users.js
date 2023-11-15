@@ -54,9 +54,11 @@ for (const conf of testUsersConf){
 
 }
 
+let idamIdCounter = 123456781230;
+
 for (const conf of caseworkersConf){
     const service = conf.services.join('_');
-    const role = conf.role;
+    const role = conf.roleCategory;
     const roleType = conf.roleType;
     const roleName = conf.roleName;
 
@@ -64,11 +66,14 @@ for (const conf of caseworkersConf){
 
 
         conf.services.forEach(jurisdiction => {
+            idamIdCounter += 1;
             const cwTemplate = rdcaseworkers.getCaseworkerTemplate();
-            cwTemplate.id = v4();
-            cwTemplate.first_name = `${role} ${i + 1}`
+            cwTemplate.id = idamIdCounter+"";
+            cwTemplate.idamId = idamIdCounter+"";
+
+            cwTemplate.first_name = `${roleName} ${i + 1}_${idamIdCounter+1}`
             cwTemplate.last_name = `${service}`
-            cwTemplate.email_id = `${service}_${role}_${i + 1}@justice.gov.uk`.toLowerCase()
+            cwTemplate.email_id = `${service}_${roleName}_${i + 1}_${idamIdCounter + 1}@justice.gov.uk`.toLowerCase()
             cwTemplate.roleCategory = role
             cwTemplate.base_location[0].location_id = '20001'
             rdcaseworkers.caseworkers.push(cwTemplate)
