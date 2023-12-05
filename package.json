@@ -88,7 +88,7 @@
     "@angular/platform-browser-dynamic": "^11.2.14",
     "@angular/router": "^11.2.14",
     "@edium/fsm": "^2.1.2",
-    "@hmcts/ccd-case-ui-toolkit": "6.19.15-restricted-case-access",
+    "@hmcts/ccd-case-ui-toolkit": "6.19.16-hearing-requirements-event-fix",
     "@hmcts/ccpay-web-component": "5.2.8",
     "@hmcts/frontend": "0.0.50-alpha",
     "@hmcts/media-viewer": "2.9.5",

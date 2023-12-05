@@ -2591,12 +2591,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/ccd-case-ui-toolkit@npm:6.19.15-restricted-case-access":
-  version: 6.19.15-restricted-case-access
-  resolution: "@hmcts/ccd-case-ui-toolkit@npm:6.19.15-restricted-case-access"
+"@hmcts/ccd-case-ui-toolkit@npm:6.19.16-hearing-requirements-event-fix":
+  version: 6.19.16-hearing-requirements-event-fix
+  resolution: "@hmcts/ccd-case-ui-toolkit@npm:6.19.16-hearing-requirements-event-fix"
   dependencies:
     tslib: ^2.0.0
-  checksum: ecafb4a68a46ff22a9ecdb3edcc43fb1f27edb6ad19ece09afd7c0b8ec419c9826294608c0ddf1dcf8308495ad3461da419bbb4e1e8833787246a97d16b9cab6
+  checksum: 7a8c6c7868229137a7451bf3f5cecc64a890d942d65903523efc1307f077f2feee5039265ca352e52c0a549c61ba51dd1c1c94d016180556faacefc08a3c9a6c
   languageName: node
   linkType: hard
 
@@ -19249,7 +19249,7 @@ __metadata:
     "@angular/platform-browser-dynamic": ^11.2.14
     "@angular/router": ^11.2.14
     "@edium/fsm": ^2.1.2
-    "@hmcts/ccd-case-ui-toolkit": 6.19.15-restricted-case-access
+    "@hmcts/ccd-case-ui-toolkit": 6.19.16-hearing-requirements-event-fix
     "@hmcts/ccpay-web-component": 5.2.8
     "@hmcts/frontend": 0.0.50-alpha
     "@hmcts/media-viewer": 2.9.5
