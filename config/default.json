@@ -18,7 +18,7 @@
     "documentsApiV2": "http://ccd-case-document-am-api-prod.service.core-compute-prod.internal/v2/health",
     "em_anno_api": "http://em-anno-prod.service.core-compute-prod.internal/health",
     "em_docassembly_api": "http://dg-docassembly-prod.service.core-compute-prod.internal/health",
-    "termsAndConditions": "http://xui-terms-and-conditions-aat.service.core-compute-aat.internal/health",
+    "termsAndConditions": "http://xui-terms-and-conditions-prod.service.core-compute-prod.internal/health",
     "s2s": "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal/health",
     "taskApi": "http://wa-task-management-api-prod.service.core-compute-prod.internal/health",
     "roleApi": "http://am-role-assignment-service-prod.service.core-compute-prod.internal/health",
@@ -65,8 +65,8 @@
     "prd": {
       "api": "http://rd-professional-api-prod.service.core-compute-prod.internal",
       "locationApi": "http://rd-location-ref-api-demo.service.core-compute-demo.internal",
-      "judicialApi": "http://rd-judicial-api-aat.service.core-compute-aat.internal",
-      "commondataApi": "http://rd-commondata-api-aat.service.core-compute-aat.internal"
+      "judicialApi": "http://rd-judicial-api-prod.service.core-compute-prod.internal",
+      "commondataApi": "http://rd-commondata-api-prod.service.core-compute-prod.internal"
     },
     "locationref": {
       "api": "http://rd-location-ref-api-prod.service.core-compute-prod.internal"
@@ -102,7 +102,7 @@
     "markup_api": "http://em-npa-prod.service.core-compute-prod.internal",
     "icp_api": "http://em-icp-prod.service.core-compute-prod.internal",
     "s2s": "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal",
-    "termsAndConditions": "http://xui-terms-and-conditions-aat.service.core-compute-aat.internal",
+    "termsAndConditions": "http://xui-terms-and-conditions-prod.service.core-compute-prod.internal",
     "payment_return_url": "https://paymentoutcome-web.prod.platform.hmcts.net",
     "translation": "http://ts-translation-service-prod.service.core-compute-prod.internal",
     "judicialBookingApi": "http://am-judicial-booking-service-prod.service.core-compute-prod.internal"
