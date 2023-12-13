@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Chrome Debugger",
+            "request": "launch",
+            "type": "chrome",
+            "webRoot": "${workspaceFolder}",
+            "url": "http://localhost:3000"
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
