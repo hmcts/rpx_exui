@@ -7,7 +7,7 @@ import { FeatureToggleService, FilterService } from '@hmcts/rpx-xui-common-lib';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { RpxTranslationConfig, RpxTranslationModule, RpxTranslationService } from 'rpx-xui-translation';
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { TaskManagerFilterComponent } from '..';
 import * as fromStore from '../../../app/store';
 import { LocationDataService, WorkAllocationTaskService } from '../../services';

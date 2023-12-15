@@ -1,4 +1,4 @@
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { TaskTypesService } from './task-types.service';
 
 describe('TaskTypesService', () => {

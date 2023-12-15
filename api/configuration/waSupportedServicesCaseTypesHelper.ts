@@ -15,21 +15,24 @@ export interface WAFeatureConfig {
 
 export function getFormattedSupportedServicesCaseTypes(waSupportedServices: string): WAFeatureConfig {
   try {
-    const formattedWAFeatureConfig: WAFeatureConfig = { configurations: [] };
-    waSupportedServices.split(',').forEach((service) => {
-      const caseTypes = getConfigValue(`waSupportedServiceandCaseTypes.${service}.caseTypes`);
-      const releaseVersion = getConfigValue(`waSupportedServiceandCaseTypes.${service}.releaseVersion`);
-      const serviceConfig: ServiceConfig = {
-        caseTypes: caseTypes.split(','),
-        releaseVersion,
-        serviceName: service
-      };
-      serviceConfig.caseTypes = caseTypes.split(',');
-      serviceConfig.releaseVersion = releaseVersion;
-      serviceConfig.serviceName = service;
-      formattedWAFeatureConfig.configurations.push(serviceConfig);
-    });
-    return formattedWAFeatureConfig;
+    if (waSupportedServices) {
+      const formattedWAFeatureConfig: WAFeatureConfig = { configurations: [] };
+      waSupportedServices.split(',').forEach((service) => {
+        const caseTypes = getConfigValue(`waSupportedServiceandCaseTypes.${service}.caseTypes`);
+        const releaseVersion = getConfigValue(`waSupportedServiceandCaseTypes.${service}.releaseVersion`);
+        const serviceConfig: ServiceConfig = {
+          caseTypes: caseTypes.split(','),
+          releaseVersion,
+          serviceName: service
+        };
+        serviceConfig.caseTypes = caseTypes.split(',');
+        serviceConfig.releaseVersion = releaseVersion;
+        serviceConfig.serviceName = service;
+        formattedWAFeatureConfig.configurations.push(serviceConfig);
+      });
+      return formattedWAFeatureConfig;
+    }
+    return null;
   } catch (error) {
     logger.error('Error in formatting the supported service and case types - ', error);
     return null;

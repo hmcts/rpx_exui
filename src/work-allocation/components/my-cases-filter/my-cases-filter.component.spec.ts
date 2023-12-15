@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ExuiCommonLibModule, FilterService } from '@hmcts/rpx-xui-common-lib';
 import { RpxTranslationConfig, RpxTranslationModule, RpxTranslationService } from 'rpx-xui-translation';
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { LocationDataService } from '../../services';
 import { ALL_LOCATIONS } from '../constants/locations';
 import { MyCasesFilterComponent } from './my-cases-filter.component';
