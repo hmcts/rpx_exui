@@ -7,6 +7,8 @@ const ccdMockData = require('./index')
 
 const userApiData = require('../userApiData')
 
+const caseEventMockData = require('./caseEvent_data')
+
 
 
 router.get('/data/internal/cases/:caseId', (req, res) => {
@@ -53,11 +55,11 @@ router.get('/data/internal/case-types/:jurisdiction/event-triggers/:caseType', (
     ccdMockData.caseEventData.setEventProps({
         show_summary:false
     })
-    res.send(ccdMockData.caseEventData.eventData)
+    res.send(caseEventMockData.getCaseFlagsEventResponse())
 })
 
 router.get('/data/internal/cases/:caseid/event-triggers/:eventId', (req, res) => {
-    res.send(ccdMockData.caseEventData.eventData);
+    res.send(caseEventMockData.getCaseFlagsEventResponse());
 })
 
 router.get('/activity/cases/:cases/activity', (req, res) => {

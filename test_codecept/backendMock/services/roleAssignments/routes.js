@@ -1,5 +1,4 @@
 
-
 const express = require('express')
 const minimist = require('minimist');
 
@@ -19,7 +18,7 @@ router.get('/actors/:actorId', (req, res) => {
     //     roleAssignmentsDefault = { roleAssignmentResponse :[]}
     // }
 
-    const actorRoles = service.serviceUsersRoleAssignments.filter(role => role.actorId === req.params.actorId)
+    const actorRoles = service.getServiceUsersRolesAssignments(req.headers.auth).filter(role => role.actorId === req.params.actorId)
     res.send({ roleAssignmentResponse: actorRoles })
     // userApiData.sendResponse(req, res, "OnUserRoleAssignments1", () => { return roleAssignmentsDefault });
 
@@ -32,16 +31,18 @@ router.get('/roles', (req, res) => {
 
 
 router.post('/query', (req, res) => {
+    const auth = req.headers.authorization.replace('Bearer', '').trim()
     let roleAssignments = [];
     console.log(`Role assignments req: ${JSON.stringify(req.body, null, 2)}`)
     const reqProps = Object.keys(req.body);
     if (reqProps.includes('queryRequests')) {
         for (const queryReq of req.body.queryRequests) {
-            const queryResponse = service.getRequestedRoleAssignments(queryReq);
+            
+            const queryResponse = service.getRequestedRoleAssignments(auth,queryReq);
             roleAssignments = [...roleAssignments, ...queryResponse]
         }
     } else {
-        roleAssignments = service.getRequestedRoleAssignments(req.body);
+        roleAssignments = service.getRequestedRoleAssignments(auth,req.body);
     }
 
     res.send({ roleAssignmentResponse: roleAssignments })
@@ -55,9 +56,10 @@ router.delete('/:id', (req, res) => {
 
 
 router.post('/', (req, res) => {
+    const auth = req.headers.authorization.replace('Bearer', '').trim()
     service.serviceUsersRoleAssignments.push(req.body)
 
-    const newRoles = service.pushNewRoleAssignmentRequests(req.body);
+    const newRoles = service.pushNewRoleAssignmentRequests(auth,req.body);
 
     res.status(201).send({
         roleAssignmentResponse: {

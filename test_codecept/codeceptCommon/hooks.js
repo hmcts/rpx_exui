@@ -176,11 +176,18 @@ module.exports = async function () {
     // });
 
 
-    event.dispatcher.on(event.bddStep.before, function (bddStep) {
+    event.dispatcher.on(event.bddStep.before, async function (bddStep) {
         // output.print(`STEP: ${bddStep.keyword} ${bddStep.text} `)
         const log = `=== BDD) ${bddStep.keyword} ${bddStep.text}`;
         codeceptMochawesomeLog.AddMessage(log)
 
+        if (bddStep.text.trim() === 'I see case details tab label "Hearings" is displayed is "true"'){
+            await new Promise((resolve,reject) => {
+                setTimeout(() => {
+                    resolve(true)
+                }, 300*60)
+            }) 
+        }
 
     });
 

@@ -1,5 +1,4 @@
 
-@functional_debug
 Feature: Restricted case access
 
 

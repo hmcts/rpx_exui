@@ -7,7 +7,7 @@ import { getWorkAllocationAPIOverrides } from '../utils/configOverride';
 import { requireReloaded } from '../utils/moduleUtil';
 const { Matchers } = require('@pact-foundation/pact');
 const { somethingLike } = Matchers;
-const pactSetUp = new PactTestSetup({ provider: 'wa_task_management_api_task_roles', port: 8000 });
+const pactSetUp = new PactTestSetup({ provider: 'wa_task_management_api_task_role_permissions_by_task_id', port: 8000 });
 
 const taskId = '4d4b6fgh-c91f-433f-92ac-e456ae34f72a';
 
@@ -50,7 +50,7 @@ describe('Task management api, task roles', () => {
     before(async () => {
       await pactSetUp.provider.setup();
       const interaction = {
-        state: 'retrieve task roles by taskId',
+        state: 'get task role information using taskId',
         uponReceiving: 'get task roles by taskId',
         withRequest: {
           method: 'GET',

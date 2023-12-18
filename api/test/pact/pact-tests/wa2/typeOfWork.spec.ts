@@ -8,14 +8,62 @@ import { requireReloaded } from '../utils/moduleUtil';
 const { Matchers } = require('@pact-foundation/pact');
 const { somethingLike } = Matchers;
 
-const pactSetUp = new PactTestSetup({ provider: 'wa_task_management_api_work_types', port: 8000 });
+const pactSetUp = new PactTestSetup({ provider: 'wa_task_management_api_get_work_types', port: 8000 });
 
 describe('Task management api, work types', () => {
   const RESPONSE_BODY = {
     'work_types': [
       {
-        id: somethingLike('1234'),
-        label: somethingLike('test')
+        id: somethingLike('hearing_work'),
+        label: somethingLike('Hearing Work')
+      },
+      {
+        id: somethingLike('upper_tribunal'),
+        label: somethingLike('Upper Tribunal')
+      },
+      {
+        id: somethingLike('routine_work'),
+        label: somethingLike('Routine work')
+      },
+      {
+        id: somethingLike('decision_making_work'),
+        label: somethingLike('Decision-making work')
+      },
+      {
+        id: somethingLike('applications'),
+        label: somethingLike('Applications')
+      },
+      {
+        id: somethingLike('priority'),
+        label: somethingLike('Priority')
+      },
+      {
+        id: somethingLike('access_requests'),
+        label: somethingLike('Access requests')
+      },
+      {
+        id: somethingLike('error_management'),
+        label: somethingLike('Error management')
+      },
+      {
+        id: somethingLike('review_case'),
+        label: somethingLike('Review Case')
+      },
+      {
+        id: somethingLike('evidence'),
+        label: somethingLike('Evidence')
+      },
+      {
+        id: somethingLike('follow_up'),
+        label: somethingLike('Follow Up')
+      },
+      {
+        id: somethingLike('pre_hearing'),
+        label: somethingLike('Pre-Hearing')
+      },
+      {
+        id: somethingLike('post_hearing'),
+        label: somethingLike('Post-Hearing')
       }
     ]
   };
@@ -31,7 +79,7 @@ describe('Task management api, work types', () => {
     before(async () => {
       await pactSetUp.provider.setup();
       const interaction = {
-        state: 'retrieve all work types',
+        state: 'retrieve work types by userId',
         uponReceiving: 'retrieve all work types',
         withRequest: {
           method: 'GET',
@@ -96,6 +144,5 @@ describe('Task management api, work types', () => {
 });
 
 function assertResponses(dto: any) {
-  expect(dto[0].key).to.be.equal('1234');
-  expect(dto[0].label).to.be.equal('test');
+  expect(dto[0].key).to.be.equal('hearing_work');
 }

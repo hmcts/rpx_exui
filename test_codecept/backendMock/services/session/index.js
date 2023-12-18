@@ -4,62 +4,64 @@ const path = require('path')
 const axios = require('axios')
 
 const session = require('./sampleSession.json')
+
 const roleAssignmentsService = require('../roleAssignments/index')
 
-class MockSessionService{
-    constructor(mode){
+class MockSessionService {
+    constructor(mode) {
         this.http = axios.create({
             baseURL: "http://localhost:3000",
             timeout: 60000,
         })
 
-        if(mode && mode === 'DEBUG'){
+        if (mode && mode === 'DEBUG') {
             this.sessionsPath = path.resolve(__dirname, '../../../../api/.sessions')
 
-        }else{
+        } else {
             this.sessionsPath = path.resolve(__dirname, '../../../../.sessions')
 
         }
-        console.log("Session path : "+this.sessionsPath)
+        console.log("Session path : " + this.sessionsPath)
         this.defaultSession = '';
     }
 
 
-    setDefaultSession(session){
+    setDefaultSession(session) {
         this.defaultSession = session.split(".")[0]
             .replace('s:', '');
     }
 
-    async getCopyOfDefaultSession(){
+    async getCopyOfDefaultSession() {
         const sessionFile = `${this.sessionsPath}/${this.defaultSession}.json`;
         let sessionJson = await fs.readFileSync(sessionFile);
         return JSON.parse(sessionJson)
     }
 
-    getSessionFiles(){
+    getSessionFiles() {
+
 
         console.log(this.sessionsPath)
         return fs.readdirSync(this.sessionsPath)
     }
 
-    async updateSessionFile(filename){
+    async updateSessionFile(filename) {
 
     }
 
-    async getSessionCookies(){
+    async getSessionCookies() {
         const res = await this.http.get('/external/configuration-ui/')
         return res.headers['set-cookie'];
     }
 
-    async setUserSession( session,userDetails){
+    async setUserSession(session, userDetails) {
         // const sessionCookies = await this.getSessionCookies();
         // const webAppSession = sessionCookies.find(cookie => cookie.includes('xui-webapp'));
         const sessionId = session.split(".")[0]
-            .replace('s:','')
+            .replace('s:', '')
         const sessionFile = `${this.sessionsPath}/${sessionId}.json`
         let sessionJson = await fs.readFileSync(sessionFile);
-        sessionJson =  JSON.parse(sessionJson)
-        sessionJson.passport.user.userinfo.roles = ['caseworker','caseworker-iac-judge']
+        sessionJson = JSON.parse(sessionJson)
+        sessionJson.passport.user.userinfo.roles = ['caseworker', 'caseworker-iac-judge']
 
         fs.writeFileSync(sessionFile, JSON.stringify(sessionJson, null, 2), 'utf8');
         return "";
@@ -67,10 +69,10 @@ class MockSessionService{
     }
 
 
-    async getSessionFileAuth(auth){
+    async getSessionFileAuth(auth) {
         const files = await this.getSessionFiles();
         let authSessionFile = null;
-        for(const file of files){
+        for (const file of files) {
             const sessionFile = `${this.sessionsPath}/${file}`
             let sessionJson = await fs.readFileSync(sessionFile);
             try {
@@ -88,10 +90,10 @@ class MockSessionService{
         return authSessionFile;
     }
 
-    async waitForSessionWithRoleAssignments(auth){
+    async waitForSessionWithRoleAssignments(auth) {
 
         let counter = 0;
-        while (counter < 20){
+        while (counter < 20) {
             await sleepForSeconds(2)
             const sessionFile = await this.getSessionFileAuth(auth);
             let sessionJson = await fs.readFileSync(sessionFile, 'utf8');
@@ -99,8 +101,8 @@ class MockSessionService{
 
             if (sessionJson.roleAssignmentResponse) {
                 break;
-            } else if(counter > 15) {
-                throw('Session not updated with actual role assignments')
+            } else if (counter > 15) {
+                throw ('Session not updated with actual role assignments')
             }
             counter++;
         }
@@ -109,7 +111,7 @@ class MockSessionService{
 
     }
 
-    async updateAuthSessionWithRoles(auth, roles){
+    async updateAuthSessionWithRoles(auth, roles) {
         await this.waitForSessionWithRoleAssignments(auth)
         const sessionFile = await this.getSessionFileAuth(auth);
         let sessionJson = await fs.readFileSync(sessionFile);
@@ -139,21 +141,23 @@ class MockSessionService{
 
         roleAssignmentsService.serviceUsersRoleAssignments.push(...roleAssignments)
         let sessionJson = await fs.readFileSync(sessionFile);
+
+        roleAssignmentsService.addRoleAssigmemntsToSession(auth,roleAssignments)
         sessionJson = JSON.parse(sessionJson)
-        if (sessionJson.roleAssignmentResponse){
+        if (sessionJson.roleAssignmentResponse) {
             sessionJson.roleAssignmentResponse.push(...roleAssignments)
-        }else{
+        } else {
             sessionJson.roleAssignmentResponse = roleAssignments;
         }
 
         await fs.writeFileSync(sessionFile, JSON.stringify(sessionJson, null, 2), 'utf8');
 
-        sessionJson = await fs.readFileSync(sessionFile,'utf-8');
+        sessionJson = await fs.readFileSync(sessionFile, 'utf-8');
         sessionJson = JSON.parse(sessionJson)
         return sessionJson.roleAssignmentResponse;
     }
 
-    async getSessionRolesAndRoleAssignments(auth){
+    async getSessionRolesAndRoleAssignments(auth) {
         const sessionFile = await this.getSessionFileAuth(auth);
         let sessionJson = await fs.readFileSync(sessionFile);
         sessionJson = JSON.parse(sessionJson)
@@ -168,10 +172,10 @@ const mode = process.env.DEBUG && process.env.DEBUG === "true" ? "DEBUG" : ""
 module.exports = new MockSessionService(mode);
 
 
-async function sleepForSeconds(seconds){
-    return new Promise((resolve,reject) => {
+async function sleepForSeconds(seconds) {
+    return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(true)
-        }, seconds*1000)
+        }, seconds * 1000)
     })
 }

@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import * as config from 'config';
 import * as sinon from 'sinon';
 import { mockReq, mockRes } from 'sinon-express-mock';
@@ -73,12 +74,10 @@ describe('access management service, delete exclusion', () => {
 
       try {
         await deleteUserExclusion(req, response, next);
-
         assertResponses(returnedResponse);
         pactSetUp.provider.verify();
         pactSetUp.provider.finalize();
       } catch (err) {
-        console.log(err.stack);
         pactSetUp.provider.verify();
         pactSetUp.provider.finalize();
         throw new Error(err);
@@ -88,5 +87,5 @@ describe('access management service, delete exclusion', () => {
 });
 
 function assertResponses(dto: any) {
-  console.log(JSON.stringify(dto));
+  expect(dto.id).to.be.equal(exclusionId);
 }

@@ -109,14 +109,6 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
         isAmendedSource: AnswerSource.HOW_PARTICIPANTS_ATTEND
       },
       {
-        id: 'howParticipantsAttendant',
-        answerTitle: 'What will be the methods of attendance for this hearing?',
-        answerSource: AnswerSource.HOW_PARTICIPANTS_ATTEND,
-        changeLink: '/hearings/request/hearing-attendance#hearingLevelChannelList',
-        isHiddenSource: IsHiddenSource.PAPER_HEARING,
-        isAmendedSource: AnswerSource.HOW_PARTICIPANTS_ATTEND
-      },
-      {
         id: 'howAttendant',
         answerTitle: 'How will each participant attend the hearing?',
         answerSource: AnswerSource.HOW_ATTENDANT,
