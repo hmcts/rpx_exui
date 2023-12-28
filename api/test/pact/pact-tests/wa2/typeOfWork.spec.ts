@@ -5,6 +5,7 @@ import { mockReq, mockRes } from 'sinon-express-mock';
 import { PactTestSetup } from '../settings/provider.mock';
 import { getWorkAllocationAPIOverrides } from '../utils/configOverride';
 import { requireReloaded } from '../utils/moduleUtil';
+import { eachLike } from '@pact-foundation/pact/src/dsl/matchers';
 const { Matchers } = require('@pact-foundation/pact');
 const { somethingLike } = Matchers;
 
@@ -12,60 +13,10 @@ const pactSetUp = new PactTestSetup({ provider: 'wa_task_management_api_get_work
 
 describe('Task management api, work types', () => {
   const RESPONSE_BODY = {
-    'work_types': [
-      {
-        id: somethingLike('hearing_work'),
-        label: somethingLike('Hearing Work')
-      },
-      {
-        id: somethingLike('upper_tribunal'),
-        label: somethingLike('Upper Tribunal')
-      },
-      {
-        id: somethingLike('routine_work'),
-        label: somethingLike('Routine work')
-      },
-      {
-        id: somethingLike('decision_making_work'),
-        label: somethingLike('Decision-making work')
-      },
-      {
-        id: somethingLike('applications'),
-        label: somethingLike('Applications')
-      },
-      {
-        id: somethingLike('priority'),
-        label: somethingLike('Priority')
-      },
-      {
-        id: somethingLike('access_requests'),
-        label: somethingLike('Access requests')
-      },
-      {
-        id: somethingLike('error_management'),
-        label: somethingLike('Error management')
-      },
-      {
-        id: somethingLike('review_case'),
-        label: somethingLike('Review Case')
-      },
-      {
-        id: somethingLike('evidence'),
-        label: somethingLike('Evidence')
-      },
-      {
-        id: somethingLike('follow_up'),
-        label: somethingLike('Follow Up')
-      },
-      {
-        id: somethingLike('pre_hearing'),
-        label: somethingLike('Pre-Hearing')
-      },
-      {
-        id: somethingLike('post_hearing'),
-        label: somethingLike('Post-Hearing')
-      }
-    ]
+    work_types: eachLike({
+      id: somethingLike('applications'),
+      label: somethingLike('Applications')
+    })
   };
 
   describe('get /work-types', () => {
@@ -144,5 +95,5 @@ describe('Task management api, work types', () => {
 });
 
 function assertResponses(dto: any) {
-  expect(dto[0].key).to.be.equal('hearing_work');
+  expect(dto[0].key).to.be.equal('applications');
 }
