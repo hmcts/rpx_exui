@@ -48,7 +48,8 @@ describe('MediaViewerWrapperComponent', () => {
         { provide: WindowService, useValue: windowService },
         { provide: FeatureToggleService, useValue: featureToggleService },
         { provide: SessionStorageService, useValue: sessionStorageService }
-      ]
+      ],
+      teardown: { destroyAfterEach: false }
     })
       .compileComponents();
   }));

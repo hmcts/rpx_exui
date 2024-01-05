@@ -1,4 +1,4 @@
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { ListConstants } from '../components/constants';
 import { SearchTaskRequest, TaskSearchParameters } from '../models/dtos';
 import { ACTION, WorkAllocationTaskService } from './work-allocation-task.service';

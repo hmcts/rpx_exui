@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { PaymentLibModule } from '@hmcts/ccpay-web-component';
 import { ExuiCommonLibModule } from '@hmcts/rpx-xui-common-lib';
 import { SharedModule } from '../app/shared/shared.module';
@@ -15,6 +15,7 @@ import { RefundsComponent } from './refunds/refunds.component';
     ExuiCommonLibModule
   ],
   declarations: [RefundsComponent],
-  exports: [RefundsComponent]
+  exports: [RefundsComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class RefundsModule {}
+export class RefundsModule { }

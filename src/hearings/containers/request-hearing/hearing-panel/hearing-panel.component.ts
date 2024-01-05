@@ -269,8 +269,8 @@ export class HearingPanelComponent extends RequestHearingPageFlow implements OnI
           parent_category: otherPanelRoles.parent_category,
           active_flag: otherPanelRoles.active_flag,
           child_nodes: otherPanelRoles.child_nodes,
-          selected: !otherPanelRoles.selected ? false : true
-        } as LovRefDataModel) as FormGroup);
+          selected: !!otherPanelRoles.selected
+        } as LovRefDataModel) as FormGroup as any);
       });
     }
     return dataSourceArray;

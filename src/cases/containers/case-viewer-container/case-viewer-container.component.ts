@@ -3,8 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CaseTab, CaseView } from '@hmcts/ccd-case-ui-toolkit';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store, select } from '@ngrx/store';
-import { combineLatest, of } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
+import { combineLatest, of, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AppUtils } from '../../../app/app-utils';
 import { AppConstants } from '../../../app/app.constants';
@@ -52,10 +51,10 @@ export class CaseViewerContainerComponent implements OnInit {
   ];
 
   constructor(private readonly route: ActivatedRoute,
-              private readonly store: Store<fromRoot.State>,
-              private readonly featureToggleService: FeatureToggleService,
-              private readonly allocateRoleService: AllocateRoleService,
-              private readonly waService: WASupportedJurisdictionsService) {
+    private readonly store: Store<fromRoot.State>,
+    private readonly featureToggleService: FeatureToggleService,
+    private readonly allocateRoleService: AllocateRoleService,
+    private readonly waService: WASupportedJurisdictionsService) {
     this.userRoles$ = this.store.pipe(select(fromRoot.getUserDetails)).pipe(
       map((userDetails) => userDetails.userInfo.roles)
     );

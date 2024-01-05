@@ -6,7 +6,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { initialState } from '../../../hearing.test.data';
 import { HearingsService } from '../../../services/hearings.service';
 import { ValidatorsUtils } from '../../../utils/validators.utils';
@@ -15,7 +15,7 @@ import { HearingActualsTimingComponent } from './hearing-actuals-timing.componen
 import * as _ from 'lodash';
 
 @Component({ selector: 'exui-app-blank', template: '' })
-class BlankComponent {}
+class BlankComponent { }
 
 const mockActivatedRoute = {
   paramMap: of(convertToParamMap({

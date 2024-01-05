@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { metaReducers } from '../../app/app.module';
 import { UserDetails } from '../../app/models';
 import { SessionStorageService } from '../../app/services';

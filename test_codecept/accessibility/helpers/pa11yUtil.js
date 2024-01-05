@@ -27,6 +27,7 @@ async function initBrowser() {
         args: [
             '--no-sandbox',
             '--disable-dev-shm-usage',
+            '--disable-gpu'
         ],
     });
 
