@@ -5,8 +5,8 @@ import { LocationModel } from '@hmcts/rpx-xui-common-lib';
 import { Store, select } from '@ngrx/store';
 import * as moment from 'moment';
 import { EMPTY } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/internal/observable/of';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { catchError, first, map, mergeMap } from 'rxjs/operators';
 import { RoleAssignmentInfo, UserDetails } from '../../app/models';
 import { SessionStorageService } from '../../app/services';
@@ -42,7 +42,7 @@ export class LocationResolver implements Resolve<LocationModel[]> {
     private readonly sessionStorageService: SessionStorageService,
     private readonly locationService: LocationDataService,
     private readonly userService: UserService
-  ) {}
+  ) { }
 
   public resolve(): Observable<LocationModel[]> {
     return this.userDetails()
@@ -97,7 +97,7 @@ export class LocationResolver implements Resolve<LocationModel[]> {
         && roleAssignment.roleName !== 'fee-paid-judge') {
         this.setRegionsAndBaseLocations(roleAssignment, roleJurisdiction, regionLocations, false);
       } else if (roleJurisdiction && !this.allFeePaidLocationServices.includes(roleJurisdiction) && roleAssignment.roleType === 'ORGANISATION'
-      && (roleAssignment.bookable === true || roleAssignment.bookable === 'true') && this.checkDatesValid(roleAssignment)) {
+        && (roleAssignment.bookable === true || roleAssignment.bookable === 'true') && this.checkDatesValid(roleAssignment)) {
         this.setRegionsAndBaseLocations(roleAssignment, roleJurisdiction, regionLocations, true);
       }
     });
@@ -146,23 +146,27 @@ export class LocationResolver implements Resolve<LocationModel[]> {
       } else {
         if (!this.locations.find((location) => location.services.includes(roleJurisdiction))) {
           const location =
-            { id: null,
-              userId: this.userId,
-              locationId: null,
-              locationName: '',
-              services: [roleAssignment.jurisdiction] };
+          {
+            id: null,
+            userId: this.userId,
+            locationId: null,
+            locationName: '',
+            services: [roleAssignment.jurisdiction]
+          };
           this.setAllLocations(location, roleAssignment, feePaid);
         }
       }
     } else if (roleAssignment.region) {
       if (!this.locations.find((location) => location.regionId === roleAssignment.region && location.services.includes(roleJurisdiction))) {
         const location =
-          { id: undefined,
-            userId: this.userId,
-            locationId: undefined,
-            locationName: '',
-            services: [roleAssignment.jurisdiction],
-            regionId: roleAssignment.region };
+        {
+          id: undefined,
+          userId: this.userId,
+          locationId: undefined,
+          locationName: '',
+          services: [roleAssignment.jurisdiction],
+          regionId: roleAssignment.region
+        };
         this.setAllLocations(location, roleAssignment, feePaid);
       }
     } else {
@@ -202,11 +206,13 @@ export class LocationResolver implements Resolve<LocationModel[]> {
       : !this.locations.find((location) => location.id === roleAssignment.baseLocation && location.services.includes(service));
     if (newLocation) {
       const location =
-        { id: roleAssignment.baseLocation,
-          userId: this.userId,
-          locationId: roleAssignment.baseLocation,
-          locationName: '',
-          services: [roleAssignment.jurisdiction] };
+      {
+        id: roleAssignment.baseLocation,
+        userId: this.userId,
+        locationId: roleAssignment.baseLocation,
+        locationName: '',
+        services: [roleAssignment.jurisdiction]
+      };
       this.setAllLocations(location, roleAssignment, feePaid);
     }
   }

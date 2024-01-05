@@ -1,5 +1,3 @@
-const PallyActions = require('../helpers/pallyActions');
-
 const baseUrl = 'http://localhost:3000/'; 
 
 const conf = {

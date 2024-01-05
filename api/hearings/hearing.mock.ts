@@ -1,4 +1,4 @@
-import MockAdapter from 'axios-mock-adapter';
+import MockAdapter = require('axios-mock-adapter');
 import { HttpMockAdapter } from '../common/httpMockAdapter';
 import {
   HEARING_ACTUAL, HEARING_ACTUAL_ADJOURNED, HEARING_ACTUAL_AWAITING,

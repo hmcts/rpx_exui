@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
-import { EMPTY, Observable } from 'rxjs';
-import { of } from 'rxjs/internal/observable/of';
+import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, first, tap } from 'rxjs/operators';
 import { handleFatalErrors, WILDCARD_SERVICE_DOWN } from '../../work-allocation/utils';
 
@@ -15,7 +14,7 @@ export class CaseAllocateRoleLinkResolverService implements Resolve<boolean> {
   private showAllocateRoleLink: boolean = null;
 
   constructor(private readonly http: HttpClient,
-              private readonly router: Router) {}
+    private readonly router: Router) { }
 
   public resolve(route: ActivatedRouteSnapshot): Observable<boolean> {
     const caseId = route.paramMap.get('cid');

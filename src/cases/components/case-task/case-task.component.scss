@@ -12,3 +12,13 @@ strong {
   margin-right: 40px;
   display: inline-block;
 }
+
+.govuk-summary-list__value a {
+  cursor: pointer;
+  color: #4c2c92;
+
+  &:visited {
+    color: #4c2c92;
+  }
+
+}

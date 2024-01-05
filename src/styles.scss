@@ -1,5 +1,5 @@
 @import './style/app.scss';
-@import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 $govuk-compatibility-govukfrontendtoolkit: true;
-@import "../node_modules/govuk-frontend/govuk/all";
+@import "govuk-frontend/govuk/all";
