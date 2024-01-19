@@ -7,13 +7,25 @@ const service = require('./index')
 
 const userApiData = require('../userApiData')
 
+const listedHearing = require('./mockData/listedHearing.data')
+const awaitinghearingsDetails = require('./mockData/awaitingHearingDetails.data')
+const completedHearing = require('./mockData/completedHearing.data')
+
+
 
 router.get('/hearings/:caseId', (req, res) => {
     
- 
-
     userApiData.sendResponse(req, res, "OnCaseHearings", () => service.getCaseHearings())
+
    
+});
+
+router.get('/hearing/:hearingId', (req, res) => {
+
+    // userApiData.sendResponse(req, res, "OnGetHearing", () => service.gethearingTemplate({}))
+    userApiData.sendResponse(req, res, "OnGetHearing", () => completedHearing)
+
+
 });
 
 router.post('/serviceHearingValues', (req,res) => {
@@ -34,10 +46,25 @@ router.post('/hearing', (req,res) => {
 })
 
 
+
+router.get('/hearingActuals/:hearingId', (req, res) => {
+    res.send(loadServicehearingValues)
+})
+
+router.put('/hearingActuals/:hearingId', (req, res) => {
+    res.send({})
+})
+
+
+router.post('/hearingActualsCompletion/:hearingId', (req, res) => {
+    res.send({})
+})
+
+
 module.exports =  router;
 
 
-const loadServicehearingValues = {
+const loadServicehearingValues = {  
     "hmctsServiceID": "ABA5",
     "hmctsInternalCaseName": "1690807693531270_John Doe Vs Mary Richards",
     "publicCaseName": "Re-Minor",
@@ -190,7 +217,7 @@ const loadServicehearingValues = {
     "caseFlags": {
         "flags": []
     },
-    "screenFlow": [
+    "screenFlow_dummy": [
         {
             "navigation": [
                 {

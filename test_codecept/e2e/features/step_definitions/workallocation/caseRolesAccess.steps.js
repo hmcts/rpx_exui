@@ -73,7 +73,7 @@ const { DataTableArgument } = require('codeceptjs');
     });
 
     Then('I validate case roles table has headers for role category {string} in case roles and access page', async function(roleCategory,headerColumnsDatatab){
-        const headerNameHashes = headerColumnsDatatab.hashes();
+        const headerNameHashes = headerColumnsDatatab.parse().hashes();
         await BrowserWaits.retryWithActionCallback(async () => {
             for (const headerHash of headerNameHashes) {
                 expect(await caseRolesAndAccessPage.isTableColumnDisplayedForAccessRoleType(roleCategory, headerHash.headerName), `${headerHash.headerName} column is not displayedin case role table for role ${roleCategory}`).to.be.true
@@ -82,7 +82,7 @@ const { DataTableArgument } = require('codeceptjs');
     });
 
     Then('I validate case roles table for role category {string} has data', async function (roleCategory, rowsDatatabale) {
-        const rowHashes = rowsDatatabale.hashes();
+        const rowHashes = rowsDatatabale.parse().hashes();
         let rowNum = 0;        
         for (const rowHash of rowHashes) {
             rowNum++;
@@ -142,7 +142,10 @@ const { DataTableArgument } = require('codeceptjs');
         const rolesCount = await caseRolesTable.getRowsCount();
         const expectedDisplayedStatus = isDisplayedAsString.toLowerCase().includes('true');
         for (let i = 1; i <= rolesCount; i++){
-            expect(await caseRolesTable.isLinkWithTextPresentAtRow(i, linkText), `${linkText} at row ${i} expected to display ${expectedDisplayedStatus} check failed.`).to.equal(expectedDisplayedStatus);
+            await BrowserWaits.retryWithActionCallback(async () => {
+                expect(await caseRolesTable.isLinkWithTextPresentAtRow(i, linkText), `${linkText} at row ${i} expected to display ${expectedDisplayedStatus} check failed.`).to.equal(expectedDisplayedStatus);
+
+            })
         }
    });
 

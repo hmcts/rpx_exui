@@ -72,9 +72,16 @@
             <div class="govuk-details__summary-text govuk-!-padding-bottom-1">
               {{actualHearingDay.hearingDate | date: "dd MMMM yyyy"}}
             </div>
-            <div class="govuk-tag" [class.govuk-tag--grey]="!isDetailsProvidedForDay(actualHearingDay)">
-              {{isDetailsProvidedForDay(actualHearingDay) ? 'DETAILS PROVIDED' : 'AWAITING CONFIRMATION'}}
-            </div>
+            <ng-container *ngIf="!hearingIsInFuture(actualHearingDay.hearingDate)">
+              <div class="govuk-tag" [class.govuk-tag--grey]="!isDetailsProvidedForDay(actualHearingDay)">
+                {{isDetailsProvidedForDay(actualHearingDay) ? 'DETAILS PROVIDED' : 'AWAITING CONFIRMATION'}}
+              </div>
+            </ng-container>
+            <ng-container *ngIf="hearingIsInFuture(actualHearingDay.hearingDate)">
+              <div class="govuk-tag" [class.govuk-tag--grey]="!isDetailsProvidedForDay(actualHearingDay)">
+                FUTURE HEARING DAY
+              </div>
+            </ng-container>
           </summary>
 
           <div class="govuk-details__text listing-info">
@@ -86,12 +93,14 @@
                     {{actualHearingDay.notRequired ? 'No' : 'Yes'}}
                   </div>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a href="javascript:void(0)" id="hearing-stage-result-change-link" class="govuk-link"
-                    (click)="changeWasThisHearingDayRequired(actualHearingDay)">
-                    Change
-                  </a>
-                </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <ng-container *ngIf="!hearingIsInFuture(actualHearingDay.hearingDate)">
+                      <a href="javascript:void(0)" id="hearing-stage-result-change-link" class="govuk-link"
+                        (click)="changeWasThisHearingDayRequired(actualHearingDay)">
+                        Change
+                      </a>
+                    </ng-container>
+                  </dd>
               </div>
               <ng-container *ngIf="!actualHearingDay.notRequired">
                 <br>
@@ -101,14 +110,17 @@
                       <span class="govuk-heading-m govuk-!-margin-bottom-0">Hearing timings</span>
                     </dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a href="javascript:void(0)" (click)="confirmActualHearingTimeForDay(actualHearingDay)"
-                        id="hearing-timing-result-confirm-link" class="govuk-link">
-                        Confirm
-                      </a>&nbsp;
-                      <a [routerLink]="['/', 'hearings', 'actuals' , id, 'hearing-timing', actualHearingDay.hearingDate]"
-                        class="govuk-link">Update</a>
-                    </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <ng-container *ngIf="!hearingIsInFuture(actualHearingDay.hearingDate)">
+                          <a href="javascript:void(0)" (click)="confirmActualHearingTimeForDay(actualHearingDay)"
+                            id="hearing-timing-result-confirm-link" class="govuk-link">
+                            Confirm
+                          </a>&nbsp;
+                          <a [routerLink]="['/', 'hearings', 'actuals' , id, 'hearing-timing', actualHearingDay.hearingDate]"
+                            class="govuk-link">Update
+                          </a>
+                        </ng-container>
+                      </dd>
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">Start time</dt>
@@ -138,13 +150,17 @@
                       <span class="govuk-heading-m govuk-!-margin-bottom-0">Participants</span>
                     </dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a href="javascript:void(0)" (click)="confirmActualPartiesForDay(actualHearingDay)"
-                        id="hearing-parties-result-confirm-link" class="govuk-link">Confirm</a>&nbsp;
-                      <a *ngIf="!isPaperHearing" href="javascript:void(0)"
-                        [routerLink]="['/', 'hearings', 'actuals', id, 'actuals-parties', actualHearingDay.hearingDate]"
-                        class="govuk-link">Update</a>
-                    </dd>
+                    <ng-container *ngIf="!actualHearingDay.notRequired">
+                      <dd class="govuk-summary-list__actions">
+                        <ng-container *ngIf="!hearingIsInFuture(actualHearingDay.hearingDate)">
+                          <a href="javascript:void(0)" (click)="confirmActualPartiesForDay(actualHearingDay)"
+                            id="hearing-parties-result-confirm-link" class="govuk-link">Confirm</a>&nbsp;
+                          <a *ngIf="!isPaperHearing" href="javascript:void(0)"
+                            [routerLink]="['/', 'hearings', 'actuals', id, 'actuals-parties', actualHearingDay.hearingDate]"
+                            class="govuk-link">Update</a>
+                        </ng-container>
+                      </dd>
+                    </ng-container>
                   </div>
                   <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">Names</dt>

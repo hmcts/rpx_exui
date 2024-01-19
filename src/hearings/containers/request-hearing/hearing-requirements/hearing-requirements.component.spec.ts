@@ -737,9 +737,9 @@ describe('HearingRequirementsComponent', () => {
             ],
             hearingIsLinkedFlag: false,
             hearingWindow: {
-              dateRangeStart: '2022-12-12T09:00:00.000Z',
-              dateRangeEnd: '2022-12-12T09:00:00.000Z',
-              firstDateTimeMustBe: ''
+              dateRangeStart: '2022-11-23T09:00:00.000Z',
+              dateRangeEnd: '2022-11-30T09:00:00.000Z',
+              firstDateTimeMustBe: '2022-12-01T09:00:00.000Z'
             },
             privateHearingRequiredFlag: false,
             panelRequirements: null,

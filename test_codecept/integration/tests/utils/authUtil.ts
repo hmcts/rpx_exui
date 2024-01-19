@@ -31,7 +31,7 @@ export function updateSessionCookieString(username, name, value) {
             isNewCookie = false;
         }
     }
- 
+
     let cookieString = '';
     for (const cookie of authCookiesForUsers[username]) {
         cookieString = `${cookieString}${cookie.name}=${cookie.value};`;
@@ -166,7 +166,7 @@ async function  authenticateAndGetcookies(username, password)  {
     await page.close();
     await browser.close();
     return cookies;
-   
+
 }
 
 function getPuppeteerLaunchOptions(){

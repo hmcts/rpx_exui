@@ -11,8 +11,8 @@ import {
   ACTION,
   EXUIDisplayStatusEnum,
   EXUISectionStatusEnum,
-  HMCStatus,
   HearingListingStatusEnum,
+  HMCStatus,
   Mode
 } from '../../../models/hearings.enum';
 import { ServiceLinkedCasesWithHearingsModel } from '../../../models/linkHearings.model';

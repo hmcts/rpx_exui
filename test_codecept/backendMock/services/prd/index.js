@@ -9,23 +9,23 @@ class PRDApi{
         }
         this.categoryTypes = {
             HearingType:{ 
-                inputs: [{ value_en: 'Breach 1' }, { value_en: 'Breach 2'}], 
+                inputs: [{ value_en: 'Breach 1', key: 'ABA1-BRE' }, { value_en: 'Breach 2', key: 'ABA2-BRE' }], 
                 value:[]
             },
             Facilities: {
-                inputs: [{ value_en: 'Facility 1' }, { value_en: 'Facility 2'}], 
+                inputs: [{ value_en: 'Facility 1', key: 'ABA1-FAC' }, { value_en: 'Facility 2', key: 'ABA2-FAC' }], 
                 value: []
             },
             HearingChannel: {
-                inputs: [{ value_en: 'Hearing channel 1' }, { value_en: 'Hearing channel 2'}], 
+                inputs: [{ value_en: 'Hearing channel 1', key: 'ABA1-HRC' }, { value_en: 'Hearing channel 2', key: 'ABA2-HRC' }], 
                 value: []
             },
             JudgeType: {
-                inputs: [{ value_en: 'Judge type 1' }, { value_en: 'Judge type 2'}], 
+                inputs: [{ value_en: 'Judge type 1', key: 'ABA1-JDT' }, { value_en: 'Judge type 2', key: 'ABA2-JDT' }], 
                 value: []
             },
             HearingPriority: {
-                inputs: [{ value_en: 'Hearing priority 1' }, { value_en: 'Hearing priority 2'}], 
+                inputs: [{ value_en: 'Hearing priority 1', key: 'ABA1-HPR' }, { value_en: 'Hearing priority 2', key: 'ABA2-HPR' }], 
                 value: []
             },
             caseType:{
@@ -39,9 +39,27 @@ class PRDApi{
             HearingSubChannel:{
                 inputs: [{ value_en: 'Hearing sub channel code 1' }, { value_en: 'Hearing sub channel code 2' }],
                 value: []
+            },
+            PanelMemberType: {
+                inputs: [{ value_en: 'Panel member type 1' }, { value_en: 'Panel member type 2' }],
+                value: []
+            },
+            EntityRoleCode: {
+                inputs: [{ value_en: 'Entity role code 1' }, { value_en: 'Entity role code 1' }],
+                value: []
+            },
+            ActualPartHeardReasonCodes:{
+                inputs: [{ value_en: 'Actual part hearing reason code 1' }, { value_en: 'Actual part hearing reason code 1' }],
+                value: []
+            },
+            ActualCancellationReasonCodes: {
+                inputs: [{ value_en: 'Actual cancellation reason code 1' }, { value_en: 'Actual cancellation reason code 1' }],
+                value: []
             }
+
         }
 
+        this.panelMembers = [];
         this.caseFlags = { 
             flags:[
                  { FlagDetails: [] }
@@ -55,7 +73,9 @@ class PRDApi{
         }
        
     }
-        
+    
+    
+
     setUpcategories(categoryType){
         const getCategory = (categoryType, type) => {
             return {
@@ -69,12 +89,14 @@ class PRDApi{
                 "parent_category": type.parent_category ? type.parent_category : "",
                 "parent_key": type.parent_key ? type.parent_key : "",
                 "active_flag": type.active_flag ? type.active_flag : "Y",
-                "child_nodes": type.child_nodes ? type.child_nodes : null
+                "child_nodes": type.child_nodes ? type.child_nodes : []
 
             }
         }
+        let ctr = 0;
         this.categoryTypes[categoryType].inputs.forEach(type => {
             this.categoryTypes[categoryType].value.push(getCategory(categoryType, type))
+            ctr++;
         })
     }
 

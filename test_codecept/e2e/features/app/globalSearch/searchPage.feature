@@ -24,7 +24,7 @@ Feature: Global search
         Examples:
             | SearchField             | Input            |
             # | Name                    | test             |
-            | 16-digit case reference | 1546883526751282 |
+            | 16-digit case reference | 1697034829280945 |
 
 
 

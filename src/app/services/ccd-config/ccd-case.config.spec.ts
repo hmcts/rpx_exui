@@ -138,22 +138,6 @@ describe('AppConfiguration', () => {
     expect(service.getAnnotationApiUrl()).toBeUndefined();
   }));
 
-  it('should have getNotificationUrl', inject([AppConfig], (service: AppConfig) => {
-    expect(service.getNotificationUrl()).toBe('dummy');
-  }));
-
-  it('should have getNotificationUrl defined', inject([AppConfig], (service: AppConfig) => {
-    expect(service.getNotificationUrl()).toBeDefined();
-  }));
-
-  it('should have getNotificationUrl', inject([AppConfig], (service: AppConfig) => {
-    expect(service.getNotificationUrl()).toBe('dummy');
-  }));
-
-  it('should have getNotificationUrl defined', inject([AppConfig], (service: AppConfig) => {
-    expect(service.getNotificationUrl()).toBeDefined();
-  }));
-
   it('should have getDocumentManagementUrlV2', inject([AppConfig], (service: AppConfig) => {
     expect(service.getDocumentManagementUrlV2).toBeDefined();
   }));

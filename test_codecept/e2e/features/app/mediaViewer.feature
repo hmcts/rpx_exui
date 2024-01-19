@@ -27,7 +27,7 @@ Feature: Check media viewer
     Scenario: Validate media viewer text redaction working
         When I click on search button
         Then Search page should be displayed
-        When I enter search fields jurisdiction "Family Divorce" case type "XUI Test Case type"
+        When I enter search fields jurisdiction "Family Divorce" case type "XUI Test Case type dev"
         When I click apply to perform case search
         Then I see results returned
         When I open second case in search results
@@ -40,7 +40,7 @@ Feature: Check media viewer
     Scenario: Validate media viewer bookmark feature working
         When I click on search button
         Then Search page should be displayed
-        When I enter search fields jurisdiction "Family Divorce" case type "XUI Test Case type"
+        When I enter search fields jurisdiction "Family Divorce" case type "XUI Test Case type dev"
         When I click apply to perform case search
         Then I see results returned
         When I open second case in search results
@@ -53,7 +53,7 @@ Feature: Check media viewer
     Scenario: Validate media viewer comment feature working
         When I click on search button
         Then Search page should be displayed
-        When I enter search fields jurisdiction "Family Divorce" case type "XUI Test Case type"
+        When I enter search fields jurisdiction "Family Divorce" case type "XUI Test Case type dev"
         When I click apply to perform case search
         Then I see results returned
         When I open second case in search results

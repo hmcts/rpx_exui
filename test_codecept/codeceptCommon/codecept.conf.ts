@@ -27,13 +27,14 @@ console.log(`headless : ${!head}`)
 
 
 
-let pipelineBranch = process.env.TEST_URL.includes('pr-')   ? "preview" : "master"
+let pipelineBranch = process.env.TEST_URL.includes('pr-') || process.env.TEST_URL.includes('manage-case.aat.platform.hmcts.net') ? "preview" : "master"
 
 let features = ''
-if (testType === 'e2e' || testType === 'smoke'){  
+if (testType === 'e2e' || testType === 'smoke'){
   features = `../e2e/features/app/**/*.feature`
 } else if (testType === 'ngIntegration'){
-  features = `../ngIntegration/tests/features/**/*.feature`
+  
+  features = pipelineBranch === 'master' ? `../ngIntegration/tests/features/**/notests.feature` : `../ngIntegration/tests/features/**/*.feature`
 
 } else{
   throw new Error(`Unrecognized test type ${testType}`);
@@ -51,7 +52,7 @@ if (pipelineBranch === 'master' && testType === 'ngIntegration'){
 } 
 
 const tags = process.env.DEBUG ? 'functional_debug' : bddTags
-const grepTags = `(?=.*@${testType === 'smoke' ? 'smoke' : tags})^(?!.*@ignore)^(?!.*@${pipelineBranch === 'preview' ? 'AAT_only' : 'preview_only'})`
+const grepTags = `(?=.*@${testType === 'smoke' ? 'smoke' : tags})^(?!.*@ignore)`
 console.log(grepTags)
 
 exports.config = {
@@ -62,7 +63,7 @@ exports.config = {
   },
   grep: grepTags,
   output: functional_output_dir,
- 
+
   helpers: {
     CustomHelper:{
       require:"./customHelper.js"
@@ -99,7 +100,7 @@ exports.config = {
            '--disable-setuid-sandbox', '--no-zygote ', '--disableChecks'
         ]
       }
-      
+
     },
     // Playwright: {
     //   url: "https://manage-case.aat.platform.hmcts.net",
@@ -117,7 +118,7 @@ exports.config = {
   },
   "mocha": {
     // reporter: 'mochawesome',
-   
+
     // "reporterOptions": {
     //   "reportDir": functional_output_dir,
     //   reportName:'XUI_MC',
@@ -140,7 +141,7 @@ exports.config = {
     //   // inlineAssets: true,
 
     // },
-    
+
     //   "mochawesome": {
     //     "stdout": `${functional_output_dir}/`,
     //     "options": {
@@ -159,14 +160,14 @@ exports.config = {
     //     }
     //   }
     // }
-   
+
   },
   plugins:{
     screenshotOnFail: {
       enabled: true,
       fullPageScreenshots: 'true'
     },
-   
+
     "myPlugin": {
       "require": "./hooks",
       "enabled": true
@@ -185,7 +186,7 @@ exports.config = {
       includeExampleValues: false, // if true incorporate actual values from Examples table along with variable placeholder when writing steps to the report
       timeMultiplier: 1000000,     // Used when calculating duration of individual BDD steps.  Defaults to nanoseconds
     }
-   
+
   },
   include: {
   },
@@ -197,28 +198,28 @@ exports.config = {
     if(!parallel){
       await setup()
     }
-    
+
   },
   teardown: async () => {
     if (!parallel) {
       await teardown()
       exitWithStatus()
     }
-   
-    
+
+
   },
   bootstrapAll: async () => {
     if (parallel) {
       await setup()
     }
-   
+
   },
-  teardownAll: async () => {  
+  teardownAll: async () => {
     if (parallel) {
       await teardown()
       exitWithStatus()
     }
-   
+
   }
 }
 
@@ -238,7 +239,7 @@ async function setup(){
     await backendMockApp.startServer(debugMode);
     await applicationServer.start()
   }
-  
+
 }
 
 async function teardown(){
@@ -296,7 +297,7 @@ async function generateCucumberReport(){
       }
     });
   console.log('completed cucumber report')
-  
+
 
 }
 

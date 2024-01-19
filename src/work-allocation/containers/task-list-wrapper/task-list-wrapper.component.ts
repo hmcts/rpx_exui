@@ -177,9 +177,9 @@ export class TaskListWrapperComponent implements OnDestroy, OnInit {
         filter((f: FilterSetting) => f && f.hasOwnProperty('fields'))
       )
       .subscribe((f: FilterSetting) => {
-        const newLocations = f.fields.find((field) => field.name === 'locations').value;
+        const newLocations = f.fields.find((field) => field.name === 'locations')?.value;
         const typesOfWork = f.fields.find((field) => field.name === 'types-of-work');
-        const services = f.fields.find((field) => field.name === 'services').value;
+        const services = f.fields.find((field) => field.name === 'services')?.value;
         const newWorkTypes = typesOfWork ? typesOfWork.value : [];
         if (this.initialFilterApplied) {
           // do not reset the pagination when the initial filter value has not been consumed

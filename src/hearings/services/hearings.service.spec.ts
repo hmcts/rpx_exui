@@ -70,7 +70,18 @@ describe('HearingsService', () => {
   describe('submitHearingRequest', () => {
     const payload = {
       requestDetails: null,
-      hearingDetails: null,
+      hearingDetails: {
+        duration: 0,
+        hearingType: null,
+        hearingLocations: null,
+        hearingWindow: null,
+        panelRequirements: null,
+        autolistFlag: null,
+        hearingPriorityType: null,
+        amendReasonCodes: null,
+        hearingChannels: null,
+        listingAutoChangeReasonCode: null
+      },
       partyDetails: null
     };
 
@@ -91,18 +102,24 @@ describe('HearingsService', () => {
       ...hearingRequest,
       requestDetails: {
         ...hearingRequest.requestDetails,
-        hearingRequestID: 'h100000'
+        hearingRequestID: '1000000'
+      },
+      ...hearingRequest,
+      hearingDetails: {
+        ...hearingRequest.hearingDetails
       }
     };
 
     it('should update hearing request', inject([HttpTestingController, HearingsService], (httpMock: HttpTestingController, service: HearingsService) => {
       service.updateHearingRequest(payload).subscribe((response) => {
+        console.log('RESPONSE', JSON.stringify(response));
+        console.log('PAYLOAD', JSON.stringify(payload));
         expect(response).toBeNull();
       });
       httpMock.expectOne((req: HttpRequest<any>) => {
         expect(req.url).toBe('api/hearings/updateHearingRequest');
         expect(req.method).toBe('PUT');
-        expect(req.params.get('hearingId')).toEqual('h100000');
+        expect(req.params.get('hearingId')).toEqual('1000000');
         return true;
       })
         .flush(null);
@@ -294,6 +311,51 @@ describe('HearingsService', () => {
         return true;
       })
         .flush(null);
+    }));
+  });
+
+  describe('prepareHearingRequestModel', () => {
+    const model:HearingRequestMainModel = {
+      hearingDetails: {
+        duration: 0,
+        hearingType: null,
+        hearingLocations: null,
+        hearingWindow: {
+          dateRangeStart: '2022-11-23T09:00:00.000Z',
+          dateRangeEnd: '2022-11-30T09:00:00.000Z',
+          firstDateTimeMustBe: '2022-12-01T09:00:00.000Z'
+        },
+        panelRequirements: null,
+        autolistFlag: null,
+        hearingPriorityType: null,
+        amendReasonCodes: null,
+        hearingChannels: null,
+        listingAutoChangeReasonCode: null
+      },
+      partyDetails: []
+    };
+
+    it('should return HearingRequestMainModel with no update', inject([HearingsService], (service: HearingsService) => {
+      expect(service.prepareHearingRequestModel(model)).toEqual(model);
+    }));
+
+    it('should return HearingRequestMainModel hearingWindow null', inject([HearingsService], (service: HearingsService) => {
+      const newModel:HearingRequestMainModel = {
+        ...model,
+        hearingDetails: {
+          ...model.hearingDetails,
+          hearingWindow: {}
+        }
+      };
+
+      const result:HearingRequestMainModel = {
+        ...model,
+        hearingDetails: {
+          ...model.hearingDetails,
+          hearingWindow: null
+        }
+      };
+      expect(service.prepareHearingRequestModel(newModel)).toEqual(result);
     }));
   });
 });

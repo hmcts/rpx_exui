@@ -13,7 +13,7 @@ describe('OpenId Connect API', () => {
     before(async () => {
       await pactSetUp.provider.setup();
       pactSetUp.provider.addInteraction({
-        state: 'a well-known endpoint',
+        state: '.well-known endpoint',
         uponReceiving: 'a request for configuration',
         withRequest: {
           method: 'GET',

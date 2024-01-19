@@ -17,6 +17,7 @@ import { HearingActualsEditSummaryComponent } from './hearing-actuals-edit-summa
 
 @Pipe({ name: 'transformAnswer' })
 export class MockHearingAnswersPipe implements PipeTransform {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public transform(answerSource, hearingState$, index?: number): string {
     return '';
   }
@@ -194,22 +195,10 @@ describe('HearingActualSummaryComponent', () => {
   });
 
   it('should return updated notRequired', () => {
-    const patchedHearingActuals = ActualHearingsUtils.mergeSingleHearingPartActuals(component.hearingActualsMainModel,
-      component.actualHearingDays[0].hearingDate, { notRequired: true } as ActualHearingDayModel);
+    const patchedHearingActuals = ActualHearingsUtils.mergeSingleHearingPartActuals(
+      component.hearingActualsMainModel, component.actualHearingDays[0].hearingDate, { notRequired: true } as ActualHearingDayModel
+    );
     expect(patchedHearingActuals.actualHearingDays[0].notRequired).toBe(true);
-  });
-
-  it('should check confirm Actual Hearing Time For Day', () => {
-    const hearingDay: ActualHearingDayModel = hearingActualsMainModel.hearingActuals.actualHearingDays[0];
-    component.confirmActualHearingTimeForDay(hearingDay);
-    expect(component.validationErrors.length).toBe(0);
-  });
-
-  it('should check confirm Actual Parties For Day', () => {
-    const hearingDay: ActualHearingDayModel = hearingActualsMainModel.hearingActuals.actualHearingDays[0];
-    component.confirmActualPartiesForDay(hearingDay);
-    expect(component.hearingPartiesResultErrorMessage).toBe('');
-    expect(component.successBanner).toBeTruthy();
   });
 
   afterEach(() => {

@@ -7,8 +7,27 @@ class RoleAssignments {
     constructor() {
         this.serviceUsersRoleAssignments = []
 
+       this.sessiononRolesAssignments = [];
 
     }
+
+    addRoleAssigmemntsToSession(auth, roleAssignments){
+        const sessionObj = this.sessiononRolesAssignments.find((forSession) => forSession.auth === auth)
+        if (!sessionObj){
+            this.sessiononRolesAssignments.push({
+                auth: auth,
+                roleAssignments: roleAssignments
+            })
+        }else{
+            sessionObj.roleAssignments.push(...roleAssignments)
+        }
+    }
+
+    getRolesAssignmentsForSession(auth){
+        const sessionObj = this.sessiononRolesAssignments.find((forSession) => forSession.auth === auth)
+        return sessionObj ? sessionObj.roleAssignments : [];
+    }
+
 
 
     getActorRoles(actorID) {
@@ -31,8 +50,14 @@ class RoleAssignments {
         return { roleAssignmentResponse: roles }
     }
 
-    getRequestedRoleAssignments(reqBody) {
-        const filteredRolesAssignments = this.serviceUsersRoleAssignments.filter(roleAssignment => {
+    getServiceUsersRolesAssignments(auth){
+        return this.getRolesAssignmentsForSession(auth);
+    }
+
+
+    getRequestedRoleAssignments(auth,reqBody) {
+        const consolidatedRoleAssignments = [...this.serviceUsersRoleAssignments ,...this.getRolesAssignmentsForSession(auth)]
+        const filteredRolesAssignments = consolidatedRoleAssignments.filter(roleAssignment => {
             const keys = Object.keys(reqBody)
             for (const key of keys) {
                 if (key === 'attributes') {
@@ -40,11 +65,11 @@ class RoleAssignments {
 
                         return false;
                     }
-                } else if (key === 'roleName' || key === 'roleType') {
+                } else if (key === 'roleName' || key === 'roleType' || key === 'roleCategory' || key === 'grantType') {
                     if (!reqBody[key].includes(roleAssignment[key])) {
                         return false;
                     }
-                } else {
+                }  else {
                     throw new Error(`role assigment req ${key} not configured for filter in MOCK`)
                 }
             }
@@ -59,8 +84,9 @@ class RoleAssignments {
         const attribKeys = Object.keys(attributes)
 
 
+
         for (const key of attribKeys) {
-            if (!roleAssignmentAttribs[key] || !attributes[key].includes(roleAssignmentAttribs[key])) {
+            if (roleAssignmentAttribs === undefined || !roleAssignmentAttribs[key] || !attributes[key].includes(roleAssignmentAttribs[key])) {
                 // console.log(`${key} : attribute no matched ${roleAssignmentAttribs[key]}`)
                 return false;
             }
@@ -68,15 +94,15 @@ class RoleAssignments {
         return true;
     }
 
-    pushNewRoleAssignmentRequests(roleRequests) {
+    pushNewRoleAssignmentRequests(auth, roleRequests) {
         console.log(roleRequests)
 
-        this.serviceUsersRoleAssignments.push(...roleRequests.requestedRoles)
+        this.getRolesAssignmentsForSession(auth).push(...roleRequests.requestedRoles)
         return roleRequests.requestedRoles;
     }
 
 
-    getQueryResults(queryRequests) {
+    getQueryResults(queryRequests){
         const roleAssignments = []
         const query = queryRequests[0];
         const roleType = query.roleType ? query.roleType[0] : null;

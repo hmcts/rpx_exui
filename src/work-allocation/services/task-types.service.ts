@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SessionStorageService } from '../../app/services';
 
@@ -10,7 +10,7 @@ import { SessionStorageService } from '../../app/services';
 })
 export class TaskTypesService {
   public static typesOfWorkStorageKey: string = 'typesOfWork_cache';
-  public constructor(private readonly http: HttpClient, private readonly sessionStorage: SessionStorageService) {}
+  public constructor(private readonly http: HttpClient, private readonly sessionStorage: SessionStorageService) { }
 
   public getTypesOfWork(): Observable<any[]> {
     if (this.sessionStorage.getItem(TaskTypesService.typesOfWorkStorageKey)) {

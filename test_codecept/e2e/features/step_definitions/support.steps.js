@@ -66,3 +66,15 @@ const cucumberReporter = require('../../../codeceptCommon/reportLogger');
         const unKnownWindowHandles = await ArrayUtil.filter(allWindowHandles, async (handle) => !knownWindowHandles.includes(handle));
         return unKnownWindowHandles;
     }
+
+
+   Then('debug sleep minutes {int}', async function(minutes){
+        await new Promise((resolve,reject) => {
+            setTimeout(() => {
+                resolve(true)
+            }, minutes*60*1000)
+        })
+    });
+
+
+

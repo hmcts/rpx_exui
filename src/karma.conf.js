@@ -8,18 +8,13 @@ module.exports = function(config) {
     browserNoActivityTimeout: 60000,
     browserDisconnectTimeout: 60000,
     basePath: '',
-    frameworks: ['parallel', 'jasmine', '@angular-devkit/build-angular'],
-    parallelOptions: {
-      executors: 1,
-      shardStrategy: 'round-robin'
-    },
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
-      require('karma-parallel'),
+      require('karma-coverage'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-spec-reporter'),
-      require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-sonarqube-unit-reporter')
     ],
@@ -30,13 +25,12 @@ module.exports = function(config) {
         verboseDeprecations: true,
       }
     },
-    coverageIstanbulReporter: {
+    reporters: ['spec', 'progress', 'kjhtml', 'coverage'],
+    coverageReporter: {
+      type: 'lcov',
       dir: require('path').join(__dirname, '../reports/tests/coverage/ng'),
-      reports: ['html', 'lcovonly', 'text-summary'],
-      fixWebpackSourcePaths: true,
-      combineBrowserReports: true
+      subdir: '.'
     },
-    reporters: ['spec', 'progress', 'kjhtml', 'coverage-istanbul'],
     specReporter: {
       maxLogLines: 5, // limit number of lines logged per test
       suppressErrorSummary: false,// do not print error summary

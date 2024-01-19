@@ -125,7 +125,7 @@ describe('StaffAddEditUserFormComponent', () => {
       expect(component.errors).not.toBeFalsy();
       expect(component.submitted).toBe(false);
 
-      const validForm = new FormGroup({});
+      const validForm = new FormGroup<any>({});
       spyOn(validForm, 'markAllAsTouched');
       expect(validForm.markAllAsTouched).not.toHaveBeenCalled();
 
@@ -146,7 +146,7 @@ describe('StaffAddEditUserFormComponent', () => {
       expect(component.errors).not.toBeFalsy();
       expect(component.submitted).toBe(false);
 
-      const validForm = new FormGroup({});
+      const validForm = new FormGroup<any>({});
       spyOn(validForm, 'markAllAsTouched');
       expect(validForm.markAllAsTouched).not.toHaveBeenCalled();
 

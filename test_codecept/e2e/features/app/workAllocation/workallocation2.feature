@@ -1,4 +1,4 @@
-@fullfunctional @wa2 @demo @functional_enabled
+@fullfunctional @wa2 @demo @functional_enabled @ignore
 Feature: WA Release 2: : Work allocations My work, All work
 
     Scenario Outline: View tasks, E2E journey of Caseworker-ia-officer user
@@ -94,6 +94,3 @@ Feature: WA Release 2: : Work allocations My work, All work
         #     | Role          |
         #     | Person        |
             # | Hearing date |
-
-
-

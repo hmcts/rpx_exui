@@ -93,4 +93,5 @@ ignore/
 !.yarn/versions
 
 /infrastructure/.terraform/
+.angular/cache/*
 install-state.gz

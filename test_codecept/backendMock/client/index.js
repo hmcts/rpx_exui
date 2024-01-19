@@ -9,6 +9,7 @@ class BackendMockClient{
 
     constructor(){
         this.baseUrl = 'http://localhost:8080/client/'
+        this.activeSession = null;
 ;    }
 
     async updateAuthSessionWithRoles(auth, roles){
@@ -55,6 +56,12 @@ class BackendMockClient{
         })
     }
 
+    async clearUserSessionData(auth){
+        return await axiosInstance.post(`${this.baseUrl}session/user/sessionData/clear`, {
+            auth: auth
+        })
+    }
+
 
     async logMessage(mesage){
         if (process.env.TEST_TYPE !== 'e2e') {
@@ -65,6 +72,13 @@ class BackendMockClient{
        
     }
 
+    async addReusableSession(xuiCallbackResponse){
+        return await axiosInstance.post(`${this.baseUrl}session/add`, {
+            data: xuiCallbackResponse
+        })
+    }
+
+  
 }
 
 

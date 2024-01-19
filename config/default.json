@@ -48,7 +48,7 @@
       },
       "ia": {
         "serviceApi": "http://ia-hearings-api-prod.service.core-compute-prod.internal",
-        "caseTypes": "Asylum"
+        "caseTypes": "Asylum,Bail"
       },
       "employment": {
         "serviceApi": "http://et-hearings-api-prod.service.core-compute-prod.internal",

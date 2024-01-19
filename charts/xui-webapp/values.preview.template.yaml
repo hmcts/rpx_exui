@@ -24,7 +24,8 @@ nodejs:
      SERVICES_LOCATION_REF_API_URL: http://rd-location-ref-api-aat.service.core-compute-aat.internal
      FEATURE_ACCESS_MANAGEMENT_ENABLED: true
      JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CIVIL,PRIVATELAW,EMPLOYMENT,ST_CIC
-     PREVIEW_DEPLOYMENT_ID: exui-preview-deployment-2926
+     PREVIEW_DEPLOYMENT_ID: exui-preview-deployment-${CHANGE_ID}
+     FEATURE_JRD_E_LINKS_V2_ENABLED: true
   keyVaults:
     rpx:
       secrets:

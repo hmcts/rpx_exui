@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { RouterModule } from '@angular/router';
 import {
   AbstractAppConfig,
@@ -69,6 +69,9 @@ import { CreateCaseEventTriggerResolver } from './resolvers/create-case-event-tr
 // from services
 import * as fromServices from './services';
 import { effects, reducers } from './store';
+import { RestrictedCaseAccessComponent } from './components/restricted-case-access/restricted-case-access.component';
+import { RestrictedCaseAccessContainerComponent } from './containers/restricted-case-access-container/restricted-case-access-container.component';
+import { RestrictedCaseAccessGuard } from './guards/restricted-case-access-guard';
 
 @NgModule({
   imports: [
@@ -134,7 +137,8 @@ import { effects, reducers } from './store';
     IsCompoundPipe,
     CcdCYAPageLabelFilterPipe,
     CaseFileViewService,
-    JurisdictionService
+    JurisdictionService,
+    RestrictedCaseAccessGuard
   ]
 })
 /**

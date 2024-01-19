@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { CaseTab, CaseView } from '@hmcts/ccd-case-ui-toolkit';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store, select } from '@ngrx/store';
-import { combineLatest, of } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
+import { combineLatest, of, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AppUtils } from '../../../app/app-utils';
 import { AppConstants } from '../../../app/app.constants';
+import { UserRole } from '../../../app/models/user-details.model';
 import * as fromRoot from '../../../app/store';
 import { AllocateRoleService } from '../../../role-access/services';
 import { WAFeatureConfig } from '../../../work-allocation/models/common/service-config.model';
@@ -51,10 +51,10 @@ export class CaseViewerContainerComponent implements OnInit {
   ];
 
   constructor(private readonly route: ActivatedRoute,
-              private readonly store: Store<fromRoot.State>,
-              private readonly featureToggleService: FeatureToggleService,
-              private readonly allocateRoleService: AllocateRoleService,
-              private readonly waService: WASupportedJurisdictionsService) {
+    private readonly store: Store<fromRoot.State>,
+    private readonly featureToggleService: FeatureToggleService,
+    private readonly allocateRoleService: AllocateRoleService,
+    private readonly waService: WASupportedJurisdictionsService) {
     this.userRoles$ = this.store.pipe(select(fromRoot.getUserDetails)).pipe(
       map((userDetails) => userDetails.userInfo.roles)
     );
@@ -100,13 +100,16 @@ export class CaseViewerContainerComponent implements OnInit {
       this.featureToggleService.getValueOnce<FeatureVariation[]>(AppConstants.FEATURE_NAMES.mcHearingsFeature, []),
       this.userRoles$
     ]).pipe(
-      // @ts-ignore
-      map(([featureVariations, userRoles]: [FeatureVariation[], string[]]) => {
+      map(([featureVariations, userRoles]) => {
         const jurisdictionId = this.caseDetails.case_type.jurisdiction.id;
         const caseTypeId = this.caseDetails.case_type.id;
         const hasMatchedPermissions = featureVariations.some((featureVariation) =>
-          Utils.hasMatchedPermissions(featureVariation, jurisdictionId, caseTypeId, userRoles));
-        return hasMatchedPermissions ? this.appendedTabs : [];
+          Utils.hasMatchedJurisdictionAndCaseType(featureVariation, jurisdictionId, caseTypeId)
+        );
+        const hasHearingRole = userRoles.includes(UserRole.HearingViewer) ||
+          userRoles.includes(UserRole.ListedHearingViewer) ||
+          userRoles.includes(UserRole.HearingManager);
+        return (hasMatchedPermissions && hasHearingRole) ? this.appendedTabs : [];
       })
     );
   }

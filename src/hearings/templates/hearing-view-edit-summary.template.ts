@@ -55,7 +55,7 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
         answerTitle: 'Reasonable adjustments',
         answerSource: AnswerSource.CASE_FLAGS,
         changeLink: '/hearings/request/hearing-requirements#linkAmendFlags',
-        isAmendedSource: AnswerSource.CASE_FLAGS
+        isAmendedSource: AnswerSource.REASONABLE_ADJUSTMENTS
       }
     ]
   },
@@ -99,14 +99,6 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
         answerSource: AnswerSource.IS_PAPER_HEARING,
         changeLink: '/hearings/request/hearing-attendance#paperHearingYes',
         isAmendedSource: AnswerSource.IS_PAPER_HEARING
-      },
-      {
-        id: 'howParticipantsAttendant',
-        answerTitle: 'What will be the methods of attendance for this hearing?',
-        answerSource: AnswerSource.HOW_PARTICIPANTS_ATTEND,
-        changeLink: '/hearings/request/hearing-attendance#hearingLevelChannelList',
-        isHiddenSource: IsHiddenSource.PAPER_HEARING,
-        isAmendedSource: AnswerSource.HOW_PARTICIPANTS_ATTEND
       },
       {
         id: 'howParticipantsAttendant',

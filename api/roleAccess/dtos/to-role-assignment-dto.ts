@@ -11,7 +11,7 @@ export function toRoleAssignmentBody(currentUserId: string, allocateRoleData: Al
     requestedRoles: [{
       roleType: 'CASE',
       grantType: 'SPECIFIC',
-      classification: 'PUBLIC',
+      classification: 'RESTRICTED',
       attributes: {
         caseId: allocateRoleData.caseId,
         jurisdiction: allocateRoleData.jurisdiction

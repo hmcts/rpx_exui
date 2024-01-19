@@ -26,7 +26,6 @@ import { ValidatorsUtils } from '../../../utils/validators.utils';
 export class HearingActualsViewEditPartiesComponent implements OnInit, OnDestroy {
   public partyChannels: LovRefDataModel[];
   public hearingRoles: LovRefDataModel[] = [];
-  public immutablePartyRoles: LovRefDataModel[] = [];
   public mutablePartyRoles: LovRefDataModel[] = [];
 
   public columns: string[] = [
@@ -155,14 +154,8 @@ export class HearingActualsViewEditPartiesComponent implements OnInit, OnDestroy
   }
 
   private setUpRoleLists(): void {
-    const plannedParties = this.hearingActualsMainModel.hearingPlanned.plannedHearingDays[this.plannedDayIndex].parties;
     for (const role of this.hearingRoles) {
-      const isPlannedRole = plannedParties.some((plannedParty) => plannedParty.partyRole === role.key);
-      if (isPlannedRole) {
-        this.immutablePartyRoles.push(role);
-      } else {
-        this.mutablePartyRoles.push(role);
-      }
+      this.mutablePartyRoles.push(role);
     }
   }
 

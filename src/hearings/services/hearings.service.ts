@@ -73,7 +73,7 @@ export class HearingsService {
   }
 
   public submitHearingRequest(hearingRequestMainModel: HearingRequestMainModel): Observable<ResponseDetailsModel> {
-    return this.http.post<ResponseDetailsModel>('api/hearings/submitHearingRequest', hearingRequestMainModel);
+    return this.http.post<ResponseDetailsModel>('api/hearings/submitHearingRequest', this.prepareHearingRequestModel(hearingRequestMainModel));
   }
 
   public updateHearingRequest(hearingRequestMainModel: HearingRequestMainModel): Observable<ResponseDetailsModel> {
@@ -81,7 +81,7 @@ export class HearingsService {
       params: new HttpParams()
         .set('hearingId', hearingRequestMainModel.requestDetails.hearingRequestID)
     };
-    return this.http.put<ResponseDetailsModel>('api/hearings/updateHearingRequest', hearingRequestMainModel, options);
+    return this.http.put<ResponseDetailsModel>('api/hearings/updateHearingRequest', this.prepareHearingRequestModel(hearingRequestMainModel), options);
   }
 
   public getHearingActuals(hearingId: string): Observable<HearingActualsMainModel> {
@@ -114,5 +114,20 @@ export class HearingsService {
         .set('hearingGroupId', hearingGroupId)
     };
     return this.http.delete<LinkedHearingGroupResponseModel>('api/hearings/deleteLinkedHearingGroup', options);
+  }
+
+  public prepareHearingRequestModel(hearingRequestMainModel: HearingRequestMainModel): HearingRequestMainModel {
+    let model = hearingRequestMainModel;
+    const newModel: HearingRequestMainModel = {
+      ...hearingRequestMainModel,
+      hearingDetails: {
+        ...hearingRequestMainModel.hearingDetails,
+        hearingWindow: null
+      }
+    };
+    if (hearingRequestMainModel.hearingDetails.hearingWindow && Object.keys(hearingRequestMainModel.hearingDetails.hearingWindow).length === 0) {
+      model = newModel;
+    }
+    return model;
   }
 }

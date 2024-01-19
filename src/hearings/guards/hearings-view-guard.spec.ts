@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { UserDetails } from '../../app/models';
 import { SessionStorageService } from '../../app/services';
 import * as fromAppStore from '../../app/store';
+import { FeatureVariation } from '../../cases/models/feature-variation.model';
 import { HearingsViewGuard } from './hearings-view-guard';
 
 describe('HearingsViewGuard', () => {
@@ -68,14 +69,31 @@ describe('HearingsViewGuard', () => {
       ]
     }
   };
-  const FEATURE_FLAG = [
+
+  const USER_4: UserDetails = {
+    canShareCases: true,
+    sessionTimeout: {
+      idleModalDisplayTime: 10,
+      totalIdleTime: 50
+    },
+    userInfo: {
+      id: '41a90c39-d756-4eba-8e85-5b5bf56b31f5',
+      forename: 'Luke',
+      surname: 'Wilson',
+      email: 'lukesuperuserxui@mailnesia.com',
+      active: true,
+      roles: [
+        'caseworker',
+        'caseworker-sscs'
+      ]
+    }
+  };
+
+  const FEATURE_FLAG: FeatureVariation[] = [
     {
       jurisdiction: 'SSCS',
-      caseType: 'Benefit',
-      roles: [
-        'caseworker-sscs',
-        'caseworker-sscs-judge',
-        'caseworker-sscs-dwpresponsewriter'
+      includeCaseTypes: [
+        'Benefit'
       ]
     }
   ];
@@ -95,7 +113,7 @@ describe('HearingsViewGuard', () => {
     featureToggleMock = jasmine.createSpyObj<FeatureToggleService>('featureToggleService', ['getValueOnce']);
   });
 
-  it('case worker should be able to access the hearings view link', () => {
+  it('should view hearings be enabled for user with hearing manager role', () => {
     storeMock.pipe.and.returnValue(of(USER_1));
     featureToggleMock.getValueOnce.and.returnValue(of(FEATURE_FLAG));
     sessionStorageMock.getItem.and.returnValue(JSON.stringify(CASE_INFO));
@@ -106,7 +124,7 @@ describe('HearingsViewGuard', () => {
     expect(result$).toBeObservable(expected);
   });
 
-  it('judicial user should be able to access the hearings view link', () => {
+  it('should view hearings be enabled for user with hearing viewer role', () => {
     storeMock.pipe.and.returnValue(of(USER_2));
     featureToggleMock.getValueOnce.and.returnValue(of(FEATURE_FLAG));
     sessionStorageMock.getItem.and.returnValue(JSON.stringify(CASE_INFO));
@@ -117,7 +135,7 @@ describe('HearingsViewGuard', () => {
     expect(result$).toBeObservable(expected);
   });
 
-  it('ogd user should be able to access the hearings view link', () => {
+  it('should view hearings be enabled for user with listed hearing viewer role', () => {
     storeMock.pipe.and.returnValue(of(USER_3));
     featureToggleMock.getValueOnce.and.returnValue(of(FEATURE_FLAG));
     sessionStorageMock.getItem.and.returnValue(JSON.stringify(CASE_INFO));
@@ -128,12 +146,10 @@ describe('HearingsViewGuard', () => {
     expect(result$).toBeObservable(expected);
   });
 
-  it('user should not be able to access the hearings view link', () => {
-    storeMock.pipe.and.returnValue(of(USER_1));
-
+  it('should view hearings be disabled for user with no hearing related roles', () => {
+    storeMock.pipe.and.returnValue(of(USER_4));
     featureToggleMock.getValueOnce.and.returnValue(of(FEATURE_FLAG));
-    const caseInfo = { cid: '1546518523959179', caseType: 'PRLAPPS', jurisdiction: 'PRL' };
-    sessionStorageMock.getItem.and.returnValue(JSON.stringify(caseInfo));
+    sessionStorageMock.getItem.and.returnValue(JSON.stringify(CASE_INFO));
     hearingsViewGuard = new HearingsViewGuard(storeMock, sessionStorageMock, featureToggleMock, routerMock);
     const result$ = hearingsViewGuard.canActivate();
     const canActive = false;

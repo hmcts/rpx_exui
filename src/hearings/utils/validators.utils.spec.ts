@@ -3,6 +3,8 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { HearingDateEnum } from '../models/hearings.enum';
 import { ValidatorsUtils } from './validators.utils';
+import { HearingWindowModel } from '../models/hearingWindow.model';
+import { HearingRequestMainModel } from '../models/hearingRequestMain.model';
 
 describe('ValidatorsUtils', () => {
   beforeEach(() => {
@@ -219,5 +221,53 @@ describe('ValidatorsUtils', () => {
     evaluatedForm.setParent(parties);
     const result = service.validateDuplicateEntries(1, 'Duplicate entry')(evaluatedForm);
     expect(result.hasOwnProperty('duplicateEntries')).toBeTruthy();
+  }));
+
+  it('should return HearingWindowModel NULL when hearingWidnow is an empty object', inject([ValidatorsUtils], (service: ValidatorsUtils) => {
+    const model:HearingRequestMainModel = {
+      hearingDetails: {
+        duration: 0,
+        hearingType: null,
+        hearingLocations: null,
+        hearingWindow: {},
+        panelRequirements: null,
+        autolistFlag: null,
+        hearingPriorityType: null,
+        amendReasonCodes: null,
+        hearingChannels: null,
+        listingAutoChangeReasonCode: null
+      },
+      partyDetails: []
+    };
+    expect(service.getHearingWindow(model)).toBeNull();
+  }));
+
+  it('should return HearingWindowModel when hearingWindow is not empty', inject([ValidatorsUtils], (service: ValidatorsUtils) => {
+    const model:HearingRequestMainModel = {
+      hearingDetails: {
+        duration: 0,
+        hearingType: null,
+        hearingLocations: null,
+        hearingWindow: {
+          dateRangeStart: '2022-11-23T09:00:00.000Z',
+          dateRangeEnd: '2022-11-30T09:00:00.000Z',
+          firstDateTimeMustBe: '2022-12-01T09:00:00.000Z'
+        },
+        panelRequirements: null,
+        autolistFlag: null,
+        hearingPriorityType: null,
+        amendReasonCodes: null,
+        hearingChannels: null,
+        listingAutoChangeReasonCode: null
+      },
+      partyDetails: []
+    };
+
+    const hearingWidnow:HearingWindowModel = {
+      dateRangeStart: '2022-11-23T09:00:00.000Z',
+      dateRangeEnd: '2022-11-30T09:00:00.000Z',
+      firstDateTimeMustBe: '2022-12-01T09:00:00.000Z'
+    };
+    expect(service.getHearingWindow(model)).toEqual(hearingWidnow);
   }));
 });

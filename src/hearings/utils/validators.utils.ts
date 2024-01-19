@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
 import * as moment from 'moment';
 import { HearingDateEnum } from '../models/hearings.enum';
+import { HearingWindowModel } from '../models/hearingWindow.model';
+import { HearingRequestMainModel } from '../models/hearingRequestMain.model';
 
 @Injectable({ providedIn: 'root' })
 export class ValidatorsUtils {
@@ -188,6 +190,11 @@ export class ValidatorsUtils {
 
       return null;
     };
+  }
+
+  public getHearingWindow(hearingRequestMainModel: HearingRequestMainModel): HearingWindowModel {
+    return hearingRequestMainModel.hearingDetails.hearingWindow && Object.keys(hearingRequestMainModel.hearingDetails.hearingWindow).length === 0 ?
+      null : hearingRequestMainModel.hearingDetails.hearingWindow;
   }
 }
 

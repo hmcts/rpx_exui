@@ -1,3 +1,6 @@
+
+const caseFlagsEventResponse = require('./caseFlagsCreateManageEventResponse')
+
 class CaseEventData{
 
     constructor(){
@@ -12,6 +15,10 @@ class CaseEventData{
 
     addCaseField(fieldProps){
         this.eventData.case_fields.push();
+    }
+
+    getCaseFlagsEventResponse() {
+        return caseFlagsEventResponse;
     }
 
 }

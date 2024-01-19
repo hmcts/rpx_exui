@@ -95,7 +95,7 @@ class NodeAppMockData {
                 "id": "02d1f898-4109-4a28-a978-2ba14f42de22",
                 "forename": "Luke",
                 "surname": "Wilson",
-                "email": "lukesuperuserxui@mailnesia.com",
+                "email": "lukesuperuserxui_new@mailnesia.com",
                 "active": true,
                 "roles": [
                     "caseworker-ia-caseofficer",

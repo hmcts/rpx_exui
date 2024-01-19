@@ -72,7 +72,7 @@ const {postTaskAction, getTask} = require("../../../../api/workAllocation");
     });
 
     Given('I set MOCK case details with reference {string}', async function(caseDetailsReference){
-      const caseDetails = ccdMockData.caseDetailsResponse;
+        const caseDetails = JSON.parse(JSON.stringify(ccdMockData.caseDetailsResponse));
          global.scenarioData[caseDetailsReference] = caseDetails;
 
         await serviceMock.updateCaseData(global.scenarioData[caseDetailsReference], 200)
@@ -80,9 +80,8 @@ const {postTaskAction, getTask} = require("../../../../api/workAllocation");
     });
 
     Given('I set MOCK case {string} details with reference {string}', async function (caseType, caseDetailsReference) {
-        const caseDetails = caseDetailsMock[caseType];
+        const caseDetails = JSON.parse(JSON.stringify(caseDetailsMock[caseType]));
         global.scenarioData[caseDetailsReference] = caseDetails;
-
         await serviceMock.updateCaseData(global.scenarioData[caseDetailsReference], 200)
 
     });
@@ -100,7 +99,7 @@ const {postTaskAction, getTask} = require("../../../../api/workAllocation");
             })
             const field = getCaseDetailsMetadataField(caseDetails,'[JURISDICTION]');
             field.value = value;
-        } else if (property.toLowerCase().includes('casetype')) {
+        } else if (property.toLowerCase().includes('caseType')) {
             const field = getCaseDetailsMetadataField(caseDetails, '[CASE_TYPE]');
             field.value = value;
         }
@@ -111,6 +110,9 @@ const {postTaskAction, getTask} = require("../../../../api/workAllocation");
             })
             const field = getCaseDetailsMetadataField(caseDetails, '[JURISDICTION]');
             field.value = value;
+        }
+        else if (property.toLowerCase().includes('case_id')) {
+            caseDetails.case_id = value;
         }
         else {
             throw Error(` metada field ${property} is not recognised or not implemented in test`);
@@ -212,6 +214,8 @@ const {postTaskAction, getTask} = require("../../../../api/workAllocation");
             "publish_as": null,
             "acls": null
         });
+
+        await serviceMock.updateCaseData(caseDetails, 200)
 
     });
 

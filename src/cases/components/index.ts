@@ -4,6 +4,7 @@ import { AllocateARoleLinkComponent } from './allocate-a-role/allocate-a-role-li
 import { AlertComponent } from './case-alert/alert.component';
 import { CaseHearingsListComponent } from './case-hearings-list/case-hearings-list.component';
 import { CaseTaskComponent } from './case-task/case-task.component';
+import { RestrictedCaseAccessComponent } from './restricted-case-access/restricted-case-access.component';
 import { RoleAccessSectionComponent } from './role-access-section/role-access-section.component';
 import { RolesAndAccessComponent } from './roles-and-access/roles-and-access.component';
 import { TaskAlertBannerComponent } from './task-alert-banner/task-alert-banner.component';
@@ -17,12 +18,13 @@ export const components: any[] = [
   CaseTaskComponent,
   AllocateARoleLinkComponent,
   RoleAccessSectionComponent,
-  CaseHearingsListComponent
+  CaseHearingsListComponent,
+  RestrictedCaseAccessComponent
 ];
 
-export * from './case-alert/alert.component';
-export * from './task-alert-banner/task-alert-banner.component';
-export * from './case-task/case-task.component';
 export * from './allocate-a-role/allocate-a-role-link.component';
-export * from './role-access-section/role-access-section.component';
+export * from './case-alert/alert.component';
 export * from './case-hearings-list/case-hearings-list.component';
+export * from './case-task/case-task.component';
+export * from './role-access-section/role-access-section.component';
+export * from './task-alert-banner/task-alert-banner.component';

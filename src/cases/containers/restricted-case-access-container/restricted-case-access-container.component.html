@@ -1,0 +1,17 @@
+<xuilib-loading-spinner *ngIf="showSpinner$ | async"></xuilib-loading-spinner>
+<div class="govuk-width-container govuk-!-margin-bottom-4">
+  <br/>
+  <div class="hmcts-banner">
+    <svg class="hmcts-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
+      <path d="M13.7,18.5h-2.4v-2.4h2.4V18.5z M12.5,13.7c-0.7,0-1.2-0.5-1.2-1.2V7.7c0-0.7,0.5-1.2,1.2-1.2s1.2,0.5,1.2,1.2v4.8
+C13.7,13.2,13.2,13.7,12.5,13.7z M12.5,0.5c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.4,12-12S19.1,0.5,12.5,0.5z"></path></svg>
+    <div class="hmcts-banner__message">
+      <span class="hmcts-banner__assistive">{{ 'information' | rpxTranslate }}</span>
+      <span>{{ 'This case is restricted. The details of the users with access are provided below.' | rpxTranslate }}</span>
+    </div>
+  </div>
+  <h1 class="govuk-heading-l">{{caseId | caseReference}}</h1>
+  <exui-restricted-case-access [restrictedCases]="restrictedCases"
+  ></exui-restricted-case-access>
+  <a href="javascript:history.back()" class="govuk-link">{{ 'Back to search' | rpxTranslate }}</a>
+</div>

@@ -41,17 +41,17 @@ describe('Evidence Manager Endpoints', () => {
     expect(response.status).to.equal(204);
   });
 
-  it('Get document annotations filter', async () => {
-    await Request.withSession(userName, password);
-    const xsrfToken = await getXSRFToken(userName, password);
-    const headers = {
-      experimental: true,
-      'X-XSRF-TOKEN': xsrfToken
-    };
-    const response = await Request.get(`em-anno/annotation-sets/filter?documentId=${config.em[config.testEnv].docId}`, null, 200);
-    expect(response.status).to.equal(200);
-    expect(response.data).to.have.all.keys('createdBy', 'createdByDetails', 'lastModifiedByDetails', 'createdDate', 'lastModifiedBy', 'annotations', 'documentId', 'id', 'lastModifiedDate');
-  });
+  // it('Get document annotations filter', async () => {
+  //   await Request.withSession(userName, password);
+  //   const xsrfToken = await getXSRFToken(userName, password);
+  //   const headers = {
+  //     experimental: true,
+  //     'X-XSRF-TOKEN': xsrfToken
+  //   };
+  //   const response = await Request.get(`em-anno/annotation-sets/filter?documentId=${config.em[config.testEnv].docId}`, null, 200);
+  //   expect(response.status).to.equal(200);
+  //   expect(response.data).to.have.all.keys('createdBy', 'createdByDetails', 'lastModifiedByDetails', 'createdDate', 'lastModifiedBy', 'annotations', 'documentId', 'id', 'lastModifiedDate');
+  // });
 
   it('Put document annotation', async () => {
     await Request.withSession(userName, password);

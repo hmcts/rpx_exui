@@ -77,7 +77,7 @@ class Browser{
     async getCurrentUrl(){
         return await getActor().grabCurrentUrl()
     }
-   
+
     async refresh(){
         const url = await this.getCurrentUrl();
         await this.get(url);
@@ -90,15 +90,18 @@ class Browser{
         }catch(err){
 
         }
-        
+
     }
 
     async executeScript(fn, element){
-        return getActor().executeScript(fn, element.selector);  
+      if (element)
+        return getActor().executeScript(fn, element.selector);
+      else
+        return undefined;
     }
 
     async getBrowserLogs(){
-        return await getActor().grabBrowserLogs();  
+        return await getActor().grabBrowserLogs();
     }
 
     async captureBrowserLogs(){
@@ -113,7 +116,7 @@ class Browser{
     async getSessionStorage(key) {
         return await getActor().executeScript((key) => {
             return window.sessionStorage[key]
-        },key); 
+        },key);
     }
 
     async getLocalStorage(key) {

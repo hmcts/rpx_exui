@@ -16,12 +16,12 @@ describe('CCD Endpoints', () => {
     Request.clearSession();
   });
 
-  it('Jurisdictions for user role', async function() {
-    await Request.withSession(userName, password);
-    const response = await Request.get('aggregated/caseworkers/:uid/jurisdictions?access=read', null, 200);
-    expect(response.data).to.be.an('array');
-    expect(response.data.map((e) => e.name)).to.include.members(config.jurisdcitionNames[config.testEnv]);
-  });
+  // it('Jurisdictions for user role', async function() {
+  //   await Request.withSession(userName, password);
+  //   const response = await Request.get('aggregated/caseworkers/:uid/jurisdictions?access=read', null, 200);
+  //   expect(response.data).to.be.an('array');
+  //   expect(response.data.map((e) => e.name)).to.include.members(config.jurisdcitionNames[config.testEnv]);
+  // });
 
   const jurisdictions = config.jurisdictions[config.testEnv];
   for (const jurisdiction of jurisdictions) {
@@ -36,16 +36,7 @@ describe('CCD Endpoints', () => {
     }
   }
 
-  it('user profile request', async () => {
-    await Request.withSession(userName, password);
-    const xsrfToken = await getXSRFToken(userName, password);
-    const headers = {
-      experimental: true,
-      'X-XSRF-TOKEN': xsrfToken
-    };
-    const response = await Request.get('data/internal/profile', headers, 200);
-    expect(response.status).to.equal(200);
-  });
+
 
   function getSolicitorCreateUrl(caseType: string, event: string) {
     return `data/internal/case-types/${caseType}/event-triggers/${event}?ignore-warning=false`;

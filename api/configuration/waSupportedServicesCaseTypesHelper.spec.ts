@@ -18,7 +18,7 @@ describe('getFormattedSupportedServicesCaseTypes', () => {
   });
 
   it('should return null if the config value is null', () => {
-    const formattedServiceCasetypes = service.getFormattedSupportedServicesCaseTypes(null);
+    const formattedServiceCasetypes = service.getFormattedSupportedServicesCaseTypes('');
     expect(formattedServiceCasetypes).to.equal(null);
   });
 

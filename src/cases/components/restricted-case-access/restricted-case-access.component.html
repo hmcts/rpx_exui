@@ -1,0 +1,17 @@
+<h2 class="govuk-heading-m">{{ 'Users with access' | rpxTranslate }}</h2>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header govuk-table-column-header" scope="col">{{ 'User' | rpxTranslate }}</th>
+      <th class="govuk-table__header govuk-table-column-header" scope="col">{{ 'Case role' | rpxTranslate }}</th>
+      <th class="govuk-table__header govuk-table-column-actions" scope="col">{{ 'Email address' | rpxTranslate }}</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row" *ngFor="let case of restrictedCases">
+      <td class="govuk-table__cell">{{case.user}}</td>
+      <td class="govuk-table__cell">{{case.role}}</td>
+      <td class="govuk-table__cell">{{case.email}}</td>
+    </tr>
+  </tbody>
+</table>

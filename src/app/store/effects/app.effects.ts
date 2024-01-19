@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RoleService } from '@hmcts/rpx-xui-common-lib';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { AuthService } from '../../../app/services/auth/auth.service';
 import { SessionStorageService } from '../../../app/services/session-storage/session-storage.service';
@@ -20,7 +20,7 @@ export class AppEffects {
     private readonly userService: UserService,
     private readonly sessionStorageService: SessionStorageService,
     private readonly roleService: RoleService
-  ) {}
+  ) { }
 
   @Effect()
   public config = this.actions$.pipe(

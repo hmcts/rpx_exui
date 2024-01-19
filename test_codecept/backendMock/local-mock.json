@@ -32,7 +32,8 @@
         "prd": {
             "api": "http://localhost:8080",
             "commondataApi": "http://localhost:8080",
-            "locationApi": "http://localhost:8080"
+            "locationApi": "http://localhost:8080",
+            "judicialApi": "http://localhost:8080"
         },
         "em_anno_api": "http://localhost:8080",
         "idam": {
