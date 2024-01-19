@@ -18,7 +18,7 @@ let page = null;
 let sessionCookies = [];
 
 async function initBrowser() {
-    idamLogin.withCredentials('lukesuperuserxui@mailnesia.com', 'Monday01')
+    idamLogin.withCredentials('lukesuperuserxui_new@mailnesia.com', 'Monday01')
     await idamLogin.do()
 
     testBrowser = await puppeteer.launch({
@@ -27,6 +27,7 @@ async function initBrowser() {
         args: [
             '--no-sandbox',
             '--disable-dev-shm-usage',
+            '--disable-gpu'
         ],
     });
 

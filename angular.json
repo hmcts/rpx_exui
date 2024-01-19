@@ -16,6 +16,7 @@
             "aot": true,
             "buildOptimizer": true,
             "outputPath": "dist/rpx-exui",
+            "sourceMap": true,
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -27,7 +28,6 @@
               "includePaths": [
                 "node_modules/govuk_frontend_toolkit/stylesheets",
                 "node_modules/govuk-elements-sass/public/sass",
-                "node_modules/govuk-frontend/govuk/all",
                 "node_modules"
               ]
             },
@@ -148,12 +148,17 @@
             "stylePreprocessorOptions": {
               "includePaths": [
                 "node_modules/govuk_frontend_toolkit/stylesheets",
-                "node_modules/govuk-elements-sass/public/sass"
+                "node_modules/govuk-elements-sass/public/sass",
+                "node_modules"
               ]
             },
             "styles": [
               "src/styles.scss"
             ],
+            "include": [
+              "src/**/*.spec.*"
+            ],
+            "exclude": [],
             "scripts": [],
             "assets": [
               "src/favicon.ico",
@@ -162,15 +167,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "**/api/**"
+            "eslintConfig": ".eslintrc.cjs",
+            "lintFilePatterns": [
+              "src/**/*.ts"
             ]
           }
         }
@@ -194,8 +195,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig": ".eslintrc.js",
             "tsConfig": "e2e/tsconfig.e2e.json",
             "exclude": [
               "**/node_modules/**"
@@ -205,7 +207,6 @@
       }
     }
   },
-  "defaultProject": "rpx-exui",
   "schematics": {
     "@schematics/angular:component": {
       "style": "scss"

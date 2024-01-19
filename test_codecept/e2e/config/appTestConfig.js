@@ -93,21 +93,18 @@ const data = {
                 release: "general", userIdentifier: "CASEWORKER_GLOBALSEARCH",
                 key: "Welcome01"
             },
-
             {
                 idamId: "ae28c49a-ad0f-467a-a480-15fcaa66165d",
                 email: "exuigsuser@mailinator.com",
                 release: "general", userIdentifier: "WA2",
                 key: "Welcome01"
             },
-
             {
                 idamId: "ae28c49a-ad0f-467a-a480-15fcaa66165d",
                 email: "exuigsuser@mailinator.com",
                 release: "general", userIdentifier: "WA2_GLOBAL-SEARCH",
                 key: "Welcome01"
             },
-
             {
                 idamId: "7381c1ae-9cc9-4251-b283-727feef94a3d",
                 email: "xui_bookingui_on@hmcts.net",
@@ -156,7 +153,7 @@ const data = {
             },
             {
                 idamId: "12b6a360-7f19-4985-b065-94320a891eaa",
-                email: "lukesuperuserxui@mailnesia.com",
+                email: "lukesuperuserxui_new@mailnesia.com",
                 release: "general", userIdentifier: "SOLICITOR"
             },
             {

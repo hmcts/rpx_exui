@@ -9,7 +9,7 @@ const { DataTableArgument } = require('codeceptjs');
 
 
 const hearingTabPage = require('../pageObjects/hearings/hearingsTabPage')
-const createHearingWorkflow = require('../pageObjects/hearings/createhearingWorkflow')
+const createHearingWorkflow = require('../pageObjects/hearings/createHearingWorkflow/createhearingWorkflow')
 
 Then('I see hearings tab displayed', async function () {
     await BrowserWaits.retryWithActionCallback(async () => {
@@ -26,7 +26,7 @@ Then('I do not see Request a hearing button in hearings tab page', async functio
 });
 
 When('I click Request a hearing button', async function(){
-    await hearingTabPage.clickRequestHearingButton()
+    await hearingTabPage.requesthearingBtn.click()
 });
 
 Then('I see create hearing workflow container', async function () {

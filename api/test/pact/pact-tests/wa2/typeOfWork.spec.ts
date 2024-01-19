@@ -5,19 +5,18 @@ import { mockReq, mockRes } from 'sinon-express-mock';
 import { PactTestSetup } from '../settings/provider.mock';
 import { getWorkAllocationAPIOverrides } from '../utils/configOverride';
 import { requireReloaded } from '../utils/moduleUtil';
+import { eachLike } from '@pact-foundation/pact/src/dsl/matchers';
 const { Matchers } = require('@pact-foundation/pact');
 const { somethingLike } = Matchers;
 
-const pactSetUp = new PactTestSetup({ provider: 'wa_task_management_api_work_types', port: 8000 });
+const pactSetUp = new PactTestSetup({ provider: 'wa_task_management_api_get_work_types', port: 8000 });
 
 describe('Task management api, work types', () => {
   const RESPONSE_BODY = {
-    'work_types': [
-      {
-        id: somethingLike('1234'),
-        label: somethingLike('test')
-      }
-    ]
+    work_types: eachLike({
+      id: somethingLike('applications'),
+      label: somethingLike('Applications')
+    })
   };
 
   describe('get /work-types', () => {
@@ -31,7 +30,7 @@ describe('Task management api, work types', () => {
     before(async () => {
       await pactSetUp.provider.setup();
       const interaction = {
-        state: 'retrieve all work types',
+        state: 'retrieve work types by userId',
         uponReceiving: 'retrieve all work types',
         withRequest: {
           method: 'GET',
@@ -96,6 +95,5 @@ describe('Task management api, work types', () => {
 });
 
 function assertResponses(dto: any) {
-  expect(dto[0].key).to.be.equal('1234');
-  expect(dto[0].label).to.be.equal('test');
+  expect(dto[0].key).to.be.equal('applications');
 }

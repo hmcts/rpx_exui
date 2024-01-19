@@ -27,7 +27,7 @@ console.log(`headless : ${!head}`)
 
 
 
-let pipelineBranch = process.env.TEST_URL.includes('pr-')   ? "preview" : "master"
+let pipelineBranch = process.env.TEST_URL.includes('pr-') || process.env.TEST_URL.includes('manage-case.aat.platform.hmcts.net') ? "preview" : "master"
 
 let features = ''
 if (testType === 'e2e' || testType === 'smoke'){

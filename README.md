@@ -163,7 +163,7 @@ Property 'cookies' does not exist on type 'EnhancedRequest' - you will need to m
 sure @types/express-session is added ie.
 `yarn add @types/express-session`
 
-### The following is legacy readme.
+### The following is the legacy readme.
 
 ## Code scaffolding
 

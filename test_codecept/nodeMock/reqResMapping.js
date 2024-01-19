@@ -1,91 +1,22 @@
-// const ccdApiMock = require('../ngIntegration/mockData/ccd/ccdApi');
-// const WAReqResMappings  = require('./workAllocation/reqResMapping');
-// const ccdReqResMapping = require('../ngIntegration/mockData/ccd/reqResMapping');
-// const nodeAppReqResMappings = require('./nodeApp/reqResMapping');
 
-// const globalSearchReqResMapping = require('../ngIntegration/mockData/globalSearch/reqResMapping');
-
-
-// const dummyCaseDetails = require('../ngIntegration/mockData/ccd/caseDetails_data');
-
-// const requestMapping = {
-//     mockServiceResetCallbacks: [...WAReqResMappings.mockServiceResetCallbacks, ...ccdReqResMapping.mockServiceResetCallbacks ],
-//     get:{
-//         ...nodeAppReqResMappings.get,
-//         ...WAReqResMappings.get,
-//         ...ccdReqResMapping.get,
-//         ...globalSearchReqResMapping.get,
-
-       
-//        '/api/organisation': (req,res) => {
-//            res.send(getOrganisation());
-//        },
-       
-//        '/api/userList':(req,res) => {
-//             res.send(getUsersList());
-//        },
-//        '/api/jurisdictions':(req,res) => {
-//             res.send(getJurisdictions());
-//        },
-//        '/api/unassignedcases':(req,res) => {
-//            res.send(createCaseData(5));
-//        },
-//        '/api/caseshare/cases': (req,res) => {
-//            res.send(getShareCases());
-//        },
-//        '/api/caseshare/users': (req,res) => {
-//            res.send(organisationUsers());
-//        },
-//         '/data/internal/profile' : (req,res) => {
-//             res.send({});
-//         },
-//         '/api/caseshare/orgs': (req, res) => {
-//             res.send(getCaseShareOrgs());
-//         },
-//         '/data/caseworkers/:uid/jurisdictions/:jurisdiction/case-types/:caseType/cases/pagination_metadata': (req,res) => {
-//             res.send();
-//         },
-//         '/api/service-ref-data/get': (req,res) => {
-//             res.send([
-//                 {
-//                     "service": "IA",
-//                     "serviceCodes": [
-//                         "BFA1"
-//                     ]
-//                 },
-//                 {
-//                     "service": "CIVIL",
-//                     "serviceCodes": [
-//                         "AAA6",
-//                         "AAA7"
-//                     ]
-//                 }
-//             ]);
-//         }
+const requestMapping = {
+    mockServiceResetCallbacks: [ ],
+    get:{
+        
+    },
+    post:{
       
 
-//     },
-//     post:{
-//         ...WAReqResMappings.post,
-//         ...ccdReqResMapping.post,
-//         ...WAReqResMappings.post,
-//         ...globalSearchReqResMapping.post,
+    },
+    put:{
 
-        
-//         '/api/caseshare/case-assignments': (req, res) => {
-//             res.send( []);
-//         },
-       
+    },
+    delete:{
 
-//     },
-//     put:{
+    }
 
-//     },
-//     delete:{
-
-//     }
-
-// }
+}
+module.exports = { requestMapping};
 
 
 // function getOrganisation(){
@@ -102,7 +33,6 @@
 // }
 
 
-// module.exports = { requestMapping};
 
 // function getShareCases(){
 //     return [

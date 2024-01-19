@@ -1,6 +1,3 @@
-const { assertNotNull } = require("@angular/compiler/src/output/output_ast");
-
-
 
 const courtTypeIds = {
     EMPLOYMENT: ['17'], // 17: Employment Tribunal
@@ -82,6 +79,18 @@ class RDLocationService{
                 serviceConf.locations.push(temp)
             }
 
+            const temp = this.getMockLocations();
+            temp.epimms_id = index + '';
+            temp.is_case_management_location = 'Y';
+            temp.court_name = `${service} Court Center Wales`;
+            temp.venue_name = `${service} Court Center Wales`;
+            temp.site_name = `${service} Court Center Wales`;
+            temp.court_type_id = typeIds[0];
+            temp.court_type = `${service} Court`;
+            temp.region = 'Wales';
+            temp.region_id = "7";
+            serviceConf.locations.push(temp)
+
         })
     }
 
@@ -107,7 +116,7 @@ class RDLocationService{
 
         const serviceWithCode = this.locationsConfig.find(service => service.serviceCode.includes(serviceCode))
 
-        assertNotNull(serviceWithCode, `Mock service config not found for service code ${serviceCode}`)
+        console.assert(serviceWithCode, `Mock service config not found for service code ${serviceCode}`);
         
         return {
             "service_code": serviceCode,

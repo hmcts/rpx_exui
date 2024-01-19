@@ -1,10 +1,9 @@
 const fs = require('fs');
 
-const testType = process.env.TEST_TYPE
+const testType = process.env.TEST_TYPE;
 
 
-class StatsReporter{
-
+class StatsReporter {
     constructor(){
         this.analysisOutputFile = `${__dirname}/../../functional-output/tests/run-analysis-${testType}.txt`;
         this.statLogsDir = `${__dirname}/../../functional-output/tests/featureRunLogs-${testType}`;
@@ -98,11 +97,11 @@ class StatsReporter{
         if (!fs.existsSync(this.statLogsDir)) {
             return;
         }
-        this.collectLogs()
+        this.collectLogs();
        
         // console.log(JSON.stringify(this.stats, null, 2))
         this.generateStats();
-        this.logsStatsToFile(this.analysis)
+        this.logsStatsToFile(this.analysis);
         // console.log(JSON.stringify(this.analysis, null, 2))
     }
 

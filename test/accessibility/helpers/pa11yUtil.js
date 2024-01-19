@@ -17,7 +17,8 @@ async function initBrowser() {
     headless: conf.headless,
     args: [
       '--no-sandbox',
-      '--disable-dev-shm-usage'
+      '--disable-dev-shm-usage',
+      '--disable-gpu'
     ]
   });
 

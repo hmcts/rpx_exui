@@ -5,6 +5,7 @@ Feature: WA Release 2: My work - My Tasks
         Given I init MockApp
 
 
+@functional_debug
     Scenario Outline:  My Tasks, colums and column links for "<UserType>"
         
         
@@ -84,6 +85,7 @@ Feature: WA Release 2: My work - My Tasks
         When I click on primary navigation header tab "My work", I see selected tab page displayed
         When I click task column link "Task" at row 1, I see case details page
         Then I see case details page
+
         Then I validate case details task tab page is displayed
         Examples:
             | UserIdentifier     | UserType   | Roles                                                            | roleCategory     |
