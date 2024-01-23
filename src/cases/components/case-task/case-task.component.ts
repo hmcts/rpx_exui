@@ -167,7 +167,7 @@ export class CaseTaskComponent implements OnInit {
       .getValue(AppConstants.FEATURE_NAMES.waServiceConfig, null)
       .pipe(first())
       .toPromise();
-    const jurisdictionConfiguration = featureConfigurations.configurations
+    const jurisdictionConfiguration = featureConfigurations?.configurations
       .find((serviceConfig) => serviceConfig.serviceName === this.task.jurisdiction);
     this.isRelease4 = jurisdictionConfiguration?.releaseVersion === '4';
   }

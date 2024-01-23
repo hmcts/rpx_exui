@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Optional } from '@angular/core';
-import { AppInsights } from 'applicationinsights-js';
-import { AbstractAppInsights } from './appInsightsWrapper';
+import { ApplicationInsights, IConfig } from '@microsoft/applicationinsights-web';
+import { IAppInsights } from '@microsoft/applicationinsights-web';
 
 export interface IMonitoringService {
   logPageView(name?: string, url?: string, properties?: any,
@@ -10,7 +10,7 @@ export interface IMonitoringService {
   logException(exception: Error);
 }
 
-export class MonitorConfig implements Microsoft.ApplicationInsights.IConfig {
+export class MonitorConfig implements IConfig {
   public instrumentationKey?: string;
   public endpointUrl?: string;
   public emitLineDelimitedJson?: boolean;
@@ -51,9 +51,9 @@ export class MonitoringService implements IMonitoringService {
   public areCookiesEnabled: boolean = false;
 
   constructor(private readonly http: HttpClient, @Optional() private config?: MonitorConfig,
-              @Optional() private readonly appInsights?: AbstractAppInsights) {
+              @Optional() private readonly appInsights?: IAppInsights) {
     if (!appInsights) {
-      appInsights = AppInsights;
+      appInsights = ApplicationInsights.;
     }
   }
 

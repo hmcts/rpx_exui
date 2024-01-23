@@ -1,40 +1,58 @@
-import { AppInsights } from 'applicationinsights-js';
+import {
+  IAppInsights,
+  IEventTelemetry,
+  IMetricTelemetry,
+  IPageViewPerformanceTelemetry,
+  IAutoExceptionTelemetry,
+  ITelemetryItem,
+  ITraceTelemetry, IExceptionTelemetry, IPageViewTelemetry
+} from '@microsoft/applicationinsights-web';
 
-export abstract class AbstractAppInsights implements Microsoft.ApplicationInsights.IAppInsights {
-  public config: Microsoft.ApplicationInsights.IConfig; public context: Microsoft.ApplicationInsights.ITelemetryContext;
-  public queue: (() => void)[];
-  public abstract startTrackPage(name?: string);
-  public abstract stopTrackPage(name?: string, url?: string, properties?: { [name: string]: string; },
-                         measurements?: { [name: string]: number; });
+import { ICookieMgr } from '@microsoft/applicationinsights-core-js;
 
-  public abstract trackPageView(name?: string, url?: string, properties?: { [name: string]: string; },
-                         measurements?: { [name: string]: number; }, duration?: number);
+export abstract class AbstractAppInsights implements IAppInsights {
+  _onerror(exception: IAutoExceptionTelemetry): void {
+  }
 
-  public abstract startTrackEvent(name: string);
-  public abstract stopTrackEvent(name: string, properties?: { [name: string]: string; }, measurements?: { [name: string]: number; });
-  public abstract trackEvent(name: string, properties?: { [name: string]: string; }, measurements?: { [name: string]: number; });
-  public abstract trackDependency(id: string, method: string, absoluteUrl: string, pathName: string, totalTime: number,
-                           success: boolean, resultCode: number,
-                           properties?: { [name: string]: string; }, measurements?: { [name: string]: number; });
+  addTelemetryInitializer(telemetryInitializer: (item: ITelemetryItem) => (boolean | void)): void {
+  }
 
-  public abstract trackException(exception: Error, handledAt?: string,
-                          properties?: { [name: string]: string; }, measurements?: { [name: string]: number; },
-                          severityLevel?: AI.SeverityLevel);
+  getCookieMgr(): ICookieMgr {
+    return undefined;
+  }
 
-  public abstract trackMetric(name: string, average: number, sampleCount?: number, min?: number, max?: number,
-                       properties?: { [name: string]: string; });
+  startTrackEvent(name: string): void {
+  }
 
-  public abstract trackTrace(message: string, properties?: { [name: string]: string; }, severityLevel?: AI.SeverityLevel) ;
-  public abstract flush();
-  public abstract setAuthenticatedUserContext(authenticatedUserId: string, accountId?: string, storeInCookie?: boolean);
-  public abstract clearAuthenticatedUserContext();
-  public abstract downloadAndSetup?(config: Microsoft.ApplicationInsights.IConfig);
-  public abstract _onerror(message: string, url: string, lineNumber: number, columnNumber: number, error: Error);
-}
+  startTrackPage(name?: string): void {
+  }
+
+  stopTrackEvent(name: string, properties?: Object, measurements?: Object): void {
+  }
+
+  stopTrackPage(name?: string, url?: string, customProperties?: Object): void {
+  }
+
+  trackEvent(event: IEventTelemetry, customProperties?: { [p: string]: any }): void {
+  }
+
+  trackException(exception: IExceptionTelemetry, customProperties?: { [p: string]: any }): void {
+  }
+
+  trackMetric(metric: IMetricTelemetry, customProperties?: { [p: string]: any }): void {
+  }
+
+  trackPageView(pageView: IPageViewTelemetry, customProperties?: { [p: string]: any }): void {
+  }
+
+  trackPageViewPerformance(pageViewPerformance: IPageViewPerformanceTelemetry, customProperties?: { [p: string]: any }): void {
+  }
+
+  trackTrace(trace: ITraceTelemetry, customProperties?: { [p: string]: any }): void {
+  }
+ }
 
 export class AppInsightsWrapper implements AbstractAppInsights {
-  public config: Microsoft.ApplicationInsights.IConfig; public context: Microsoft.ApplicationInsights.ITelemetryContext;
-  public queue: (() => void)[];
   public startTrackPage(name?: string) {
     AppInsights.startTrackPage(name);
   }
