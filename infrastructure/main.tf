@@ -66,6 +66,23 @@ moved {
   to   = module.application_insights.azurerm_application_insights.this
 }
 
+resource "azurerm_application_insights" "appinsight" {
+  name                = "${local.app_full_name}-appinsights-${var.env}-classic"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.rg.name
+  application_type    = var.application_type
+
+  tags = var.common_tags
+
+  lifecycle {
+    ignore_changes = [
+      # Ignore changes to appinsights as otherwise upgrading to the Azure provider 2.x
+      # destroys and re-creates this appinsights instance
+      application_type,
+    ]
+  }
+}
+
 resource "azurerm_resource_group" "rg" {
   name     = "${local.app_full_name}-${var.env}"
   location = var.location
@@ -75,6 +92,6 @@ resource "azurerm_resource_group" "rg" {
 
 resource "azurerm_key_vault_secret" "app_insights_key" {
   name         = "appinsights-instrumentationkey-mc"
-  value        = module.application_insights.instrumentation_key
+  value        = azurerm_application_insights.appinsight.instrumentation_key
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }

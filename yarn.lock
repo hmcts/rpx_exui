@@ -2615,12 +2615,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/ccd-case-ui-toolkit@npm:7.0.2":
-  version: 7.0.2
-  resolution: "@hmcts/ccd-case-ui-toolkit@npm:7.0.2"
+"@hmcts/ccd-case-ui-toolkit@npm:7.0.10":
+  version: 7.0.10
+  resolution: "@hmcts/ccd-case-ui-toolkit@npm:7.0.10"
   dependencies:
     tslib: ^2.3.0
-  checksum: f2b7265ed82a867c4481bffbf970acf7d2737c59616b0c9ae1661bbbb9e78438a7ec6166cac4c486a9b687bcfcc1c0512b163dbaeb8b216f5444f0239112f6cb
+  checksum: faef4f75363a83a3c154ae57c48836f23aab9f0744b1e4fb48687e7079f1872d642c189b03f0efa7b393a15089080356fc0172ce63ba0d9bfad66aa5a32b9c14
   languageName: node
   linkType: hard
 
@@ -2643,9 +2643,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/media-viewer@npm:2.10.1-RC.1":
-  version: 2.10.1-RC.1
-  resolution: "@hmcts/media-viewer@npm:2.10.1-RC.1"
+"@hmcts/media-viewer@npm:3.0.2":
+  version: 3.0.2
+  resolution: "@hmcts/media-viewer@npm:3.0.2"
   dependencies:
     "@circlon/angular-tree-component": ^11.0.4
     "@swimlane/ngx-datatable": ^20.0.0
@@ -2666,7 +2666,7 @@ __metadata:
     "@ngrx/router-store": ^15.0.0
     "@ngrx/store": ^15.0.0
     "@ngrx/store-devtools": ^15.0.0
-  checksum: a5e13ac71d38010ae27b3fa98f4267d64156eb759d50b59365d4b79d60369987e1209bd1e247fdba1b76170bb8bb093738b99a99167274d60f729c6e7d3f65f7
+  checksum: 8b055fa73099c76078b1b7109b15b2779afdbac2328aa5398869eaf1b0a95b2f2105c3dec8b370a506b0ef4bf82ca34861a2c9f0d5dcee55b5106dc2702a9a4b
   languageName: node
   linkType: hard
 
@@ -2703,16 +2703,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/rpx-xui-common-lib@npm:2.0.1":
-  version: 2.0.1
-  resolution: "@hmcts/rpx-xui-common-lib@npm:2.0.1"
+"@hmcts/rpx-xui-common-lib@npm:2.0.13":
+  version: 2.0.13
+  resolution: "@hmcts/rpx-xui-common-lib@npm:2.0.13"
   dependencies:
     tslib: ^2.0.0
   peerDependencies:
     launchdarkly-js-client-sdk: ^2.15.2
     ngx-pagination: ^3.2.1
     rpx-xui-translation: ^0.1.1
-  checksum: d077e9fc16eedb6786effcdafb378d39e7f547a15636a4514f7d36453407beb2e02ca8c2bbd74322b3cd63e10e0c471be557f6d645d4f83f15b2694e380297b7
+  checksum: 0bc444dac8cdf213d8f5485fd2db591f9a20a89c4b0e2cc81af7f8ca04fc8efa26d4db40466861596d35f2ae4c6db7b0d09501c3d9ae6565e99eb1d3a770790e
   languageName: node
   linkType: hard
 
@@ -15120,17 +15120,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:>= 3.7.0, lodash@npm:^4.17.10, lodash@npm:^4.17.11, lodash@npm:^4.17.12, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.20, lodash@npm:^4.17.21":
+"lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
-  languageName: node
-  linkType: hard
-
-"lodash@npm:^3.7.0":
-  version: 3.10.1
-  resolution: "lodash@npm:3.10.1"
-  checksum: 53065d3712a2fd90b55690c5af19f9625a5bbb2b7876ff76d782ee1dc22618fd4dff191d44a8e165a17b5b81a851c3e884d3b5b25e314422fbe24bb299542685
   languageName: node
   linkType: hard
 
@@ -15330,6 +15323,15 @@ __metadata:
   version: 2.5.2
   resolution: "luxon@npm:2.5.2"
   checksum: d8b671ffd2ff0b438af862ac11082a81b3aedd9f8b6a4ca636f944224f8dd381125cd4d274ca0a8aedcaf2cfca0fc2ca96fe4cc1b16a28b7af701afb95c0bff8
+  languageName: node
+  linkType: hard
+
+"lz-string@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "lz-string@npm:1.5.0"
+  bin:
+    lz-string: bin/bin.js
+  checksum: 1ee98b4580246fd90dd54da6e346fb1caefcf05f677c686d9af237a157fdea3fd7c83a4bc58f858cd5b10a34d27afe0fdcbd0505a47e0590726a873dc8b8f65d
   languageName: node
   linkType: hard
 
@@ -19081,13 +19083,13 @@ __metadata:
     "@angular/platform-browser-dynamic": ^15.2.9
     "@angular/router": ^15.2.9
     "@edium/fsm": ^2.1.2
-    "@hmcts/ccd-case-ui-toolkit": 7.0.2
+    "@hmcts/ccd-case-ui-toolkit": 7.0.10
     "@hmcts/ccpay-web-component": 6.0.2
     "@hmcts/frontend": 0.0.50-alpha
-    "@hmcts/media-viewer": 2.10.1-RC.1
+    "@hmcts/media-viewer": 3.0.2
     "@hmcts/nodejs-healthcheck": 1.7.0
     "@hmcts/properties-volume": ^0.0.13
-    "@hmcts/rpx-xui-common-lib": 2.0.1
+    "@hmcts/rpx-xui-common-lib": 2.0.13
     "@hmcts/rpx-xui-node-lib": 2.25.12
     "@microsoft/applicationinsights-web": ^3.0.7
     "@ng-idle/core": ^11.1.0
@@ -19179,6 +19181,7 @@ __metadata:
     launchdarkly-js-client-sdk: ^2.16.3
     local-storage: ^2.0.0
     lodash: ^4.17.21
+    lz-string: ^1.5.0
     material-design-icons: ^3.0.1
     mocha: ^8.1.1
     mochawesome: ^6.2.1

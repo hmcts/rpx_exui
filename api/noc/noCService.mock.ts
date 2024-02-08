@@ -1,4 +1,4 @@
-import MockAdapter = require('axios-mock-adapter');
+import * as MockAdapter from 'axios-mock-adapter';
 import * as faker from 'faker/locale/en_GB';
 import { httpMock } from './httpMock';
 import { NoCQuestion } from './models/noCQuestion.interface';
@@ -30,7 +30,7 @@ export const generator = (schema, min = 1, max) => {
 };
 
 export const init = () => {
-  const mock = new MockAdapter(httpMock);
+  const mock: MockAdapter = new MockAdapter(httpMock);
 
   // schema
   const questionsSchema: NoCQuestion[] = [

@@ -82,6 +82,12 @@ export class HearingRequirementsComponent extends RequestHearingPageFlow impleme
    * Initializes hearing request from hearing values
    */
   public initializeHearingRequestFromHearingValues(): void {
+    // Get hearing window from hearingRequestMainModel
+    let hearingWindow = this.validatorsUtils.getHearingWindow(this.hearingRequestMainModel);
+    // Get hearing window from serviceHearingValuesModel if null
+    if (!hearingWindow && this.serviceHearingValuesModel.hearingWindow) {
+      hearingWindow = this.serviceHearingValuesModel.hearingWindow;
+    }
     const combinedParties: PartyDetailsModel[] = this.combinePartiesWithIndOrOrg(this.serviceHearingValuesModel.parties);
     const hearingRequestMainModel: HearingRequestMainModel = {
       hearingDetails: {
@@ -89,7 +95,7 @@ export class HearingRequirementsComponent extends RequestHearingPageFlow impleme
         hearingType: this.serviceHearingValuesModel.hearingType,
         hearingLocations: this.serviceHearingValuesModel.hearingLocations,
         hearingIsLinkedFlag: this.serviceHearingValuesModel.hearingIsLinkedFlag,
-        hearingWindow: this.validatorsUtils.getHearingWindow(this.hearingRequestMainModel),
+        hearingWindow: hearingWindow,
         privateHearingRequiredFlag: this.serviceHearingValuesModel.privateHearingRequiredFlag,
         panelRequirements: this.serviceHearingValuesModel.panelRequirements,
         autolistFlag: this.serviceHearingValuesModel.autoListFlag,

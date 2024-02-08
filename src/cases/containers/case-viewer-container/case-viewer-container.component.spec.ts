@@ -147,6 +147,14 @@ class MockFeatureToggleService implements FeatureToggleService {
     }] as unknown as R);
   }
 
+  public getValueSync<R>(_key: string, _defaultValue: R): R {
+    return {
+      jurisdiction: 'SSCS',
+      caseType: 'Benefit',
+      roles: ['caseworker-sscs-judge', 'caseworker-sscs']
+    } as unknown as R;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
   public initialize(_user: FeatureUser, _clientId: string): void { }
 

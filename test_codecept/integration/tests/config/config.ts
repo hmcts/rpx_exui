@@ -5,8 +5,7 @@ export  const config =  {
             {
                 id: 'DIVORCE',
                 caseTypeIds: [
-                    'xuiTestCaseType',
-                    'FinancialRemedyContested'
+                    'xuiTestCaseType'
                 ]
             },
             {

@@ -1,7 +1,7 @@
 import { Matchers } from '@pact-foundation/pact';
 import { like } from '@pact-foundation/pact/src/dsl/matchers';
 
-const { term, string, boolean, eachLike } = Matchers;
+const { string, boolean, eachLike } = Matchers;
 
 export default {
   'request_parameter_supported': boolean(true),

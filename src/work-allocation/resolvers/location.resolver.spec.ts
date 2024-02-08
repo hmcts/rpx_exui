@@ -11,7 +11,7 @@ import { reducers } from '../../app/store';
 import * as fromCaseList from '../../app/store/reducers';
 import { RoleCategory } from '../../role-access/models';
 import { AllocateRoleService } from '../../role-access/services';
-import { LocationsByRegion, LocationsByService } from '../models/dtos';
+import { LocationsByRegion } from '../models/dtos';
 import { CaseworkerDataService, LocationDataService } from '../services';
 import { LocationResolver } from './location-resolver.service';
 
@@ -446,7 +446,6 @@ describe('LocationResolver', () => {
     // EUI-7909 - Remove next five lines of code
     const locationsByRegion: LocationsByRegion[] = [{ regionId: '4', locations: ['12345', '2341'] }, { regionId: '3', locations: ['54321'] }];
     const expectedLocation = [{ id: null, userId: '998db99b-08aa-43d4-bc6b-0aabbb0e3c6f', locationName: '', locationId: null, services: ['IA'] }];
-    const expectedUserLocations = [];
     expect(service.getJudicialWorkersOrCaseWorkers(locationsByRegion, CASE_WORKER_SHOULD_HAVE_ALL_LOCATIONS)).toEqual(expectedLocation);
     expect(sessionStorageService.setItem).toHaveBeenCalledWith('userLocations', '[]');
   }));
@@ -495,7 +494,6 @@ describe('LocationResolver', () => {
     spyOn(sessionStorageService, 'setItem');
     const locationsByRegion: LocationsByRegion[] = [{ regionId: '4', locations: ['12345', '2341'] }, { regionId: '3', locations: ['54321'] }];
     const expectedLocation = [{ id: null, userId: '998db99b-08aa-43d4-bc6b-0aabbb0e3c6f', locationName: '', locationId: null, services: ['IA'] }];
-    const expectedUserLocations = [];
     expect(service.getJudicialWorkersOrCaseWorkers(locationsByRegion, CASE_WORKER_SHOULD_HAVE_ALL_LOCATIONS)).toEqual(expectedLocation);
     expect(sessionStorageService.setItem).toHaveBeenCalledWith('userLocations', '[]');
   }));

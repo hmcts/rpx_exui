@@ -19,7 +19,8 @@
         "./test_codecept/integration/tests/workallocation/release2Tasks.spec.ts",
         "./test_codecept/integration/tests/workallocation/release2CaseRoles.spec.ts",
         "./test_codecept/integration/tests/workallocation/person.spec.ts",
-        "./test_codecept/integration/tests/workallocation/findPerson.spec.ts"
+        "./test_codecept/integration/tests/workallocation/findPerson.spec.ts",
+        "./test_codecept/integration/tests/evidenceManager.spec.ts"
   ],
   "file": ["./test_codecept/integration/tests/utils/helper.ts"]
 }

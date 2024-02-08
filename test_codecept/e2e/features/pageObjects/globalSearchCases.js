@@ -95,7 +95,7 @@ class GlobalSearchCasesPage{
     constructor(){
         this.pageHeader = element(by.xpath("//h1[contains(text(),'Search cases')]"));
 
-        this.caseReference = $('exui-case-reference-search-box input#caseReference')
+        this.caseReference = $('input#caseRef');
         this.otherReference = new InputSearchField('otherRef');//$("//xuilib-gov-uk-input//input[@id = 'otherRef']);
         this.fullName = new InputSearchField('fullName');//$("//xuilib-gov-uk-input//input[@id = 'fullName']);
         this.firstLineOfAddress = new InputSearchField('addressLine1');//$("//xuilib-gov-uk-input//input[@id = 'addressLine1']);

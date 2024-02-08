@@ -64,4 +64,10 @@ describe('PhaseBannerComponent', () => {
     component.toggleLanguage('en');
     expect(component.currentLang).toBe('en');
   });
+
+  it('should close banner', () => {
+    component.closeBanner();
+    expect(component.noBanner).toEqual(false);
+    expect(mockSessionStorageService.setItem).toHaveBeenCalled();
+  });
 });

@@ -3,6 +3,7 @@
 
 const CucumberReporter = require('../../codeceptCommon/reportLogger');
 const BrowserLogs = require('./browserLogs');
+const reportLogger = require('../../codeceptCommon/reportLogger')
 class BrowserWaits{
     constructor(){
         this.waitTime = 30000; 
@@ -112,6 +113,9 @@ class BrowserWaits{
         for (let i = 0; i < 20; i++) {
             await this.waitForSeconds(1);
             nextPage = await browser.getCurrentUrl();
+            reportLogger.AddMessage(`waiting for page nav`)
+            reportLogger.AddMessage(`From   : ${currentPageUrl}`)
+            reportLogger.AddMessage(`Current: ${nextPage}`)
             if (currentPageUrl !== nextPage) {
                 break;
             }

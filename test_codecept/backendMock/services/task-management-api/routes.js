@@ -32,7 +32,7 @@ router.get('/:taskId/roles', (req, res) => {
 });
 
 router.post('/:taskId/:action', (req,res) => {
-    res.send({})
+    res.status(204).send({})
 })
 
 router.post('/search-for-completable', (req, res) => {

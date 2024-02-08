@@ -28,6 +28,10 @@ class CCDApi{
         this.setDefaultData();
     }
 
+    getDetailsMockData(){
+        return JSON.parse(JSON.stringify(caseDetailsData));
+    }
+
     setDefaultData(){
         this.caseDetailsResponse = JSON.parse(JSON.stringify(caseDetailsData));
         this.caseList = this.getWorkbasketCases();

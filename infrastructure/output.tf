@@ -11,6 +11,6 @@ output "vaultUri" {
 }
 
 output "appInsightsInstrumentationKey" {
-  value     = module.application_insights.instrumentation_key
+  value     = azurerm_application_insights.appinsight.instrumentation_key
   sensitive = true
 }

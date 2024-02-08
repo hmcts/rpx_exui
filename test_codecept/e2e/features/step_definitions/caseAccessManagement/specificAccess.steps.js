@@ -25,7 +25,7 @@ const { DataTableArgument } = require('codeceptjs');
     });
 
     Then('I validate Review specific access page access request details', async function (datatable) {
-        const requestDetails = datatable.rowsHash(); 
+        const requestDetails = datatable.parse().rowsHash(); 
         await BrowserWaits.retryWithActionCallback(async () => {
             const actualRequestDetails = await reviewSARPage.getAccessRequestDetails();
             const expectedRowHeaders = Object.keys(requestDetails);
@@ -135,6 +135,13 @@ const { DataTableArgument } = require('codeceptjs');
     });
 
     Then('I validate date input field {string} is displayed {string} in SAR work flow page', async function(datInputField, state){
+        const expectedVisibility = state.toLowerCase().includes('yes') || state.toLowerCase().includes('true');
+        await BrowserWaits.retryWithActionCallback(async () => {
+            expect(await durationSelectionPage.isDateInputWithLabelDisplayed(datInputField)).to.equal(expectedVisibility);
+        });
+    });
+
+    Then('I validate date input field {string} is displayed {string} in SAR work flow page', async function (datInputField, state) {
         const expectedVisibility = state.toLowerCase().includes('yes') || state.toLowerCase().includes('true');
         await BrowserWaits.retryWithActionCallback(async () => {
             expect(await durationSelectionPage.isDateInputWithLabelDisplayed(datInputField)).to.equal(expectedVisibility);

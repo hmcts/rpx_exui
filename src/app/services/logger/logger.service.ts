@@ -22,7 +22,7 @@ export interface ILoggerService {
 export class LoggerService implements ILoggerService {
   public COOKIE_KEYS;
 
-  public static NOOP_FUNCTION_FOR_LOGGING = () => {
+  public static readonly NOOP_FUNCTION_FOR_LOGGING = () => {
     // Do nothing.
   };
 
@@ -39,7 +39,7 @@ export class LoggerService implements ILoggerService {
   }
 
   private setupSwitcherForConsoleLogs() {
-    this.environmentService.config$.subscribe((config) => {
+    this.environmentService.config$.subscribe(() => {
       console.info(`Environment is ${this.environmentService.isProd() ? 'prod' : 'non-prod'}.`);
       LoggerService.switchConsoleLogs({ switchOffAll: false });
     });

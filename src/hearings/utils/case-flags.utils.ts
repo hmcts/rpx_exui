@@ -90,7 +90,12 @@ export class CaseFlagsUtils {
     partyDetails.forEach((party) => {
       const foundPartyFromService = partiesFromServiceValue.find((pt) => pt.partyID === party.partyID);
       const partyName = party.partyName ? party.partyName : (foundPartyFromService ? foundPartyFromService.partyName : '');
-      const reasonableAdjustments: string[] = party.individualDetails && party.individualDetails.reasonableAdjustments ? party.individualDetails.reasonableAdjustments : [];
+      let reasonableAdjustments: string[] = party.individualDetails && party.individualDetails.reasonableAdjustments ? party.individualDetails.reasonableAdjustments : [];
+      // If reasonable adjustments are not found in the hearing request,
+      // check the service hearing values in case flags have been set after the hearing was requested
+      if (reasonableAdjustments.length === 0 && foundPartyFromService.individualDetails && foundPartyFromService.individualDetails.reasonableAdjustments.length > 0) {
+        reasonableAdjustments = foundPartyFromService.individualDetails.reasonableAdjustments;
+      }
       const allFlagsId: string[] = reasonableAdjustments.slice();
       if (party.individualDetails && party.individualDetails.interpreterLanguage) {
         allFlagsId.push(party.individualDetails.interpreterLanguage);

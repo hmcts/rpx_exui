@@ -89,7 +89,7 @@ export class WorkCaseListWrapperComponent implements OnInit, OnDestroy {
     protected readonly httpClient: HttpClient,
     protected store: Store<fromActions.State>,
     protected checkReleaseVersionService: CheckReleaseVersionService
-  ) {}
+  ) { }
 
   public get cases(): Case[] {
     return this.pCases;
@@ -169,13 +169,16 @@ export class WorkCaseListWrapperComponent implements OnInit, OnDestroy {
     const userRoles$ = this.store.pipe(select(fromActions.getUserDetails)).pipe(map((userDetails) =>
       userDetails.roleAssignmentInfo.filter((role) => role.roleName && role.roleName === 'task-supervisor').map((role) => role.jurisdiction || null)
     ));
+
     const waJurisdictions$ = this.waSupportedJurisdictionsService.getWASupportedJurisdictions();
     this.waSupportedJurisdictions$ = combineLatest(
       [userRoles$,
         waJurisdictions$]
     ).pipe(
       map((jurisdictions) => {
-        return jurisdictions[0].includes(null) ? jurisdictions[1] : jurisdictions[0];
+        const areasOfJurisdiction = jurisdictions[0].includes(null) ? jurisdictions[1] : jurisdictions[0];
+        const uniqueJurisdictionsValue = [...new Set(areasOfJurisdiction)];
+        return uniqueJurisdictionsValue;
       }));
   }
 

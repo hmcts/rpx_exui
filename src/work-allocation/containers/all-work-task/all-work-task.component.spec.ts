@@ -1,5 +1,5 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -15,7 +15,6 @@ import { CaseRoleDetails } from '../../../role-access/models';
 import { AllocateRoleService } from '../../../role-access/services';
 import { TaskContext } from '../../../work-allocation/enums';
 import { WorkAllocationComponentsModule } from '../../components/work-allocation.components.module';
-import { FieldConfig } from '../../models/common';
 import { Task } from '../../models/tasks';
 import { CaseworkerDataService, LocationDataService, WASupportedJurisdictionsService, WorkAllocationFeatureService, WorkAllocationTaskService } from '../../services';
 import { CheckReleaseVersionService } from '../../services/check-release-version.service';
@@ -33,14 +32,6 @@ class WrapperComponent {
   template: '<div>Nothing</div>'
 })
 class NothingComponent { }
-@Component({
-  selector: 'exui-task-field',
-  template: '<div class="xui-task-field">{{task.taskName}}</div>'
-})
-class TaskFieldComponent {
-  @Input() public config: FieldConfig;
-  @Input() public task: Task;
-}
 const USER_DETAILS = {
   canShareCases: true,
   userInfo: {
@@ -63,7 +54,6 @@ xdescribe('AllWorkTaskComponent', () => {
   let component: AllWorkTaskComponent;
   let wrapper: WrapperComponent;
   let fixture: ComponentFixture<WrapperComponent>;
-  let router: Router;
   const mockTaskService = jasmine.createSpyObj('mockTaskService', ['searchTask']);
   const mockAlertService = jasmine.createSpyObj('mockAlertService', ['destroy']);
   const mockSessionStorageService = jasmine.createSpyObj('mockSessionStorageService', ['getItem', 'setItem']);
@@ -82,7 +72,6 @@ xdescribe('AllWorkTaskComponent', () => {
     }
   };
   let storeMock: jasmine.SpyObj<Store<fromActions.State>>;
-  let store: Store<fromActions.State>;
   beforeEach(waitForAsync(() => {
     storeMock = jasmine.createSpyObj('store', ['dispatch', 'pipe']);
     storeMock.pipe.and.returnValue(of(USER_DETAILS));
@@ -115,10 +104,8 @@ xdescribe('AllWorkTaskComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WrapperComponent);
-    store = TestBed.inject(Store);
     wrapper = fixture.componentInstance;
     component = wrapper.appComponentRef;
-    router = TestBed.inject(Router);
     const tasks: Task[] = getMockTasks();
     const caseRoles: CaseRoleDetails[] = getMockCaseRoles();
     mockTaskService.searchTask.and.returnValue(of({ tasks }));
@@ -249,7 +236,6 @@ xdescribe('AllWorkTaskComponent', () => {
     const mockLocationService = jasmine.createSpyObj('mockLocationService', ['getLocations']);
     const mockWASupportedJurisdictionService = jasmine.createSpyObj('mockWASupportedJurisdictionService', ['getWASupportedJurisdictions']);
     let storeMock: jasmine.SpyObj<Store<fromActions.State>>;
-    let store: Store<fromActions.State>;
     beforeEach(waitForAsync(() => {
       storeMock = jasmine.createSpyObj('store', ['dispatch', 'pipe']);
       storeMock.pipe.and.returnValue(of(USER_DETAILS));
@@ -323,7 +309,6 @@ xdescribe('AllWorkTaskComponent', () => {
           { provide: Store, useValue: storeMock }
         ]
       }).compileComponents();
-      store = TestBed.inject(Store);
       fixture = TestBed.createComponent(WrapperComponent);
       wrapper = fixture.componentInstance;
       component = wrapper.appComponentRef;
@@ -335,8 +320,6 @@ xdescribe('AllWorkTaskComponent', () => {
     it(`onPaginationEvent with error response code ${scr.statusCode}`, () => {
       const navigateSpy = spyOn(router, 'navigate');
       component.getSearchTaskRequestPagination();
-      const searchRequest = component.onPaginationEvent(1);
-      const payload = { searchRequest, view: component.view, refined: false, currentUser: undefined };
 
       expect(navigateSpy).toHaveBeenCalledWith([scr.routeUrl]);
     });

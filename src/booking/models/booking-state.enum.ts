@@ -1,6 +1,6 @@
 export enum BookingState {
-    HOME,
-    LOCATION,
-    BOOKDATE,
-    CHECK
+  HOME,
+  LOCATION,
+  BOOKDATE,
+  CHECK
 }

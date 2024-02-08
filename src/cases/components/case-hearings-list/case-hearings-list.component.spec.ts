@@ -20,6 +20,7 @@ class MockRoleCategoryMappingService {
   public isEnabled = (): Observable<boolean> => of(true);
   public getValue = <R>(key: string, defaultValue: R): Observable<R> => of(defaultValue);
   public getValueOnce = <R>(key: string, defaultValue: R): Observable<R> => of(defaultValue);
+  public getValueSync = <R>(feature: string, defaultValue: R): R => defaultValue;
 }
 
 const UPCOMING_HEARING_LIST: HearingListViewModel[] = [{

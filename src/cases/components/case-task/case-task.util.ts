@@ -31,6 +31,8 @@ export const appendTaskIdAsQueryStringToTaskDescription = (task: Task): string =
       }
     });
     return newTaskDescription;
+  } else if (task?.description) {
+    return task?.description;
   }
   return '';
 };

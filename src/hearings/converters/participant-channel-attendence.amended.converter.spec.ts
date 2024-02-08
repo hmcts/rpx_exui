@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
 import { of } from 'rxjs';
@@ -9,8 +8,6 @@ import { ParticipantChannelAttendenceAmendedConverter } from './participant-chan
 
 describe('ParticipantChannelAttendenceAmendedConverter', () => {
   let converter: ParticipantChannelAttendenceAmendedConverter;
-  let store: Store<any>;
-  let router: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,8 +25,6 @@ describe('ParticipantChannelAttendenceAmendedConverter', () => {
         }
       ]
     });
-    store = TestBed.inject(Store);
-    router = TestBed.inject(ActivatedRoute);
     converter = new ParticipantChannelAttendenceAmendedConverter();
   });
 

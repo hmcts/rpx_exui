@@ -58,6 +58,15 @@ const cucumberReporter = require('../../../codeceptCommon/reportLogger');
 
     
 
+
+     Then('I wait for seconds for {int}', async function(waitSeconds){
+        await new Promise((resolve,reject) => {
+            setTimeout(() => {
+                resolve(true)
+            }, waitSeconds*1000 )
+        })
+    });
+
     async function getUnknownWindowHandles(){
         const scenarioDataKeys = Object.keys(global.scenarioData);
         const windowReferences = await ArrayUtil.filter(scenarioDataKeys,async (scrDataKey) => scrDataKey.includes('window.') );

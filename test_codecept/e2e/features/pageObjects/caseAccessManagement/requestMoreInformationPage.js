@@ -2,22 +2,20 @@
 
 class SARRequestMoreInformationPage{
     constructor(){
-        this.header = $('exui-specific-access-information h1');
-        this.headerCaption = $('exui-specific-access-information h1 span')
-        this.hint = $('exui-specific-access-information .govuk-hint');
+        this.container = $('exui-specific-access-information h1');
+        
+        this.fieldMapping = {
+            "Request more information": element(by.xpath(`//h1[contains(text(),'Request more information')]/..//textarea`))
+        }
 
-        this.textArea = $('exui-specific-access-information textarea');
+        
 
     }
 
-    async isDisplayed(){
-        return await this.header.isDisplayed(); 
+    async inputValues(field, value){
+        await this.fieldMapping[field].sendkeys(value)
     }
 
-
-    async enterInTextArea(text) {
-        return await this.textArea.sendKeys(text);
-    }
 }
 
-module.exports = new SARRequestMoreInformationPage();
+module.exports = SARRequestMoreInformationPage;

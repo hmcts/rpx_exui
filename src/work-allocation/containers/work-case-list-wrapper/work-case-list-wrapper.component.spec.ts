@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AlertService, LoadingService, PaginationModule } from '@hmcts/ccd-case-ui-toolkit';
 import { ExuiCommonLibModule, FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store, StoreModule } from '@ngrx/store';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { SessionStorageService } from '../../../app/services';
 import { InfoMessageCommService } from '../../../app/shared/services/info-message-comms.service';
@@ -157,5 +157,21 @@ describe('WorkCaseListWrapperComponent', () => {
       component.onActionHandler(secondCaseAction);
       expect(mockRouter.navigateByUrl).toHaveBeenCalledWith(jasmine.stringMatching('remove'), { state: { backUrl: null } });
     }));
+
+    it('should filter out duplicates values', () => {
+      const loadSpy = spyOn(component, 'loadSupportedJurisdictions');
+      let jurisdictionValue = [];
+      component.waSupportedJurisdictions$ = new Observable((jr) => {
+        jr.next(['Public Law', 'Immigration', 'Public Law']);
+      });
+
+      component.waSupportedJurisdictions$.subscribe((rst) => {
+        jurisdictionValue = [...new Set(rst)];
+      });
+
+      component.ngOnInit();
+      expect(loadSpy).toHaveBeenCalled();
+      expect(jurisdictionValue.length).toEqual(2);
+    });
   });
 });

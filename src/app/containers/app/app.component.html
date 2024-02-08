@@ -1,6 +1,7 @@
-<xuilib-cookie-banner 
+<xuilib-cookie-banner
   [identifier]="cookieName"
   [appName]="'this service'"
+  [enableDynatrace]="true"
   *ngIf="isCookieBannerVisible"
   (acceptanceNotifier)="notifyAcceptance()"
   (rejectionNotifier)="notifyRejection()"

@@ -58,6 +58,7 @@ nodejs:
     SERVICES_HEARINGS_COMPONENT_API_PRIVATELAW: http://fis-hmc-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     SERVICES_HMC_HEARINGS_COMPONENT_API: http://hmc-cft-hearing-service-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     SERVICES_HEARINGS_COMPONENT_API_CIVIL: http://civil-service-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+    SERVICES_HEARINGS_COMPONENT_API_IAC: http://ia-hearings-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     # Services work allocation endpoints
     SERVICES_WORK_ALLOCATION_TASK_API: http://wa-task-management-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     # Services role  endpoints

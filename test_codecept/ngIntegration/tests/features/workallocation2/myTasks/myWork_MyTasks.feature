@@ -5,7 +5,6 @@ Feature: WA Release 2: My work - My Tasks
         Given I init MockApp
 
 
-@functional_debug
     Scenario Outline:  My Tasks, colums and column links for "<UserType>"
         
         

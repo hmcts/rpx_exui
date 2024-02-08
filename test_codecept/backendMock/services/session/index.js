@@ -3,7 +3,6 @@ const path = require('path')
 
 const axios = require('axios')
 
-const session = require('./sampleSession.json')
 
 const roleAssignmentsService = require('../roleAssignments/index')
 
@@ -142,7 +141,8 @@ class MockSessionService {
         roleAssignmentsService.serviceUsersRoleAssignments.push(...roleAssignments)
         let sessionJson = await fs.readFileSync(sessionFile);
 
-        roleAssignmentsService.addRoleAssigmemntsToSession(auth,roleAssignments)
+        roleAssignmentsService.serviceUsersRoleAssignments.push(...roleAssignments)
+
         sessionJson = JSON.parse(sessionJson)
         if (sessionJson.roleAssignmentResponse) {
             sessionJson.roleAssignmentResponse.push(...roleAssignments)

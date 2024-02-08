@@ -1,4 +1,4 @@
-import MockAdapter = require('axios-mock-adapter');
+import * as MockAdapter from 'axios-mock-adapter';
 import * as _ from 'lodash';
 import { HttpMockAdapter } from '../common/httpMockAdapter';
 

@@ -1,6 +1,6 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { Component, Input, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { LoadingService, PaginationModule } from '@hmcts/ccd-case-ui-toolkit';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
@@ -14,7 +14,7 @@ import { FieldConfig, SortField } from '../../models/common';
 import { PaginationParameter } from '../../models/dtos';
 import { Task, TaskAction, TaskServiceConfig } from '../../models/tasks';
 import { WorkAllocationTaskService } from '../../services';
-import { getMockTasks, MockRouter } from '../../tests/utils.spec';
+import { MockRouter, getMockTasks } from '../../tests/utils.spec';
 import { TaskListComponent } from './task-list.component';
 
 @Component({

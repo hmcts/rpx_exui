@@ -4,7 +4,6 @@ import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
-import { addMatchers, getTestScheduler, initTestScheduler, resetTestScheduler } from 'jasmine-marbles';
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(

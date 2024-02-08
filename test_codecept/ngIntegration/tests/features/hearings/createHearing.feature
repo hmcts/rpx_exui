@@ -1,5 +1,5 @@
 
-@ng @functional_enabled  @functional_debug
+@ng @functional_enabled
 Feature: Create hearings workflow
 
 

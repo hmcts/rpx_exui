@@ -5,6 +5,8 @@ const { SHORT_DELAY, MID_DELAY, LONG_DELAY, LOG_LEVELS } = require('../../suppor
 var BrowserWaits = require('../../support/customWaits');
 const CucumberReportLogger = require('../../../codeceptCommon/reportLogger');
 
+
+
 function loginLogoutObjects() {
 
   this.emailAddress = element(by.css("[id='username']"));
@@ -17,7 +19,32 @@ function loginLogoutObjects() {
 
   this.incorrectCredentialsErrorHeader = element(by.xpath('//h2[@id = "validation-error-summary-heading"][contains(text(),"Incorrect email or password")]'));
 
+  this.reuseLoginSession = async function(email){
+    const { users, reuseCounter } = inject();
+
+    const mathcingSession = users.filter(user => user.email === email)
+    CucumberReportLogger.AddMessage(`Users sessions available ${users.length}, `)
+    CucumberReportLogger.AddMessage(`This user ${email} session ${mathcingSession.length > 0 ? 'exists':'does not exist'} `)
+
+    share({ reuseCounter: mathcingSession.length > 0 ? (reuseCounter + 1) : reuseCounter })
+
+
+    // if (mathcingSession.length > 0){
+    //   await browser.get(`${process.env.TEST_URL}/get-help`);
+    //   await BrowserWaits.waitForElement($('exui-get-help'))
+    //   await browser.driver.manage().setCookies(mathcingSession[0].cookies)
+    //   await browser.get(`${process.env.TEST_URL}`);
+    //   return true
+    // }
+    // return false
+  }
+
+
   this.givenIAmLoggedIn = async function (email,password) {
+    const isSessionReused = await this.reuseLoginSession(email)
+    // if (isSessionReused){
+    //   return;
+    // }
     await BrowserWaits.waitForElement(this.signinTitle);;
     await this.loginWithCredentials(email, password);
     
@@ -77,6 +104,15 @@ function loginLogoutObjects() {
     console.log('password done')
 
     await this.clickSignIn();
+    try{
+      await BrowserWaits.waitForElement($("exui-app-header"));
+      const { users } = inject();
+      const cookies = await browser.driver.manage().getCookies()
+      users.push({ email: username, cookies: cookies })
+      share({ users: users })
+    }catch(err){
+
+    }
     console.log('sign in done')
 
   };

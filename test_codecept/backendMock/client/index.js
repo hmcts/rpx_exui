@@ -28,7 +28,7 @@ class BackendMockClient{
     }
 
     async updateAuthSessionWithRoleAssignments(auth, roleAssignments) {
-        await this.setUserApiData(auth, "OnUserRoleAssignments", roleAssignments )
+        await this.setUserApiData(auth, "OnUserRoleAssignments", { status: 200, data: roleAssignments } )
         return await axiosInstance.post(`${this.baseUrl}session/user/roleAssignments`, {
             auth: auth,
             roleAssignments: roleAssignments

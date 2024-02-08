@@ -1,6 +1,7 @@
 
 
 const client = require('./index')
+const reportLogger = require('../../codeceptCommon/reportLogger')
 
 class ServiceMock{
 
@@ -15,7 +16,8 @@ class ServiceMock{
     }
 
     async updateCaseData(data, status){
-        await this.updateMockServer('OnCaseDetails', { status: status ? status:200, data: data });
+        const res = await this.updateMockServer('OnCaseDetails', { status: status ? status:200, data: data });
+        reportLogger.AddMessage(`Case data updated to mock, Status code ${res.status}`)
     }
 
     async updateSearchForCompletableTasks(data, status){

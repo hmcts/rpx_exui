@@ -7,7 +7,7 @@ const logger = log4jui.getLogger('errorHandler');
 /**
  * Note that the next, NextFunction is required here.
  */
-// eslint-disable-next-line no-unused-vars, no-shadow
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function errorHandler(err, req: Request, res: Response, next: NextFunction) {
   if (propsExist(err, ['config', 'headers'])) {
     // remove any sensitive data, such as bearer token from being logged

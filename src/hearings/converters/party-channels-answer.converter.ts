@@ -8,7 +8,7 @@ import * as fromHearingStore from '../store';
 import { AnswerConverter } from './answer.converter';
 
 export class PartyChannelsAnswerConverter implements AnswerConverter {
-  constructor(protected readonly route: ActivatedRoute) {}
+  constructor(protected readonly route: ActivatedRoute) { }
 
   private static getPartyChannelValue(refData: LovRefDataModel[], party: PartyDetailsModel): string {
     let preferredHearingChannelRefData = null;
@@ -39,16 +39,25 @@ export class PartyChannelsAnswerConverter implements AnswerConverter {
   }
 
   public getPartyName(party: PartyDetailsModel, foundPartyFromService: PartyDetailsModel): string {
-    if (party.partyName) {
-      return party.partyName;
+    if (party) {
+      return this.getFullName(party);
     }
-    if (foundPartyFromService) {
-      if (foundPartyFromService.partyName && foundPartyFromService.partyName !== null) {
-        return foundPartyFromService.partyName;
-      }
 
-      return foundPartyFromService.partyID;
+    if (foundPartyFromService) {
+      return this.getFullName(foundPartyFromService);
     }
-    return '';
+  }
+
+  getFullName(pdm: PartyDetailsModel) {
+    if (pdm.partyName) {
+      return pdm.partyName;
+    } else if (pdm.individualDetails) {
+      return this.getVal(pdm.individualDetails.firstName) + ' ' + this.getVal(pdm.individualDetails.lastName);
+    }
+    return pdm.partyID;
+  }
+
+  getVal(item: string) {
+    return item ? item : '';
   }
 }

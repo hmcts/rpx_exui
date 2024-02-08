@@ -55,7 +55,8 @@
     "test:fullfunctional": "yarn run test:xuiIntegration && yarn run test:functionalApiE2e",
     "test:fullfunctional:local": "webdriver-manager update --versions.chrome 2.40 && protractor ./test/e2e/config/fullfunctional.conf.js --local",
     "test:functional1": "yarn run test:xuiIntegration && yarn run test:functionalApiE2e",
-    "test:functional": "yarn test:api && yarn run test:xuiIntegration && yarn run test:codeceptE2E",
+    "test:functional_old": "yarn test:api && yarn run test:xuiIntegration && yarn run test:codeceptE2E",
+    "test:functional": "npm-run-all -p -l -n -c test:api test:xuiIntegration test:codeceptE2E",
     "test:functional:backup": "webdriver-manager update --versions.chrome 2.40 && protractor ./test/e2e/config/conf.js --local",
     "test:functional:local": "yarn test:ngIntegration && webdriver-manager update --versions.chrome 2.40 && protractor ./test/e2e/config/functional.conf.js --local",
     "test:functionalApiE2e": "yarn run test:api && yarn run test:codeceptE2E",
@@ -89,13 +90,13 @@
     "@angular/platform-browser-dynamic": "^15.2.9",
     "@angular/router": "^15.2.9",
     "@edium/fsm": "^2.1.2",
-    "@hmcts/ccd-case-ui-toolkit": "7.0.2",
+    "@hmcts/ccd-case-ui-toolkit": "7.0.10",
     "@hmcts/ccpay-web-component": "6.0.2",
     "@hmcts/frontend": "0.0.50-alpha",
-    "@hmcts/media-viewer": "2.10.1-RC.1",
+    "@hmcts/media-viewer": "3.0.2",
     "@hmcts/nodejs-healthcheck": "1.7.0",
     "@hmcts/properties-volume": "^0.0.13",
-    "@hmcts/rpx-xui-common-lib": "2.0.1",
+    "@hmcts/rpx-xui-common-lib": "2.0.13",
     "@hmcts/rpx-xui-node-lib": "2.25.12",
     "@microsoft/applicationinsights-web": "^3.0.7",
     "@ng-idle/core": "^11.1.0",
@@ -137,6 +138,7 @@
     "launchdarkly-js-client-sdk": "^2.16.3",
     "local-storage": "^2.0.0",
     "lodash": "^4.17.21",
+    "lz-string": "^1.5.0",
     "material-design-icons": "^3.0.1",
     "mochawesome": "^6.2.1",
     "mochawesome-report-generator": "^5.1.0",
@@ -253,6 +255,9 @@
   },
   "browser": {
     "crypto": false
+  },
+  "resolutions": {
+    "lodash": "^4.17.21"
   },
   "packageManager": "yarn@3.6.3"
 }

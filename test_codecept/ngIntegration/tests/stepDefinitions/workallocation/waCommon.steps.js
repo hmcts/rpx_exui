@@ -114,6 +114,8 @@ async function loginattemptCheckAndRelogin(username, password, world) {
         
 
         await browser.get('http://localhost:3000/get-help');
+  
+
         let userDetails = null;
       
         await BrowserWaits.retryWithActionCallback(async () => {
@@ -349,7 +351,7 @@ async function loginattemptCheckAndRelogin(username, password, world) {
             const roleAssignmentTemplate = roleAssignmentMock.getRoleAssignmentTemplate();
             const roleKeys = Object.keys(roleAssignment);
 
-            const attributeProperties = ['jurisdiction', 'substantive', 'caseType', 'caseId', 'baseLocation', 'primaryLocation','bookable']
+            const attributeProperties = ['jurisdiction', 'substantive', 'caseType', 'caseId', 'baseLocation', 'primaryLocation', 'bookable','specificAccessReason']
 
             for(const attr of roleKeys){
                 const value =  boolAttributes.includes(attr) ? roleAssignment[attr].includes('true') : roleAssignment[attr];
@@ -583,4 +585,33 @@ async function loginattemptCheckAndRelogin(username, password, world) {
         CucumberReporter.AddMessage(`For roles "${roles}" Person of type "${roleCategory} is added"`);
         CucumberReporter.AddJson(person);
     });
+
+
+Given('I set role assignment query response', async function (roleAssignments){
+        reportLogger.reportDatatable(roleAssignments)
+        const boolAttributes = ['isCaseAllocator', 'contractType', 'bookable'];
+        const roleAssignmentArr = [];
+        for (const roleAssignment of roleAssignments.parse().hashes()) {
+
+            const roleAssignmentTemplate = roleAssignmentMock.getRoleAssignmentTemplate();
+            const roleKeys = Object.keys(roleAssignment);
+
+            const attributeProperties = ['jurisdiction', 'substantive', 'caseType', 'caseId', 'baseLocation', 'primaryLocation', 'bookable','specificAccessReason']
+
+            for (const attr of roleKeys) {
+                const value = boolAttributes.includes(attr) ? roleAssignment[attr].includes('true') : roleAssignment[attr];
+                if (attributeProperties.includes(attr) && value !== '') {
+                    roleAssignmentTemplate.attributes[attr] = value;
+                } else {
+                    roleAssignmentTemplate[attr] = value;
+
+                }
+            }
+
+            roleAssignmentArr.push(roleAssignmentTemplate);
+        }
+
+    await mockService.setRoleAssignmentsQuery({ roleAssignmentResponse: roleAssignmentArr },200)
+
+    })
 

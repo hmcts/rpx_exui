@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription, of } from 'rxjs';
 import { debounceTime, filter, mergeMap, switchMap } from 'rxjs/operators';
 
-import { AppConstants } from '../../../app/app.constants';
 import { UserInfo } from '../../../app/models';
 import { SessionStorageService } from '../../../app/services';
 import { InfoMessage } from '../../../app/shared/enums/info-message';

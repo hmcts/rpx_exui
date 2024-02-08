@@ -1,8 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { EnvironmentService } from './environment.service';
-import { EnvironmentConfig } from '../../../models/environmentConfig.model';
-import { Observable } from 'rxjs';
 
 describe('EnvironmentService', () => {
   beforeEach(() => {

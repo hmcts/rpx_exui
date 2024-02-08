@@ -1849,14 +1849,14 @@ describe('workAllocation.utils', () => {
       let specificRoleAssignments: RoleAssignment[];
       let newRoleAssignment: RoleAssignment[];
       describe('filterMyAccessRoleAssignments', () => {
-        it('should filter role assignments having specific assess', () => {
+        it('should filter role assignments having specific access', () => {
           specificRoleAssignments = filterMyAccessRoleAssignments(roleAssignments);
           expect(specificRoleAssignments.length).to.equal(2);
         });
       });
 
       describe('getAccessGrantedRoleAssignments', () => {
-        it('should filter role assignments having specific assess granted', () => {
+        it('should filter role assignments having specific access granted', () => {
           newRoleAssignment = getAccessGrantedRoleAssignments(roleAssignments);
           expect(newRoleAssignment.length).to.equal(1);
         });
