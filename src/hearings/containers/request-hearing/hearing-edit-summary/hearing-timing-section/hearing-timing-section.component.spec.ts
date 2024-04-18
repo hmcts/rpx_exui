@@ -101,7 +101,7 @@ describe('HearingTimingSectionComponent', () => {
       leadJudgeContractType: null,
       amendReasonCodes: null,
       listingAutoChangeReasonCode: null
-    }
+    };
     component.ngOnInit();
     expect(component.hearingLength).toEqual('1 Hour');
     expect(component.specificDate).toEqual('Choose a date range<br>Earliest start date: 12 December 2022<br>Latest end date: 12 December 2022');
