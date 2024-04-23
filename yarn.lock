@@ -4513,7 +4513,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ngrx/effects@npm:16.3.0":
+"@ngrx/effects@npm:^16.3.0":
   version: 16.3.0
   resolution: "@ngrx/effects@npm:16.3.0"
   dependencies:
@@ -4526,7 +4526,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ngrx/router-store@npm:16.3.0":
+"@ngrx/router-store@npm:^16.3.0":
   version: 16.3.0
   resolution: "@ngrx/router-store@npm:16.3.0"
   dependencies:
@@ -4548,7 +4548,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ngrx/store-devtools@npm:16.3.0":
+"@ngrx/store-devtools@npm:^16.3.0":
   version: 16.3.0
   resolution: "@ngrx/store-devtools@npm:16.3.0"
   dependencies:
@@ -4560,15 +4560,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ngrx/store@npm:^15.2.1":
-  version: 15.4.0
-  resolution: "@ngrx/store@npm:15.4.0"
+"@ngrx/store@npm:^16.3.0":
+  version: 16.3.0
+  resolution: "@ngrx/store@npm:16.3.0"
   dependencies:
     tslib: ^2.0.0
   peerDependencies:
-    "@angular/core": ^15.0.0
+    "@angular/core": ^16.0.0
     rxjs: ^6.5.3 || ^7.5.0
-  checksum: 444ab9c3da0f69fda6c09a92d50de5b828b3dce221abb4167aecbac3a120102ccbd64d3060c173b0db21b29632b850646a4d9d977a15c65d45a244f2352b3c5e
+  checksum: e31319f2e072a8145bb5093a38a1f6bfc4b723286128ca46bb1e571c7efe25114bc7c6ca8b96c7544030f28847bf1c116880aa8f32af9e8a8659e0083fb9fbc0
   languageName: node
   linkType: hard
 
@@ -20427,11 +20427,11 @@ __metadata:
     "@microsoft/applicationinsights-web": ^3.1.0
     "@ng-idle/core": ^11.1.0
     "@ng-idle/keepalive": ^14.0.0
-    "@ngrx/effects": 16.3.0
-    "@ngrx/router-store": 16.3.0
+    "@ngrx/effects": ^16.3.0
+    "@ngrx/router-store": ^16.3.0
     "@ngrx/schematics": 16.3.0
-    "@ngrx/store": ^15.2.1
-    "@ngrx/store-devtools": 16.3.0
+    "@ngrx/store": ^16.3.0
+    "@ngrx/store-devtools": ^16.3.0
     "@nguniversal/express-engine": 16.2.0
     "@nicky-lenaers/ngx-scroll-to": ^14.0.0
     "@pact-foundation/pact": ^9.11.1
