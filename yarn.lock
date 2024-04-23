@@ -4572,15 +4572,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ngrx/store@npm:^17.2.0":
-  version: 17.2.0
-  resolution: "@ngrx/store@npm:17.2.0"
+"@ngrx/store@npm:^15.2.1":
+  version: 15.4.0
+  resolution: "@ngrx/store@npm:15.4.0"
   dependencies:
     tslib: ^2.0.0
   peerDependencies:
-    "@angular/core": ^17.0.0
+    "@angular/core": ^15.0.0
     rxjs: ^6.5.3 || ^7.5.0
-  checksum: 82cb77c42ae5149c98fd5c2104023d6606c62daba0180babdc1c1306f604bc39fed4ccaeba86bb3d90949b92c864a01ad3865953597f092f6138ed54ab560a9e
+  checksum: 444ab9c3da0f69fda6c09a92d50de5b828b3dce221abb4167aecbac3a120102ccbd64d3060c173b0db21b29632b850646a4d9d977a15c65d45a244f2352b3c5e
   languageName: node
   linkType: hard
 
@@ -20449,7 +20449,7 @@ __metadata:
     "@ngrx/effects": ^17.2.0
     "@ngrx/router-store": ^17.2.0
     "@ngrx/schematics": 16.3.0
-    "@ngrx/store": ^17.2.0
+    "@ngrx/store": ^15.2.1
     "@ngrx/store-devtools": ^17.2.0
     "@nguniversal/express-engine": 16.2.0
     "@nicky-lenaers/ngx-scroll-to": ^14.0.0
