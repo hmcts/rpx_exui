@@ -1,4 +1,4 @@
-@fullfunctional @functional_enabled
+@fullfunctional @functional_enabled @DAVID
 Feature: Login
 
   Background:

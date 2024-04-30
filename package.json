@@ -72,6 +72,7 @@
     "test:backendMock": "DEBUG=true nodemon test_codecept/backendMock/app --standalone",
     "test:codeceptE2EDebug": "TEST_TYPE=e2e npx codeceptjs run --plugins retryFailedStep --plugins cucumberJsonReporter --config ./test_codecept/codeceptCommon/codecept.conf.ts --features --grep @functional_debug",
     "test:codeceptE2E": "PARALLEL=true TEST_TYPE=e2e npx codeceptjs run-workers --suites 6 --plugins cucumberJsonReporter --plugins retryFailedStep --config ./test_codecept/codeceptCommon/codecept.conf.ts --features --grep  functional_enabled",
+    "test:codeceptDAV": "PARALLEL=true TEST_TYPE=e2e npx codeceptjs run-workers --suites 2 --plugins cucumberJsonReporter --plugins retryFailedStep --config ./test_codecept/codeceptCommon/codecept.conf.ts --features --grep  DAVID",
     "test:xuiIntegrationDebug": "DEBUG=true NODE_CONFIG_ENV=mock TEST_TYPE=ngIntegration npx codeceptjs run -p pauseOnFail --config ./test_codecept/codeceptCommon/codecept.conf.ts --features --grep '(?=.*@functional_debug)^(?!.*@ignore)' ",
     "test:xuiIntegration": "yarn build && node ./test_codecept/backendMock/configCopy.js && NODE_CONFIG_ENV=mock TEST_TYPE=ngIntegration PARALLEL=true npx codeceptjs run-workers --suites 8 --config ./test_codecept/codeceptCommon/codecept.conf.ts --features --grep '(?=.*@functional_enabled)^(?!.*@ignore)' ",
     "parallel": "npm-run-all -l -p test:api test:xuiIntegration test:codeceptE2E"

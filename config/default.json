@@ -262,5 +262,14 @@
     "consumerVersion": "",
     "brokerUsername": "",
     "brokerPassword": ""
+  },
+  "secrets": {
+    "rpx": {
+      "mc-idam-client-secret": "https://portal.azure.com/#@HMCTS.NET/asset/Microsoft_Azure_KeyVault/Secret/https://rpx-aat.vault.azure.net/secrets/mc-idam-client-secret",
+      "mc-s2s-client-secret": "https://portal.azure.com/#@HMCTS.NET/asset/Microsoft_Azure_KeyVault/Secret/https://rpx-aat.vault.azure.net/secrets/mc-idam-client-secret",
+      "system-user-name": "https://portal.azure.com/#@HMCTS.NET/asset/Microsoft_Azure_KeyVault/Secret/https://rpx-aat.vault.azure.net/secrets/mc-idam-client-secret",
+      "system-user-password": "https://portal.azure.com/#@HMCTS.NET/asset/Microsoft_Azure_KeyVault/Secret/https://rpx-aat.vault.azure.net/secrets/mc-idam-client-secret",
+      "webapp-redis-connection-string": "https://portal.azure.com/#@HMCTS.NET/asset/Microsoft_Azure_KeyVault/Secret/https://rpx-aat.vault.azure.net/secrets/mc-idam-client-secret"
+    }
   }
 }
