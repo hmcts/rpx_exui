@@ -1,4 +1,4 @@
-@fullfunctional  @staffUI @functional_enabled
+@fullfunctional  @staffUI @functional_enablGI @GOOD
 Feature: Staff UI Search
 
 

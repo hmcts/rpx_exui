@@ -1,4 +1,4 @@
-@fullfunctional @test @ignore @functional_enabled
+@fullfunctional @test @ignore @functional_enablGI @BAD
 Feature: Test case type case creation and case details validations Part 3
 
     Background:

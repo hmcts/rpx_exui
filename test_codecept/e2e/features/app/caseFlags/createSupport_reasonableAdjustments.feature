@@ -1,5 +1,5 @@
 
-@fullfunctional @functional_enabled @functional_debug
+@fullfunctional @functional_enablGI @functional_debug @GOOD
 Feature: Support request Add/Update Reasonable adjustment
 
     Background: Setup case
