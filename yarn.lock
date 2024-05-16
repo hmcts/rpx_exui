@@ -2703,16 +2703,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/rpx-xui-common-lib@npm:2.0.18":
-  version: 2.0.18
-  resolution: "@hmcts/rpx-xui-common-lib@npm:2.0.18"
+"@hmcts/rpx-xui-common-lib@npm:2.0.18-find-self-user-search":
+  version: 2.0.18-find-self-user-search
+  resolution: "@hmcts/rpx-xui-common-lib@npm:2.0.18-find-self-user-search"
   dependencies:
     tslib: ^2.0.0
   peerDependencies:
     launchdarkly-js-client-sdk: ^2.15.2
     ngx-pagination: ^3.2.1
     rpx-xui-translation: ^0.1.1
-  checksum: 4eb916c687ca453d7f03cad661de00308962a4c7cd977f35fc5b3bccfafd172c01a8852a5c4ff5309fbcda8e18a125ec123587e0510c25865b254930b18f5f28
+  checksum: d352a55b868111499a6ce1d840cc16d71698c07becbf7105efb310728431e3d6f66b206389d93c51cd3e0bcf0f82ece4a99b2ec3618a02d1a02070867ccd6d4d
   languageName: node
   linkType: hard
 
@@ -19201,7 +19201,7 @@ __metadata:
     "@hmcts/media-viewer": 3.0.4
     "@hmcts/nodejs-healthcheck": 1.7.0
     "@hmcts/properties-volume": ^0.0.13
-    "@hmcts/rpx-xui-common-lib": 2.0.18
+    "@hmcts/rpx-xui-common-lib": 2.0.18-find-self-user-search
     "@hmcts/rpx-xui-node-lib": 2.25.12
     "@microsoft/applicationinsights-web": ^3.1.0
     "@ng-idle/core": ^11.1.0

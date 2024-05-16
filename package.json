@@ -96,7 +96,7 @@
     "@hmcts/media-viewer": "3.0.4",
     "@hmcts/nodejs-healthcheck": "1.7.0",
     "@hmcts/properties-volume": "^0.0.13",
-    "@hmcts/rpx-xui-common-lib": "2.0.18",
+    "@hmcts/rpx-xui-common-lib": "2.0.18-find-self-user-search",
     "@hmcts/rpx-xui-node-lib": "2.25.12",
     "@microsoft/applicationinsights-web": "^3.1.0",
     "@ng-idle/core": "^11.1.0",
