@@ -15,6 +15,7 @@ describe('AppComponent', () => {
   let title: any;
   let testRoute: RoutesRecognized;
   let sessionStorageService;
+  let initialisationSyncService;
 
   beforeEach(() => {
     store = jasmine.createSpyObj('store', ['pipe', 'dispatch']);
@@ -25,6 +26,7 @@ describe('AppComponent', () => {
     loggerService = jasmine.createSpyObj('LoggerService', ['enableCookies', 'log']);
     environmentService = jasmine.createSpyObj('environmentService', ['config$']);
     sessionStorageService = jasmine.createSpyObj('SessionStorageService', ['setItem']);
+    initialisationSyncService = jasmine.createSpyObj('InitialisationSyncService', ['waitForInialisation', 'initialisationComplete']);
     testRoute = new RoutesRecognized(1, 'test', 'test', {
       url: 'test',
       root: {
@@ -65,7 +67,7 @@ describe('AppComponent', () => {
     });
     router = { events: of(testRoute) };
     title = jasmine.createSpyObj('Title', ['setTitle']);
-    appComponent = new AppComponent(store, googleTagManagerService, timeoutNotificationService, router, title, featureToggleService, loggerService, cookieService, environmentService, sessionStorageService);
+    appComponent = new AppComponent(store, googleTagManagerService, timeoutNotificationService, router, title, featureToggleService, loggerService, cookieService, environmentService, sessionStorageService, initialisationSyncService);
   });
 
   it('Truthy', () => {

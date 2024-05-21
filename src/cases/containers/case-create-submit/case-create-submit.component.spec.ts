@@ -31,6 +31,7 @@ import { AppConfig } from '../../../app/services/ccd-config/ccd-case.config';
 import { AppConfigService } from '../../../app/services/config/configuration.services';
 import * as fromCases from '../../store/reducers';
 import { CaseCreateSubmitComponent } from './case-create-submit.component';
+import { InitialisationSyncService } from '../../../app/services/ccd-config/initialisation-sync-service';
 
 class MockSortService {
   public features = {};
@@ -138,6 +139,8 @@ describe('CaseCreateSubmitComponent', () => {
         LoadingService,
         SessionStorageService,
         HttpErrorService,
+        { provide: Window, useValue: window },
+        InitialisationSyncService,
         AppConfigService,
         AppConfig,
         {

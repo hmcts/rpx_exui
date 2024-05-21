@@ -37,7 +37,8 @@ export class CaseTaskComponent implements OnInit {
   constructor(private readonly alertService: AlertService,
               private readonly router: Router,
               private readonly sessionStorageService: SessionStorageService,
-              protected taskService: WorkAllocationTaskService) {
+              protected taskService: WorkAllocationTaskService,
+              private readonly window: Window) {
   }
 
   public get returnUrl(): string {
@@ -153,11 +154,23 @@ export class CaseTaskComponent implements OnInit {
 
   public async onClick(event: string) {
     const url = event.substring(event.indexOf('(') + 1, event.indexOf(')'));
-    const urls = url.split('?');
-    await this.router.navigate([urls[0]], {
-      queryParams: {
-        tid: urls[1].split('=')[1]
+    let qp = {};
+    let base = null;
+    if (!url.startsWith('http')) {
+      base = this.window.location.origin;
+    }
+    try {
+      const u = base ? new URL(url, base) : new URL(url);
+      const tid = u.searchParams.get('tid');
+      if (tid) {
+        qp = { tid: tid };
+        u.searchParams.delete('tid');
       }
-    });
+      await this.router.navigate([u.toString()], {
+        queryParams: qp
+      });
+    } catch (e) {
+      console.log('Invalid url found in task onClick', e);
+    }
   }
 }

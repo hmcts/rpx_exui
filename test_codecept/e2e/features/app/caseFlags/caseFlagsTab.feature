@@ -3,10 +3,10 @@ Feature: Case flags tab
 
     Background: Setup case
         When I navigate to Expert UI Url
-        Given I am logged into Expert UI with with case flags
+        Given I am logged into Expert UI with case flags
 
 
-    Scenario: Create case flag
+    Scenario: View case flag
 
         Given I navigate to page route "/cases/case-details/1698182796208883"
         When I click tab with label "Case flags" in case details page, to see element with css selector "ccd-read-case-flag-field #read-case-flag-title"
@@ -18,7 +18,6 @@ Feature: Case flags tab
           | Documents in a specified colour   | Test              | 24 Oct 2023   |               | ACTIVE      |
           | Support filling in forms          | Test              | 24 Oct 2023   |               | ACTIVE      |
           | Documents in a specified colour   | Test auto comment | 05 Feb 2024   |               | REQUESTED   |
-
 
   Scenario: Create case flag 2
 

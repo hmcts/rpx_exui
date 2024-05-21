@@ -1,9 +1,8 @@
 import { of } from 'rxjs';
-import { MonitorConfig, MonitoringService } from './monitoring.service';
+import { MonitoringService } from './monitoring.service';
 
 describe('Monitoring service', () => {
   const mockedHttpClient = jasmine.createSpyObj('mockedHttpClient', { get: of({ key: 'Some Value' }) });
-  const mockedConfig = new MonitorConfig();
 
   it('should be Truthy', () => {
     const service = new MonitoringService(mockedHttpClient);

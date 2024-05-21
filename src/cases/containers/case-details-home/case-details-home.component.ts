@@ -21,7 +21,6 @@ export class CaseDetailsHomeComponent implements OnInit {
   }
 
   public ngOnInit() {
-    console.info('ngOnInit started - CaseDetailsHomeComponent');
     if (this.extras && this.extras.state && this.extras.state.showMessage && this.extras.state.messageText) {
       // EUI-4488 - preserve alerts on initialisation so messages are not removed when first entering page
       this.alertService.setPreserveAlerts(true);
@@ -37,6 +36,5 @@ export class CaseDetailsHomeComponent implements OnInit {
         this.sessionStorageService.setItem('caseInfo', JSON.stringify(caseInfo));
       }
     });
-    console.info('ngOnInit finished - CaseDetailsHomeComponent');
   }
 }

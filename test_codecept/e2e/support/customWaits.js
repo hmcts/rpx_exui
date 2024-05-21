@@ -7,7 +7,7 @@ const reportLogger = require('../../codeceptCommon/reportLogger');
 
 class BrowserWaits{
     constructor(){
-        this.waitTime = 30000; 
+        this.waitTime = 15000; 
         this.pageErrors = $$(".error-summary");
         this.retriesCount = 3;
 

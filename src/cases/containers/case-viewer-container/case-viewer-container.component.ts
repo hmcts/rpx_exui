@@ -138,12 +138,10 @@ export class CaseViewerContainerComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    console.info('ngOnInit started - CaseViewerContainerComponent');
     this.caseDetails = this.route.snapshot.data.case as CaseView;
     this.allocateRoleService.manageLabellingRoleAssignment(this.caseDetails.case_id).subscribe();
     this.prependedTabs$ = this.prependedCaseViewTabs();
     this.appendedTabs$ = this.appendedCaseViewTabs();
-    console.info('ngOnInit finished - CaseViewerContainerComponent');
   }
 
   private prependedCaseViewTabs(): Observable<CaseTab[]> {

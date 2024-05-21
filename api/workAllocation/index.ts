@@ -216,17 +216,18 @@ export async function getTasksByCaseIdAndEventId(req: EnhancedRequest, res: Resp
   const eventId = req.params.eventId;
   const caseType = req.params.caseType;
   const jurisdiction = req.params.jurisdiction;
-
+  const traceProps = { functionCall: 'getTasksByCaseIdAndEventId' };
   try {
     const payload = { case_id: caseId, event_id: eventId, case_jurisdiction: jurisdiction, case_type: caseType };
     const jurisdictions = getWASupportedJurisdictionsList();
     // Adding log in app insights for task completion journey
-    trackTrace(`Search for completable task of eventId and caseId: ${eventId} ${caseId}`, { functionCall: 'getTasksByCaseIdAndEventId' });
+    trackTrace(`Search for completable task of eventId and caseId: ${eventId} ${caseId}`, traceProps);
     const { status, data } = jurisdictions.includes(jurisdiction)
       ? await handlePost(`${baseWorkAllocationTaskUrl}/task/search-for-completable`, payload, req)
       : { status: 200, data: [] };
     return res.status(status).send(data);
   } catch (e) {
+    trackTrace(`Error calling /task/search-for-completable ${e.toString()}`, traceProps);
     next(e);
   }
 }
