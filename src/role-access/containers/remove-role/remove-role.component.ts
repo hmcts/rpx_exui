@@ -115,7 +115,7 @@ export class RemoveRoleComponent implements OnInit {
 
   private getNamesIfNeeded(): void {
     if (!this.role.name) {
-      this.caseworkerDataService.getCaseworkersForServices([this.jurisdiction]).pipe(first()).subscribe((caseworkers) => {
+      this.caseworkerDataService.getUsersFromServices([this.jurisdiction]).pipe(first()).subscribe((caseworkers) => {
         const caseworker = caseworkers.find((givenCaseworker) => givenCaseworker.idamId === this.role.actorId);
         this.role.name = `${caseworker.firstName}-${caseworker.lastName}`;
         this.role.email = caseworker.email;

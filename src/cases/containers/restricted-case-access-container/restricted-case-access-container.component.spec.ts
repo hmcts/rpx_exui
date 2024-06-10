@@ -22,7 +22,7 @@ describe('RestrictedCaseAccessContainerComponent', () => {
   let fixture: ComponentFixture<RestrictedCaseAccessContainerComponent>;
   const mockAllocateService = jasmine.createSpyObj('AllocateRoleService', ['getCaseAccessRolesByCaseId']);
   const mockWASupportedJurisdictionsService = jasmine.createSpyObj('WASupportedJurisdictionsService', ['getWASupportedJurisdictions']);
-  const mockCaseworkerDataService = jasmine.createSpyObj('CaseworkerDataService', ['getCaseworkersForServices']);
+  const mockCaseworkerDataService = jasmine.createSpyObj('CaseworkerDataService', ['getUsersFromServices']);
   const mockLoadingService = jasmine.createSpyObj('LoadingService', ['register', 'unregister']);
   const mockActivatedRoute = {
     snapshot: {
@@ -55,7 +55,7 @@ describe('RestrictedCaseAccessContainerComponent', () => {
       .compileComponents();
     mockAllocateService.getCaseAccessRolesByCaseId.and.returnValue(of(CASEROLES));
     mockWASupportedJurisdictionsService.getWASupportedJurisdictions.and.returnValue(of(['IA']));
-    mockCaseworkerDataService.getCaseworkersForServices.and.returnValue(of([CASEWORKERS.JANE_DOE, CASEWORKERS.JOHN_SMITH]));
+    mockCaseworkerDataService.getUsersFromServices.and.returnValue(of([CASEWORKERS.JANE_DOE, CASEWORKERS.JOHN_SMITH]));
     mockLoadingService.register.and.callThrough();
     mockLoadingService.unregister.and.callThrough();
     fixture = TestBed.createComponent(RestrictedCaseAccessContainerComponent);
@@ -68,7 +68,7 @@ describe('RestrictedCaseAccessContainerComponent', () => {
     expect(mockLoadingService.register).toHaveBeenCalled();
     expect(mockAllocateService.getCaseAccessRolesByCaseId).toHaveBeenCalled();
     expect(mockWASupportedJurisdictionsService.getWASupportedJurisdictions).toHaveBeenCalled();
-    expect(mockCaseworkerDataService.getCaseworkersForServices).toHaveBeenCalled();
+    expect(mockCaseworkerDataService.getUsersFromServices).toHaveBeenCalled();
     expect(mockLoadingService.unregister).toHaveBeenCalled();
   });
 

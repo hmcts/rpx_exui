@@ -279,6 +279,19 @@ describe('HearingTimingComponent', () => {
     expect(component.firstDateOfHearingError.isInvalid).toBeTruthy();
   });
 
+  it('should allow todays date', () => {
+    component.firstDateOfHearingError = null;
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getUTCFullYear();
+    component.firstHearingFormGroup.get('firstHearingDate_day').setValue(day);
+    component.firstHearingFormGroup.get('firstHearingDate_month').setValue(month);
+    component.firstHearingFormGroup.get('firstHearingDate_year').setValue(year);
+    component.showChosenDateError();
+    expect(component.firstDateOfHearingError).toEqual(null);
+  });
+
   it('should check date selection format', () => {
     component.firstDateOfHearingError = null;
     component.firstHearingFormGroup.get('firstHearingDate_day').setValue('ewr');
@@ -288,6 +301,22 @@ describe('HearingTimingComponent', () => {
     expect(component.firstDateOfHearingError.isInvalid).toBeTruthy();
   });
 
+  it('should allow todays date to pass showChosenDateRangeError', () => {
+    component.earliestDateOfHearingError = null;
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getUTCFullYear();
+    component.earliestHearingFormGroup.get('earliestHearingDate_day').setValue(day);
+    component.earliestHearingFormGroup.get('earliestHearingDate_month').setValue(month);
+    component.earliestHearingFormGroup.get('earliestHearingDate_year').setValue(year);
+    component.latestHearingFormGroup.get('latestHearingDate_day').setValue(day);
+    component.latestHearingFormGroup.get('latestHearingDate_month').setValue(month);
+    component.latestHearingFormGroup.get('latestHearingDate_year').setValue(year);
+    component.showChosenDateRangeError();
+    expect(component.earliestDateOfHearingError).toEqual(null);
+    expect(component.earliestDateOfHearingError).toEqual(null);
+  });
   it('should check showChosenDateRangeError', () => {
     component.earliestDateOfHearingError = null;
     component.earliestHearingFormGroup.get('earliestHearingDate_day').setValue('10');

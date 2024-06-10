@@ -10,13 +10,6 @@ describe('WorkAllocation service', () => {
       expect(service).toBeTruthy();
     });
 
-    it('getAll should make correct api call', () => {
-      const service = new CaseworkerDataService(mockHttpService, mockSessionStorageService);
-      mockHttpService.get.and.returnValue(of([]));
-      service.getAll();
-      expect(mockHttpService.get).toHaveBeenCalledWith(CaseworkerDataService.caseWorkerUrl);
-    });
-
     it('getForLocation should make correct api call', () => {
       const service = new CaseworkerDataService(mockHttpService, mockSessionStorageService);
       service.getForLocation('location123');

@@ -46,7 +46,7 @@ export class TasksContainerComponent implements OnInit {
           this.tasks = tasks;
           this.warningIncluded = this.tasks.some((task) => task.warnings);
           if (tasks && tasks.length > 0) {
-            return this.caseworkerService.getCaseworkersForServices([tasks[0].jurisdiction]);
+            return this.caseworkerService.getUsersFromServices([tasks[0].jurisdiction]);
           }
           return of([]);
         })).pipe(mergeMap((caseworkers) => {

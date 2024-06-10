@@ -39,7 +39,7 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
     // step definition code here
     const datatableHashes = datatable.hashes();
     for (const row of datatableHashes) {
-      workAlloctionMockData.setLocationForCaseWokerInService(service, row.email, row.locationId);
+      workAlloctionMockData.setLocationForCaseWorkers(service, row.email, row.locationId);
     }
   });
 

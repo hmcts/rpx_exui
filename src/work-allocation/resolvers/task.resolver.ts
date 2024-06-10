@@ -26,7 +26,7 @@ export class TaskResolver implements Resolve<{ task: Task; caseworkers: Casework
     const caseworker$ = task$
       .pipe(
         mergeMap((task) => {
-          return this.caseworkerService.getCaseworkersForServices([task.task.jurisdiction]);
+          return this.caseworkerService.getUsersFromServices([task.task.jurisdiction]);
         })
       );
     return forkJoin({ task: task$, caseworkers: caseworker$ });

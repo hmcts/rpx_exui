@@ -2,12 +2,10 @@ import { Router } from 'express';
 import { getJudicialUsers } from '../roleAccess';
 
 import {
-  getAllCaseWorkers,
   getAllCaseWorkersForLocation,
   getCases,
   getCaseWorkersForLocationAndService,
   getCaseWorkersForService,
-  getCaseWorkersFromServices,
   getMyAccess,
   getMyCases,
   getRolesCategory,
@@ -21,7 +19,8 @@ import {
   searchCaseWorker,
   searchTask,
   showAllocateRoleLink,
-  getTaskNames
+  getTaskNames,
+  getUsersByServiceName
 } from '.';
 import authInterceptor from '../lib/middleware/auth';
 import { getFullLocations, getLocationById, getLocations, getLocationsByRegion } from './locationController';
@@ -31,12 +30,11 @@ const router = Router({ mergeParams: true });
 
 router.use(authInterceptor);
 
+router.use('/caseworker/getUsersByServiceName', getUsersByServiceName);
 router.use('/caseworker/location/:locationId/service/:serviceId', getCaseWorkersForLocationAndService);
 router.use('/caseworker/location/:locationId', getAllCaseWorkersForLocation);
 router.use('/caseworker/service/:serviceId', getCaseWorkersForService);
 router.use('/caseworker/search', searchCaseWorker);
-router.use('/caseworker', getAllCaseWorkers);
-router.use('/retrieveCaseWorkersForServices', getCaseWorkersFromServices);
 
 router.use('/findPerson', postFindPersonSearch);
 

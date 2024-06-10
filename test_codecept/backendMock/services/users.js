@@ -26,15 +26,16 @@ const users = {
 }
 
 for (const conf of testUsersConf) {
-    const cwTemplate = rdcaseworkers.getCaseworkerTemplate();
+    const cwTemplate = rdcaseworkers.getStaffUserDetailsTemplate();
     const bookingsTemplate = roleAssignment.getBookings();
     bookingsTemplate.bookings = conf.bookings
-    cwTemplate.id = conf.id;
-    cwTemplate.first_name = conf.first_name
-    cwTemplate.last_name = conf.last_name
-    cwTemplate.email_id = conf.email_id
-    cwTemplate.roleCategory = conf.roleCategory
-    cwTemplate.base_location[0].location_id = '20001'
+    cwTemplate.staff_profile.id = conf.id;
+    cwTemplate.staff_profile.first_name = conf.first_name
+    cwTemplate.staff_profile.last_name = conf.last_name
+    cwTemplate.staff_profile.email_id = conf.email_id
+    cwTemplate.staff_profile.roleCategory = conf.roleCategory
+    cwTemplate.staff_profile.base_location[0].location_id = '20001'
+    cwTemplate.ccd_service_name = 'IA'
     rdcaseworkers.caseworkers.push(cwTemplate)
 
 
@@ -68,15 +69,16 @@ for (const conf of caseworkersConf) {
 
         conf.services.forEach(jurisdiction => {
             idamIdCounter += 1;
-            const cwTemplate = rdcaseworkers.getCaseworkerTemplate();
-            cwTemplate.id = idamIdCounter + "";
-            cwTemplate.idamId = idamIdCounter + "";
+            const cwTemplate = rdcaseworkers.getStaffUserDetailsTemplate();
+            cwTemplate.staff_profile.id = idamIdCounter + "";
+            cwTemplate.staff_profile.idamId = idamIdCounter + "";
 
-            cwTemplate.first_name = `${roleName} ${i + 1}_${idamIdCounter + 1}`
-            cwTemplate.last_name = `${service}`
-            cwTemplate.email_id = `${service}_${roleName}_${i + 1}_${idamIdCounter + 1}@justice.gov.uk`.toLowerCase()
-            cwTemplate.roleCategory = role
-            cwTemplate.base_location[0].location_id = '20001'
+            cwTemplate.staff_profile.first_name = `${roleName} ${i + 1}_${idamIdCounter + 1}`
+            cwTemplate.staff_profile.last_name = `${service}`
+            cwTemplate.staff_profile.email_id = `${service}_${roleName}_${i + 1}_${idamIdCounter + 1}@justice.gov.uk`.toLowerCase()
+            cwTemplate.staff_profile.roleCategory = role
+            cwTemplate.staff_profile.base_location[0].location_id = '20001'
+            cwTemplate.ccd_service_name = 'IA'
             rdcaseworkers.caseworkers.push(cwTemplate)
 
 

@@ -23,7 +23,7 @@ class WorkAllocationMockData {
     this.caseWorkersList = this.getPersonList(20);
     this.judgeUsers = this.setUpJudicialUsersList(20);
 
-    this.caseworkersByService = this.getCaseworkersByService(this.waSupportedJusridictions);
+    this.usersFromServices = this.getUsersFromServices(this.waSupportedJusridictions);
 
     this.caseEventTasks = WorkAllocationDataModels.getCaseEventTasksCompletable();
 
@@ -43,8 +43,8 @@ class WorkAllocationMockData {
     const tasks = [
       { task_title: 'task 1', dueDate: -1, created_date: -10, permissions: 'Own,Execute,Manage', warnings: 'true', assignee: this.caseWorkersList[0].idamId, description: 'Click link to proceed to next step [case details link next step](/case/case-details/${[CASE_REFERENCE]})' },
       { task_title: 'task 2', dueDate: 0, created_date: -10, permissions: 'Own,Execute,Manage', warnings: 'true', assignee: this.judgeUsers[0].sidam_id, description: 'Click link to proceed to task [Task link next step](/case/case-details/${[id]})' },
-      { task_title: 'task 3', dueDate: 1, created_date: -10, permissions: 'Own,Execute,Manage', warnings: 'true', assignee: 'soneone' },
-      { task_title: 'task 4', dueDate: 10, created_date: -10, permissions: 'Own,Execute,Manage', warnings: 'true', assignee: 'soneone' }
+      { task_title: 'task 3', dueDate: 1, created_date: -10, permissions: 'Own,Execute,Manage', warnings: 'true', assignee: 'someone' },
+      { task_title: 'task 4', dueDate: 10, created_date: -10, permissions: 'Own,Execute,Manage', warnings: 'true', assignee: 'someone' }
     ];
     this.caseTasks = this.getCaseTasks(tasks);
 
@@ -109,19 +109,14 @@ class WorkAllocationMockData {
       }
     }
 
-    for(const byservice of this.caseworkersByService){
-      if(byservice.service === service){
-        const personWithIdamd = JSON.parse(JSON.stringify(this.getPersonList(1)[0]));
-        personWithIdamd.idamId = idamId;
-        personWithIdamd.location = {
-          id: locationsByService[0].epimms_id,
-          locationName: locationsByService[0].court_name
-        };
-        byservice.caseworkers.push(personWithIdamd);
-        user = personWithIdamd;
-        break;
-      }
-    }
+    const personWithIdamId = JSON.parse(JSON.stringify(this.getPersonList(1)[0]));
+    personWithIdamId.idamId = idamId;
+    personWithIdamId.location = {
+      id: locationsByService[0].epimms_id,
+      locationName: locationsByService[0].court_name
+    };
+    this.usersFromService.push(personWithIdamId);
+    user = personWithIdamId;
     return user;
   }
 
@@ -136,28 +131,23 @@ class WorkAllocationMockData {
       }
     }
 
-    for (const byservice of this.caseworkersByService) {
-      if (byservice.service === service) {
-        const personWithIdamd = JSON.parse(JSON.stringify(this.getPersonList(1)[0]));
+    const personWithIdamId = JSON.parse(JSON.stringify(this.getPersonList(1)[0]));
 
-        personWithIdamd.idamId = caseworker.idamId;
-        personWithIdamd.firstName = caseworker.firstName;
-        personWithIdamd.lastName = caseworker.lastName;
-        personWithIdamd.email = caseworker.email;
-        personWithIdamd.roleCategory = caseworker.roleCategory;
-        personWithIdamd.service = service;
+    personWithIdamId.idamId = caseworker.idamId;
+    personWithIdamId.firstName = caseworker.firstName;
+    personWithIdamId.lastName = caseworker.lastName;
+    personWithIdamId.email = caseworker.email;
+    personWithIdamId.roleCategory = caseworker.roleCategory;
+    personWithIdamId.service = service;
 
-        personWithIdamd.location = {
-          id: locationsByService[0].epimms_id,
-          locationName: locationsByService[0].court_name
-        };
-        byservice.caseworkers.push(personWithIdamd);
-        break;
-      }
-    }
+    personWithIdamId.location = {
+      id: locationsByService[0].epimms_id,
+      locationName: locationsByService[0].court_name
+    };
+    this.usersFromServices.push(personWithIdamId);
   }
 
-  setLocationForCaseWokerInService(service, email, locationId){
+  setLocationForCaseWorkers(service, email, locationId){
     let locationsByService = null;
     for (const byService of this.locationsByServices) {
       if (byService.service === service) {
@@ -177,14 +167,9 @@ class WorkAllocationMockData {
       }
     }
 
-    for (const byservice of this.caseworkersByService) {
-      if (byservice.service === service) {
-        for(const caseworker of byservice.caseworkers){
-          if(caseworker.email === email){
-            caseworker.location = locationDetailsToDetach;
-          }
-        }
-        break;
+    for (const caseworkerUser of this.usersFromServices) {
+      if(caseworkerUser.email === email){
+        caseworkerUser.location = locationDetailsToDetach;
       }
     }
   }
@@ -254,36 +239,6 @@ class WorkAllocationMockData {
   updateWASupportedJurisdictions(jurisdictions){
     this.waSupportedJusridictions = jurisdictions;
     this.setDefaultData();
-  }
-
-  getCaseworkersByService(services){
-    const caseworkersByServices = [];
-    for (const service of services){
-      const cwByService = { service: service, caseworkers: [] };
-      cwByService.caseworkers = this.getPersonList(20, null, service);
-
-      let locationsForThisService = null;
-      for(const locationsByService of this.locationsByServices){
-        if (locationsByService.service === service){
-          locationsForThisService = locationsByService.locations;
-          break;
-        }
-      }
-
-      let loctionTracker = 0;
-      for (const cw of cwByService.caseworkers){
-        cw.location = { id: locationsForThisService[loctionTracker].epimms_id,
-          locationName: locationsForThisService[loctionTracker].court_name };
-
-        loctionTracker++;
-        if (loctionTracker >=locationsForThisService.length){
-          loctionTracker = 0;
-        }
-      }
-
-      caseworkersByServices.push(cwByService);
-    }
-    return caseworkersByServices;
   }
 
   setUpJudicialUsersList(count){
@@ -475,7 +430,7 @@ class WorkAllocationMockData {
           'id': 'a',
           'locationName': 'Location A',
           'services': [
-            'a'
+            'IA'
           ]
         }
       });
@@ -764,22 +719,8 @@ class WorkAllocationMockData {
     ];
   }
 
-  retrieveCaseWorkersForServices(services, allServices){
-    const caseWorkerForServices = [];
-    for(const byService of this.caseworkersByService){
-      if (allServices){
-        caseWorkerForServices.push(byService);
-      } else if(services && services.includes(byService.service)){
-        caseWorkerForServices.push(byService);
-      }else{
-        //throw new Error(`retrieveCaseWorkersForServices request services or fullservices atre not set.`);
-      }
-    }
-    return caseWorkerForServices;
-  }
-
-  addLocationWithNamesToService(locations, service){
-
+  getUsersFromServices(services){
+    return this.caseWorkersList.filter((caseworker) => services.includes(caseworker.location.services[0]));
   }
 
   searchLocations(serviceIds, searchTerm){

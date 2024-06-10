@@ -21,7 +21,7 @@ describe('RejectedRequestViewComponent', () => {
 
   const mockSupportedJurisdictionsService = jasmine.createSpyObj('WASupportedJurisdictionsService', ['getWASupportedJurisdictions']);
   const mockAllocateRoleService = jasmine.createSpyObj('allocateRoleService', ['getCaseRolesUserDetails']);
-  const mockCaseworkerDataService = jasmine.createSpyObj('caseworkerDataService', ['getCaseworkersForServices']);
+  const mockCaseworkerDataService = jasmine.createSpyObj('caseworkerDataService', ['getUsersFromServices']);
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -62,7 +62,7 @@ describe('RejectedRequestViewComponent', () => {
     component = fixture.componentInstance;
     const caseRoles: CaseRoleDetails[] = getMockCaseRoles();
     component.roleCategory = RoleCategory.JUDICIAL;
-    mockCaseworkerDataService.getCaseworkersForServices.and.returnValue(of([]));
+    mockCaseworkerDataService.getUsersFromServices.and.returnValue(of([]));
     mockAllocateRoleService.getCaseRolesUserDetails.and.returnValue(of(caseRoles));
     mockSupportedJurisdictionsService.getWASupportedJurisdictions.and.returnValue(of(['IA']));
     fixture.detectChanges();
@@ -77,7 +77,7 @@ describe('RejectedRequestViewComponent', () => {
     component.roleCategory = RoleCategory.ADMIN;
     component.ngOnInit();
     expect(mockSupportedJurisdictionsService.getWASupportedJurisdictions).toHaveBeenCalled();
-    expect(mockCaseworkerDataService.getCaseworkersForServices).toHaveBeenCalled();
+    expect(mockCaseworkerDataService.getUsersFromServices).toHaveBeenCalled();
   });
 
   it('should allow the user to go to request again', () => {

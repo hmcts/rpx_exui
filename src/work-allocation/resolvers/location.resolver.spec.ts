@@ -301,7 +301,6 @@ describe('LocationResolver', () => {
       ],
       providers: [
         LocationResolver,
-        CaseworkerDataService,
         AllocateRoleService,
         LocationDataService,
         SessionStorageService,
@@ -327,14 +326,6 @@ describe('LocationResolver', () => {
     service.getRegionLocations(CASE_WORKER);
     expect(locationService.getLocationsByRegion).toHaveBeenCalledWith(['IA']);
   });
-
-  it('resolves caseworkers location', inject([LocationResolver], (service: LocationResolver) => {
-    spyOn(store, 'pipe').and.returnValue(of(CASE_WORKER));
-    spyOn(caseworkerDataService, 'getAll').and.returnValue(of(CASE_WORKERS));
-    service.resolve().subscribe((location: any) => {
-      expect(location.court_name).toEqual(CASE_WORKERS[0].location.locationName);
-    });
-  }));
 
   it('resolves judicialworkers location', inject([LocationResolver], (service: LocationResolver) => {
     spyOn(store, 'pipe').and.returnValue(of(JUDICIAL_WORKER));

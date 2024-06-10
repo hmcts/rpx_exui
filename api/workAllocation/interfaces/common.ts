@@ -25,7 +25,7 @@ export interface LocationApi {
   location_id: string;
   location: string;
   is_primary: boolean;
-  services: string[];
+  services?: string[];
 }
 
 export interface CaseworkersByService {

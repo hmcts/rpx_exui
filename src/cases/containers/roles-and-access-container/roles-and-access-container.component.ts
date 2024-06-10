@@ -43,7 +43,7 @@ export class RolesAndAccessContainerComponent implements OnInit {
     // We need this call. No active subscribers are needed
     // as this will enable the loading caseworkers if not
     // present in session storage
-    this.caseworkers$ = this.caseworkerDataService.getCaseworkersForServices([jurisdiction.value]).pipe(first());
+    this.caseworkers$ = this.caseworkerDataService.getUsersFromServices([jurisdiction.value]).pipe(first());
     this.loadRoles(jurisdiction);
     this.loadExclusions(jurisdiction);
   }

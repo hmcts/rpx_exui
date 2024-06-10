@@ -32,7 +32,7 @@ describe('Work allocation Release 2: persons, caseworkers and judicial users', (
             'content-length': JSON.stringify(reqBody).length
         };
 
-        const response = await Request.post(`workallocation/retrieveCaseWorkersForServices`, reqBody, headers, 200);
+        const response = await Request.post(`workallocation/caseworker/getUsersByServiceName`, reqBody, headers, 200);
         expect(response.status).to.equal(200);
         expect(response.data).to.be.an('array');
 

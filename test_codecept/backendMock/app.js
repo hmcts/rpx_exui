@@ -101,7 +101,7 @@ class MockApp {
         app.use('/task', taskApi)
         app.use('/work-types', workTypeRoutes)
         app.use('/refdata/location', locationRoutes)
-        app.use('/refdata/case-worker', caseworkerRoutes )
+        app.use('/refdata/internal/staff', caseworkerRoutes )
         app.use('/refdata/judicial', judicialRoutes )
 
 

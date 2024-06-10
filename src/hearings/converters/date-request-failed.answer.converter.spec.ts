@@ -16,7 +16,7 @@ describe('DateRequestFailedAnswerConverter', () => {
     const STATE: State = _.cloneDeep(initialState.hearings);
     STATE.hearingRequest.hearingRequestMainModel.hearingResponse.errorTimestamp = STATE.hearingRequest.hearingRequestMainModel.hearingResponse.receivedDateTime;
     const result$ = dateRequestSubmittedAnswerConverter.transformAnswer(of(STATE));
-    const type = '30 November 2021 09:11:00';
+    const type = '30 November 2021 09:00:00';
     const expected = cold('(b|)', { b: type });
     expect(result$).toBeObservable(expected);
   });
