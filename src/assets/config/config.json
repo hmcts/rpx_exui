@@ -21,7 +21,7 @@
     "activity_next_poll_request_ms": 30000,
     "activity_retry": 30,
     "timeouts_case_retrieval": [
-      18, 17
+      15, 15
     ],
     "timeouts_case_retrieval_artificial_delay": 0,
     "activity_url": "/activity",
