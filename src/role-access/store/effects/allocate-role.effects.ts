@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { AllocateRoleActionTypes, ConfirmAllocation, LoadRolesComplete, NoRolesF
 
 @Injectable()
 export class AllocateRoleEffects {
-  @Effect() public getRoles$ = this.actions$
+  public getRoles$ = createEffect(() => this.actions$
     .pipe(
       ofType<ConfirmAllocation>(AllocateRoleActionTypes.LOAD_ROLES),
       mergeMap(
@@ -24,9 +24,9 @@ export class AllocateRoleEffects {
             })
           )
       )
-    );
+    ));
 
-  @Effect() public confirmAllocation$ = this.actions$
+  public confirmAllocation$ = createEffect(() => this.actions$
     .pipe(
       ofType<ConfirmAllocation>(AllocateRoleActionTypes.CONFIRM_ALLOCATION),
       mergeMap(
@@ -55,7 +55,7 @@ export class AllocateRoleEffects {
             })
           )
       )
-    );
+    ));
 
   private readonly payload: any;
 

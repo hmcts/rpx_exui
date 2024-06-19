@@ -1,9 +1,8 @@
 import { initialState } from '../hearing.test.data';
-import { HearingConditions, KEY_MODE } from '../models/hearingConditions';
+import { KEY_MODE } from '../models/hearingConditions';
 import { HearingDayScheduleModel } from '../models/hearingDaySchedule.model';
 import { HearingRequestMainModel } from '../models/hearingRequestMain.model';
 import { Mode } from '../models/hearings.enum';
-import { PropertiesUpdatedOnPageVisit } from '../models/hearingsUpdateMode.enum';
 import { HearingsUtils } from './hearings.utils';
 
 describe('HearingsUtils', () => {

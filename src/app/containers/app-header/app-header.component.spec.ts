@@ -1,4 +1,3 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NavigationEnd, Router } from '@angular/router';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
@@ -13,7 +12,8 @@ import { AppHeaderComponent } from './app-header.component';
 const storeMock = {
   pipe: () => of([]),
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  dispatch: () => {}
+  dispatch: () => {},
+  select: () => of(null) // Mocking select method
 };
 
 const loggerServiceMock = jasmine.createSpyObj('loggerService', ['error']);
@@ -29,9 +29,9 @@ describe('AppHeaderComponent', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let store: Store<fromActions.State>;
   const subscriptionMock: Subscription = new Subscription();
-  const stateStoreMock: Store<fromActions.State> = new Store<fromActions.State>(null, null, null);
   const eventsSub = new BehaviorSubject<any>(null);
   const featureToggleServiceMock = jasmine.createSpyObj('FeatureToggleService', ['getValue']);
+  let stateStoreMock: Store<fromActions.State>;
 
   beforeEach(async () => {
     dispatchSpy = spyOn(storeMock, 'dispatch');
@@ -44,7 +44,6 @@ describe('AppHeaderComponent', () => {
       declarations: [
         AppHeaderComponent
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         {
           provide: Store,
@@ -70,8 +69,13 @@ describe('AppHeaderComponent', () => {
     }).compileComponents();
 
     store = TestBed.inject(Store);
-    featureToggleServiceSpy = TestBed.inject(FeatureToggleService) as jasmine.SpyObj<FeatureToggleService>;
 
+    // Reset spies
+    dispatchSpy.calls.reset();
+    subscribeSpy.calls.reset();
+
+    featureToggleServiceSpy = TestBed.inject(FeatureToggleService) as jasmine.SpyObj<FeatureToggleService>;
+    stateStoreMock = TestBed.inject(Store);
     featureToggleServiceSpy.getValue.and.returnValue(of(AppConstants.DEFAULT_MENU_ITEMS));
     fixture = TestBed.createComponent(AppHeaderComponent);
     component = fixture.componentInstance;

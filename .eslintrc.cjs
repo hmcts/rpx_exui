@@ -22,6 +22,7 @@ module.exports = {
     '@typescript-eslint/no-extra-semi': 'off',
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/no-duplicate-enum-values': 'off',
     'array-bracket-spacing': 'error',
     'arrow-parens': ['error', 'always'],
     'arrow-spacing': 'error',

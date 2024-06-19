@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserInfo } from '../models';
 import { SessionStorageService } from '../services';
 
@@ -7,7 +7,7 @@ import { SessionStorageService } from '../services';
   providedIn: 'root'
 })
 
-export class CaseAllocatorGuard implements CanActivate {
+export class CaseAllocatorGuard {
   constructor(private readonly sessionStorageService: SessionStorageService,
                 private readonly router: Router) {}
 

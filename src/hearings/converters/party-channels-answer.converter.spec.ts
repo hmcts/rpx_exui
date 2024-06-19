@@ -118,9 +118,6 @@ describe('PartyChannelsAnswerConverter', () => {
   });
 
   it('should return party name if party name from party is null whereas foundPartyFromService is not null', () => {
-    const party: PartyDetailsModel = {
-      partyID: 'P001', partyRole: 'appellant', partyType: PartyType.IND
-    };
     const foundPartyFromService: PartyDetailsModel = {
       partyID: 'P002', partyRole: 'appellant', partyType: PartyType.ORG, partyName: 'Jack'
     };
@@ -128,9 +125,6 @@ describe('PartyChannelsAnswerConverter', () => {
   });
 
   it('should return party firstName and lastName if party name from party is null whereas foundPartyFromService is not null', () => {
-    const party: PartyDetailsModel = {
-      partyID: 'P001', partyRole: 'appellant', partyType: PartyType.IND
-    };
     const foundPartyFromService: PartyDetailsModel = {
       partyID: 'P002', partyRole: 'appellant', partyType: PartyType.ORG,
       individualDetails: { firstName: 'Jack', lastName: 'Smith' }

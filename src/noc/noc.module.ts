@@ -10,18 +10,10 @@ import { StoreModule } from '@ngrx/store';
 import { AppConfig } from '../app/services/ccd-config/ccd-case.config';
 import { SharedModule } from '../app/shared/shared.module';
 import * as fromContainers from './containers';
-import { NocDateFieldComponent } from './containers/noc-field/date';
-import { NocDateTimeFieldComponent } from './containers/noc-field/datetime';
-import { NocEmailFieldComponent } from './containers/noc-field/email';
 import { FormValidatorsService } from './containers/noc-field/form-validators.service';
-import { NocNumberFieldComponent } from './containers/noc-field/number';
 import { PaletteService } from './containers/noc-field/palette.service';
-import { NocPhoneUkFieldComponent } from './containers/noc-field/phone-uk';
-import { NocPostcodeFieldComponent } from './containers/noc-field/postcode';
-import { NocTextFieldComponent } from './containers/noc-field/text';
-import { NocTimeFieldComponent } from './containers/noc-field/time';
 import { UtilsModule } from './containers/noc-field/utils/utils.module';
-import { NocYesNoFieldComponent, YesNoService } from './containers/noc-field/yes-no';
+import { YesNoService } from './containers/noc-field/yes-no';
 import { nocRouting } from './noc.routes';
 import { NocService } from './services';
 import { effects, reducers } from './store';
@@ -40,17 +32,6 @@ import { effects, reducers } from './store';
     ExuiCommonLibModule
   ],
   declarations: [...fromContainers.containers],
-  entryComponents: [
-    NocTextFieldComponent,
-    NocNumberFieldComponent,
-    NocEmailFieldComponent,
-    NocPhoneUkFieldComponent,
-    NocYesNoFieldComponent,
-    NocPostcodeFieldComponent,
-    NocDateFieldComponent,
-    NocDateTimeFieldComponent,
-    NocTimeFieldComponent
-  ],
   providers: [{
     provide: AbstractAppConfig,
     useExisting: AppConfig

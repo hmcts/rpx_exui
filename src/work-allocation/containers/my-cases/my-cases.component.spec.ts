@@ -45,6 +45,7 @@ describe('MyCasesComponent', () => {
     allocateRoleService = {},
     httpClient = {},
     store = {},
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     checkReleaseVersionService = {}
   }) => new MyCasesComponent(
     changeDetectorRef as ChangeDetectorRef,

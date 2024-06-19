@@ -23,9 +23,9 @@ export class CaseTaskComponent implements OnInit {
   private static readonly CASE_ID_VARIABLE = '${[case_id]}';
   private static readonly TASK_ID_VARIABLE = '${[id]}';
   private static readonly VARIABLES: string[] = [
-    CaseTaskComponent.CASE_REFERENCE_VARIABLE,
-    CaseTaskComponent.CASE_ID_VARIABLE,
-    CaseTaskComponent.TASK_ID_VARIABLE
+    CaseTaskComponent?.CASE_REFERENCE_VARIABLE,
+    CaseTaskComponent?.CASE_ID_VARIABLE,
+    CaseTaskComponent?.TASK_ID_VARIABLE
   ];
 
   public manageOptions: { id: string, title: string }[];

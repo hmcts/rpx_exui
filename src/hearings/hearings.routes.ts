@@ -1,7 +1,5 @@
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FeatureToggleGuard } from '@hmcts/rpx-xui-common-lib';
-import { AppConstants } from '../app/app.constants';
 import { ErrorPageComponent } from './components';
 import { CancelHearingComponent } from './containers/cancel-hearing/cancel-hearing.component';
 import { HearingActualsAddEditSummaryComponent } from './containers/hearing-actuals/hearing-actuals-add-edit-summary/hearing-actuals-add-edit-summary.component';

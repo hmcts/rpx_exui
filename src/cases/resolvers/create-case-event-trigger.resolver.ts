@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { CaseEventTrigger, CasesService, Draft, DRAFT_QUERY_PARAM } from '@hmcts/ccd-case-ui-toolkit';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
-export class CreateCaseEventTriggerResolver implements Resolve<CaseEventTrigger> {
+export class CreateCaseEventTriggerResolver {
   public static readonly PARAM_JURISDICTION_ID = 'jid';
   public static readonly PARAM_CASE_TYPE_ID = 'ctid';
   public static readonly PARAM_EVENT_ID = 'eid';

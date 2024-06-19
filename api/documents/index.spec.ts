@@ -14,6 +14,8 @@ describe('Documents Uploading', () => {
   let res;
   let req;
   let proxyRes;
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let json;
 
   beforeEach(() => {
@@ -28,6 +30,7 @@ describe('Documents Uploading', () => {
       }
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     json = [
       {
         classification: 'PUBLIC',

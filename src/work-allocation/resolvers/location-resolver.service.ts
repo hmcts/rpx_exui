@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Resolve, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { LocationModel } from '@hmcts/rpx-xui-common-lib';
 import { Store, select } from '@ngrx/store';
 import * as moment from 'moment';
@@ -22,7 +22,7 @@ import { WILDCARD_SERVICE_DOWN, addLocationToLocationsByService, handleFatalErro
   providedIn: 'root'
 })
 // Note: used before my work and booking screens
-export class LocationResolver implements Resolve<LocationModel[]> {
+export class LocationResolver {
   private userRole: string;
   // Note that bookableServices only used for ease of use
   // - i.e. removing non-bookable services from booking ui functionality

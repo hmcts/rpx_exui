@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
@@ -10,7 +10,7 @@ import * as fromAppStore from '../../app/store';
 import { HearingsGuard } from './hearings-guard';
 
 @Injectable()
-export class HearingsEditGuard extends HearingsGuard implements CanActivate {
+export class HearingsEditGuard extends HearingsGuard {
   constructor(protected readonly appStore: Store<fromAppStore.State>,
               protected readonly sessionStorageService: SessionStorageService,
               protected readonly featureToggleService: FeatureToggleService,
