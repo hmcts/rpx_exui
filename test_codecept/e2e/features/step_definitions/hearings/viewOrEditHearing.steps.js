@@ -53,7 +53,7 @@ Then('I validate fields displayed in view or edit hearing page', async function 
         const values = await viewOrEditHearingPage.getKeyFieldValue(field);
         const isValueDisplayed = values.find(v => v.includes(expectedVal))
         const actualValue = values.find(v => v.includes(expectedVal) )
-        expect(actualValue, `Field:${field} no displayed ${expectedAmendFlagDisplayed}`).to.equal(undefined)
+        expect(actualValue, `Field:${field} no displayed ${expectedAmendFlagDisplayed}`).to.not.equal(undefined)
 
         if (expectedAmendFlagDisplayed && expectedAmendFlagDisplayed !== '') {
             expect(actualValue, `Field:${field} to include label AMENDED actual ${expectedAmendFlagDisplayed}`).to.includes(expectedAmendFlagDisplayed)
