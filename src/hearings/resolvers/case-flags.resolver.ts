@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { ServiceIdResolverResolve } from './service-id-resolver.resolve';
 @Injectable({
   providedIn: 'root'
 })
-export class CaseFlagsResolver extends ServiceIdResolverResolve implements Resolve<CaseFlagReferenceModel[]> {
+export class CaseFlagsResolver extends ServiceIdResolverResolve {
   constructor(
     private readonly caseFlagsRefDataService: CaseFlagsRefDataService,
     protected readonly hearingStore: Store<fromHearingStore.State>,

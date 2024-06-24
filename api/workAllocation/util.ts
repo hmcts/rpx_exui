@@ -74,7 +74,7 @@ export function prepareGetSpecificLocationUrl(baseUrl: string, epimmsId: string)
 }
 
 export function prepareGetUsersUrl(baseUrl: string, service: string): string {
-  return `${baseUrl}/refdata/internal/staff/usersByServiceName?ccd_service_names=${service}&page_size=1000`;
+  return `${baseUrl}/refdata/internal/staff/usersByServiceName?ccd_service_names=${service}&page_size=12000`;
 }
 
 export function prepareRoleApiUrl(baseUrl: string) {
@@ -283,7 +283,7 @@ export function mapUsersToCaseworkers(users: StaffUserDetails[], roleAssignments
         lastName: staffUser.staff_profile.last_name,
         location: mapCaseworkerLocation(staffUser.staff_profile.base_location),
         roleCategory: getUserRoleCategory(roleAssignments, staffUser.staff_profile),
-        service: staffUser.ccd_service_name
+        service: staffUser.ccd_service_name.toUpperCase()
       };
       caseworkers.push(thisCaseWorker);
     });

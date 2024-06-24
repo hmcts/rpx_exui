@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import * as fromApp from '../store';
 @Injectable({
   providedIn: 'root'
 })
-export class AcceptTermsGuard implements CanActivate {
+export class AcceptTermsGuard {
   constructor(private readonly store: Store<fromApp.State>) {}
 
   public canActivate(): Observable<boolean> {

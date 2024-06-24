@@ -9,8 +9,6 @@ const { Matchers } = require('@pact-foundation/pact');
 const { somethingLike } = Matchers;
 const pactSetUp = new PactTestSetup({ provider: 'am_orgRoleMapping_refresh', port: 8000 });
 
-const actorId = '004b7164-0943-41b5-95fc-39794af4a9fe';
-
 describe('get /am/role-mapping/judicial/refresh', () => {
   const sandbox: sinon.SinonSandbox = sinon.createSandbox();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

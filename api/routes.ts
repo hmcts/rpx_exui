@@ -16,6 +16,7 @@ import roleAccessRouter from './roleAccess/routes';
 import { router as refDataRouter } from './ref-data/routes';
 import { router as specificAccessRouter } from './specificAccessOrchastrator/routes';
 import staffRefDataRouter from './staff-ref-data/routes';
+import { router as staffSupportedJurisdictionsRouter } from './staffSupportedJurisdictions';
 import userRouter from './user/routes';
 import { router as waSupportedJurisdictionRouter } from './waSupportedJurisdictions';
 
@@ -48,6 +49,7 @@ router.use('/locations', locationsRouter);
 router.use('/caseshare', caseShareRoutes);
 router.use('/noc', nocRouter);
 router.use('/organisation', organisationRouter);
+router.use('/staff-supported-jurisdiction', staffSupportedJurisdictionsRouter);
 router.use('/wa-supported-jurisdiction', waSupportedJurisdictionRouter);
 router.use('/globalSearch', globalSearchRoutes);
 router.use('/locations', locationsRouter);

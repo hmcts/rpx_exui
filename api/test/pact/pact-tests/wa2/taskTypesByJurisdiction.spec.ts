@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import * as config from 'config';
 import * as sinon from 'sinon';
 import { mockReq, mockRes } from 'sinon-express-mock';
@@ -101,6 +100,7 @@ describe('Task management api, tasks by jurisdiction', () => {
   });
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function assertResponses(dto: any) {
   // expect(dto[0].key).to.be.equal('1234');
   // expect(dto[0].label).to.be.equal('test');

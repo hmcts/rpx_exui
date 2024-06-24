@@ -130,6 +130,7 @@
     }
   },
   "jurisdictions": "JURISDICTIONS",
+  "staffSupportedJurisdictions": "STAFF_SUPPORTED_JURISDICTIONS",
   "waSupportedJurisdictions": "WA_SUPPORTED_JURISDICTIONS",
   "globalSearchServices": "GLOBAL_SEARCH_SERVICES",
   "serviceRefDataMapping": "SERVICE_REF_DATA_MAPPING",

@@ -11,28 +11,20 @@ import {
 } from '../configuration/references';
 import * as log4jui from '../lib/log4jui';
 import { EnhancedRequest, JUILogger } from '../lib/models';
-import { Role } from '../roleAccess/models/roleType';
-import { getAllRoles } from '../roleAccess/roleAssignmentService';
 import { refreshRoleAssignmentForUser } from '../user';
 import { RoleAssignment } from '../user/interfaces/roleAssignment';
 import { getWASupportedJurisdictionsList } from '../waSupportedJurisdictions';
 import * as caseServiceMock from './caseService.mock';
 import {
-  getUserIdsFromJurisdictionRoleResponse,
-  getUserIdsFromRoleApiResponse,
   handleCaseWorkerForLocation,
   handleCaseWorkerForLocationAndService,
   handleCaseWorkerForService,
-  handleCaseWorkersForServicesPost,
-  handlePostCaseWorkersRefData,
-  handlePostRoleAssignments,
   handlePostSearch
 } from './caseWorkerService';
 import { ViewType } from './constants/actions';
 import { CaseList } from './interfaces/case';
 import { PaginationParameter } from './interfaces/caseSearchParameter';
-import { CaseworkerPayload, ServiceCaseworkerData } from './interfaces/caseworkerPayload';
-import { CaseDataType, Caseworker, CaseworkersByService } from './interfaces/common';
+import { CaseDataType } from './interfaces/common';
 import { SearchTaskParameter } from './interfaces/taskSearchParameter';
 import { checkIfCaseAllocator } from './roleService';
 import * as roleServiceMock from './roleService.mock';
@@ -44,16 +36,13 @@ import {
   constructRoleAssignmentQuery,
   filterByLocationId,
   getCaseIdListFromRoles,
-  getCaseworkerDataForServices,
   getMyAccessMappedCaseList,
   getRoleAssignmentsByQuery,
-  getSessionCaseworkerInfo,
   getSubstantiveRoles,
   getTypesOfWorkByUserId,
   getUniqueCasesCount,
   handlePost,
   mapCasesFromData,
-  mapCaseworkerData,
   paginate,
   prepareCaseWorkerForLocation,
   prepareCaseWorkerForLocationAndService,
@@ -62,10 +51,7 @@ import {
   prepareGetTaskUrl,
   preparePaginationUrl,
   preparePostTaskUrlAction,
-  prepareRoleApiRequest,
-  prepareRoleApiUrl,
   prepareSearchTaskUrl,
-  prepareServiceRoleApiRequest,
   prepareTaskSearchForCompletable,
   searchCasesById,
   searchUsers

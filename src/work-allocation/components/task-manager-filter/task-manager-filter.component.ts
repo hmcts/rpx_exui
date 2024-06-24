@@ -6,7 +6,6 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { AppUtils } from '../../../app/app-utils';
-import { AppConstants } from '../../../app/app.constants';
 import { UserRole } from '../../../app/models';
 import * as fromAppStore from '../../../app/store';
 import { getRoleCategory } from '../../utils';

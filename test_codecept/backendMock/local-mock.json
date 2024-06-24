@@ -104,6 +104,7 @@
         "prefix": "MC-activity:",
         "ttl": 86400
     },
+    "staffSupportedJurisdictions": "IA,CIVIL,PRIVATELAW",
     "waSupportedJurisdictions": "IA,CIVIL,PRIVATELAW",
     "serviceRefDataMapping": [
         {

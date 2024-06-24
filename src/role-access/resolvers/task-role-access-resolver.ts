@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { EMPTY, forkJoin, Observable } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 
@@ -9,7 +9,7 @@ import { handleFatalErrors, WILDCARD_SERVICE_DOWN } from '../../work-allocation/
 import { AllocateRoleService } from '../services';
 
 @Injectable({ providedIn: 'root' })
-export class TaskRoleAccessResolver implements Resolve<{ task: Task; role: any } > {
+export class TaskRoleAccessResolver {
   constructor(
     private readonly taskService: WorkAllocationTaskService,
     private readonly router: Router,

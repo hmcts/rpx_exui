@@ -206,7 +206,7 @@ describe('HearingCreateEditSummaryComponent', () => {
     component.removeUnnecessarySummaryTemplateItems();
     fixture.detectChanges();
     const sfCreateEditStore = spyOn(component, 'getScreenFlowFromStore').and.returnValue(of(screenFlow));
-    component.getScreenFlowFromStore().subscribe((scr) => {
+    component.getScreenFlowFromStore().subscribe(() => {
       expect(screenFlow.length).toEqual(4);
       expect(template.length).toEqual(screenFlow.length + 1);
 

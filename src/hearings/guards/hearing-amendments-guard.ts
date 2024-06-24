@@ -5,11 +5,11 @@ import { SessionStorageService } from '../../app/services';
 import * as fromAppStore from '../../app/store';
 import { HearingsGuard } from './hearings-guard';
 import { AppConstants } from '../../app/app.constants';
-import { CanActivate } from '@angular/router';
+
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class HearingAmendmentsGuard extends HearingsGuard implements CanActivate {
+export class HearingAmendmentsGuard extends HearingsGuard {
   constructor(protected readonly appStore: Store<fromAppStore.State>,
     protected readonly sessionStorageService: SessionStorageService,
     protected readonly featureToggleService: FeatureToggleService) {

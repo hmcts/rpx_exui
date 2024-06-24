@@ -45,6 +45,8 @@ export class LinkedHearingsWithCaseComponent implements OnInit, OnDestroy {
   public showSpinner: boolean = true;
   public hearingStageOptions: LovRefDataModel[];
 
+  public message: string = 'Hearings may be unavailable due to their status, or if they are already linked to another hearing.\nOnly hearings from cases linked to this case will appear in this list.';
+
   constructor(private readonly hearingStore: Store<fromHearingStore.State>,
               private readonly validators: ValidatorsUtils,
               private readonly route: ActivatedRoute,

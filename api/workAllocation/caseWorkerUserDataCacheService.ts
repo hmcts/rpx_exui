@@ -1,14 +1,15 @@
 import { baseCaseWorkerRefUrl, baseRoleAssignmentUrl } from './index';
 import { ServiceUserDetailList, StaffUserDetails } from './interfaces/staffUserDetails';
 import { EnhancedRequest } from '../lib/models';
-import { getWASupportedJurisdictionsList } from '../waSupportedJurisdictions';
+import { getStaffSupportedJurisdictionsList } from '../staffSupportedJurisdictions';
 import { mapUsersToCaseworkers, prepareGetUsersUrl, prepareRoleApiRequest, prepareRoleApiUrl } from './util';
 import { handlePostRoleAssignments, handleUsersGet } from './caseWorkerService';
 import { NextFunction } from 'express';
 import { Caseworker } from './interfaces/common';
 import { FullUserDetailCache } from './fullUserDetailCache';
 
-const TTL = 300;
+// 10 minutes
+const TTL = 600;
 
 let timestamp: Date;
 let refreshRoles: boolean;
@@ -22,7 +23,7 @@ export async function fetchUserData(req: EnhancedRequest, next: NextFunction): P
       // hasTTLExpired to determine whether roles require refreshing
       // cachedUsers to ensure rerun if user restarts request early
       refreshRoles = true;
-      const jurisdictions = getWASupportedJurisdictionsList();
+      const jurisdictions = getStaffSupportedJurisdictionsList();
       cachedUsers = [];
       for (const jurisdiction of jurisdictions) {
         const getUsersPath: string = prepareGetUsersUrl(baseCaseWorkerRefUrl, jurisdiction);
@@ -51,7 +52,7 @@ export async function fetchRoleAssignments(cachedUserData: StaffUserDetails[], r
       // refreshRoles to determine whether roles require refreshing
       // cachedUsersWithRoles to ensure rerun if user restarts request early
       const roleApiPath: string = prepareRoleApiUrl(baseRoleAssignmentUrl);
-      const jurisdictions = getWASupportedJurisdictionsList();
+      const jurisdictions = getStaffSupportedJurisdictionsList();
       const payload = prepareRoleApiRequest(jurisdictions);
       const { data } = await handlePostRoleAssignments(roleApiPath, payload, req);
       const roleAssignments = data.roleAssignmentResponse;

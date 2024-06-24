@@ -19,7 +19,9 @@
             "sourceMap": true,
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "src/tsconfig.app.json",
             "allowedCommonJsDependencies": [
               "hammerjs"
@@ -103,31 +105,31 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "rpx-exui:build",
-            "proxyConfig": "./proxy.config.json"
+            "proxyConfig": "./proxy.config.json",
+            "buildTarget": "rpx-exui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "rpx-exui:build:production"
+              "buildTarget": "rpx-exui:build:production"
             }
           }
         },
         "serveTest": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "rpx-exui:build",
-            "proxyConfig": "./proxyTest.config.json"
+            "proxyConfig": "./proxyTest.config.json",
+            "buildTarget": "rpx-exui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "rpx-exui:build:production"
+              "buildTarget": "rpx-exui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "rpx-exui:build"
+            "buildTarget": "rpx-exui:build"
           }
         },
         "test": {
@@ -142,7 +144,10 @@
               "src/environments/**"
             ],
             "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "stylePreprocessorOptions": {

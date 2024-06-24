@@ -9,14 +9,12 @@ import { UserDetails } from '../../app/models';
 import { SessionStorageService } from '../../app/services';
 import { reducers } from '../../app/store';
 import * as fromCaseList from '../../app/store/reducers';
-import { RoleCategory } from '../../role-access/models';
 import { AllocateRoleService } from '../../role-access/services';
 import { LocationsByRegion } from '../models/dtos';
-import { CaseworkerDataService, LocationDataService } from '../services';
+import { LocationDataService } from '../services';
 import { LocationResolver } from './location-resolver.service';
 
 describe('LocationResolver', () => {
-  let caseworkerDataService: CaseworkerDataService;
   let judicialWorkerDataService: AllocateRoleService;
   let locationService: LocationDataService;
   let sessionStorageService: SessionStorageService;
@@ -277,21 +275,6 @@ describe('LocationResolver', () => {
     }
   ];
 
-  const CASE_WORKERS = [
-    {
-      email: 'CWR-func-test-user1-#s@justice.gov.uk',
-      firstName: 'IAC',
-      idamId: '998db99b-08aa-43d4-bc6b-0aabbb0e3c6f',
-      lastName: 'CW2',
-      location: {
-        id: '231596',
-        locationName: 'Birmingham',
-        services: null
-      },
-      roleCategory: RoleCategory.LEGAL_OPERATIONS
-    }
-  ];
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -308,7 +291,6 @@ describe('LocationResolver', () => {
       ]
     }
     );
-    caseworkerDataService = TestBed.inject(CaseworkerDataService) as CaseworkerDataService;
     judicialWorkerDataService = TestBed.inject(AllocateRoleService) as AllocateRoleService;
     locationService = TestBed.inject(LocationDataService) as LocationDataService;
     sessionStorageService = TestBed.inject(SessionStorageService) as SessionStorageService;

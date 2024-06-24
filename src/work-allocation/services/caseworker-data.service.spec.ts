@@ -1,4 +1,3 @@
-import { of } from 'rxjs';
 import { CaseworkerDataService } from './caseworker-data.service';
 
 describe('WorkAllocation service', () => {

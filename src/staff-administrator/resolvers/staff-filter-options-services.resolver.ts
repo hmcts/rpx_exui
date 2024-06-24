@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+
 import { RefDataService } from '@hmcts/rpx-xui-common-lib';
 import { map } from 'rxjs/operators';
-import { StaffFilterOption } from '../models/staff-filter-option.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StaffFilterOptionsServicesResolver implements Resolve<StaffFilterOption[]> {
+export class StaffFilterOptionsServicesResolver {
   constructor(private refDataService: RefDataService) { }
 
   public resolve() {

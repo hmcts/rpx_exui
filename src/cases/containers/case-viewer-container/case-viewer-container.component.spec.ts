@@ -147,6 +147,7 @@ class MockFeatureToggleService implements FeatureToggleService {
     }] as unknown as R);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public getValueSync<R>(_key: string, _defaultValue: R): R {
     return {
       jurisdiction: 'SSCS',

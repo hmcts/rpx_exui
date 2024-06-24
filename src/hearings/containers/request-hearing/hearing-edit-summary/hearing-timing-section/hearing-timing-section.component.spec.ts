@@ -4,6 +4,7 @@ import { LovRefDataModel } from '../../../../models/lovRefData.model';
 import { HearingsService } from '../../../../services/hearings.service';
 import { HearingTimingSectionComponent } from './hearing-timing-section.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HMCLocationType } from '../../../../models/hearings.enum';
 
 describe('HearingTimingSectionComponent', () => {
   let component: HearingTimingSectionComponent;
@@ -64,6 +65,43 @@ describe('HearingTimingSectionComponent', () => {
   });
 
   it('should verify component data', () => {
+    component.hearingDetails = {
+      duration: 60,
+      hearingType: 'final',
+      hearingChannels: ['byPhone'],
+      hearingLocations: [
+        {
+          locationId: '196538',
+          locationType: HMCLocationType.COURT
+        },
+        {
+          locationId: '234850',
+          locationType: HMCLocationType.COURT
+        }
+      ],
+      hearingIsLinkedFlag: false,
+      hearingWindow: {
+        dateRangeStart: '2022-12-12T09:00:00.000Z',
+        dateRangeEnd: '2022-12-12T09:00:00.000Z',
+        firstDateTimeMustBe: ''
+      },
+      privateHearingRequiredFlag: false,
+      panelRequirements: null,
+      autolistFlag: false,
+      nonStandardHearingDurationReasons: [],
+      hearingPriorityType: 'standard',
+      numberOfPhysicalAttendees: 3,
+      hearingInWelshFlag: false,
+      facilitiesRequired: [
+        'immigrationDetentionCentre',
+        'inCameraCourt'
+      ],
+      listingComments: 'blah blah blah',
+      hearingRequester: null,
+      leadJudgeContractType: null,
+      amendReasonCodes: null,
+      listingAutoChangeReasonCode: null
+    };
     component.ngOnInit();
     expect(component.hearingLength).toEqual('1 Hour');
     expect(component.specificDate).toEqual('Choose a date range<br>Earliest start date: 12 December 2022<br>Latest end date: 12 December 2022');

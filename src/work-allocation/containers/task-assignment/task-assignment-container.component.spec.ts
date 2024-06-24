@@ -65,13 +65,7 @@ describe('TaskAssignmentContainerComponent2', () => {
     assignTask: jasmine.createSpy('assignTask').and.returnValue(of({}))
   };
   const mockSessionStorageService = jasmine.createSpyObj('SessionStorageService', ['getItem']);
-  const mockCheckReleaseVersionService = {
-    isRelease4: () => {
-      return {
-        subscribe: () => true
-      };
-    }
-  };
+
   const MESSAGE_SERVICE_METHODS = ['addMessage', 'emitMessages', 'getMessages', 'nextMessage', 'removeAllMessages'];
   const mockInfoMessageCommService = jasmine.createSpyObj('mockInfoMessageCommService', MESSAGE_SERVICE_METHODS);
   // eslint-disable-next-line @typescript-eslint/no-empty-function

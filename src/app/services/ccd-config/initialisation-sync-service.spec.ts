@@ -1,13 +1,5 @@
-import { LaunchDarklyDefaultsConstants } from './launch-darkly-defaults.constants';
-import { DeploymentEnvironmentEnum } from '../../enums/deployment-environment-enum';
 import { fakeAsync, flush, TestBed } from '@angular/core/testing';
-import { StoreModule } from '@ngrx/store';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AppConfig } from './ccd-case.config';
-import { AppConfigService } from '../config/configuration.services';
 import { InitialisationSyncService } from './initialisation-sync-service';
-import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
-import { EnvironmentService } from '../../shared/services/environment.service';
 import createSpy = jasmine.createSpy;
 
 describe('InitialisationSyncService', () => {
