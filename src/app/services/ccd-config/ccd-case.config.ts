@@ -58,6 +58,19 @@ export class AppConfig extends AbstractAppConfig {
           }
         });
 
+        this.featureToggleService.getValue('icp-enabled', false).subscribe({
+          next: (val) => this.config = {
+            ...this.config,
+            icp_enabled: val
+          }
+        });
+        this.featureToggleService.getValue('icp-jurisdictions', []).subscribe({
+          next: (val: string[]) => this.config = {
+            ...this.config,
+            icp_jurisdictions: val
+          }
+        });
+
         this.featureToggleService.getValue(AppConstants.FEATURE_NAMES.enableRestrictedCaseAccess, false).subscribe({
           next: (val) => this.config = {
             ...this.config,
@@ -257,5 +270,13 @@ export class AppConfig extends AbstractAppConfig {
 
   public getEnableCaseFileViewVersion1_1(): boolean {
     return this.config.enable_case_file_view_version_1_1;
+  }
+
+  public getIcpEnable(): boolean {
+    return this.config.icp_enabled;
+  }
+
+  public getIcpJurisdictions(): string[] {
+    return this.config.icp_jurisdictions;
   }
 }

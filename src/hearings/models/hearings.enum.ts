@@ -220,6 +220,7 @@ export enum HearingStageResultEnum {
 export enum HearingErrorMessage {
   ENTER_A_VALID_LOCATION = 'Enter a valid location',
   ENTER_A_LOCATION = 'Enter a location',
+  ADD_A_LOCATION = 'Add a location',
 }
 
 export enum HearingDatePriorityConstEnum {

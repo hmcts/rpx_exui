@@ -49,7 +49,9 @@ export class LaunchDarklyDefaultsConstants {
       {
         caseTypes: [
           'ET_EnglandWales',
-          'ET_Scotland'
+          'ET_Scotland',
+          'ET_EnglandWales_Multiple',
+          'ET_Scotland_Multiple'
         ],
         releaseVersion: '4',
         serviceName: 'EMPLOYMENT'

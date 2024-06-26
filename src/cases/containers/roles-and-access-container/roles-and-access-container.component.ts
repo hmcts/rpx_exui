@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CaseView } from '@hmcts/ccd-case-ui-toolkit';
+import { CaseField, CaseView } from '@hmcts/ccd-case-ui-toolkit';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
@@ -43,8 +43,7 @@ export class RolesAndAccessContainerComponent implements OnInit {
     // as this will enable the loading caseworkers if not
     // present in session storage
     this.caseworkers$ = this.caseworkerDataService.getUsersFromServices([jurisdiction.value]).pipe(first());
-    this.loadRoles(jurisdiction);
-    this.loadExclusions(jurisdiction);
+    this.setRolesAndExclusions(jurisdiction);
   }
 
   public loadExclusions(jurisdiction: any): void {
@@ -95,5 +94,10 @@ export class RolesAndAccessContainerComponent implements OnInit {
     if (user && user.roleAssignmentInfo) {
       this.showAllocateRoleLink = user.roleAssignmentInfo.some((roleAssignmentInfo) => roleAssignmentInfo.isCaseAllocator && roleAssignmentInfo.jurisdiction === caseJurisdiction);
     }
+  }
+
+  private setRolesAndExclusions(jurisdiction: CaseField) {
+    this.loadRoles(jurisdiction);
+    this.loadExclusions(jurisdiction);
   }
 }
