@@ -1,3 +1,4 @@
+import { HearingResponseError } from '../../../hearings/models/hearingResponseError.model';
 import * as fromHearingRequestAction from './hearing-request.action';
 
 describe('Hearing Request Actions', () => {
@@ -52,6 +53,20 @@ describe('Hearing Request Actions', () => {
     it('should reset hearing request last error action', () => {
       const action = new fromHearingRequestAction.ResetHearingRequestLastError();
       expect(action.type).toBe(fromHearingRequestAction.RESET_HEARING_REQUEST_LAST_ERROR);
+    });
+  });
+
+  describe('UpdateHearingValuesFailure', () => {
+    it('should fail to update hearing values', () => {
+      const payload: HearingResponseError = {
+        errorCode: 0,
+        status: 'Not Found',
+        errorDescription: 'Something went wrong',
+        errorMessage: 'Error',
+        timeStamp: '2020-01-01T00:00:00'
+      };
+      const action = new fromHearingRequestAction.GetHearingJudicialUsersFailure(payload);
+      expect(action.type).toBe(fromHearingRequestAction.GET_JUDICIAL_USER_FAILURE);
     });
   });
 });

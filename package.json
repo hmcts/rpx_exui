@@ -1,6 +1,6 @@
 {
   "name": "rpx-exui",
-  "version": "7.0.2",
+  "version": "7.0.4",
   "engines": {
     "node": ">=18.17.0"
   },
@@ -92,7 +92,7 @@
     "@angular/router": "^17.3.6",
     "@angular/ssr": "^17.3.6",
     "@edium/fsm": "^2.1.2",
-    "@hmcts/ccd-case-ui-toolkit": "7.0.41",
+    "@hmcts/ccd-case-ui-toolkit": "7.0.42",
     "@hmcts/ccpay-web-component": "6.2.1",
     "@hmcts/frontend": "0.0.50-alpha",
     "@hmcts/media-viewer": "4.0.4",

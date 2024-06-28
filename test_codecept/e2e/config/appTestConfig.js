@@ -152,6 +152,12 @@ const data = {
                 email: "xui_hearing_manager_cr84_off@justice.gov.uk",
                 release: "hearing_CR84", userIdentifier: "HEARING_MANAGER_CR84_OFF",
                 key: "Monday01"
+            },
+            {
+                idamId: "11111111-1111-1111-1111-111111111111",
+                email: "henry_fr_harper@yahoo.com",
+                release: "flagsTest", userIdentifier: "USER_WITH_FLAGS",
+                key: "Nagoya0102"
             }
 
 
@@ -247,6 +253,12 @@ const data = {
                 email: "xui_caseofficer@justice.gov.uk",
                 release: "general", userIdentifier: "STAFF_ADMIN",
                 key: "Welcome01"
+            },
+            {
+                idamId: "11111111-1111-1111-1111-111111111111",
+                email: "henry_fr_harper@yahoo.com",
+                release: "flagsTest", userIdentifier: "USER_WITH_FLAGS",
+                key: "Nagoya0102"
             }
 
 

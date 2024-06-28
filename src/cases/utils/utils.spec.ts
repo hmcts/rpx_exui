@@ -88,6 +88,30 @@ describe('Utils', () => {
     expect(Utils.hasMatchedJurisdictionAndCaseType(featureVariation, jurisdictionId, caseTypeId)).toEqual(true);
   });
 
+  it('should check for regEx expression and matched permissions return true', () => {
+    const featureVariation = {
+      jurisdiction: 'SSCS',
+      includeCaseTypes: [
+        '(Benefit-|BENEFIT-)\\d+'
+      ]
+    };
+    const jurisdictionId = 'SSCS';
+    const caseTypeId = 'Benefit-1243';
+    expect(Utils.hasMatchedJurisdictionAndCaseType(featureVariation, jurisdictionId, caseTypeId)).toEqual(true);
+  });
+
+  it('should check for regEx expression and matched permissions return false', () => {
+    const featureVariation = {
+      jurisdiction: 'SSCS',
+      includeCaseTypes: [
+        '(Benefit-|BENEFIT-)\\d+'
+      ]
+    };
+    const jurisdictionId = 'SSCS';
+    const caseTypeId = 'Benefit1243';
+    expect(Utils.hasMatchedJurisdictionAndCaseType(featureVariation, jurisdictionId, caseTypeId)).toEqual(false);
+  });
+
   it('should check for matched permissions return false', () => {
     const featureVariation = {
       jurisdiction: 'SSCS',

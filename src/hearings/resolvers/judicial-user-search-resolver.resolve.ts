@@ -47,8 +47,9 @@ export class JudicialUserSearchResolver {
 
   public getUsersData$(judgePersonalCodesList: string[]): Observable<JudicialUserModel[]> {
     return this.judicialRefDataService.searchJudicialUserByPersonalCodes(judgePersonalCodesList).pipe(
-      catchError(() => {
-        return [];
+      catchError((error) => {
+        this.hearingStore.dispatch(new fromHearingStore.GetHearingJudicialUsersFailure(error.error));
+        return of([]);
       })
     );
   }

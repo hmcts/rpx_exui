@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoadingService } from '@hmcts/ccd-case-ui-toolkit';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { MockRpxTranslatePipe } from '../../../../app/shared/test/mock-rpx-translate.pipe';
 import { initialState } from '../../../hearing.test.data';
 import { ACTION, AnswerSource, IsHiddenSource } from '../../../models/hearings.enum';
@@ -10,6 +11,7 @@ import { HearingsService } from '../../../services/hearings.service';
 import { HearingViewEditSummaryComponent } from './hearing-view-edit-summary.component';
 import { Section } from '../../../../hearings/models/section';
 import { ScreenNavigationModel } from '../../../../hearings/models/screenNavigation.model';
+import * as fromHearingStore from '../../../../hearings/store';
 
 describe('HearingViewEditSummaryComponent', () => {
   let component: HearingViewEditSummaryComponent;
@@ -19,6 +21,7 @@ describe('HearingViewEditSummaryComponent', () => {
   hearingsService.navigateAction$ = of(ACTION.CONTINUE);
   let screenFlow: ScreenNavigationModel[];
   let template: Section[];
+  let mockStore: Store<fromHearingStore.State>;
 
   describe('getHearingRequestToCompare and getHearingRequest are holding different state', () => {
     beforeEach(() => {
@@ -33,6 +36,8 @@ describe('HearingViewEditSummaryComponent', () => {
       }).compileComponents();
       fixture = TestBed.createComponent(HearingViewEditSummaryComponent);
       component = fixture.componentInstance;
+      mockStore = TestBed.inject(Store);
+
       fixture.detectChanges();
       screenFlow = [
         {
@@ -249,6 +254,21 @@ describe('HearingViewEditSummaryComponent', () => {
         expect(template.length).toEqual(0);
         expect(scrFl).toHaveBeenCalled();
       });
+    });
+
+    it('should set requestError when there is an error', () => {
+      const error = { errorMessage: 'Error Title', errorDescription: 'Error Description' };
+      spyOn(mockStore, 'select').and.returnValue(of(error));
+      component.ngOnInit();
+      fixture.detectChanges();
+      expect(component.validationErrors).toEqual([{ id: 'judicialUserGetError', message: `Judicial user: ${error.errorDescription}` }]);
+    });
+
+    it('should not set requestError when there is no error', () => {
+      spyOn(mockStore, 'select').and.returnValue(of(null));
+      component.ngOnInit();
+      fixture.detectChanges();
+      expect(component.requestError).toBeNull();
     });
 
     afterEach(() => {

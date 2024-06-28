@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
-import { Observable, Subscription, combineLatest } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, Subject, Subscription, combineLatest } from 'rxjs';
+import { take, takeUntil, tap } from 'rxjs/operators';
 import { HearingRequestStateData } from '../../../models/hearingRequestStateData.model';
 import { ACTION, Mode } from '../../../models/hearings.enum';
 import { HearingsService } from '../../../services/hearings.service';
@@ -12,6 +12,7 @@ import { HEARING_VIEW_EDIT_SUMMARY_TEMPLATE } from '../../../templates/hearing-v
 import { RequestHearingPageFlow } from '../request-hearing.page.flow';
 import { Section } from '../../../../hearings/models/section';
 import { ScreenNavigationModel } from '../../../../hearings/models/screenNavigation.model';
+import { HearingResponseError } from '../../../../hearings/models/hearingResponseError.model';
 
 @Component({
   selector: 'exui-hearing-view-edit-summary',
@@ -25,6 +26,10 @@ export class HearingViewEditSummaryComponent extends RequestHearingPageFlow impl
   private initialAndCurrentStatesSubscription: Subscription;
   private readonly notUpdatedMessage = 'The request has not been updated';
   public screenFlow: ScreenNavigationModel[] = [];
+
+  public getError$: Observable<HearingResponseError>;
+  private unsubscribe$: Subject<void> = new Subject<void>();
+  public requestError: null | { title: string, description: string } = null;
 
   constructor(protected readonly hearingStore: Store<fromHearingStore.State>,
               protected readonly hearingsService: HearingsService,
@@ -40,6 +45,17 @@ export class HearingViewEditSummaryComponent extends RequestHearingPageFlow impl
 
   ngOnInit(): void {
     this.removeUnnecessarySummaryTemplateItems();
+    this.getError$ = this.hearingStore.select(fromHearingStore.selectGetJudicialUsersError);
+    this.getError$
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        tap((error) => {
+          if (error) {
+            this.validationErrors = [{ id: 'judicialUserGetError', message: `Judicial user: ${error.errorDescription}` }];
+          }
+        })
+      )
+      .subscribe();
   }
 
   public executeAction(action: ACTION): void {
@@ -79,5 +95,7 @@ export class HearingViewEditSummaryComponent extends RequestHearingPageFlow impl
   public ngOnDestroy(): void {
     super.unsubscribe();
     this.initialAndCurrentStatesSubscription?.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
