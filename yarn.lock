@@ -3393,12 +3393,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/ccd-case-ui-toolkit@npm:7.0.42-manage-doc-error-msg":
-  version: 7.0.42-manage-doc-error-msg
-  resolution: "@hmcts/ccd-case-ui-toolkit@npm:7.0.42-manage-doc-error-msg"
+"@hmcts/ccd-case-ui-toolkit@npm:7.0.44-manage-doc-error-msg":
+  version: 7.0.44-manage-doc-error-msg
+  resolution: "@hmcts/ccd-case-ui-toolkit@npm:7.0.44-manage-doc-error-msg"
   dependencies:
     tslib: ^2.3.0
-  checksum: 80d86116484fbe78b6b46aa0e5777d089fdc30381e5806d154b4bfb4f3cbac95271339ea9b86a90da46d422e4cf450f7b65407422e511a583a429fe05acc77e5
+  checksum: 58b284bce743a0123da78b5e577e135e3bf5a70aeb9481f11d1adfa3f99d83d5bd0da0c0b218b4ba5e91b885f3989a9a5c518243c764ce07cffe75be9eea0327
   languageName: node
   linkType: hard
 
@@ -21949,7 +21949,7 @@ __metadata:
     "@angular/router": ^17.3.6
     "@angular/ssr": ^17.3.6
     "@edium/fsm": ^2.1.2
-    "@hmcts/ccd-case-ui-toolkit": 7.0.42-manage-doc-error-msg
+    "@hmcts/ccd-case-ui-toolkit": 7.0.44-manage-doc-error-msg
     "@hmcts/ccpay-web-component": 6.2.1
     "@hmcts/frontend": 0.0.50-alpha
     "@hmcts/media-viewer": 4.0.4
