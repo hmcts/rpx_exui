@@ -9,7 +9,7 @@ variable "location" {
 variable "env" {}
 
 variable "shared_product_name" {
-    default = "rpx"
+  default = "rpx"
 }
 
 variable "subscription" {}
@@ -19,7 +19,7 @@ variable "common_tags" {
 }
 
 variable "enable_ase" {
-    default = false
+  default = false
 }
 
 variable "application_type" {

@@ -43,7 +43,6 @@ test('My work tabs', async ({ page }) => {
 });
 
 test('View tasks, E2E journey of Caseworker-ia-officer user', async ({ page }) => {
-  //IAC_CaseOfficer_R2
   await signIn(page, "IAC_CaseOfficer_R2", false);
 
   console.log("Check all header tabs");
