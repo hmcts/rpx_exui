@@ -48,7 +48,7 @@ export class CaseCreateEffects {
     ofType(fromActions.CREATED_CASE_LOADED),
     map((payload: any) => {
       const replacements = { CASEID: payload.caseId };
-      this.alertService.success({ phrase: 'Case #%CASEID% has been created.', replacements });
+      this.alertService.success({ phrase: 'Case #%CASEID% has been created.', replacements, preserve: true });
       this.loggerService.info('Case created successfully');
       return new fromRoot.NewCaseLoadedSuccessfully();
     }),
