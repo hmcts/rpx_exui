@@ -11,6 +11,6 @@ export class ListedHearingViewerHiddenConverter implements HiddenConverter {
 
   public transformHidden(): Observable<boolean> {
     return this.store.pipe(select(fromRoot.getUserDetails)).pipe(
-      map((userDetails) => userDetails.userInfo.roles.includes('listed-hearing-viewer')));
+      map((userDetails) => userDetails?.userInfo?.roles.includes('listed-hearing-viewer')));
   }
 }

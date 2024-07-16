@@ -156,7 +156,7 @@ export enum HearingDateEnum {
   DisplayTime = 'HH:mm',
   DisplayMonth = 'DD MMMM YYYY',
   DefaultFormat = 'DD-MM-YYYY',
-  RequestFailedDateAndTime = 'DD MMMM YYYY HH:MM:SS',
+  RequestFailedDateAndTime = 'DD MMMM YYYY HH:mm:ss',
   DateAndTimeInZoneZ = 'YYYY-MM-DDTHH:mm:ssZ',
   InvalidDate = 'Invalid date'
 }
@@ -220,6 +220,7 @@ export enum HearingStageResultEnum {
 export enum HearingErrorMessage {
   ENTER_A_VALID_LOCATION = 'Enter a valid location',
   ENTER_A_LOCATION = 'Enter a location',
+  ADD_A_LOCATION = 'Add a location',
 }
 
 export enum HearingDatePriorityConstEnum {

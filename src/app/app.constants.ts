@@ -66,7 +66,7 @@ const helpContactDetails: ContactDetailsDataModel[] = [
     badgeColour: BadgeColour.BADGE_BLUE,
     email: 'contactprobate@justice.gov.uk',
     phone: '0300 303 0648',
-    openingTimes: 'Monday to Friday, 9:30am to 5pm (excluding public holidays)'
+    openingTimes: 'Monday to Friday, 9am to 1pm (Closed on bank holidays)'
   },
   {
     title: 'Divorce',

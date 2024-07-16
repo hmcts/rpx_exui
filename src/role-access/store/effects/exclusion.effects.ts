@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
@@ -20,7 +20,7 @@ export class ExclusionEffects {
     private readonly roleExclusionsService: RoleExclusionsService
   ) {}
 
-  @Effect() public confirmExclusion$ = this.actions$
+  public confirmExclusion$ = createEffect(() => this.actions$
     .pipe(
       ofType<ConfirmExclusionAction>(ExclusionActionTypes.CONFIRM_EXCLUSION),
       mergeMap(
@@ -55,7 +55,7 @@ export class ExclusionEffects {
             })
           )
       )
-    );
+    ));
 
   public static handleError(error: RoleAccessHttpError): Observable<Action> {
     if (error && error.status) {

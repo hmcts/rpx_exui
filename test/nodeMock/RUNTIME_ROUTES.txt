@@ -14,7 +14,7 @@
 /workallocation2/task/types-of-work
 /api/wa-supported-jurisdiction/get
 /workallocation2/task
-/workallocation2/retrieveCaseWorkersForServices
+/workallocation2/caseworker/getUsersByServiceName
 /data/internal/cases/1234567812345678
 /workallocation2/case/task/1234567812345678
 /api/role-access/exclusions/post

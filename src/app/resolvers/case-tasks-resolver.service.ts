@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, first } from 'rxjs/operators';
 import { TaskList } from '../../work-allocation/models/dtos';
@@ -9,7 +9,7 @@ import { handleFatalErrors, WILDCARD_SERVICE_DOWN } from '../../work-allocation/
 @Injectable({
   providedIn: 'root'
 })
-export class CaseTasksResolverService implements Resolve<TaskList> {
+export class CaseTasksResolverService {
   public static CASE_TASKS_URL: string = '/workallocation/case/task';
 
   constructor(private readonly http: HttpClient, private readonly router: Router) {}

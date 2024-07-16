@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserInfo } from '../models';
 import { SessionStorageService } from '../services';
 
@@ -7,7 +7,7 @@ import { SessionStorageService } from '../services';
   providedIn: 'root'
 })
 
-export class CaseAllocatorGuard implements CanActivate {
+export class CaseAllocatorGuard {
   constructor(private readonly sessionStorageService: SessionStorageService,
                 private readonly router: Router) {}
 
@@ -15,7 +15,7 @@ export class CaseAllocatorGuard implements CanActivate {
     const userInfoStr = this.sessionStorageService.getItem('userDetails');
     if (userInfoStr) {
       const userInfo: UserInfo = JSON.parse(userInfoStr);
-      const roleExists = userInfo.roles.includes('case-allocator');
+      const roleExists = userInfo?.roles.includes('case-allocator');
       if (!roleExists) {
         this.router.navigateByUrl('/cases');
       }

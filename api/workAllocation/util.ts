@@ -35,6 +35,7 @@ import {
 import { Person, PersonRole } from './interfaces/person';
 import { RoleCaseData } from './interfaces/roleCaseData';
 import { SearchTaskParameter } from './interfaces/taskSearchParameter';
+import { StaffProfile, StaffUserDetails } from './interfaces/staffUserDetails';
 
 export function prepareGetTaskUrl(baseUrl: string, taskId: string): string {
   return `${baseUrl}/task/${taskId}`;
@@ -70,6 +71,10 @@ export function prepareGetLocationsUrl(baseUrl: string, serviceCode: string = 'B
 // however could still be used for another process
 export function prepareGetSpecificLocationUrl(baseUrl: string, epimmsId: string): string {
   return `${baseUrl}/refdata/location/court-venues?epimms_id=${epimmsId}`;
+}
+
+export function prepareGetUsersUrl(baseUrl: string, service: string): string {
+  return `${baseUrl}/refdata/internal/staff/usersByServiceName?ccd_service_names=${service}&page_size=12000`;
 }
 
 export function prepareRoleApiUrl(baseUrl: string) {
@@ -267,12 +272,53 @@ export function mapCaseworkerData(caseWorkerData: CaseworkerApi[], roleAssignmen
   return caseworkers;
 }
 
+export function mapUsersToCaseworkers(users: StaffUserDetails[], roleAssignments: RoleAssignment[]): Caseworker[] {
+  const caseworkers: Caseworker[] = [];
+  if (users) {
+    users.forEach((staffUser: StaffUserDetails) => {
+      const thisCaseWorker: Caseworker = {
+        email: staffUser.staff_profile.email_id,
+        firstName: staffUser.staff_profile.first_name,
+        idamId: staffUser.staff_profile.id,
+        lastName: staffUser.staff_profile.last_name,
+        location: mapCaseworkerLocation(staffUser.staff_profile.base_location),
+        roleCategory: getUserRoleCategory(roleAssignments, staffUser.staff_profile),
+        service: staffUser.ccd_service_name.toUpperCase()
+      };
+      caseworkers.push(thisCaseWorker);
+    });
+  }
+  return caseworkers;
+}
+
 export function getRoleCategory(roleAssignments: RoleAssignment[], caseWorkerApi: CaseworkerApi): string {
   const roleAssignment = roleAssignments.find((roleAssign) => roleAssign.actorId === caseWorkerApi.id);
   return roleAssignment ? roleAssignment.roleCategory : null;
 }
 
+export function getUserRoleCategory(roleAssignments: RoleAssignment[], user: StaffProfile): string {
+  // TODO: Will need to be updated
+  const roleAssignment = roleAssignments.find((roleAssign) => roleAssign.actorId === user.id);
+  return roleAssignment ? roleAssignment.roleCategory : null;
+}
+
 export function mapCaseworkerLocation(baseLocation: LocationApi[]): Location {
+  let thisBaseLocation: Location = null;
+  if (baseLocation) {
+    baseLocation.forEach((location: LocationApi) => {
+      if (location.is_primary) {
+        thisBaseLocation = {
+          id: location.location_id,
+          locationName: location.location,
+          services: location.services
+        };
+      }
+    });
+  }
+  return thisBaseLocation;
+}
+
+export function mapUserLocation(baseLocation: LocationApi[]): Location {
   let thisBaseLocation: Location = null;
   if (baseLocation) {
     baseLocation.forEach((location: LocationApi) => {
@@ -513,7 +559,6 @@ export async function getCaseIdListFromRoles(roleAssignmentList: RoleAssignment[
 
   const response = await Promise.all(casePromises.map(reflect));
   const caseResults = response.filter((x) => x.status === 'fulfilled' && x.value).map((x) => x.value);
-
   let cases = [];
   caseResults.forEach((caseResult) => cases = [...cases, ...caseResult.cases]);
 
@@ -913,4 +958,17 @@ export async function getTypesOfWorkByUserId(path, req: express.Request): Promis
 export function getUniqueCasesCount(caseData: RoleCaseData[]): number {
   const caseIds = caseData ? caseData.map((caseResult) => caseResult.case_id) : [];
   return new Set(caseIds).size;
+}
+
+export function searchUsers(services: string[], term: string, users: Caseworker[]): Caseworker[] {
+  if (services) {
+    users = users.filter((user) => services.includes(user.service));
+  }
+  if (term) {
+    users = users.filter((user) => {
+      const name = user.firstName + ' ' + user.lastName;
+      return name.toUpperCase().includes(term.toUpperCase());
+    });
+  }
+  return users;
 }

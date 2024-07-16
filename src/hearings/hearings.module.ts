@@ -45,7 +45,6 @@ import { WarningAndErrorSectionComponent } from './containers/request-hearing/he
     PaletteUtilsModule
   ],
   declarations: [...fromComponents.components, ...fromContainers.containers, WarningAndErrorSectionComponent],
-  entryComponents: [],
   providers: [
     PageFlow,
     {

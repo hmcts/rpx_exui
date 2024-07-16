@@ -67,7 +67,9 @@ export class CaseViewerContainerComponent implements OnInit {
       {
         'caseTypes': [
           'ET_EnglandWales',
-          'ET_Scotland'
+          'ET_Scotland',
+          'ET_EnglandWales_Multiple',
+          'ET_Scotland_Multiple'
         ],
         'releaseVersion': '4',
         'serviceName': 'EMPLOYMENT'
@@ -120,7 +122,7 @@ export class CaseViewerContainerComponent implements OnInit {
     private readonly allocateRoleService: AllocateRoleService,
     private readonly waService: WASupportedJurisdictionsService) {
     this.userRoles$ = this.store.pipe(select(fromRoot.getUserDetails)).pipe(
-      map((userDetails) => userDetails.userInfo.roles)
+      map((userDetails) => userDetails?.userInfo?.roles)
     );
   }
 
@@ -138,12 +140,10 @@ export class CaseViewerContainerComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    console.info('ngOnInit started - CaseViewerContainerComponent');
     this.caseDetails = this.route.snapshot.data.case as CaseView;
     this.allocateRoleService.manageLabellingRoleAssignment(this.caseDetails.case_id).subscribe();
     this.prependedTabs$ = this.prependedCaseViewTabs();
     this.appendedTabs$ = this.appendedCaseViewTabs();
-    console.info('ngOnInit finished - CaseViewerContainerComponent');
   }
 
   private prependedCaseViewTabs(): Observable<CaseTab[]> {

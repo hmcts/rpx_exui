@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +9,13 @@ import { StaffUser } from '../../../models/staff-user.model';
 import { StaffAddEditFormService } from '../../../services/staff-add-edit-form/staff-add-edit-form.service';
 import { StaffDataAccessService } from '../../../services/staff-data-access/staff-data-access.service';
 import { StaffUserCheckAnswersComponent } from './staff-user-check-answers.component';
+
+@Pipe({ name: 'rpxTranslate' })
+class RpxTranslateMockPipe implements PipeTransform {
+  public transform(value: string): string {
+    return value;
+  }
+}
 
 describe('StaffUserCheckAnswersComponent', () => {
   let component: StaffUserCheckAnswersComponent;
@@ -69,7 +76,7 @@ describe('StaffUserCheckAnswersComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      declarations: [StaffUserCheckAnswersComponent],
+      declarations: [StaffUserCheckAnswersComponent, RpxTranslateMockPipe],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         { provide: StaffDataAccessService, useValue: mockStaffDataAccessService },
@@ -230,6 +237,63 @@ describe('StaffUserCheckAnswersComponent', () => {
     done();
     expect(mockStaffDataAccessService.addNewUser).toHaveBeenCalled();
     expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/service-down');
+  });
+
+  it('should handle error with status 400 correctly', () => {
+    const errorResponse = {
+      message: 'Bad Request',
+      name: 'name',
+      status: 400,
+      statusTest: 'Server Error',
+      url: '',
+      error: {
+        errorCode: 400,
+        errorDescription: 'Invalid Email',
+        errorMessage: 'Invalid email',
+        status: 400,
+        timeStamp: ''
+      },
+      headers: 'any'
+    };
+    spyOn(window, 'scrollTo');
+    mockStaffDataAccessService.addNewUser.and.returnValue(throwError(errorResponse));
+    component.onSubmitAddUser();
+    expect(mockStaffDataAccessService.addNewUser).toHaveBeenCalledWith(testStaffUser);
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+  });
+
+  it('should display error message when errMsg is set', () => {
+    const errorDescription = 'Error: You must add a valid email address';
+    component.errMsg = {
+      message: 'Bad Request',
+      name: 'name',
+      status: 400,
+      statusTest: 'Server Error',
+      url: '',
+      error: {
+        errorCode: 400,
+        errorDescription: 'Error: You must add a valid email address',
+        errorMessage: 'Invalid email',
+        status: '400',
+        timeStamp: ''
+      },
+      headers: 'any'
+    };
+    fixture.detectChanges();
+
+    const errorSummaryElement = fixture.debugElement.query(By.css('.error-summary'));
+    expect(errorSummaryElement).toBeTruthy();
+
+    const errorMessageHeading = errorSummaryElement.query(By.css('.error-summary-heading'));
+    expect(errorMessageHeading.nativeElement.textContent).toContain('Error: ');
+    expect(errorMessageHeading.nativeElement.textContent).toContain(errorDescription);
+  });
+
+  it('should not display error message when errMsg is not set', () => {
+    component.errMsg = null;
+    fixture.detectChanges();
+    const errorSummaryElement = fixture.debugElement.query(By.css('.error-summary'));
+    expect(errorSummaryElement).toBeFalsy();
   });
 
   it('should call updateUser and then redirect to staff on successful call when calling onSubmitEditMode', fakeAsync(() => {

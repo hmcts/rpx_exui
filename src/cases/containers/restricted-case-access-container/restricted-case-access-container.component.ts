@@ -41,7 +41,7 @@ export class RestrictedCaseAccessContainerComponent implements OnInit, OnDestroy
       }), take(1),
       switchMap(() => this.waSupportedJurisdictionsService.getWASupportedJurisdictions()),
       take(1),
-      switchMap((jurisdictions) => this.caseworkerDataService.getCaseworkersForServices(jurisdictions)),
+      switchMap((jurisdictions) => this.caseworkerDataService.getUsersFromServices(jurisdictions)),
       take(1),
       switchMap((caseworkers) => of(this.getRestrictedCases(caseworkers)))
     ).subscribe(

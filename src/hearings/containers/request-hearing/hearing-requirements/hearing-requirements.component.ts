@@ -2,7 +2,6 @@ import { AfterViewInit, Component, HostListener, OnDestroy, OnInit } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store } from '@ngrx/store';
-import { lastValueFrom } from 'rxjs';
 import { LoggerService } from '../../../../app/services/logger/logger.service';
 import * as fromHearingStore from '../../../../hearings/store';
 import { ValidatorsUtils } from '../../../../hearings/utils/validators.utils';
@@ -14,7 +13,6 @@ import { HearingRequestMainModel } from '../../../models/hearingRequestMain.mode
 import { ACTION, CaseFlagType, Mode } from '../../../models/hearings.enum';
 import { LovRefDataModel } from '../../../models/lovRefData.model';
 import { PartyDetailsModel } from '../../../models/partyDetails.model';
-import { PartyFlagsDisplayModel } from '../../../models/partyFlags.model';
 import { HearingsService } from '../../../services/hearings.service';
 import { LocationsDataService } from '../../../services/locations-data.service';
 import { CaseFlagsUtils } from '../../../utils/case-flags.utils';

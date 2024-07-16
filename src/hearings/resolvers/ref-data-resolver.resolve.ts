@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { ServiceIdResolverResolve } from './service-id-resolver.resolve';
 @Injectable({
   providedIn: 'root'
 })
-export class RefDataResolver extends ServiceIdResolverResolve implements Resolve<LovRefDataModel[]> {
+export class RefDataResolver extends ServiceIdResolverResolve {
   public serviceId: string = '';
 
   constructor(

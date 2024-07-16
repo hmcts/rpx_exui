@@ -33,7 +33,7 @@ export class HearingViewSummaryComponent implements OnInit {
     this.isHearingAmendmentsEnabled$ = this.hearingsFeatureService.isFeatureEnabled(AppConstants.FEATURE_NAMES.enableHearingAmendments);
 
     this.isHearingManager$ = this.appStore.pipe(select(fromAppStore.getUserDetails)).pipe(
-      map((userDetails) => userDetails.userInfo.roles.includes(UserRole.HearingManager))
+      map((userDetails) => userDetails?.userInfo?.roles.includes(UserRole.HearingManager))
     );
 
     combineLatest([this.isHearingAmendmentsEnabled$, this.isHearingManager$])

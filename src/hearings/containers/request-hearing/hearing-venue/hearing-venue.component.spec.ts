@@ -142,6 +142,30 @@ describe('HearingVenueComponent', () => {
     expect(formValid).toEqual(true);
   });
 
+  it('should return false when calling isFormValid with location selected', () => {
+    component.findLocationFormGroup.controls.locationSelectedFormControl.setValue('Hatt');
+    const formValid = component.isFormValid();
+    expect(formValid).toEqual(false);
+    expect(component.findLocationFormGroup.controls.locationSelectedFormControl.errors)
+      .toEqual({ addLocation: 'Add a location' });
+  });
+
+  it('should return false when calling isFormValid with location selected is undefined', () => {
+    component.findLocationFormGroup.controls.locationSelectedFormControl.markAsDirty();
+    const formValid = component.isFormValid();
+    expect(formValid).toEqual(false);
+    expect(component.findLocationFormGroup.controls.locationSelectedFormControl.errors)
+      .toEqual({ addLocation: 'Enter a location' });
+  });
+
+  it('should return false when calling isFormValid with location not selected', () => {
+    component.findLocationFormGroup.controls.locationSelectedFormControl.markAsPristine();
+    component.selectedLocations = [];
+    const formValid = component.isFormValid();
+    expect(formValid).toEqual(false);
+    expect(component.validationErrors.length).toEqual(1);
+  });
+
   it('should return false for isFormValid when a location is selected and not added', () => {
     const location: LocationByEPIMMSModel = {
       epimms_id: '123',

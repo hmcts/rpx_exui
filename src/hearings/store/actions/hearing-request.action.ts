@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { HttpError } from '../../../models/httpError.model';
 import { HearingConditions } from '../../models/hearingConditions';
 import { HearingRequestMainModel } from '../../models/hearingRequestMain.model';
+import { HearingResponseError } from '../../models/hearingResponseError.model';
 
 export const RESET_HEARING_REQUEST = '[HEARING REQUEST] Reset Hearing Request';
 export const NAVIGATE_BACK_HEARING_REQUEST = '[HEARING REQUEST] Navigate Back Hearing Request';
@@ -14,6 +15,7 @@ export const SUBMIT_HEARING_REQUEST_FAILURE = '[HEARING REQUEST] Submit Hearing 
 export const VIEW_EDIT_SUBMIT_HEARING_REASON = '[HEARING REQUEST AMEND] View Edit Submit Hearing Reason';
 export const VIEW_EDIT_SUBMIT_HEARING_REQUEST = '[HEARING REQUEST AMEND] View Edit Submit Hearing Request';
 export const RESET_HEARING_REQUEST_LAST_ERROR = '[HEARING REQUEST] Reset Hearing Request Last Error';
+export const GET_JUDICIAL_USER_FAILURE = '[HEARING REQUEST] Get Judicial User Failure';
 
 export class ResetHearingRequest implements Action {
   public readonly type = RESET_HEARING_REQUEST;
@@ -76,6 +78,11 @@ export class ResetHearingRequestLastError implements Action {
   public readonly type = RESET_HEARING_REQUEST_LAST_ERROR;
 }
 
+export class GetHearingJudicialUsersFailure implements Action {
+  public readonly type = GET_JUDICIAL_USER_FAILURE;
+  constructor(public payload: HearingResponseError) {}
+}
+
 export type HearingRequestAction =
   | ResetHearingRequest
   | NavigateBackHearingRequest
@@ -87,4 +94,5 @@ export type HearingRequestAction =
   | SubmitHearingRequestFailure
   | ViewEditSubmitHearingReason
   | ViewEditSubmitHearingRequest
-  | ResetHearingRequestLastError;
+  | ResetHearingRequestLastError
+  | GetHearingJudicialUsersFailure;

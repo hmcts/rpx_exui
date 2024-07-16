@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as RouterActions from '../actions/router.action';
 
 import { Store } from '@ngrx/store';
@@ -19,41 +19,37 @@ export class RouterEffects {
     private readonly store: Store<fromCases.State>
   ) {}
 
-  @Effect({ dispatch: false })
-  public navigate$ = this.actions$.pipe(
-      ofType(RouterActions.GO),
-      map((action: RouterActions.Go) => action.payload),
-      mergeMap(({ path, query: queryParams, extras, callback, errorHandler }) =>
-        from(
-          this.router.navigate(path, { queryParams, ...extras })
-            .then(() => callback ? callback() : false)
-            .catch((error) => errorHandler ? errorHandler(error) : false)
-        )
+  public navigate$ = createEffect(() => this.actions$.pipe(
+    ofType(RouterActions.GO),
+    map((action: RouterActions.Go) => action.payload),
+    mergeMap(({ path, query: queryParams, extras, callback, errorHandler }) =>
+      from(
+        this.router.navigate(path, { queryParams, ...extras })
+          .then(() => callback ? callback() : false)
+          .catch((error) => errorHandler ? errorHandler(error) : false)
       )
-    );
+    )
+  ), { dispatch: false });
 
-  @Effect({ dispatch: false })
-  public navigateNewCase$ = this.actions$.pipe(
-      ofType(RouterActions.CREATE_CASE_GO),
-      map((action: RouterActions.CreateCaseGo) => action.payload),
-      mergeMap(({ path, query: queryParams, extras, caseId }) =>
-        from(
-          this.router.navigate(path, { queryParams, ...extras }).then(() => {
-            this.store.dispatch(new fromCases.CreateCaseLoaded(caseId));
-          })
-        )
+  public navigateNewCase$ = createEffect(() => this.actions$.pipe(
+    ofType(RouterActions.CREATE_CASE_GO),
+    map((action: RouterActions.CreateCaseGo) => action.payload),
+    mergeMap(({ path, query: queryParams, extras, caseId }) =>
+      from(
+        this.router.navigate(path, { queryParams, ...extras }).then(() => {
+          this.store.dispatch(new fromCases.CreateCaseLoaded(caseId));
+        })
       )
-    );
+    )
+  ), { dispatch: false });
 
-  @Effect({ dispatch: false })
-  public navigateBack$ = this.actions$.pipe(
-      ofType(RouterActions.BACK),
-      tap(() => this.location.back())
-    );
+  public navigateBack$ = createEffect(() => this.actions$.pipe(
+    ofType(RouterActions.BACK),
+    tap(() => this.location.back())
+  ), { dispatch: false });
 
-  @Effect({ dispatch: false })
-  public navigateForward$ = this.actions$.pipe(
-      ofType(RouterActions.FORWARD),
-      tap(() => this.location.forward())
-    );
+  public navigateForward$ = createEffect(() => this.actions$.pipe(
+    ofType(RouterActions.FORWARD),
+    tap(() => this.location.forward())
+  ), { dispatch: false });
 }

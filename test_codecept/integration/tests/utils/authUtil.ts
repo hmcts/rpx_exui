@@ -148,8 +148,8 @@ async function  authenticateAndGetcookies(username, password)  {
                     loginAttemptsCounter++;
                     console.log("Login error : " + error.message);
                 } else {
-                    await page.close();
-                    await browser.close();
+                    await page?.close();
+                    await browser?.close();
                     throw error;
                 };
             }
@@ -157,20 +157,18 @@ async function  authenticateAndGetcookies(username, password)  {
 
     }catch(err){
         console.log("Pupeeteer browser login to app error occured : " + err);
-
-        await page.close();
-        await browser.close();
+        await page?.close();
+        await browser?.close();
         throw new Error(err);
     }
     const cookies = await page.cookies();
-    await page.close();
-    await browser.close();
+    await page?.close();
+    await browser?.close();
     return cookies;
-
 }
 
 function getPuppeteerLaunchOptions(){
-    const puppeteerOption = { ignoreHTTPSErrors: true, headless: 'new', args: ['--disable-gpu', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] };
+    const puppeteerOption = { ignoreHTTPSErrors: true, headless: true, args: ['--disable-gpu', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] };
     // if (!config.baseUrl.includes('manage-case.')) {
     //     puppeteerOption.args.push('--proxy-server=http://proxyout.reform.hmcts.net:8080');
     // }

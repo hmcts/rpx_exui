@@ -11,6 +11,7 @@ export const MCLAUNCHDARKLYKEY = new InjectionToken<string>('LAUNCHDARKLYKEY');
   providedIn: 'root'
 })
 export class McLaunchDarklyService extends LaunchDarklyService {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(@Inject(MCLAUNCHDARKLYKEY) key: string) {
     super();
     this.rootGuard(LaunchDarklyService);

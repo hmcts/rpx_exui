@@ -30,13 +30,12 @@ describe('Work allocation Release 2: persons, caseworkers and judicial users', (
       'content-length': JSON.stringify(reqBody).length
     };
 
-    const response = await Request.post('workallocation/retrieveCaseWorkersForServices', reqBody, headers, 200);
+    const response = await Request.post('workallocation/caseworker/getUsersByServiceName', reqBody, headers, 200);
     expect(response.status).to.equal(200);
     expect(response.data).to.be.an('array');
 
     const expectedCases = workAllocationDataModels.getFindPersonObj();
-    expect(response.data[0]).to.have.all.keys(['service', 'caseworkers']);
-    expect(Object.keys(response.data[0].caseworkers[0])).to.have.members(Object.keys(expectedCases));
+    expect(Object.keys(response.data[0])).to.have.members(Object.keys(expectedCases));
   });
 
   it('get judicial users', async function () {

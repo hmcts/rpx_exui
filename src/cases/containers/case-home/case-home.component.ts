@@ -46,7 +46,6 @@ export class CaseHomeComponent implements OnInit, OnDestroy {
    * have yet to be logged in. ie. Viewing an accessibility page.
    */
   public ngOnInit(): void {
-    console.info('ngOnInit started - CaseHomeComponent');
     this.navigationSubscription = this.navigationNotifier.navigation.subscribe((navigation) => {
       if (navigation.action) {
         this.actionDispatcher(this.paramHandler(navigation));
@@ -59,7 +58,6 @@ export class CaseHomeComponent implements OnInit, OnDestroy {
     ]);
 
     this.showSpinner$ = libServices$.pipe(delay(0), map((states) => states.reduce((c, s) => c || s, false)));
-    console.info('ngOnInit finished - CaseHomeComponent');
   }
 
   public ngOnDestroy(): void {

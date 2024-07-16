@@ -133,12 +133,14 @@ export class HearingVenueComponent extends RequestHearingPageFlow implements OnI
 
   public isFormValid(): boolean {
     let returnValue: boolean = true;
-    if (this.findLocationFormGroup.controls.locationSelectedFormControl.valid) {
+    if (this.findLocationFormGroup.controls.locationSelectedFormControl.dirty || this.findLocationFormGroup.controls.locationSelectedFormControl.value) {
       returnValue = false;
-      this.setLocationError(HearingErrorMessage.ENTER_A_VALID_LOCATION);
-    }
-
-    if (!this.selectedLocations.length) {
+      const isLocationSelected = !!this.findLocationFormGroup.controls.locationSelectedFormControl.value;
+      const message = isLocationSelected ? HearingErrorMessage.ADD_A_LOCATION : HearingErrorMessage.ENTER_A_LOCATION;
+      const locationSelectedFormControl = this.findLocationFormGroup.controls.locationSelectedFormControl;
+      locationSelectedFormControl.setErrors({ addLocation: message });
+      this.setLocationError(message);
+    } else if (!this.selectedLocations.length) {
       returnValue = false;
       this.setLocationError(HearingErrorMessage.ENTER_A_LOCATION);
     }

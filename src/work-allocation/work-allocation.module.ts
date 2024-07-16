@@ -14,7 +14,7 @@ import { RoleAccessModule } from '../role-access/role-access.module';
 import { WorkAllocationComponentsModule } from './components/work-allocation.components.module';
 import * as fromContainers from './containers';
 import { WorkAllocationAccessGuard } from './guards';
-import { CaseworkerDataService, LocationDataService, WASupportedJurisdictionsService, WorkAllocationTaskService } from './services';
+import { CaseworkerDataService, LocationDataService, StaffSupportedJurisdictionsService, WASupportedJurisdictionsService, WorkAllocationTaskService } from './services';
 import { workAllocationRouting } from './work-allocation-feature.routes';
 
 // from containers
@@ -42,6 +42,7 @@ import { workAllocationRouting } from './work-allocation-feature.routes';
     BookingService,
     CaseworkerDataService,
     LocationDataService,
+    StaffSupportedJurisdictionsService,
     WASupportedJurisdictionsService,
     LoadingService,
     SessionStorageService

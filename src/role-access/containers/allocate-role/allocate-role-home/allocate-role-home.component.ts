@@ -91,7 +91,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
               private readonly router: Router) {
     this.appStoreSub = this.appStore.pipe(select(fromAppStore.getUserDetails)).subscribe(
       (userDetails) => {
-        this.userRole = AppUtils.getUserRole(userDetails.userInfo.roles);
+        this.userRole = AppUtils.getUserRole(userDetails?.userInfo?.roles);
       }
     );
     if (this.route.snapshot.queryParams) {

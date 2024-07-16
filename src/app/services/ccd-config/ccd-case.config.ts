@@ -5,6 +5,9 @@ import { AppConstants } from '../../../app/app.constants';
 import { WAFeatureConfig } from '../../../work-allocation/models/common/service-config.model';
 import { EnvironmentService } from '../../shared/services/environment.service';
 import { AppConfigService } from '../config/configuration.services';
+import { InitialisationSyncService } from './initialisation-sync-service';
+import { LaunchDarklyDefaultsConstants } from './launch-darkly-defaults.constants';
+import { DeploymentEnvironmentEnum } from '../../enums/deployment-environment-enum';
 
 /**
  * see more:
@@ -16,56 +19,71 @@ import { AppConfigService } from '../config/configuration.services';
 export class AppConfig extends AbstractAppConfig {
   public workallocationUrl: string;
   protected config: CaseEditorConfig;
-
+  private deploymentEnv = DeploymentEnvironmentEnum.PROD;
   constructor(
     private readonly appConfigService: AppConfigService,
     private readonly featureToggleService: FeatureToggleService,
-    private readonly environmentService: EnvironmentService
+    private readonly environmentService: EnvironmentService,
+    private readonly initialisationSyncService: InitialisationSyncService,
+    private readonly window: Window
   ) {
     super();
+    this.deploymentEnv = environmentService.getDeploymentEnv();
     this.config = this.appConfigService.getEditorConfiguration() || {};
+    this.initialisationSyncService.waitForInitialisation((init) => {
+      console.log(`waitForInitialisation callback called: ${init}`);
+      if (init) {
+        this.featureToggleService.getValue('mc-document-secure-mode-enabled', false).subscribe({
+          next: (val) => this.config = {
+            ...this.config,
+            document_management_secure_enabled: val
+          }
+        });
 
-    this.featureToggleService.getValue('mc-document-secure-mode-enabled', false).subscribe({
-      next: (val) => this.config = {
-        ...this.config,
-        document_management_secure_enabled: val
-      }
-    });
+        this.featureToggleService.getValue('access-management-mode', true).subscribe({
+          next: (val) => this.config = {
+            ...this.config,
+            access_management_mode: val
+          }
+        });
 
-    this.featureToggleService.getValue('access-management-mode', false).subscribe({
-      next: (val) => this.config = {
-        ...this.config,
-        access_management_mode: val
-      }
-    });
+        this.featureToggleService.getValue('wa-service-config',
+          LaunchDarklyDefaultsConstants.getWaServiceConfig(this.deploymentEnv)).subscribe({
+          next: (val) => {
+            console.log('got value for wa-service-config: ' + JSON.stringify(val));
+            this.config = {
+              ...this.config,
+              wa_service_config: val
+            };
+          }
+        });
 
-    this.environmentService.config$.subscribe((config) => {
-      this.featureToggleService.getValue('wa-service-config', config.waSupportedServices).subscribe({
-        next: (val) => this.config = {
-          ...this.config,
-          wa_service_config: val
-        }
-      });
-    });
+        this.featureToggleService.getValue('icp-enabled', false).subscribe({
+          next: (val) => this.config = {
+            ...this.config,
+            icp_enabled: val
+          }
+        });
+        this.featureToggleService.getValue('icp-jurisdictions', []).subscribe({
+          next: (val: string[]) => this.config = {
+            ...this.config,
+            icp_jurisdictions: val
+          }
+        });
 
-    this.featureToggleService.getValue('access-management-basic-view-mock', {}).subscribe({
-      next: (val) => this.config = {
-        ...this.config,
-        access_management_basic_view_mock: val
-      }
-    });
+        this.featureToggleService.getValue(AppConstants.FEATURE_NAMES.enableRestrictedCaseAccess, false).subscribe({
+          next: (val) => this.config = {
+            ...this.config,
+            enable_restricted_case_access: val
+          }
+        });
 
-    this.featureToggleService.getValue(AppConstants.FEATURE_NAMES.enableRestrictedCaseAccess, false).subscribe({
-      next: (val) => this.config = {
-        ...this.config,
-        enable_restricted_case_access: val
-      }
-    });
-
-    this.featureToggleService.getValue(AppConstants.FEATURE_NAMES.enableCaseFileViewVersion1_1, false).subscribe({
-      next: (val) => this.config = {
-        ...this.config,
-        enable_case_file_view_version_1_1: val
+        this.featureToggleService.getValue(AppConstants.FEATURE_NAMES.enableCaseFileViewVersion1_1, false).subscribe({
+          next: (val) => this.config = {
+            ...this.config,
+            enable_case_file_view_version_1_1: val
+          }
+        });
       }
     });
   }
@@ -218,10 +236,6 @@ export class AppConfig extends AbstractAppConfig {
     return this.config.wa_service_config;
   }
 
-  public getAccessManagementBasicViewMock(): unknown {
-    return this.config.access_management_basic_view_mock;
-  }
-
   public getLocationRefApiUrl(): string {
     return this.config.location_ref_api_url;
   }
@@ -256,5 +270,13 @@ export class AppConfig extends AbstractAppConfig {
 
   public getEnableCaseFileViewVersion1_1(): boolean {
     return this.config.enable_case_file_view_version_1_1;
+  }
+
+  public getIcpEnable(): boolean {
+    return this.config.icp_enabled;
+  }
+
+  public getIcpJurisdictions(): string[] {
+    return this.config.icp_jurisdictions;
   }
 }

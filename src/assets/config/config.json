@@ -35,7 +35,6 @@
     "refunds_url": "api/refund",
     "notification_url": "api/notification",
     "access_management_mode": false,
-    "access_management_basic_view_mock_mode": false,
     "location_ref_api_url": "/refdata/location",
     "cam_role_assignments_api_url": "/am/role-assignments",
     "categories_and_documents_url": "/categoriesAndDocuments",

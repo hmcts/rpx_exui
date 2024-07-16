@@ -32,7 +32,10 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
 
   Then('I validate work filter button text is {string}', async function (btntext) {
     await BrowserWaits.retryWithActionCallback(async () => {
-      expect(await myWorkPage.showHideWorkFilterBtn.getText()).to.contains(btntext);
+      const btnLabel = await myWorkPage.showHideWorkFilterBtn.getText()
+      reportLogger.AddMessage(`Button text  "${btnLabel}"`);
+
+      expect(btnLabel).to.contains(btntext);
     });
   });
 

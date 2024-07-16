@@ -73,7 +73,7 @@ export class SpecificAccessReviewComponent implements OnInit, OnDestroy {
       );
     } else {
       this.waSupportedJurisdictionsService.getWASupportedJurisdictions().subscribe((services) => {
-        this.caseworkerDataService.getCaseworkersForServices(services).subscribe(
+        this.caseworkerDataService.getUsersFromServices(services).subscribe(
           (caseworkers) => {
             const caseworker = caseworkers.find((thisCaseworker) => thisCaseworker.idamId === this.specificAccessStateData.actorId);
             if (caseworker) {

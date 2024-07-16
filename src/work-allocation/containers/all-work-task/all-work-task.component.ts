@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Person } from '@hmcts/rpx-xui-common-lib';
 import { select } from '@ngrx/store';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppUtils } from '../../../app/app-utils';
 import { UserInfo, UserRole } from '../../../app/models';
@@ -21,8 +21,6 @@ import { TaskListWrapperComponent } from '../task-list-wrapper/task-list-wrapper
 export class AllWorkTaskComponent extends TaskListWrapperComponent {
   private static readonly ALL_TASKS = 'All';
   private static readonly AVAILABLE_TASKS = 'None / Available tasks';
-  public locations: Location[];
-  public waSupportedJurisdictions$: Observable<string[]>;
   public supportedJurisdictions: string[];
   public sortedBy: SortField = {
     fieldName: '',

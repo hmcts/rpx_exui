@@ -60,19 +60,13 @@ describe('AvailableTasksComponent', () => {
   const mockRouter = new MockRouter();
   const mockAlertService = jasmine.createSpyObj('mockAlertService', ['destroy']);
   const mockFilterService = jasmine.createSpyObj('mockFilterService', ['getStream']);
-  const mockCaseworkerDataService = jasmine.createSpyObj('mockCaseworkerDataService', ['getCaseworkersForServices']);
+  const mockCaseworkerDataService = jasmine.createSpyObj('mockCaseworkerDataService', ['getUsersFromServices']);
   const mockSessionStorageService = jasmine.createSpyObj('mockSessionStorageService', ['getItem', 'setItem']);
   const mockFeatureToggleService = jasmine.createSpyObj('mockFeatureToggleService', ['isEnabled', 'getValue']);
   const mockLoadingService = jasmine.createSpyObj('mockLoadingService', ['register', 'unregister']);
   const mockWASupportedJurisdictionsService = jasmine.createSpyObj('mockWASupportedJurisdictionsService', ['getWASupportedJurisdictions']);
   const mockRoleService = jasmine.createSpyObj('mockRolesService', ['getCaseRolesUserDetails']);
-  const mockCheckReleaseVersionService = {
-    isRelease4: () => {
-      return {
-        subscribe: () => true
-      };
-    }
-  };
+
   let storeMock: jasmine.SpyObj<Store<fromActions.State>>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let store: Store<fromActions.State>;
@@ -131,7 +125,7 @@ describe('AvailableTasksComponent', () => {
         }
       ]
     };
-    mockCaseworkerDataService.getCaseworkersForServices.and.returnValue(of([]));
+    mockCaseworkerDataService.getUsersFromServices.and.returnValue(of([]));
     mockFilterService.getStream.and.returnValue(of(filterFields));
     mockWASupportedJurisdictionsService.getWASupportedJurisdictions.and.returnValue(of(['Service1', 'Service2']));
     const tasks: Task[] = getMockTasks();

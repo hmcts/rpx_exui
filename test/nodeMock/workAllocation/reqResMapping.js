@@ -262,8 +262,8 @@ module.exports = {
       }
       res.send(returnUsers);
     },
-    '/workallocation/retrieveCaseWorkersForServices': (req, res) => {
-      res.send(workAllocationMockData.retrieveCaseWorkersForServices(req.body.serviceIds, req.body.fullServices));
+    '/workallocation/caseworker/getUsersByServiceName': (req, res) => {
+      res.send(workAllocationMockData.getUsersFromServices(req.query.ccd_service_name));
     },
     '/api/role-access/allocate-role/valid-roles': (req, res) => {
       res.send(workAllocationMockData.getRoles(req.body.serviceIds));

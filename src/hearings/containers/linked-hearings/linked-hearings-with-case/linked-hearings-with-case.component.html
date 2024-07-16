@@ -8,8 +8,7 @@
   {{isHearingsAvailable ? linkedHearingEnum.HearingSelection : linkedHearingEnum.NoHearingSelection | rpxTranslate }}
 </h1>
 <p class="govuk-hint" *ngIf="linkedCases?.length && isHearingsAvailable">
-  {{ 'Hearings may be unavailable due to their status, or if they are already' +
-  'linked to another hearing.<br>Only hearings from cases linked to this case will appear in this list.' | rpxTranslate }}
+  {{ message | rpxTranslate }}
 </p>
 <p class="govuk-hint" *ngIf="!isHearingsAvailable">
   {{linkedHearingEnum.NoHearingsAvailable | rpxTranslate }}

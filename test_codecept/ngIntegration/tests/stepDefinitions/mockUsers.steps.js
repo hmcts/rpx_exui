@@ -43,7 +43,7 @@ const { DataTableArgument } = require('codeceptjs');
         // step definition code here
         const datatableHashes = datatable.parse().hashes();
         for (const row of datatableHashes) {
-            workAlloctionMockData.setLocationForCaseWokerInService(service, row.email, row.locationId);
+            workAlloctionMockData.setLocationForCaseWorkers(service, row.email, row.locationId);
         }
     });
 

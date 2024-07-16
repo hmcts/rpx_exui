@@ -34,9 +34,8 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import {
   LoggerModule,
   NGXLogger,
-  NGXLoggerHttpService,
   NgxLoggerLevel,
-  NGXMapperService
+  NGXLoggerMapperService
 } from 'ngx-logger';
 import { RpxTranslationModule } from 'rpx-xui-translation';
 import { BookingServiceDownComponent, BookingSystemErrorComponent, RefreshBookingServiceDownComponent } from '../booking/containers';
@@ -63,6 +62,7 @@ import { effects } from './store/effects';
 // ngrx modules - END
 // APP store
 import { CustomSerializer, reducers } from './store/reducers';
+import { InitialisationSyncService } from './services/ccd-config/initialisation-sync-service';
 // enforces immutability
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -94,8 +94,8 @@ export function launchDarklyClientIdFactory(
     EffectsModule.forRoot(effects),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
-      logOnly: environment.production
-    }),
+      logOnly: environment.production,
+      connectInZone: true }),
     SharedModule,
     ExuiCommonLibModule,
     NgIdleKeepaliveModule.forRoot(),
@@ -111,8 +111,7 @@ export function launchDarklyClientIdFactory(
   ],
   providers: [
     NGXLogger,
-    NGXLoggerHttpService,
-    NGXMapperService,
+    NGXLoggerMapperService,
     {
       provide: RouterStateSerializer,
       useClass: CustomSerializer
@@ -140,7 +139,9 @@ export function launchDarklyClientIdFactory(
     FilterService,
     GoogleTagManagerService,
     LoadingService,
-    RoleService
+    RoleService,
+    InitialisationSyncService,
+    { provide: Window, useValue: window }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

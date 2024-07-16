@@ -3,6 +3,7 @@ const INITIAL_TIMEOUT_PERIOD = 5000; // 5 seconds
 const MAX_TIMEOUT_PERIOD = 180000; // 180 seconds
 
 // Handle requests being sent to the target server
+// @typescript-eslint/no-unused-vars
 export function handleRequest(proxyReq, req, res) {
   if (req.method === 'POST') {
     const defaultTimeoutPeriod = INITIAL_TIMEOUT_PERIOD;
@@ -29,6 +30,7 @@ export function handleRequest(proxyReq, req, res) {
 }
 
 // Handle responses being sent back to the client
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function handleResponse(proxyRes, req, res) {
   if (req.method === 'POST') {
     // Current time stored as the last time a document upload was completed

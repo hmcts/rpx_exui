@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { StaffUser } from '../models/staff-user.model';
 import { StaffDataAccessService } from '../services/staff-data-access/staff-data-access.service';
@@ -7,7 +7,7 @@ import { StaffDataAccessService } from '../services/staff-data-access/staff-data
 @Injectable({
   providedIn: 'root'
 })
-export class StaffUserDetailsResolverService implements Resolve<{ userDetails: StaffUser}> {
+export class StaffUserDetailsResolverService {
   constructor(private staffDataAccessService: StaffDataAccessService) {
   }
 

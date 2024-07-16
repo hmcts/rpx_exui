@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { select, Store } from '@ngrx/store';
 import { combineLatest, Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import * as fromActions from '../../app/store';
 import { RoleCategory } from '../models';
 
 @Injectable()
-export class BookingGuard implements CanActivate {
+export class BookingGuard {
   public static defaultUrl: string = '/cases';
 
   constructor(private readonly router: Router,

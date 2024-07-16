@@ -1,5 +1,6 @@
 import { of } from 'rxjs';
 import { LoggerService } from './logger.service';
+import { DeploymentEnvironmentEnum } from '../../enums/deployment-environment-enum';
 
 describe('Logger service', () => {
   const mockedMonitoringService = jasmine.createSpyObj('mockedMonitoringService', ['logEvent', 'logException', 'enableCookies']);
@@ -8,7 +9,7 @@ describe('Logger service', () => {
   const mockedSessionStorageService = jasmine.createSpyObj('mockedSessionStorageService', ['getItem']);
   const mockedCryptoWrapper = jasmine.createSpyObj('mockedCryptoWrapper', ['encrypt', 'decrypt']);
   const mockedConsoleObject = jasmine.createSpyObj('mockedConsoleObject', ['log', 'trace', 'debug', 'info', 'warn', 'error']);
-  const mockEnvironmentService = jasmine.createSpyObj('mockEnvironmentService', ['isProd', 'config$']);
+  const mockEnvironmentService = jasmine.createSpyObj('mockEnvironmentService', ['config$', 'getDeploymentEnv']);
   const mockConfig = jasmine.createSpyObj('mockConfig', ['subscribe']);
   mockEnvironmentService.config$ = mockConfig;
 
@@ -99,15 +100,15 @@ describe('Logger service', () => {
 
   it('should log the correct environment type to the console', () => {
     mockEnvironmentService.config$ = of(true);
-    mockEnvironmentService.isProd.and.returnValue(true);
+    mockEnvironmentService.getDeploymentEnv.and.returnValue(DeploymentEnvironmentEnum.PROD);
     spyOn(console, 'info');
     new LoggerService(mockedMonitoringService, mockedNgxLogger, mockedSessionStorageService,
       mockedCryptoWrapper, mockEnvironmentService);
     expect(console.info).toHaveBeenCalledWith('Environment is prod.');
-    mockEnvironmentService.isProd.and.returnValue(false);
+    mockEnvironmentService.getDeploymentEnv.and.returnValue(DeploymentEnvironmentEnum.AAT);
     new LoggerService(mockedMonitoringService, mockedNgxLogger, mockedSessionStorageService,
       mockedCryptoWrapper, mockEnvironmentService);
-    expect(console.info).toHaveBeenCalledWith('Environment is non-prod.');
+    expect(console.info).toHaveBeenCalledWith('Environment is aat.');
   });
 
   describe('enableCookies()', () => {

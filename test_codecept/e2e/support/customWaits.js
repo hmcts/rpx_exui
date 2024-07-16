@@ -7,7 +7,7 @@ const reportLogger = require('../../codeceptCommon/reportLogger');
 
 class BrowserWaits{
     constructor(){
-        this.waitTime = 30000; 
+        this.waitTime = 15000;
         this.pageErrors = $$(".error-summary");
         this.retriesCount = 3;
 
@@ -178,7 +178,7 @@ class BrowserWaits{
 
 
     async retryWithActionCallback(callback, actionMessage, retryTryAttempts) {
-        
+
         const functionName = this.__getCallingFunctionName()
 
         let retryCounter = 0;
@@ -204,7 +204,7 @@ class BrowserWaits{
 
                 error = err
                 console.log(err)
-                
+
                 const currentRoute = await browser.getCurrentUrl()
                 if (currentRoute.includes('service-down')) {
                     throw new Error('Generic system error displayed: "Sorry, there is a problem with the service"');
@@ -232,7 +232,7 @@ class BrowserWaits{
         }
         while (status && counter < 10)
         CucumberReporter.AddMessage(status ? `spinner closed` : 'spinner still displayed');
-        
+
         // const isSpinnerPresent = await $("div.spinner-container").isPresent();
 
         // await this.waitForCondition(async () => {
@@ -256,4 +256,4 @@ class BrowserWaits{
     }
 }
 
-module.exports = new BrowserWaits(); 
+module.exports = new BrowserWaits();

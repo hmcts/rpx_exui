@@ -83,6 +83,7 @@ describe('AllWorkCaseComponent', () => {
     allocateRoleService = {},
     httpClient = {},
     store = {},
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     checkReleaseVersionService = {}
   }) => new AllWorkCaseComponent(
     changeDetectorRef as ChangeDetectorRef,

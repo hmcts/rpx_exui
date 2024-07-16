@@ -2,7 +2,7 @@
 
 module.exports = {
     logRequests : [
-        '/workallocation/retrieveCaseWorkersForServices',
+        '/workallocation/caseworker/getUsersByServiceName',
         '/api/role-access/roles/getJudicialUsers'
     ],
     logResponses:[

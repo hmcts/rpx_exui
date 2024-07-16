@@ -201,7 +201,7 @@ export class WorkCaseListWrapperComponent implements OnInit, OnDestroy {
 
   public setupCaseWorkers(): void {
     const caseworkersByService$ = this.waSupportedJurisdictions$.pipe(switchMap((jurisdictions) =>
-      this.caseworkerService.getCaseworkersForServices(jurisdictions)
+      this.caseworkerService.getUsersFromServices(jurisdictions)
     ));
     this.waSupportedJurisdictions$.pipe(switchMap((jurisdictions) =>
       this.rolesService.getValidRoles(jurisdictions)

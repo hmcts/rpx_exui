@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Observable } from 'rxjs';
 import { AppConstants } from '../../app/app.constants';
 
 @Injectable()
-export class RestrictedCaseAccessGuard implements CanActivate {
+export class RestrictedCaseAccessGuard {
   constructor(private readonly featureToggleService: FeatureToggleService) {
   }
 

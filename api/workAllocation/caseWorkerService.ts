@@ -6,7 +6,14 @@ import { setHeaders } from '../lib/proxy';
 import { CaseworkerPayload, ServiceCaseworkerData } from './interfaces/caseworkerPayload';
 
 const logger: JUILogger = log4jui.getLogger('caseworker-service');
-const MAX_RECORDS: number = 10000;
+const MAX_RECORDS: number = 100000;
+
+export async function handleUsersGet(path: string, req: EnhancedRequest): Promise<any> {
+  logger.info('getting users for', path);
+  const headers = setHeaders(req);
+  const response: AxiosResponse = await http.get(path, { headers });
+  return response.data;
+}
 
 export async function handleCaseWorkerGetAll(path: string, req: EnhancedRequest): Promise<any> {
   logger.info('getting all caseworkers for', path);

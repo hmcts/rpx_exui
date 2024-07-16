@@ -61,6 +61,7 @@ Then('In create case flag page {string}, I validate fields displayed', async fun
             throw new Error(`${row.field} not configured for page ${page}`)
         }
         await browserWaits.retryWithActionCallback(async () => {
+            await browserWaits.waitForElement(pageObj.fieldMapping[row.field])
             expect(await pageObj.fieldMapping[row.field].isDisplayed(), `${row.field} not displayed`).to.be.true
         })
         reportLogger.AddMessage(`${row.name} is displayed`)

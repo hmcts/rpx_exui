@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap, take } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { getHearingJudgeIds } from '../store/selectors/hearing-judges.selectors'
 @Injectable({
   providedIn: 'root'
 })
-export class JudicialUserSearchResponseResolver implements Resolve<JudicialUserModel[]> {
+export class JudicialUserSearchResponseResolver {
   constructor(
     protected readonly judicialRefDataService: JudicialRefDataService,
     protected readonly hearingStore: Store<fromHearingStore.State>
@@ -35,8 +35,9 @@ export class JudicialUserSearchResponseResolver implements Resolve<JudicialUserM
 
   public getUsersData$(judgePersonalCodesList: string[]): Observable<JudicialUserModel[]> {
     return this.judicialRefDataService.searchJudicialUserByPersonalCodes(judgePersonalCodesList).pipe(
-      catchError(() => {
-        return [];
+      catchError((error) => {
+        this.hearingStore.dispatch(new fromHearingStore.GetHearingJudicialUsersFailure(error.error));
+        return of([]);
       })
     );
   }

@@ -241,7 +241,7 @@ export class HearingTimingComponent extends RequestHearingPageFlow implements On
   public showChosenDateError(): void {
     const isInValidDate = this.getDateFormatted(this.firstHearingFormGroup, this.firstHearingDate.id).includes(null);
     const chosenDate = moment(this.getDateFormatted(this.firstHearingFormGroup, this.firstHearingDate.id), HearingDateEnum.DefaultFormat);
-    const isPastDate = chosenDate.isBefore() || chosenDate.isSame(new Date(), 'd');
+    const isPastDate = chosenDate.isBefore(moment().startOf('day'));
     const isFirstHearingDateValid = moment(chosenDate, HearingDateEnum.DefaultFormat, true).isValid();
     const isWeekday = this.isWeekDay(chosenDate);
     if (isInValidDate) {
@@ -267,8 +267,8 @@ export class HearingTimingComponent extends RequestHearingPageFlow implements On
     const isInValidLatestDate = this.getDateFormatted(this.latestHearingFormGroup, this.latestHearingDate.id).includes(null);
     const chosenEarliestDate = moment(this.getDateFormatted(this.earliestHearingFormGroup, this.earliestHearingDate.id), HearingDateEnum.DefaultFormat);
     const chosenLatestDate = moment(this.getDateFormatted(this.latestHearingFormGroup, this.latestHearingDate.id), HearingDateEnum.DefaultFormat);
-    const isPastEarliestDate = chosenEarliestDate.isBefore() || chosenEarliestDate.isSame(new Date(), 'd');
-    const isPastLatestDate = chosenLatestDate.isBefore() || chosenLatestDate.isSame(new Date(), 'd');
+    const isPastEarliestDate = chosenEarliestDate.isBefore(moment().startOf('day'));
+    const isPastLatestDate = chosenLatestDate.isBefore(moment().startOf('day'));
     const isLatestBeforeEarliest = chosenEarliestDate > chosenLatestDate;
     const isEarliestDateValid = chosenEarliestDate.isValid();
     const isLatestHearingDate = chosenLatestDate.isValid();

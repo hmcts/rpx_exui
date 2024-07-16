@@ -50,7 +50,8 @@ export const initialHearingRequestState: HearingRequestStateData = {
     },
     partyDetails: []
   },
-  lastError: null
+  lastError: null,
+  getJudicialUsersError: null
 };
 
 export function hearingRequestReducer(currentState = initialHearingRequestState,
@@ -121,6 +122,12 @@ export function hearingRequestReducer(currentState = initialHearingRequestState,
       return {
         ...currentState,
         lastError: action.payload
+      };
+    }
+    case fromActions.GET_JUDICIAL_USER_FAILURE: {
+      return {
+        ...currentState,
+        getJudicialUsersError: action.payload
       };
     }
     case fromActions.RESET_HEARING_REQUEST_LAST_ERROR: {

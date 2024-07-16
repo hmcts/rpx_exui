@@ -34,13 +34,7 @@ describe('TaskListWrapperComponent', () => {
   const mockFeatureToggleService = jasmine.createSpyObj('FeatureToggleService', ['isEnabled', 'getValue']);
   const mockCaseworkerDataService = jasmine.createSpyObj('mockCaseworkerDataService', ['getAll']);
   const mockWASupportedJurisdictionsService = jasmine.createSpyObj('mockWASupportedJurisdictionsService', ['getWASupportedJurisdictions']);
-  const mockCheckReleaseVersionService = {
-    isRelease4: () => {
-      return {
-        subscribe: () => true
-      };
-    }
-  };
+
   let storeMock: jasmine.SpyObj<Store<fromActions.State>>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let store: Store<fromActions.State>;
