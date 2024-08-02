@@ -70,7 +70,7 @@ describe('AllocateRolePersonComponent', () => {
       assignmentId: 'a123456',
       state: AllocateRoleState.CHOOSE_ALLOCATE_TO,
       typeOfRole: { id: 'ctsc', name: 'CTSC' },
-      allocateTo: AllocateTo.RESERVE_TO_ME,
+      allocateTo: AllocateTo.ALLOCATE_TO_ME,
       personToBeRemoved: {
         id: 'p111111',
         name: 'test1',
@@ -105,7 +105,7 @@ describe('AllocateRolePersonComponent', () => {
       assignmentId: 'a123456',
       state: AllocateRoleState.CHOOSE_ALLOCATE_TO,
       typeOfRole: { id: '', name: '' },
-      allocateTo: AllocateTo.RESERVE_TO_ME,
+      allocateTo: AllocateTo.ALLOCATE_TO_ME,
       personToBeRemoved: {
         id: 'p111111',
         name: 'test1',
@@ -140,7 +140,7 @@ describe('AllocateRolePersonComponent', () => {
       assignmentId: 'a123456',
       state: AllocateRoleState.CHOOSE_ALLOCATE_TO,
       typeOfRole: { id: 'admin', name: 'Admin' },
-      allocateTo: AllocateTo.RESERVE_TO_ME,
+      allocateTo: AllocateTo.ALLOCATE_TO_ME,
       personToBeRemoved: {
         id: 'p111111',
         name: 'test1',
@@ -175,7 +175,7 @@ describe('AllocateRolePersonComponent', () => {
       assignmentId: 'a123456',
       state: AllocateRoleState.CHOOSE_ALLOCATE_TO,
       typeOfRole: { id: 'lead-judge', name: 'Lead judge' },
-      allocateTo: AllocateTo.RESERVE_TO_ME,
+      allocateTo: AllocateTo.ALLOCATE_TO_ME,
       personToBeRemoved: {
         id: 'p111111',
         name: 'test1',

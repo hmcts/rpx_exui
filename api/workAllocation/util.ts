@@ -784,7 +784,7 @@ export function mapRoleCaseData(roleAssignment: RoleAssignment, caseDetail: Case
   return {
     assignee: roleAssignment.actorId,
     // hmctsCaseCategory will be available only if an event has been triggered
-    case_category: caseDetail.case_data && caseDetail.case_data.hmctsCaseCategory ? caseDetail.case_data.hmctsCaseCategory : '',
+    case_category: getCaseCategory(caseDetail),
     case_type: caseDetail.case_type_id,
     case_id: caseDetail.id,
     case_name: getCaseName(caseDetail),
@@ -813,6 +813,13 @@ export function mapRoleCaseData(roleAssignment: RoleAssignment, caseDetail: Case
     next_hearing_date: caseDetail.case_data && caseDetail.case_data.nextHearingDetails &&
       caseDetail.case_data.nextHearingDetails.hearingDateTime ? caseDetail.case_data.nextHearingDetails.hearingDateTime : null
   };
+}
+
+export function getCaseCategory(caseDetail: Case): string {
+  if (caseDetail.case_data?.caseManagementCategory?.value?.label) {
+    return caseDetail.case_data.caseManagementCategory.value.label;
+  }
+  return caseDetail.case_data && caseDetail.case_data.hmctsCaseCategory ? caseDetail.case_data.hmctsCaseCategory : '';
 }
 
 export function checkIsNew(roleAssignment: RoleAssignment, newRoleAssignmentList: RoleAssignment[]): boolean {

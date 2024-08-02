@@ -417,6 +417,15 @@ form.check-your-answers table td .markdown p {
   }
 }
 
+header {
+  .govuk-skip-link {
+    &:link, &:visited {
+      color: #fff;
+    }
+  }
+}
+
+
 .show-condition-grey-bar {
   border-left: 10px solid #bfc1c3;
   padding-left: 15px;

@@ -10,6 +10,7 @@ const { Matchers } = require('@pact-foundation/pact');
 const { somethingLike } = Matchers;
 const pactSetUp = new PactTestSetup({ provider: 'referenceData_location', port: 8000 });
 
+const service = 'IA';
 const serviceCode = 'BFA1';
 
 describe('Locations ref data api, get matching location for service code', () => {
@@ -102,11 +103,15 @@ describe('Locations ref data api, get matching location for service code', () =>
 
     it('returns the correct response', async () => {
       const configValues = getLocationsRefDataAPIOverrides(pactSetUp.provider.mockService.baseUrl);
+      // @ts-ignore
+      configValues.serviceRefDataMapping = [
+        { 'service': 'IA', 'serviceCodes': ['BFA1'] }, { 'service': 'CIVIL', 'serviceCodes': ['AAA6', 'AAA7'] }
+      ];
       sandbox.stub(config, 'get').callsFake((prop) => {
         return configValues[prop];
       });
 
-      const { getLocations } = requireReloaded('../../../../workAllocation/locationController.ts');
+      const { getLocations } = requireReloaded('../../../../workAllocation/locationController');
 
       const req = mockReq({
         headers: {
@@ -114,19 +119,7 @@ describe('Locations ref data api, get matching location for service code', () =>
           'ServiceAuthorization': 'Bearer someServiceAuthorizationToken',
           'content-type': 'application/json'
         },
-        body: {
-          'locations': [
-            {
-              'id': '425094',
-              'userId': '9f17a6d6-8c89-42ff-8ebb-3bd3bac0c3a9',
-              'locationId': '425094',
-              'locationName': '',
-              'services': [
-                'CIVIL'
-              ]
-            }
-          ]
-        }
+        query: { serviceCodes: service }
 
       });
       let returnedResponse = null;
@@ -151,7 +144,6 @@ describe('Locations ref data api, get matching location for service code', () =>
 });
 
 function assertResponses(dto: any) {
-  console.log(JSON.stringify(dto));
   expect(dto[0].id).to.be.equal('20262');
   expect(dto[0].locationName).to.be.equal('Central London County Court');
 }

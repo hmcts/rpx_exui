@@ -1,10 +1,8 @@
 import { NextFunction, Response } from 'express';
-import { getConfigValue } from '../configuration';
-import { SERVICES_LOCATION_API_PATH } from '../configuration/references';
 import { EnhancedRequest } from '../lib/models';
 import { CourtVenue, Location } from './interfaces/location';
 import { commonGetFullLocation, getRegionLocationsForServices, handleLocationGet } from './locationService';
-import { prepareGetLocationByIdUrl, prepareGetLocationsUrl } from './util';
+import { prepareGetLocationByIdUrl } from './util';
 
 export const baseUrl: string = 'http://localhost:8080';
 
@@ -32,12 +30,8 @@ export async function getLocationById(req: EnhancedRequest, res: Response, next:
  */
 export async function getLocations(req: EnhancedRequest, res: Response, next: NextFunction) {
   try {
-    const basePath = getConfigValue(SERVICES_LOCATION_API_PATH);
-    const path: string = prepareGetLocationsUrl(basePath);
-    const response = await handleLocationGet(path, req);
-    const newLocations = response.data.court_venues.filter((venue) => venue.is_case_management_location === 'Y').
-      map((venue) => ({ id: venue.epimms_id, locationName: venue.site_name }));
-    res.send(newLocations).status(response.status);
+    const response = await commonGetFullLocation(req, true);
+    res.send(response).status(200);
   } catch (error) {
     next(error);
   }
@@ -49,7 +43,7 @@ export async function getLocations(req: EnhancedRequest, res: Response, next: Ne
  */
 export async function getFullLocations(req: EnhancedRequest, res: Response, next: NextFunction) {
   try {
-    const response = await commonGetFullLocation(req);
+    const response = await commonGetFullLocation(req, false);
     res.send(response).status(200);
   } catch (error) {
     next(error);

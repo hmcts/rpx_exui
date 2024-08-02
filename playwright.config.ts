@@ -1,5 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const headlessMode = process.env.HEAD !== 'true';
+
 module.exports = defineConfig({
   testDir: "./playwright_tests/E2E",
   /* Run tests in files in parallel */
@@ -7,23 +9,26 @@ module.exports = defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: 4, // Set the number of retries for all projects
+  retries: 3, // Set the number of retries for all projects
 
-  timeout: 10 * 60 * 1000,  // 10 minutes
+  timeout: 3 * 60 * 1000,
   expect: {
-    timeout: 5 * 60 * 1000,  // 5 minutes
+    timeout: 1 * 60 * 1000,
   },
   reportSlowTests: null,
 
   /* Opt out of parallel tests on CI. */
   workers: process.env.FUNCTIONAL_TESTS_WORKERS ? 1 : 1,
-  reporter: process.env.CI ? "html" : "list",
+
+  reporter: [[process.env.CI ? 'html' : 'list'],
+             ['html', { outputFolder: 'functional-output/tests/playwright-e2e' }]],
+  
   projects: [
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"],
         channel: "chrome",
-        headless: false,
+        headless: headlessMode,
         trace: "on-first-retry",
       },
     },
@@ -31,7 +36,7 @@ module.exports = defineConfig({
       name: "firefox",
       use: { ...devices["Desktop Firefox"],
         screenshot: 'only-on-failure',
-        headless: false,
+        headless: headlessMode,
         trace: 'off'
       },
     },
@@ -39,7 +44,7 @@ module.exports = defineConfig({
       name: "webkit",
       use: { ...devices["Desktop Safari"],
         screenshot: 'only-on-failure',
-        headless: false,
+        headless: headlessMode,
         trace: 'off'
       },
     },
@@ -47,7 +52,7 @@ module.exports = defineConfig({
       name: "MobileChrome",
       use: { ...devices["Pixel 5"],
         screenshot: 'only-on-failure',
-        headless: false,
+        headless: headlessMode,
         trace: 'off'
       },
     },
@@ -55,7 +60,7 @@ module.exports = defineConfig({
       name: "MobileSafari",
       use: { ...devices["iPhone 12"],
         screenshot: 'only-on-failure',
-        headless: false,
+        headless: headlessMode,
         trace: 'off'
       },
     },
@@ -64,7 +69,7 @@ module.exports = defineConfig({
       use: { ...devices["Desktop Edge"],
         channel: "msedge",
         screenshot: 'only-on-failure',
-        headless: false,
+        headless: headlessMode,
         trace: 'off'
       },
     },

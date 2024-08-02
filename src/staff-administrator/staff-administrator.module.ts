@@ -2,6 +2,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
 import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/material/legacy-autocomplete';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { ExuiCommonLibModule } from '@hmcts/rpx-xui-common-lib';
@@ -28,6 +29,7 @@ import { StaffFilterOptionsUserTypesResolver } from './resolvers/staff-filter-op
 import { StaffUserDetailsResolverService } from './resolvers/staff-user-details-resolver.service';
 import { StaffDataAccessService } from './services/staff-data-access/staff-data-access.service';
 import { staffAdministratorRouting } from './staff-administrator.routes';
+import { staffSelectReducer } from './store/reducers/staff-select.reducer';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import { staffAdministratorRouting } from './staff-administrator.routes';
     ReactiveFormsModule,
     staffAdministratorRouting,
     NgxPaginationModule,
+    StoreModule.forFeature('staffUI', staffSelectReducer),
     MatTooltipModule,
     MatAutocompleteModule
   ],

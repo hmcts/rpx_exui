@@ -16,7 +16,7 @@ const REQUEST_BODY = {
   typeOfRole: { id: 'specific-access-granted', name: 'specific-access-granted' },
   requestedRole: 'specific-access-legal-ops',
   requestId: '59bedc19-9cc6-4bff-9f58-041c3ba664a0',
-  allocateTo: 'Reserve to me',
+  allocateTo: 'Allocate to me',
   personToBeRemoved: null,
   person: { id: 'db17f6f7-1abf-4223-8b5e-1eece04ee5d8', name: null, domain: null },
   actorId: '123',

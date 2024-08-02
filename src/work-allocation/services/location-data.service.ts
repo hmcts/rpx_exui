@@ -17,12 +17,16 @@ export class LocationDataService {
   public static regionsKey: string = 'regions';
   public constructor(private readonly http: HttpClient, private readonly sessionStorageService: SessionStorageService) {}
 
-  public getLocations(): Observable<Location[]> {
+  public getLocations(jurisdictions?: string[]): Observable<Location[]> {
     if (this.sessionStorageService.getItem(LocationDataService.allLocationsKey)) {
       const locations = JSON.parse(this.sessionStorageService.getItem(LocationDataService.allLocationsKey));
       return of(locations as Location[]);
     }
-    return this.http.get<Location[]>(`${LocationDataService.locationUrl}`).pipe(
+    const options = {
+      params: new HttpParams()
+        .set('serviceCodes', jurisdictions.join())
+    };
+    return this.http.get<Location[]>(`${LocationDataService.locationUrl}`, options).pipe(
       tap((allLocations) => this.sessionStorageService.setItem(LocationDataService.allLocationsKey, JSON.stringify(allLocations)))
     );
   }

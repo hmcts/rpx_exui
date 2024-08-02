@@ -122,12 +122,12 @@ describe('AllWorkCaseComponent', () => {
       component = initializeComponent({ locationDataService: mockLocationService, waSupportedJurisdictionsService: mockWASupportedJurisdictionService, checkReleaseVersionService: mockCheckReleaseVersionService });
       spyOn(component, 'setupCaseWorkers');
       spyOn(component, 'loadSupportedJurisdictions');
+      component.waSupportedJurisdictions$ = of(['IA']);
 
       component.ngOnInit();
 
       expect(component.setupCaseWorkers).toHaveBeenCalled();
       expect(component.loadSupportedJurisdictions).toHaveBeenCalled();
-      expect(mockLocationService.getLocations).toHaveBeenCalled();
     });
   });
 

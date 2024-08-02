@@ -5,8 +5,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-import { Observable, of } from 'rxjs';
-import { RoleCategoryMappingService } from '../../../app/services/role-category-mapping/role-category-mapping.service';
 import { MockRpxTranslatePipe } from '../../../app/shared/test/mock-rpx-translate.pipe';
 import { initialState } from '../../../hearings/hearing.test.data';
 import { HearingListViewModel } from '../../../hearings/models/hearingListView.model';
@@ -16,15 +14,7 @@ import { HearingsPipesModule } from '../../../hearings/pipes/hearings.pipes.modu
 import * as fromHearingStore from '../../../hearings/store';
 import { CaseHearingsListComponent } from './case-hearings-list.component';
 import { HearingsFeatureService } from '../../../hearings/services/hearings-feature.service';
-
-class MockRoleCategoryMappingService {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public initialize = (): void => { };
-  public isEnabled = (): Observable<boolean> => of(true);
-  public getValue = <R>(key: string, defaultValue: R): Observable<R> => of(defaultValue);
-  public getValueOnce = <R>(key: string, defaultValue: R): Observable<R> => of(defaultValue);
-  public getValueSync = <R>(feature: string, defaultValue: R): R => defaultValue;
-}
+import { of } from 'rxjs';
 
 const UPCOMING_HEARING_LIST: HearingListViewModel[] = [{
   hearingID: 'h100001',
@@ -616,10 +606,7 @@ const HEARING_TYPES_REF_DATA: LovRefDataModel[] = [
 
 describe('CaseHearingsListComponent', () => {
   let component: CaseHearingsListComponent;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let roleCategoryMappingService: RoleCategoryMappingService;
   let fixture: ComponentFixture<CaseHearingsListComponent>;
-  const mockFeatureService = new MockRoleCategoryMappingService();
   let mockStore: Store<fromHearingStore.State>;
   const featureToggleServiceMock = jasmine.createSpyObj('FeatureToggleService', ['isEnabled']);
   const hearingsFeatureServiceMock = jasmine.createSpyObj('FeatureServiceMock', ['isFeatureEnabled']);
@@ -665,7 +652,6 @@ describe('CaseHearingsListComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(CaseHearingsListComponent);
     mockStore = TestBed.inject(Store);
-    roleCategoryMappingService = new RoleCategoryMappingService(mockFeatureService);
     component = fixture.componentInstance;
     component.hearingList$ = of(UPCOMING_HEARING_LIST);
     component.hearingStageOptions = HEARING_TYPES_REF_DATA;

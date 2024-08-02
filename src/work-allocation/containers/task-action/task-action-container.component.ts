@@ -80,7 +80,7 @@ export class TaskActionContainerComponent implements OnInit {
       this.tasks[0].assigneeName = getAssigneeName(this.route.snapshot.data.taskAndCaseworkers.caseworkers, this.tasks[0].assignee);
       if (!this.tasks[0].assigneeName) {
         this.roleService.getCaseRolesUserDetails([this.tasks[0].assignee], this.tasks[0].jurisdiction).subscribe((judicialDetails) => {
-          this.tasks[0].assigneeName = judicialDetails[0].known_as;
+          this.tasks[0].assigneeName = judicialDetails[0].full_name;
         });
       }
     }

@@ -11,6 +11,7 @@ export interface IMonitoringService {
 
 export class MonitorConfig implements IConfig {
   public instrumentationKey?: string;
+  public connectionString?: string;
   public endpointUrl?: string;
   public emitLineDelimitedJson?: boolean;
   public accountId?: string;
@@ -83,14 +84,16 @@ export class MonitoringService implements IMonitoringService {
   }
 
   private send(func: () => any): void {
-    if (this.config?.instrumentationKey) {
+    if (this.config?.connectionString) {
       func();
     } else {
       // will only get run once per login
-      this.http.get('/api/monitoring-tools').subscribe((it) => {
+      this.http.get('/api/monitoring-tools').subscribe((monitor) => {
+        // eslint-disable-next-line dot-notation
+        const connStr = monitor['connectionString'];
+        console.log('Setting appInsights connection string to ' + connStr);
         this.config = {
-          // eslint-disable-next-line dot-notation
-          instrumentationKey: it['key']
+          connectionString: connStr
         };
         if (!this.areCookiesEnabled) {
           this.config = {

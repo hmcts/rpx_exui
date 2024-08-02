@@ -20,7 +20,7 @@ export class RefundsComponent implements OnInit {
   public ngOnInit() {
     this.userService.getUserDetails().subscribe((details) => {
       this.userEmail = details.userInfo.email;
-      this.userRoles = details.userInfo.roles;
+      this.userRoles = details?.userInfo?.roles;
       this.userDataLoaded = true;
     });
   }

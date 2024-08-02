@@ -134,10 +134,8 @@ describe('AppComponent', () => {
     appComponent.initializeFeature(userInfo, 'clientId');
     const featureUser = {
       key: '1234',
-      custom: {
-        roles: ['role1', 'role2'],
-        orgId: '-1'
-      }
+      roles: ['role1', 'role2'],
+      orgId: '-1'
     };
     expect(featureToggleService.initialize).toHaveBeenCalledWith(featureUser, 'clientId');
   });

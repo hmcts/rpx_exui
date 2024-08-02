@@ -20,7 +20,6 @@ export async function getUserDetails(req, res: Response, next: NextFunction): Pr
   }
   try {
     const { roles } = req.session.passport.user.userinfo;
-
     const permissions = CASE_SHARE_PERMISSIONS.split(',');
     const canShareCases = roles.some((role) => permissions.includes(role));
     const sessionTimeouts = getConfigValue(SESSION_TIMEOUTS) as RoleGroupSessionTimeout[];
@@ -71,6 +70,10 @@ export async function refreshRoleAssignmentForUser(userInfo: UserInfo, req: any)
     const id = userInfo.id ? userInfo.id : userInfo.uid;
     const path = `${baseUrl}/am/role-assignments/actors/${id}`;
     const headers = setHeaders(req);
+    if (req.session.roleRequestEtag) {
+      // add the last etag (note: could re-use more etags but requires storing of more data)
+      headers['If-None-Match'] = req.session.roleRequestEtag;
+    }
     delete headers.accept;
     try {
       const response: AxiosResponse = await http.get(path, { headers });
@@ -83,7 +86,13 @@ export async function refreshRoleAssignmentForUser(userInfo: UserInfo, req: any)
       // We check for the roleAssignments to determine the roleCategory. If not we try IDAM roles
       userInfo.roleCategory = getRoleCategoryFromRoleAssignments(roleAssignments) || getUserRoleCategory(userInfo.roles);
       req.session.roleAssignmentResponse = activeRoleAssignments;
+      req.session.roleRequestEtag = response.headers.etag;
+      req.session.userRoleAssignments = userRoleAssignments;
     } catch (error) {
+      if (error.status === 304) {
+        // as user role assignments are not returned use session to send expected results
+        return req.session.userRoleAssignments;
+      }
       let err = error;
       if (typeof error === 'object' && error !== null) {
         err = JSON.stringify(error);

@@ -91,7 +91,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
               private readonly router: Router) {
     this.appStoreSub = this.appStore.pipe(select(fromAppStore.getUserDetails)).subscribe(
       (userDetails) => {
-        this.userRole = AppUtils.getUserRole(userDetails.userInfo.roles);
+        this.userRole = AppUtils.getUserRole(userDetails?.userInfo?.roles);
       }
     );
     if (this.route.snapshot.queryParams) {
@@ -234,7 +234,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
                     switch (this.roleCategory) {
                       case RoleCategory.JUDICIAL:
                         switch (this.allocateTo) {
-                          case AllocateTo.RESERVE_TO_ME:
+                          case AllocateTo.ALLOCATE_TO_ME:
                             this.store.dispatch(new fromFeature.AllocateRoleChangeNavigation(AllocateRoleState.CHOOSE_ALLOCATE_TO));
                             break;
                           case AllocateTo.ALLOCATE_TO_ANOTHER_PERSON:
@@ -260,7 +260,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
                         break;
                       case RoleCategory.LEGAL_OPERATIONS:
                         switch (this.allocateTo) {
-                          case AllocateTo.RESERVE_TO_ME:
+                          case AllocateTo.ALLOCATE_TO_ME:
                             this.store.dispatch(new fromFeature.AllocateRoleChangeNavigation(AllocateRoleState.CHOOSE_ALLOCATE_TO));
                             break;
                           case AllocateTo.ALLOCATE_TO_ANOTHER_PERSON:
@@ -278,7 +278,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
                     switch (this.roleCategory) {
                       case RoleCategory.CTSC:
                         switch (this.allocateTo) {
-                          case AllocateTo.RESERVE_TO_ME:
+                          case AllocateTo.ALLOCATE_TO_ME:
                             this.store.dispatch(new fromFeature.AllocateRoleChangeNavigation(AllocateRoleState.CHOOSE_ALLOCATE_TO));
                             break;
                           case AllocateTo.ALLOCATE_TO_ANOTHER_PERSON:
@@ -311,7 +311,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
       case AllocateRoleNavigationEvent.CONTINUE: {
         switch (this.navigationCurrentState) {
           case AllocateRoleState.CHOOSE_ROLE:
-            this.chooseRoleComponent.navigationHandler(navEvent, this.roleCategory, this.userRole);
+            this.chooseRoleComponent.navigationHandler(navEvent);
             break;
           case AllocateRoleState.CHOOSE_ALLOCATE_TO:
             this.chooseAllocateToComponent.navigationHandler(navEvent);

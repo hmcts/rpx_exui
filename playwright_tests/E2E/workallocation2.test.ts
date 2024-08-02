@@ -55,15 +55,9 @@ test('View tasks, E2E journey of Caseworker-ia-officer user', async ({ page }) =
   await page.getByRole('link', { name: 'All work' }).click();
   await expect(page.getByRole('heading', { name: 'All work' })).toBeVisible();
   await checkAllHeadersTabMenu(page);
-  
-  console.log("Case list tabs");
-  await page.getByRole('link', { name: 'Case list' }).click();
-  await expect(page.getByRole('heading', { name: 'Case list' })).toBeVisible();
-  await checkAllHeadersTabMenu(page);
-
-  await page.getByRole('link', { name: 'Create case' }).click();
 
   console.log("Create case tabs");
+  await page.getByRole('link', { name: 'Create case' }).click();
   await expect(page.getByRole('heading', { name: 'Create Case' })).toBeVisible();
   await checkAllHeadersTabMenu(page);
 
@@ -73,6 +67,11 @@ test('View tasks, E2E journey of Caseworker-ia-officer user', async ({ page }) =
   await expect(page.locator('[data-test="search-result-summary__text"]')).toBeVisible();
   await assertTableColumnNames(page, false, true);
   await page.getByRole('button', { name: '▼ Case category ▲' }).click();
+
+  console.log("Case list tabs");
+  await page.getByRole('link', { name: 'Case list' }).click();
+  await expect(page.getByRole('heading', { name: 'Case list' })).toBeVisible();
+  await checkAllHeadersTabMenu(page);
 });
 
 async function checkAllHeadersTabMenu(page) {

@@ -15,7 +15,7 @@ export class TaskSupervisorGuard {
     const userInfoStr = this.sessionStorageService.getItem('userDetails');
     if (userInfoStr) {
       const userInfo: UserInfo = JSON.parse(userInfoStr);
-      const roleExists = userInfo.roles.includes('task-supervisor');
+      const roleExists = userInfo?.roles.includes('task-supervisor');
       if (!roleExists) {
         this.router.navigateByUrl('/cases');
       }

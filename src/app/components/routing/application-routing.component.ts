@@ -38,8 +38,7 @@ export class ApplicationRoutingComponent implements OnInit {
       if (bookingFeatureToggle && AppUtils.isBookableAndJudicialRole(userDetails)) {
         return this.router.navigate([ApplicationRoutingComponent.bookingUrl]);
       }
-      if (userDetails && userDetails.userInfo && userDetails.userInfo.roles
-        && !userDetails.userInfo.roles.includes('pui-case-manager')) {
+      if (!(userDetails?.userInfo?.roles?.includes('pui-case-manager'))) {
         const userRoles = userDetails.userInfo.roles;
         let rolePresent = false;
         for (let i = 0, len = landingRoles.roles.length; i < len; i++) {

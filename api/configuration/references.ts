@@ -11,6 +11,8 @@
 export const S2S_SECRET = 'secrets.rpx.mc-s2s-client-secret';
 export const REDIS_CLOUD_URL = 'secrets.rpx.webapp-redis-connection-string';
 export const APP_INSIGHTS_KEY = 'secrets.rpx.appinsights-instrumentationkey-mc';
+export const APP_INSIGHTS_CONNECTION_STRING = 'secrets.rpx.appinsights-connection-string-mc';
+
 export const LAUNCH_DARKLY_CLIENT_ID = 'secrets.rpx.launch-darkly-client-id';
 
 export const COOKIES_TOKEN = 'cookies.token';

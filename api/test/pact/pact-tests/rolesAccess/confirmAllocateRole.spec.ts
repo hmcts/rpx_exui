@@ -18,7 +18,7 @@ const REQUEST_BODY = {
     id: 'lead-judge',
     name: 'Lead judge'
   },
-  allocateTo: 'Reserve to me',
+  allocateTo: 'Allocate to me',
   personToBeRemoved: {
     id: 'p111111',
     name: 'test1',

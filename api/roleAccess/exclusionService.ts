@@ -154,6 +154,8 @@ export function mapRoleCategory(roleCategory: string): RoleCategory {
       return RoleCategory.ADMIN;
     case 'CTSC':
       return RoleCategory.CTSC;
+    case 'PROFESSIONAL':
+      return RoleCategory.PROFESSIONAL;
     default:
       throw new Error('Invalid roleCategory');
   }

@@ -58,7 +58,7 @@ describe('AllocateRoleService', () => {
       jurisdiction: 'IA',
       state: AllocateRoleState.CHOOSE_ROLE,
       typeOfRole: null,
-      allocateTo: AllocateTo.RESERVE_TO_ME,
+      allocateTo: AllocateTo.ALLOCATE_TO_ME,
       person: null,
       durationOfRole: DurationOfRole.SEVEN_DAYS,
       action: Actions.Allocate,

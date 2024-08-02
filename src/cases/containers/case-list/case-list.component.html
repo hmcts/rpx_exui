@@ -55,8 +55,8 @@
           >
           </ccd-search-result>
           <div id="info-msg-unselected-case" *ngIf="hasResults() && (isCaseShareVisible$ | async)" class="form-group">
-            <details class="govuk-details" data-module="govuk-details">
-              <summary class="govuk-details__summary">
+            <details #detailsElement class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary" role="button" [attr.aria-expanded]="detailsElement.open">
                 <span id="sp-msg-unselected-case-header" class="govuk-details__summary-text">
                   {{'Why are some cases unselectable?' | rpxTranslate}}
                 </span>

@@ -563,8 +563,8 @@ Feature: Create hearings workflow
             | field                                                   | value               |
             | Length of hearing                                       | 1,2,5               |
             | Does the hearing need to take place on a specific date? | Choose a date range |
-            | Earliest start date                                     | 1,8,2024            |
-            | Latest end date                                         | 1,9,2024            |
+            | Earliest start date                                     | 1,8,2025            |
+            | Latest end date                                         | 1,9,2025            |
 
             | What is the priority of this hearing? | Hearing priority 1 |
         When I click continue in create hearing workflow
@@ -610,7 +610,7 @@ Feature: Create hearings workflow
             # | Panel details | Exclude specific panel members | auto test 2 judge 2 |
 
             | Length, date and priority level of hearing | Length of hearing                                       | 1 Day 2 Hours 5 Minutes                                                                     |
-            | Length, date and priority level of hearing | Does the hearing need to take place on a specific date? | Choose a date range,Earliest start date: 01 August 2024, Latest end date: 01 September 2024 |
+            | Length, date and priority level of hearing | Does the hearing need to take place on a specific date? | Choose a date range,Earliest start date: 01 August 2025, Latest end date: 01 September 2025 |
 
             | Length, date and priority level of hearing | What is the priority of this hearing?                  | Hearing priority 1 |
             | Linked hearings                            | Will this hearing need to be linked to other hearings? | Yes                |

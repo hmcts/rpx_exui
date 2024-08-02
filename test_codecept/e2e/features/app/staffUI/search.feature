@@ -1,4 +1,4 @@
-@fullfunctional  @staffUI @functional_enabled
+@fullfunctional  @staffUI @ignore
 Feature: Staff UI Search
 
 

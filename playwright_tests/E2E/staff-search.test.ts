@@ -1,14 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { signIn, signOut } from "./steps/login-steps";
-import { clickToStaffPage } from "./steps/staff-steps";
+import { clickToStaffPage, fillSearchBox } from "./steps/staff-steps";
 
 test('Simplified search results', async ({ page }) => {
     await signIn(page, "STAFF_ADMIN");
     await clickToStaffPage(page);
   
     console.log("Using simple search");
-    await page.locator('#main-content').getByRole('textbox').click();
-    await page.locator('#main-content').getByRole('textbox').fill('xui');
+    await fillSearchBox(page);
     await page.getByRole('button', { name: 'Search' }).click();
     await expect(page.locator('exui-staff-user-list')).toContainText('Showing 1');
   
@@ -20,8 +19,7 @@ test('Simplified search', async ({ page }) => {
     await clickToStaffPage(page);
   
     console.log("Using Simple search");
-    await page.locator('#main-content').getByRole('textbox').click();
-    await page.locator('#main-content').getByRole('textbox').fill('xui');
+    await fillSearchBox(page);
     await page.getByRole('button', { name: 'Search' }).click();
     await expect(page.getByRole('columnheader', { name: 'Job title' })).toBeVisible();
     await expect(page.locator('exui-staff-user-list')).toContainText('Showing 1');

@@ -12,12 +12,11 @@ const taskId = '4d4b6fgh-c91f-433f-92ac-e456ae34f72a';
 
 describe('Task management api, task roles', () => {
   const RESPONSE_BODY = { roles: eachLike({
-    role_category: somethingLike('test-role-cat'),
-    role_name: somethingLike('test-role-name'),
+    role_category: somethingLike('LEGAL_OPERATIONS'),
+    role_name: somethingLike('tribunal-caseworker'),
     permissions: eachLike('READ'),
     authorisations: eachLike('IAC')
-  }
-  ) };
+  }) };
 
   describe('get /work-types', () => {
     const sandbox: sinon.SinonSandbox = sinon.createSandbox();

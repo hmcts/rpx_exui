@@ -122,7 +122,7 @@ export class CaseViewerContainerComponent implements OnInit {
     private readonly allocateRoleService: AllocateRoleService,
     private readonly waService: WASupportedJurisdictionsService) {
     this.userRoles$ = this.store.pipe(select(fromRoot.getUserDetails)).pipe(
-      map((userDetails) => userDetails.userInfo.roles)
+      map((userDetails) => userDetails?.userInfo?.roles)
     );
   }
 

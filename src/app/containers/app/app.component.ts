@@ -157,11 +157,10 @@ export class AppComponent implements OnInit, OnDestroy {
     if (userInfo) {
       const featureUser: FeatureUser = {
         key: userInfo.id || userInfo.uid,
-        custom: {
-          roles: userInfo.roles,
-          orgId: '-1'
-        }
+        roles: userInfo?.roles,
+        orgId: '-1'
       };
+      console.log(`LD Client: ${ldClientId}`);
       this.featureService.initialize(featureUser, ldClientId);
     } else {
       console.error('Cannot initialise featureService, no userInfo');

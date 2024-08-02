@@ -406,7 +406,9 @@ export class WorkCaseListWrapperComponent implements OnInit, OnDestroy {
   }
 
   protected setUpLocationsAndJurisdictions(): void {
-    this.locations$ = this.locationService.getLocations();
     this.loadSupportedJurisdictions();
+    this.locations$ = this.waSupportedJurisdictions$.pipe(switchMap((jurisdictions) =>
+      this.locationService.getLocations(jurisdictions)
+    ));
   }
 }

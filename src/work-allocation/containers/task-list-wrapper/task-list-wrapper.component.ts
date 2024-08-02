@@ -198,6 +198,11 @@ export class TaskListWrapperComponent implements OnDestroy, OnInit {
     // similar to case list wrapper changes
     caseworkersByService$.subscribe((caseworkers) => {
       this.caseworkers = caseworkers;
+      // EUI-2027 - Load tasks again in case this is start of new caching of caseworkers
+      // note: the if is relevant to stop the same request happening at exactly the same time on available tasks causing an error
+      if (this.tasks.length > 0) {
+        this.doLoad();
+      }
     }, (error) => {
       handleFatalErrors(error.status, this.router);
     });

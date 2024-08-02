@@ -3,8 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-
-import { UserRole } from '../../../../app/models';
 import { getLabel } from '../../../../work-allocation/utils';
 import { CHOOSE_A_ROLE, ERROR_MESSAGE } from '../../../constants';
 import {
@@ -75,7 +73,7 @@ export class ChooseRoleComponent implements OnInit, OnDestroy {
     );
   }
 
-  public navigationHandler(navEvent: AllocateRoleNavigationEvent, roleCategory: RoleCategory, userRole: UserRole): void {
+  public navigationHandler(navEvent: AllocateRoleNavigationEvent): void {
     this.submitted = true;
     if (this.radioOptionControl.invalid) {
       this.radioOptionControl.setErrors({
@@ -84,10 +82,10 @@ export class ChooseRoleComponent implements OnInit, OnDestroy {
       this.error = ERROR_MESSAGE;
       return;
     }
-    this.dispatchEvent(navEvent, roleCategory, userRole);
+    this.dispatchEvent(navEvent);
   }
 
-  public dispatchEvent(navEvent: AllocateRoleNavigationEvent, roleCategory: RoleCategory, userRole: UserRole): void {
+  public dispatchEvent(navEvent: AllocateRoleNavigationEvent): void {
     switch (navEvent) {
       case AllocateRoleNavigationEvent.CONTINUE:
         const roleChosen = this.radioOptionControl.value;
@@ -96,62 +94,9 @@ export class ChooseRoleComponent implements OnInit, OnDestroy {
           id: roleOption ? roleOption.optionId : roleChosen,
           name: roleChosen
         };
-
-        switch (roleCategory) {
-          case RoleCategory.JUDICIAL: {
-            switch (userRole) {
-              case UserRole.LegalOps:
-                this.store.dispatch(new fromFeature.ChooseRoleAndGo({
-                  typeOfRole, allocateRoleState: AllocateRoleState.SEARCH_PERSON
-                }));
-                break;
-              default:
-                this.store.dispatch(new fromFeature.ChooseRoleAndGo({
-                  typeOfRole, allocateRoleState: AllocateRoleState.CHOOSE_ALLOCATE_TO
-                }));
-                break;
-            }
-            break;
-          }
-          case RoleCategory.LEGAL_OPERATIONS: {
-            switch (userRole) {
-              case UserRole.LegalOps:
-                this.store.dispatch(new fromFeature.ChooseRoleAndGo({
-                  typeOfRole, allocateRoleState: AllocateRoleState.CHOOSE_ALLOCATE_TO
-                }));
-                break;
-              default:
-                this.store.dispatch(new fromFeature.ChooseRoleAndGo({
-                  typeOfRole, allocateRoleState: AllocateRoleState.SEARCH_PERSON
-                }));
-                break;
-            }
-            break;
-          }
-          case RoleCategory.CTSC: {
-            switch (userRole) {
-              case UserRole.CTSC:
-                this.store.dispatch(new fromFeature.ChooseRoleAndGo({
-                  typeOfRole, allocateRoleState: AllocateRoleState.CHOOSE_ALLOCATE_TO
-                }));
-                break;
-              default:
-                this.store.dispatch(new fromFeature.ChooseRoleAndGo({
-                  typeOfRole, allocateRoleState: AllocateRoleState.SEARCH_PERSON
-                }));
-                break;
-            }
-            break;
-          }
-          case RoleCategory.ADMIN: {
-            this.store.dispatch(new fromFeature.ChooseRoleAndGo({
-              typeOfRole, allocateRoleState: AllocateRoleState.SEARCH_PERSON
-            }));
-            break;
-          }
-          default:
-            throw new Error('Invalid userType');
-        }
+        this.store.dispatch(new fromFeature.ChooseRoleAndGo({
+          typeOfRole, allocateRoleState: AllocateRoleState.CHOOSE_ALLOCATE_TO
+        }));
         break;
       default:
         throw new Error('Invalid option');

@@ -112,9 +112,10 @@ export class CaseSearchComponent implements OnInit, OnDestroy {
 
     this.resultSubscription = this.resultView$.subscribe((resultView) => this.onResultsViewHandler(resultView));
 
-    this.elasticSearchFlagSubsription = this.featureToggleService.isEnabled('elastic-search').subscribe((value) => this.elasticSearchFlag = value);
-
-    this.triggerQuery();
+    this.elasticSearchFlagSubsription = this.featureToggleService.isEnabled('elastic-search').subscribe((value) => {
+      this.elasticSearchFlag = value;
+      this.triggerQuery();
+    });
   }
 
   public listenToPaginationMetadata = () => {
@@ -187,7 +188,7 @@ export class CaseSearchComponent implements OnInit, OnDestroy {
   public getEvent() {
     let event = null;
     const formGroupFromLS = JSON.parse(localStorage.getItem('search-form-group-value'));
-    const jurisdictionFromLS =this.getCompressedLSItem('search-jurisdiction');
+    const jurisdictionFromLS = this.getCompressedLSItem('search-jurisdiction');
     const caseTypeGroupFromLS = JSON.parse(localStorage.getItem('search-caseType'));
     const metadataFieldsGroupFromLS = JSON.parse(localStorage.getItem('search-metadata-fields'));
 

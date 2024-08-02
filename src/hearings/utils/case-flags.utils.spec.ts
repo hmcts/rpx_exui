@@ -508,5 +508,11 @@ describe('CaseFlagsUtils', () => {
       const partyWithFlags = CaseFlagsUtils.convertPartiesToPartyWithFlags(singleCaseFlagReferenceValue, partyDetails, servicePartyDetails);
       expect(partyWithFlags.size).toEqual(0);
     });
+
+    it('should return an empty array if partyFlags is undefined', () => {
+      const partyFlags: PartyFlagsModel[] = undefined;
+      const activeFlags = CaseFlagsUtils.displayCaseFlagsGroup(partyFlags, singleCaseFlagReferenceValue, CaseFlagType.NON_REASONABLE_ADJUSTMENT);
+      expect(activeFlags.length).toBe(0);
+    });
   });
 });

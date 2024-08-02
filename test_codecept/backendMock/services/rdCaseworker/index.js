@@ -6,8 +6,8 @@ class RDCaseworkerService {
   }
 
 
-  getUsersByService(service) {
-    const filteredCaseworkers = this.caseworkers.filter(user => service === user.ccd_service_name);
+  getUsersByService(services) {
+    const filteredCaseworkers = this.caseworkers.filter(user => services.split(',').includes(user.ccd_service_name));
     return filteredCaseworkers;
   }
 

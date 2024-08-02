@@ -23,6 +23,7 @@ import { initProxy } from './proxy.config';
 import routes from './routes';
 import workAllocationRouter from './workAllocation/routes';
 import { idamCheck } from './idamCheck';
+import { getNewUsersByServiceName } from './workAllocation';
 
 export const app = express();
 
@@ -129,3 +130,5 @@ const logger: JUILogger = log4jui.getLogger('Application');
 logger.info(`Started up using ${getConfigValue(PROTOCOL)}`);
 
 new Promise(idamCheck).then(() => 'IDAM is up and running');
+// EUI-2028 - Get the caseworkers, ideally prior to a user logging into application
+new Promise(getNewUsersByServiceName).then(() => 'Caseworkers have been loaded');

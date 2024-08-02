@@ -13,7 +13,7 @@ export enum RoleCategory {
 }
 
 export enum AllocateTo {
-  RESERVE_TO_ME = 'Reserve to me',
+  ALLOCATE_TO_ME = 'Allocate to me',
   ALLOCATE_TO_ANOTHER_PERSON = 'Allocate to another person',
   REALLOCATE_TO_ANOTHER_PERSON = 'Reallocate to another person',
 }

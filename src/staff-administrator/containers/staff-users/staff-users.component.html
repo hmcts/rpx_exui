@@ -1,5 +1,6 @@
 <div class="govuk-!-margin-top-3">
   <exui-info-message-container></exui-info-message-container>
+  <exui-error-message *ngIf="staffSelectError" [error]="staffSelectErrors"></exui-error-message>
 </div>
 
 <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">

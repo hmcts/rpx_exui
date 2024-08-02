@@ -15,7 +15,7 @@ export class CaseAllocatorGuard {
     const userInfoStr = this.sessionStorageService.getItem('userDetails');
     if (userInfoStr) {
       const userInfo: UserInfo = JSON.parse(userInfoStr);
-      const roleExists = userInfo.roles.includes('case-allocator');
+      const roleExists = userInfo?.roles.includes('case-allocator');
       if (!roleExists) {
         this.router.navigateByUrl('/cases');
       }

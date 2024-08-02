@@ -182,7 +182,7 @@ export class HearingActualsTimingComponent implements OnInit, OnDestroy {
   }
 
   private getHearingTime(value:string, actualIndex: number): string {
-    const hearingDate = this.hearingActuals.hearingActuals?.actualHearingDays.length > 0 ?
+    const hearingDate = this.hearingActuals.hearingActuals?.actualHearingDays?.length > 0 ?
       this.hearingActuals.hearingActuals.actualHearingDays[actualIndex].hearingDate : this.hearingDate;
     return value ? HearingActualsTimingComponent.replaceTime(hearingDate, moment(value, 'HH:mm')) : null;
   }

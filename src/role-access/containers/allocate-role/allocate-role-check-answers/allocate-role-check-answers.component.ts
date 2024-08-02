@@ -95,7 +95,7 @@ export class AllocateRoleCheckAnswersComponent implements OnInit, OnDestroy {
       (allocateRoleStateData.allocateTo === null && allocateRoleStateData.typeOfRole.name === TypeOfRole.CaseManager) ||
       allocateRoleStateData.action === Actions.Reallocate) {
       this.answers.push({ label: AnswerLabelText.Person, value: personDetails, action: AllocateRoleState.SEARCH_PERSON });
-    } else if (allocateRoleStateData.allocateTo === AllocateTo.RESERVE_TO_ME) {
+    } else if (allocateRoleStateData.allocateTo === AllocateTo.ALLOCATE_TO_ME) {
       if (personDetails) {
         this.answers.push({ label: AnswerLabelText.Person, value: personDetails, action: AllocateRoleState.SEARCH_PERSON });
       }

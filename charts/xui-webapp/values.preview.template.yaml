@@ -6,7 +6,6 @@ nodejs:
      SERVICES_IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
      SERVICES_IDAM_LOGIN_URL: https://idam-web-public.aat.platform.hmcts.net
      REDISCLOUD_URL: redis://${SERVICE_NAME}-redis-master:6379
-     LAUNCH_DARKLY_CLIENT_ID: 5de6610b23ce5408280f2268
      HEALTH_CCD_COMPONENT_API: https://gateway-ccd.aat.platform.hmcts.net/health
      HEALTH_CCD_DATA_API: http://ccd-data-store-api-aat.service.core-compute-aat.internal/health
      HEALTH_DOCUMENTS_API: http://dm-store-aat.service.core-compute-aat.internal/health
@@ -33,10 +32,13 @@ nodejs:
     rpx:
       secrets:
         - appinsights-instrumentationkey-mc
+        - appinsights-connection-string-mc
         - mc-s2s-client-secret
         - mc-idam-client-secret
         - system-user-name
         - system-user-password
+        - name: launch-darkly-client-id-preview
+          alias: launch-darkly-client-id
   autoscaling:
     enabled: false
   devmemoryRequests: 512Mi
