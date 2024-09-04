@@ -93,7 +93,7 @@
     "@angular/ssr": "^17.3.6",
     "@cucumber/cucumber": "^10.8.0",
     "@edium/fsm": "^2.1.2",
-    "@hmcts/ccd-case-ui-toolkit": "7.0.61",
+    "@hmcts/ccd-case-ui-toolkit": "7.0.61-task-changed-on-completion",
     "@hmcts/ccpay-web-component": "6.2.1",
     "@hmcts/frontend": "0.0.50-alpha",
     "@hmcts/media-viewer": "4.0.8",
