@@ -91,7 +91,7 @@ export const initProxy = (app: Express) => {
     onRes: amendedJurisdictions.getJurisdictions,
     rewrite: false,
     source: '/aggregated',
-    target: getConfigValue(SERVICES_CCD_COMPONENT_API_PATH)
+    target: getConfigValue(SERVICES_CCD_DATA_STORE_API_PATH)
   });
 
   applyProxy(app, {
