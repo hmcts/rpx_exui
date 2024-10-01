@@ -196,6 +196,12 @@ describe('HearingAttendanceComponent', () => {
     expect(component.prepareHearingRequestData).not.toHaveBeenCalled();
   });
 
+  it('should update hearingRequestMainModel when executeAction and forms paperHearing is YES', () => {
+    component.attendanceFormGroup.controls.paperHearing.setValue('Yes');
+    component.executeAction(ACTION.CONTINUE);
+    expect(component.hearingRequestMainModel.hearingDetails.hearingChannels).toEqual([HearingChannelEnum.ONPPR]);
+  });
+
   it('should NOT call prepareHearingRequestData when executeAction action is BACK', () => {
     component.executeAction(ACTION.BACK);
     expect(component.prepareHearingRequestData).not.toHaveBeenCalled();
@@ -235,6 +241,13 @@ describe('HearingAttendanceComponent', () => {
     };
     const organisationParties = component.getOrganisationParties();
     expect(organisationParties[0].organisationDetails).toEqual(organisationDetails);
+  });
+
+  it('should get hearing channels', () => {
+    component.attendanceFormGroup.controls.paperHearing.setValue('No');
+    expect(component.getHearingChannels()).toEqual(['TEL']);
+    component.attendanceFormGroup.controls.paperHearing.setValue('Yes');
+    expect(component.getHearingChannels()).toEqual(['ONPPRS']);
   });
 
   describe('The forms paperHearing', () => {
