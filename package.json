@@ -262,7 +262,7 @@
     "underscore": "^1.13.6",
     "uuid": "^8.3.1",
     "webpack": "^5.94.0",
-    "webpack-cli": "^4.10.0",
+    "webpack-cli": "^5.0.0",
     "webpack-node-externals": "^3.0.0",
     "webpack-source-map-support": "^2.0.1"
   },
