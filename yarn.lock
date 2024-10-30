@@ -13155,7 +13155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^2.5.0, form-data@npm:^2.5.1":
+"form-data@npm:^2.5.0":
   version: 2.5.1
   resolution: "form-data@npm:2.5.1"
   dependencies:
@@ -22083,7 +22083,7 @@ __metadata:
     exception-formatter: "npm:1.0.7"
     faker: "npm:^5.1.0"
     file-saver: "npm:^2.0.2"
-    form-data: "npm:^2.5.1"
+    form-data: "npm:^4.0.0"
     get-port: "npm:^5.1.1"
     git-rev-sync: "npm:^3.0.2"
     global-agent: "npm:^2.1.7"

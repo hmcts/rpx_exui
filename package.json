@@ -126,7 +126,7 @@
     "exception-formatter": "1.0.7",
     "faker": "^5.1.0",
     "file-saver": "^2.0.2",
-    "form-data": "^2.5.1",
+    "form-data": "^4.0.0",
     "get-port": "^5.1.1",
     "git-rev-sync": "^3.0.2",
     "global-agent": "^2.1.7",
