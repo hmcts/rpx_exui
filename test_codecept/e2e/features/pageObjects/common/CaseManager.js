@@ -449,7 +449,7 @@ class CaseManager {
             case "ccd-write-document-field":
                 await BrowserWaits.retryWithActionCallback(async () => {
                     var fileToUpload ="dummy.pdf";
-                    await (await ccdField.$('input.form-control')).uploadFile(fileToUpload);
+                    await (await ccdField.$('label.input-label')).uploadFile(fileToUpload);
                     const statusMessageELement = await ccdField.$("span.error-message")
                     let statusMessage = "";
 
