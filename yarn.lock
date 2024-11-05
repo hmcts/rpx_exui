@@ -11405,6 +11405,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"des.js@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "des.js@npm:1.1.0"
+  dependencies:
+    inherits: "npm:^2.0.1"
+    minimalistic-assert: "npm:^1.0.0"
+  checksum: 10/d35fc82b5a0b2127b12699212e90b54ddd8134e0cf8d27a8c30507ed3572aa574ab71800cbb473769128a52dcf21acc3271c5c359508a5aa772e990df3b1a698
+  languageName: node
+  linkType: hard
+
 "destroy@npm:1.2.0":
   version: 1.2.0
   resolution: "destroy@npm:1.2.0"
@@ -16478,6 +16488,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-md4@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "js-md4@npm:0.3.2"
+  checksum: 10/66cea478a6b914a5f23a588565b4ae4d9fc2ccae316c32f971aab1f94467f96aaa2b79d359e951c2eeac9c166897efcaec103b9fa99565a81291e1364b77ac12
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -21452,7 +21469,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.13.0":
+"qs@npm:6.13.0, qs@npm:^6.10.3":
   version: 6.13.0
   resolution: "qs@npm:6.13.0"
   dependencies:
@@ -21461,7 +21478,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.9.1, qs@npm:^6.9.4":
+"qs@npm:^6.9.4":
   version: 6.11.2
   resolution: "qs@npm:6.11.2"
   dependencies:
@@ -25084,14 +25101,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typed-rest-client@npm:^1.8.0":
-  version: 1.8.11
-  resolution: "typed-rest-client@npm:1.8.11"
+"typed-rest-client@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "typed-rest-client@npm:2.1.0"
   dependencies:
-    qs: "npm:^6.9.1"
+    des.js: "npm:^1.1.0"
+    js-md4: "npm:^0.3.2"
+    qs: "npm:^6.10.3"
     tunnel: "npm:0.0.6"
     underscore: "npm:^1.12.1"
-  checksum: 10/9c160780f476aa03ad1ce6e7961894d06c17d9b67d94da9fbbcd0c5a5ff741e4a6d85c3b938964b13826d3f20ea36febcd6186b43e361cc62a9960241e0f5a4f
+  checksum: 10/601da14aea1ede39c80067445e3e675ed86fb68d434aa4986767a64dfa14a0d9829ff93042246a134407d2e85f6d0c5fb7b675dc3a9b83425b5c7f3c4c4a8209
   languageName: node
   linkType: hard
 
