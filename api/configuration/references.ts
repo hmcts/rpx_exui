@@ -43,6 +43,7 @@ export const SERVICES_JUDICIAL_BOOKING_API_PATH = 'services.judicialBookingApi';
 
 export const SERVICES_HEARINGS_COMPONENT_API = 'services.hearings.serviceApi';
 export const SERVICES_HMC_HEARINGS_COMPONENT_API = 'services.hearings.hmcApi';
+export const SERVICES_HEARINGS_ENABLE_PREVIEW_CCD = 'services.hearings.enablePreviewCcd';
 
 export const SERVICES_DOCUMENTS_API_PATH = 'services.documents.api';
 export const SERVICES_DOCUMENTS_API_PATH_V2 = 'services.documentsv2.api';

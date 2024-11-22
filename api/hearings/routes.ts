@@ -6,7 +6,7 @@ import {
   getHearing,
   getHearingActuals,
   getHearings,
-  getLinkedHearingGroup,
+  getLinkedHearingGroup, injectHearingsHeaders,
   postLinkedHearingGroup,
   putLinkedHearingGroup,
   submitHearingActuals,
@@ -24,17 +24,17 @@ export const router = express.Router({ mergeParams: true });
 
 router.use(authInterceptor);
 // ------request-amend hearing APIs start------
-router.post('/loadServiceHearingValues', loadServiceHearingValues);
-router.get('/getHearings', getHearings);
-router.get('/getHearing', getHearing);
-router.post('/submitHearingRequest', submitHearingRequest);
-router.put('/updateHearingRequest', updateHearingRequest);
-router.delete('/cancelHearings', cancelHearingRequest);
+router.post('/loadServiceHearingValues', injectHearingsHeaders, loadServiceHearingValues);
+router.get('/getHearings', injectHearingsHeaders, getHearings);
+router.get('/getHearing', injectHearingsHeaders, getHearing);
+router.post('/submitHearingRequest', injectHearingsHeaders, submitHearingRequest);
+router.put('/updateHearingRequest', injectHearingsHeaders, updateHearingRequest);
+router.delete('/cancelHearings', injectHearingsHeaders, cancelHearingRequest);
 // ------request-amend hearing APIs end------
 // ------actual hearing APIs start------
-router.get('/hearingActuals/:hearingId', getHearingActuals);
-router.put('/hearingActuals', updateHearingActuals);
-router.post('/hearingActualsCompletion/:hearingId', submitHearingActuals);
+router.get('/hearingActuals/:hearingId', injectHearingsHeaders, getHearingActuals);
+router.put('/hearingActuals', injectHearingsHeaders, updateHearingActuals);
+router.post('/hearingActualsCompletion/:hearingId', injectHearingsHeaders, submitHearingActuals);
 // ------actual hearing APIs end------
 // ------link hearing APIs start------
 router.post('/loadServiceLinkedCases', loadServiceLinkedCases);

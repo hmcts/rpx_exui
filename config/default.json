@@ -54,7 +54,8 @@
         "serviceApi": "http://et-hearings-api-prod.service.core-compute-prod.internal",
         "caseTypes": "ET_EnglandWales,ET_Scotland,ET_EnglandWales_Multiple,ET_Scotland_Multiple"
       },
-      "hmcApi": "http://hmc-cft-hearing-service-prod.service.core-compute-prod.internal"
+      "hmcApi": "http://hmc-cft-hearing-service-prod.service.core-compute-prod.internal",
+      "enablePreviewCcd": false
     },
     "documents": {
       "api": "http://dm-store-prod.service.core-compute-prod.internal"

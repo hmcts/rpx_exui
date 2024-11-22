@@ -8,12 +8,14 @@ import * as express from 'express';
 import * as striptags from 'striptags';
 import { getConfigValue } from '../configuration';
 import {
-  SERVICES_CCD_COMPONENT_API_PATH
+  SERVICES_CCD_COMPONENT_API_PATH, SERVICES_HEARINGS_ENABLE_PREVIEW_CCD
 } from '../configuration/references';
 
 import { http } from './http';
 import { EnhancedRequest } from './models';
 import { exists } from './util';
+
+const hearingsPreviewCcdEnabled = getConfigValue(SERVICES_HEARINGS_ENABLE_PREVIEW_CCD) === 'true';
 
 export function setHeaders(req: express.Request, contentType?: string) {
   const headers: any = {};
@@ -43,6 +45,14 @@ export function setHeaders(req: express.Request, contentType?: string) {
 
     if (exists(req, 'headers.ServiceAuthorization')) {
       headers.ServiceAuthorization = req.headers.ServiceAuthorization;
+    }
+
+    if (hearingsPreviewCcdEnabled && exists(req, 'headers.CCD_URL')) {
+      headers.CCD_URL = req.headers.CCD_URL;
+    }
+
+    if (hearingsPreviewCcdEnabled && exists(req, 'headers.RAS_URL')) {
+      headers.RAS_URL = req.headers.RAS_URL;
     }
   }
 

@@ -56,7 +56,8 @@
         "serviceApi": "SERVICES_HEARINGS_COMPONENT_API_ET",
         "caseTypes": "SERVICES_HEARINGS_CASETYPES_ET"
       },
-      "hmcApi": "SERVICES_HMC_HEARINGS_COMPONENT_API"
+      "hmcApi": "SERVICES_HMC_HEARINGS_COMPONENT_API",
+      "enablePreviewCcd": "ENABLE_HMC_PREVIEW_CCD"
     },
     "documents": {
       "api": "SERVICES_DOCUMENTS_API"
