@@ -47,7 +47,7 @@
                 <label class="govuk-label govuk-date-input__label" for="date-start-month">
                 Month
                 </label>
-                <input id="date-start-month" name="date-start-month" type="number" pattern="[0-9]*" formControlName="monthStartDate" min="0" max="11"
+                <input id="date-start-month" name="date-start-month" type="number" pattern="[0-9]*" formControlName="monthStartDate" min="1" max="12"
                 [ngClass]="isStartDateError?'govuk-input govuk-date-input__input govuk-input--width-2 date-error':'govuk-input govuk-date-input__input govuk-input--width-2'"/>
               </div>
             </div>
@@ -91,7 +91,7 @@
                   <label class="govuk-label govuk-date-input__label" for="date-end-month">
                   Month
                   </label>
-                  <input id="date-end-month" name="date-end-month" type="number" pattern="[0-9]*" formControlName="monthEndDate" min="0" max="11"
+                  <input id="date-end-month" name="date-end-month" type="number" pattern="[0-9]*" formControlName="monthEndDate" min="1" max="12"
                   [ngClass]="isEndDateError?'govuk-input govuk-date-input__input govuk-input--width-2 date-error':'govuk-input govuk-date-input__input govuk-input--width-2'"/>
                 </div>
               </div>

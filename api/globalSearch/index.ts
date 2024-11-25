@@ -1,28 +1,35 @@
-import { Jurisdiction } from '@hmcts/ccd-case-ui-toolkit';
 import { NextFunction, Response } from 'express';
 import { handlePost } from '../common/crudService';
 import { getConfigValue } from '../configuration';
 import {
   GLOBAL_SEARCH_SERVICES,
-  SERVICES_CCD_DATA_STORE_API_PATH
+  SERVICES_CCD_DATA_STORE_API_PATH,
+  SERVICES_LOCATION_REF_API_URL
 } from '../configuration/references';
 import { GlobalSearchService } from '../interfaces/globalSearchService';
 import { EnhancedRequest } from '../lib/models';
+import { RefDataHMCTSService } from '../ref-data/models/ref-data-hmcts-service.model';
+import { http } from '../lib/http';
+import { setHeaders } from '../lib/proxy';
 
 /**
  * Get global search services
  * api/globalsearch/services
  */
+
+const baseLocationRefUrl = getConfigValue(SERVICES_LOCATION_REF_API_URL);
+
 export async function getServices(req: EnhancedRequest, res: Response, next: NextFunction): Promise<Response> {
+  const apiPath = `${baseLocationRefUrl}/refdata/location/orgServices`;
   try {
     // Return global search services from session if available
     if (req.session.globalSearchServices && req.session.globalSearchServices.length !== 0) {
       return res.json(req.session.globalSearchServices);
     }
 
-    // Retrieve jurisdictions from session if available
-    // Else perform api call to get jurisdictions
-    const services: any = generateServices(req.session.jurisdictions as Jurisdiction[]);
+    const response = await http.get(`${apiPath}`, { headers: setHeaders(req) });
+
+    const services: any = generateServices(response.data);
 
     // Store generated global search services to session
     req.session.globalSearchServices = services;
@@ -53,7 +60,7 @@ export async function getSearchResults(req: EnhancedRequest, res: Response, next
  * @param jurisdictions
  * @returns
  */
-export function generateServices(jurisdictions: Jurisdiction[]): GlobalSearchService[] {
+export function generateServices(refDataHMCTS: RefDataHMCTSService[]): GlobalSearchService[] {
   // Retrieve global search services id from config
   const globalSearchServiceIds = getConfigValue(GLOBAL_SEARCH_SERVICES);
   const globalSearchServiceIdsArray = globalSearchServiceIds.split(',');
@@ -61,9 +68,15 @@ export function generateServices(jurisdictions: Jurisdiction[]): GlobalSearchSer
   // Generate global search services
   const globalSearchServices: GlobalSearchService[] = [];
   globalSearchServiceIdsArray.forEach((serviceId) => {
-    const jurisdiction = jurisdictions ? jurisdictions.find((x) => x.id === serviceId) : null;
+    // search for the service name based on the globalSearchServiceId
+    const jurisdiction = refDataHMCTS?.length > 0 ? refDataHMCTS.filter((x) => x.ccd_service_name?.toLowerCase() === serviceId.toLowerCase()) : null;
     if (jurisdiction) {
-      globalSearchServices.push({ serviceId: jurisdiction.id, serviceName: jurisdiction.name });
+      // handle Civil service which has different service_short_description
+      if (jurisdiction.length > 1) {
+        globalSearchServices.push({ serviceId: jurisdiction[0].ccd_service_name, serviceName: toTitleCase(jurisdiction[0].ccd_service_name) });
+      } else {
+        globalSearchServices.push({ serviceId: jurisdiction[0].ccd_service_name, serviceName: jurisdiction[0].service_short_description });
+      }
     } else {
       globalSearchServices.push({ serviceId, serviceName: serviceId });
     }
@@ -71,4 +84,10 @@ export function generateServices(jurisdictions: Jurisdiction[]): GlobalSearchSer
 
   // Return generated global search services
   return globalSearchServices;
+}
+
+function toTitleCase(serviceName: string): string {
+  return serviceName.replace(/([a-zA-Z])([a-zA-Z]*)/g, (match, firstLetter, rest) => {
+    return firstLetter.toUpperCase() + rest.toLowerCase();
+  });
 }

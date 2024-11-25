@@ -19,10 +19,10 @@ module.exports = defineConfig({
   reportSlowTests: null,
 
   /* Opt out of parallel tests on CI. */
-  workers: process.env.FUNCTIONAL_TESTS_WORKERS ? 1 : 1,
+  workers: process.env.FUNCTIONAL_TESTS_WORKERS ? parseInt(process.env.FUNCTIONAL_TESTS_WORKERS, 10) : 1,
 
   reporter: [[process.env.CI ? 'html' : 'list'],
-             ['html', { outputFolder: 'functional-output/tests/playwright-e2e' }]],
+             ['html', { open: 'never', outputFolder: 'functional-output/tests/playwright-e2e' }]],
 
   projects: [
     {

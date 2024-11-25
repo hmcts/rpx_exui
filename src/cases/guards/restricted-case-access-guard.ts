@@ -10,6 +10,6 @@ export class RestrictedCaseAccessGuard {
   }
 
   public canActivate(): Observable<boolean> {
-    return this.featureToggleService.getValueOnce<boolean>(AppConstants.FEATURE_NAMES.enableRestrictedCaseAccess, false);
+    return this.featureToggleService.getValueOnce<boolean>(AppConstants.FEATURE_NAMES.enableRestrictedCaseAccess, true);
   }
 }
