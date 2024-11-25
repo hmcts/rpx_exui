@@ -8,8 +8,6 @@ Feature: Navigation header tabs
             | mc-menu-items         |
             | mc-menu-theme         |
             | MC_Notice_of_Change   |
-            | MC_Work_Allocation    |
-            | mc-user-type-roles    |
             | feature-global-search |
             | feature-refunds       |
         Given I set MOCK with user identifer "<useridentifier>" role type "<roleType>" and role identifiers "<rolesIdentifiers>"

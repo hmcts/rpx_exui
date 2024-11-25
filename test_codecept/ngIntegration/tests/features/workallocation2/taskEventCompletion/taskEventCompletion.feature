@@ -9,7 +9,7 @@ Feature: WA Release 2: Case events and Task completion and states when task_requ
     Scenario Outline: No task available
         Given I set MOCK with user "IAC_CaseOfficer_R2" and roles "<roles>,task-supervisor,case-allocator" with reference "userDetails"
 
-      
+
         # Given I set MOCK case details with reference "caseDetails"
         Given I set MOCK case list values
             | case_id          | case_fields.[CASE_REFERENCE] | case_fields_formatted.[CASE_REFERENCE] |
@@ -51,6 +51,8 @@ Feature: WA Release 2: Case events and Task completion and states when task_requ
         Then I validate case details task tab page is displayed
 
         When I start case next step "Test event"
+#        Then debug sleep minutes 10
+
         Then I see task event validation error page
             | Summary header  | There is a problem                                                            |
             | Summary message | No task available                                                             |
@@ -83,7 +85,7 @@ Feature: WA Release 2: Case events and Task completion and states when task_requ
             | case_id          | case_fields.[CASE_REFERENCE] | case_fields_formatted.[CASE_REFERENCE] |
             | 1234567812345678 | 1234567812345678             | 1234567812345678                       |
             | 1234567812345679 | 1234567812345679             | 1234567812345679                       |
-      
+
 
         Given I set MOCK user with reference "userDetails" roleAssignmentInfo
             | isCaseAllocator | jurisdiction | baseLocation |

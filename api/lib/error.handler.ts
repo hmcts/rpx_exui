@@ -17,8 +17,15 @@ export default function errorHandler(err, req: Request, res: Response, next: Nex
     // remove any sensitive data
     delete err.request._header;
   }
-  logger._logger.error(err.data);
-
+  if (err?.data) {
+    logger._logger.error(err.data);
+  } else {
+    if (err) {
+      logger._logger.error(err.toString());
+    } else {
+      logger._logger.error('errorHanndler called with no error');
+    }
+  }
   const errorStatus = err.status ? err.status : 500;
   const errorContent = err.data ? err.data : { message: 'Internal Server Error' };
   res.status(errorStatus).send(errorContent);
