@@ -37,7 +37,8 @@ def secrets = [
     secret('appinsights-instrumentationkey-mc', 'APPINSIGHTS_INSTRUMENTATIONKEY'),
     secret('appinsights-connection-string-mc', 'APPINSIGHTS_CONNECTION_STRING'),
     secret('system-user-name', 'SYSTEM_USER_NAME'),
-    secret('system-user-password', 'SYSTEM_USER_PASSWORD')
+    secret('system-user-password', 'SYSTEM_USER_PASSWORD'),
+    secret('launch-darkly-client-id', 'LAUNCH_DARKLY_CLIENT_ID'),
   ],
   ]
 
