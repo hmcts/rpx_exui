@@ -7,10 +7,7 @@
     "roles": "COOKIES_ROLES"
   },
   "logging": "LOGGING",
-  "now": {
-    "__name": "NOW",
-    "__format": "json"
-  },
+  "now": "NOW",
   "maxLogLine": "MAX_LOG_LINE",
   "stub": {
     "__name": "STUB",

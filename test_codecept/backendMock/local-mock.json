@@ -78,17 +78,6 @@
         "payments": "http://localhost:8080",
         "judicialBookingApi": "http://localhost:8080"
     },
-    "secrets": {
-        "rpx": {
-            "launch-darkly-client-id": "5de6610b23ce5408280f2268",
-            "appinsights-instrumentationkey-mc": "5f607ccb-4ab5-4c9d-a4b9-801868bdf698",
-            "mc-s2s-client-secret": "FHYQN3ZQ3BF66XWR",
-            "mc-idam-client-secret": "DBssSOq0KKLNBf2z",
-            "webapp-redis-connection-string": "redis://localhost:6379",
-            "system-user-name": "cwd_system@mailinator.com",
-            "system-user-password": "Welcome01"
-        }
-    },
     "feature": {
         "appInsightsEnabled": false,
         "proxyEnabled": false,

@@ -79,7 +79,7 @@ const {postTaskAction, getTask} = require("../../../../api/workAllocation");
          global.scenarioData[caseDetailsReference] = caseDetails;
 
         await serviceMock.updateCaseData(global.scenarioData[caseDetailsReference], 200)
-       
+
     });
 
     Given('I set MOCK case {string} details with reference {string}', async function (caseType, caseDetailsReference) {
@@ -225,13 +225,11 @@ const {postTaskAction, getTask} = require("../../../../api/workAllocation");
 
     Given('I set MOCK case details {string} trigger id {string} trigger name {string}', async function (caseDetailsRef, eventId, eventName) {
         const caseDetails = global.scenarioData[caseDetailsRef];
-        const testTrigger = { ...caseDetails.triggers[0]}
+        const testTrigger = { ...caseDetails.triggers[0] };
         testTrigger.id = eventId;
         testTrigger.name = eventName;
-        caseDetails.triggers.push(testTrigger);
-            
-        await serviceMock.updateCaseData(caseDetails, 200)
-
+        caseDetails.triggers.unshift(testTrigger);
+        await serviceMock.updateCaseData(caseDetails, 200);
     });
 
     Given('I set MOCK case roles', async function(caseRolesDatatable){

@@ -6,20 +6,35 @@ const featureNames = {
   waServiceConfig: 'wa-service-config',
   waLandingPageRoles: 'wa-landing-page-roles',
   waAccess: 'wa-access',
-  currentWAFeature: 'mc-work-allocation-active-feature',
-  workAllocation: 'MC_Work_Allocation',
   noticeOfChange: 'MC_Notice_of_Change',
-  waMvpPaginationFeature: 'mc-mvp-wa-pagination',
-  userTypeRoles: 'mc-user-type-roles',
   booking: 'mc-booking-active',
   mcHearingsFeature: 'mc-hearings-jurisdictions',
   excludedRolesForCaseTabs: 'mc-excluded-roles-case-tabs',
-
+  secureDocumentStoreEnabled: 'mc-document-secure-mode-enabled',
+  icpEnabled: 'icp-enabled',
+  icpJurisdictions: 'icp-jurisdictions',
   enableCaseFileViewVersion1_1: 'enable-case-file-view-version-1-1',
   enableHearingAmendments: 'mc-enable-hearings-amendments-service',
-  enableRestrictedCaseAccess: 'enable-restricted-case-access'
-
+  enableRestrictedCaseAccess: 'enable-restricted-case-access',
+  accessManagementMode: 'access-management-mode'
 };
+
+function featureToAttributeName(key: string): string {
+  return key.split('-').join('_');
+}
+
+export const featureToAttributeMap = new Map<string, string>([
+  [featureNames.waServiceConfig, featureToAttributeName(featureNames.waServiceConfig)],
+  [featureNames.waLandingPageRoles, featureToAttributeName(featureNames.waLandingPageRoles)],
+  [featureNames.waAccess, featureToAttributeName(featureNames.waAccess)],
+  [featureNames.booking, featureToAttributeName(featureNames.booking)],
+  [featureNames.secureDocumentStoreEnabled, 'document_management_secure_enabled'], // should refactor this
+  [featureNames.icpEnabled, featureToAttributeName(featureNames.icpEnabled)],
+  [featureNames.icpJurisdictions, featureToAttributeName(featureNames.icpJurisdictions)],
+  [featureNames.enableCaseFileViewVersion1_1, featureToAttributeName(featureNames.enableCaseFileViewVersion1_1)],
+  [featureNames.enableRestrictedCaseAccess, featureToAttributeName(featureNames.enableRestrictedCaseAccess)],
+  [featureNames.accessManagementMode, featureToAttributeName(featureNames.accessManagementMode)]
+]);
 
 const footerDataNavigation = {
   items: [
@@ -184,13 +199,12 @@ export class AppConstants {
   public static SERVICE_MESSAGE_COOKIE = serviceMessageCookie;
   public static CASE_ALLOCATOR_ROLE = caseAllocatorRole;
   public static DEFAULT_MENU_ITEMS = defaultMenuItems;
+  public static FEATURE_TO_ATTRIBUTE_MAP = featureToAttributeMap;
 }
 
 export const LD_FLAG_REMOVE_USER_FROM_CASE_MC: string = 'remove-user-from-case-mc';
-export const LD_FLAG_MC_APPLICATION_THEMES: string = 'mc-application-themes';
 export const LEGAL_OPS_ROLE_LIST: string[] = ['caseworker-ia-caseofficer', 'caseworker-ia', 'caseworker-ia-admofficer', 'task-supervisor', 'caseworker-civil', 'caseworker-privatelaw', 'hmcts-legal-operations'];
 export const JUDICIAL_ROLE_LIST: string[] = ['caseworker-ia-iacjudge', 'caseworker-privatelaw-judge', 'judge', 'hmcts-judiciary', 'judiciary', 'panelmember'];
 export const ADMIN_ROLE_LIST: string[] = ['hmcts-admin'];
 export const CTSC_ROLE_LIST: string[] = ['hmcts-ctsc'];
-export const SERVICE_OPTIONS_LIST = [{ key: 'IA', label: 'Immigration and Asylum' }, { key: 'SSCS', label: 'Social security and child support' }];
 export const PUI_CASE_MANAGER = 'pui-case-manager';
