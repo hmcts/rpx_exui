@@ -7553,15 +7553,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"applicationinsights@npm:1.8.10":
-  version: 1.8.10
-  resolution: "applicationinsights@npm:1.8.10"
+"applicationinsights@npm:1.7.2":
+  version: 1.7.2
+  resolution: "applicationinsights@npm:1.7.2"
   dependencies:
     cls-hooked: "npm:^4.2.2"
     continuation-local-storage: "npm:^3.2.1"
-    diagnostic-channel: "npm:0.3.1"
-    diagnostic-channel-publishers: "npm:0.4.4"
-  checksum: 10/c3358b622f0b506891c587ba729d333c2d7e816e3bd8e07dfffdfd6f3201c2918ba6e91360c4e345368fc28b2162cb1effbd845084f7043c2330b02a61f366d0
+    diagnostic-channel: "npm:0.2.0"
+    diagnostic-channel-publishers: "npm:^0.3.3"
+  checksum: 10/505b36d5d34e6bdb477bae1e12eddb9166bf7e906c782fce5d2802962fb8b26fe54816301233012bf573b4197a2b47f3ad161dd65fe17fa4b652ceb3cf489f9e
   languageName: node
   linkType: hard
 
@@ -9163,10 +9163,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-transformer@npm:0.5.1, class-transformer@npm:^0.5.0":
+"class-transformer@npm:0.5.1":
   version: 0.5.1
   resolution: "class-transformer@npm:0.5.1"
   checksum: 10/750327e3e9a5cf233c5234252f4caf6b06c437bf68a24acbdcfb06c8e0bfff7aa97c30428184813e38e08111b42871f20c5cf669ea4490f8ae837c09f08b31e7
+  languageName: node
+  linkType: hard
+
+"class-transformer@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "class-transformer@npm:0.3.2"
+  checksum: 10/86fc3fa614c4b11cffbdefc0fb393d674ae531298c7f3e7ea12b51a2f65c694e43f8a80c347dfdc5d0d6e60c904cdd81c9e857fd8436766e6ba4903744b78c13
   languageName: node
   linkType: hard
 
@@ -11193,21 +11200,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"diagnostic-channel-publishers@npm:0.4.4":
-  version: 0.4.4
-  resolution: "diagnostic-channel-publishers@npm:0.4.4"
+"diagnostic-channel-publishers@npm:^0.3.3":
+  version: 0.3.5
+  resolution: "diagnostic-channel-publishers@npm:0.3.5"
   peerDependencies:
     diagnostic-channel: "*"
-  checksum: 10/39ec421fee46d9d0c282b6eddcdc45bc50bd33e8fa74fec3555084c1f240600f1929f86e977785d96667feecfa7e24da8082f9a46b78460b3040d21bebc4e402
+  checksum: 10/14d68a2ce6481bdc2a52514703f3973e24740246b36c930c145aa0014acbceda7c422996430f196bf7dfee4e6c048ad23ef981c03f0c2bfee5959c2b5cbdd097
   languageName: node
   linkType: hard
 
-"diagnostic-channel@npm:0.3.1":
-  version: 0.3.1
-  resolution: "diagnostic-channel@npm:0.3.1"
+"diagnostic-channel@npm:0.2.0":
+  version: 0.2.0
+  resolution: "diagnostic-channel@npm:0.2.0"
   dependencies:
     semver: "npm:^5.3.0"
-  checksum: 10/3bc8e2e96aa390d60e9d469172cdff7ebf84bc6c86b6e43b5dc384c6bb63ffb5c74e61f6b364dcd140283e4a8d504cd2cc0ad6409af59a4b4b65ca8f4d589b06
+  checksum: 10/68e0e92076d6562e5f378e1f01f5fe5d1933449a4e1ec17ce9fb29c23e78e17e36514d279570880efc763ff638d2fb8a8b0ee44d351e6cc124579c62cad3a14d
   languageName: node
   linkType: hard
 
@@ -15584,10 +15591,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine-core@npm:~3.99.0":
-  version: 3.99.1
-  resolution: "jasmine-core@npm:3.99.1"
-  checksum: 10/b2bc829ff90aa700dee9a769d59f3ddba7cf6ecbcd3334e8e0a7b17834f43c9c80f78267c015bc0de333ddeff0c12afb3304cc812eeb32295a285a3d9badd19b
+"jasmine-core@npm:~3.4.0":
+  version: 3.4.0
+  resolution: "jasmine-core@npm:3.4.0"
+  checksum: 10/895d42cdaff549c5ae7cb1d33aff9e10118879174e7bfe703cdcaaa537ea0577a03eef8f75b696b021f9e4cce6cb09d729db16ce7064f7a4354215064a855225
   languageName: node
   linkType: hard
 
@@ -16592,14 +16599,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"karma-jasmine@npm:5.1.0":
-  version: 5.1.0
-  resolution: "karma-jasmine@npm:5.1.0"
+"karma-jasmine@npm:5.0.1":
+  version: 5.0.1
+  resolution: "karma-jasmine@npm:5.0.1"
   dependencies:
     jasmine-core: "npm:^4.1.0"
   peerDependencies:
     karma: ^6.0.0
-  checksum: 10/9cdc39a227fb95dae9dd13e418007b86a59f42e17e74921be3b9f7d0f0d8f8aeaf9a1104c915af5a0f88bb4a6f874f3f802757386302bd8e85fa790e00baeb3d
+  checksum: 10/b26566a22ffed32b181c144fca6bf412a1e3f165de574c6b912ec2fe06bb878d1a141489b1b13d40df233aad8063ef321541b8ecd7bf5835dd59ef9b2490e6e1
   languageName: node
   linkType: hard
 
@@ -21991,14 +21998,14 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.2.0"
     accessibility-checker: "npm:^3.1.70"
     allure-js-commons: "npm:^2.11.1"
-    applicationinsights: "npm:1.8.10"
+    applicationinsights: "npm:1.7.2"
     axe-html-reporter: "npm:^2.2.3"
     axios: "npm:^1.7.7"
     axios-mock-adapter: "npm:^1.22.0"
     base-64: "npm:^0.1.0"
     chai: "npm:^4.3.10"
     chai-as-promised: "npm:7.1.2"
-    class-transformer: "npm:^0.5.0"
+    class-transformer: "npm:^0.3.2"
     codeceptjs: "npm:3.5.6"
     codeceptjs-cucumber-json-reporter: "npm:^1.0.14"
     codelyzer: "npm:^5.1.2"
@@ -22031,7 +22038,7 @@ __metadata:
     helmet: "npm:^3.21.3"
     http-proxy-middleware: "npm:1.1.x"
     isomorphic-fetch: "npm:^3.0.0"
-    jasmine-core: "npm:~3.99.0"
+    jasmine-core: "npm:~3.4.0"
     jasmine-marbles: "npm:^0.9.1"
     jasmine-spec-reporter: "npm:~4.2.1"
     jsonpath: "npm:^1.1.1"
@@ -22040,7 +22047,7 @@ __metadata:
     karma-chrome-launcher: "npm:3.1.1"
     karma-coverage: "npm:~2.2.0"
     karma-coverage-istanbul-reporter: "npm:~2.1.0"
-    karma-jasmine: "npm:5.1.0"
+    karma-jasmine: "npm:5.0.1"
     karma-jasmine-html-reporter: "npm:^1.4.0"
     karma-parallel: "npm:^0.3.1"
     karma-sonarqube-unit-reporter: "npm:^0.0.23"
