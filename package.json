@@ -220,13 +220,13 @@
     "jsonwebtoken": "^9.0.2",
     "karma": "~6.4.2",
     "karma-chrome-launcher": "3.1.1",
-    "karma-coverage": "~2.0.3",
+    "karma-coverage": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "5.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "karma-parallel": "^0.3.1",
     "karma-sonarqube-unit-reporter": "^0.0.23",
-    "karma-spec-reporter": "0.0.34",
+    "karma-spec-reporter": "0.0.36",
     "mocha": "^8.1.1",
     "mochawesome": "^6.2.1",
     "mochawesome-merge": "^4.3.0",
@@ -272,5 +272,5 @@
     "axios": "1.7.7",
     "webpack": "^5.94.0"
   },
-  "packageManager": "yarn@4.5.0"
+  "packageManager": "yarn@4.5.2"
 }
