@@ -193,18 +193,17 @@ class CaseManager {
         await BrowserWaits.waitForElement(this.exuiCaseHomeComp);
         await BrowserWaits.waitForElement(this.caseNextStepSelect);
 
-
         var nextStepSelect = element(by.xpath("//*[@id='next-step']"));
         var nextStepSelectoption = null;
         if (stepName) {
-            await nextStepSelect.select(stepName)
+          cucumberReporter.AddMessage('About to select ' + stepName, LOG_LEVELS.Debug);
+          await nextStepSelect.select(stepName)
         } else {
             nextStepSelectoption = element(by.xpath("//option[text() = \'' + stepName + '\']"));
             const someStepEventName = await nextStepSelectoption.getText();
+            cucumberReporter.AddMessage('Using logic to select ' + someStepEventName, LOG_LEVELS.Debug);
             await nextStepSelect.select(someStepEventName)
-
         }
-        await browser.sleep(2)
         const currentPageUrl = await browser.getCurrentUrl()
         reportLogger.AddMessage(`on page with URL: ${currentPageUrl}`)
         await BrowserWaits.retryWithActionCallback(async () => {
@@ -212,9 +211,7 @@ class CaseManager {
             // await BrowserWaits.waitForElement($('exui-case-details-home'));
             await BrowserWaits.waitForPageNavigation(currentPageUrl)
         })
-
     }
-
 
     async AmOnCaseDetailsPage(){
         await BrowserWaits.retryWithActionCallback(async () => {
