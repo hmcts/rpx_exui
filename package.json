@@ -199,7 +199,7 @@
     "@types/sinon": "^7.0.13",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
-    "allure-js-commons": "^2.11.1",
+    "allure-js-commons": "^3.0.0",
     "axe-html-reporter": "^2.2.3",
     "base-64": "^0.1.0",
     "chai": "^4.3.10",
