@@ -581,13 +581,13 @@ __metadata:
   linkType: hard
 
 "@axe-core/playwright@npm:^4.9.1":
-  version: 4.10.0
-  resolution: "@axe-core/playwright@npm:4.10.0"
+  version: 4.10.1
+  resolution: "@axe-core/playwright@npm:4.10.1"
   dependencies:
-    axe-core: "npm:~4.10.0"
+    axe-core: "npm:~4.10.2"
   peerDependencies:
     playwright-core: ">= 1.0.0"
-  checksum: 10/a394b07181f313491567cb25fe097ba6f5fe463befb403c29e4a39eb32d27b42e84b250d239d32a1091364ec65aed88c5ade38c1b231344dcbae8ce1130cacd9
+  checksum: 10/842dde90a43157938235db8699816fc910f8f2bd737f1daa6ef96e4e407153394ae42dfde71add501161c87f25539b861f2f1aeee2e7a6e5f905cde4e6a10952
   languageName: node
   linkType: hard
 
@@ -6460,9 +6460,9 @@ __metadata:
   linkType: hard
 
 "@types/global-agent@npm:^2.1.0":
-  version: 2.1.1
-  resolution: "@types/global-agent@npm:2.1.1"
-  checksum: 10/33fddd83781706b60996d42e6e60a8a96b4163f5b54f5052c97b448edf8e7c834e9395613cec37a39da8d1d5286382e85ec09ba6b908fab5638055f7d6f76397
+  version: 2.1.3
+  resolution: "@types/global-agent@npm:2.1.3"
+  checksum: 10/6129b6d5ba871b9d111ddf91e6f9a1725d3f28bf2aa6869ec83bebd14c688cde4275ebea6fa45b0b1c00d78109d022c935f952e9e4876d76289d4706484776c3
   languageName: node
   linkType: hard
 
@@ -8205,10 +8205,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:~4.10.0":
-  version: 4.10.0
-  resolution: "axe-core@npm:4.10.0"
-  checksum: 10/6158489a7a704edc98bd30ed56243b8280c5203c60e095a2feb5bff95d9bf2ef10becfe359b1cbc8601338418999c26cf4eee704181dedbcb487f4d63a06d8d5
+"axe-core@npm:~4.10.2":
+  version: 4.10.2
+  resolution: "axe-core@npm:4.10.2"
+  checksum: 10/a69423b2ff16c15922c4ea7cf9cc5112728a2817bbe0f2cc212248d648885ffd1ba554e3a341dfc289cd9e67fc0d06f333b5c6837c5c38ca6652507381216fc1
   languageName: node
   linkType: hard
 
@@ -16926,14 +16926,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"karma-spec-reporter@npm:0.0.34":
-  version: 0.0.34
-  resolution: "karma-spec-reporter@npm:0.0.34"
+"karma-spec-reporter@npm:0.0.36":
+  version: 0.0.36
+  resolution: "karma-spec-reporter@npm:0.0.36"
   dependencies:
     colors: "npm:1.4.0"
   peerDependencies:
     karma: ">=0.9"
-  checksum: 10/5500c14163aa475dfeaa23bb4b876719baf57666df8d5f6a429f0749823960abf2c90e0abb9eb5be9a98fae440c228b1f6bd5ca111a3cbfd89b295322ab3342b
+  checksum: 10/a60db6dd94253b7e4cea338602f961db116143e40b30a0767ccad534953a30537519bc248dab5659806f36dfef4f42d2b933c89b367c4a48b20a056cee1a8ada
   languageName: node
   linkType: hard
 
@@ -19281,12 +19281,12 @@ __metadata:
   linkType: hard
 
 "node-html-parser@npm:^6.1.5":
-  version: 6.1.6
-  resolution: "node-html-parser@npm:6.1.6"
+  version: 6.1.13
+  resolution: "node-html-parser@npm:6.1.13"
   dependencies:
     css-select: "npm:^5.1.0"
     he: "npm:1.2.0"
-  checksum: 10/90e1fc36fbc916c63e94164a5673c93da5242f756a88d5c641197632d5e622edde447a398fda1dbc034342d837a16f224db9a842fc0d828739dd1095cf302e6f
+  checksum: 10/f5ebc5cea22e819e7b726b483e12241039ebdeac6eba198ebdb55a0921536798c1acd9c6f543e82f77542dc44fb2230f55891b1baae218c17969dd08f7295d14
   languageName: node
   linkType: hard
 
@@ -22426,7 +22426,7 @@ __metadata:
     karma-jasmine-html-reporter: "npm:^1.4.0"
     karma-parallel: "npm:^0.3.1"
     karma-sonarqube-unit-reporter: "npm:^0.0.23"
-    karma-spec-reporter: "npm:0.0.34"
+    karma-spec-reporter: "npm:0.0.36"
     launchdarkly-js-client-sdk: "npm:^2.16.3"
     local-storage: "npm:^2.0.0"
     lodash: "npm:^4.17.21"
