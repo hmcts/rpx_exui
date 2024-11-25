@@ -42,15 +42,14 @@ describe('getNoCQuestions API', () => {
     const expectedResponse = {
       questions: eachLike({
         case_type_id: somethingLike('Probate'),
-        order: somethingLike('1'),
+        order: somethingLike(1),
         question_text: somethingLike('What is their Email?'),
         answer_field_type: {
           id: somethingLike('Email'),
           type: somethingLike('Email'),
-          min: somethingLike(0),
-          max: somethingLike(10),
-          regular_expression: somethingLike('asdsa'),
-          collection_field_type: somethingLike('type')
+          min: somethingLike('0'),
+          max: somethingLike('10'),
+          regular_expression: somethingLike('asdsa')
         },
         display_context_parameter: somethingLike('1'),
         challenge_question_id: somethingLike('NoC'),
@@ -102,13 +101,12 @@ describe('getNoCQuestions API', () => {
 function assertResponse(returnedResponse: any) {
   expect(returnedResponse.questions.length).to.be.equal(1);
   expect(returnedResponse.questions[0].case_type_id).to.be.equal('Probate');
-  expect(returnedResponse.questions[0].order).to.be.equal('1');
+  expect(returnedResponse.questions[0].order).to.be.equal(1);
   expect(returnedResponse.questions[0].question_text).to.be.equal('What is their Email?');
   expect(returnedResponse.questions[0].answer_field_type.id).to.be.equal('Email');
   expect(returnedResponse.questions[0].answer_field_type.type).to.be.equal('Email');
-  expect(returnedResponse.questions[0].answer_field_type.min).to.be.equal(0);
+  expect(returnedResponse.questions[0].answer_field_type.min).to.be.equal('0');
   expect(returnedResponse.questions[0].answer_field_type.regular_expression).to.be.equal('asdsa');
-  expect(returnedResponse.questions[0].answer_field_type.collection_field_type).to.be.equal('type');
   expect(returnedResponse.questions[0].display_context_parameter).to.be.equal('1');
   expect(returnedResponse.questions[0].challenge_question_id).to.be.equal('NoC');
   expect(returnedResponse.questions[0].answer_field).to.be.equal('');

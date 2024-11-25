@@ -1,14 +1,29 @@
 <div>
-  <ng-container *ngIf="(lastError$ | async)?.error.code === 'answers-not-matched-any-litigant' || allAnswerEmpty || !allAnswerValid">
-    <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+  <ng-container
+    *ngIf="
+      (lastError$ | async)?.error.code === 'answers-not-matched-any-litigant' ||
+      allAnswerEmpty ||
+      !allAnswerValid
+    "
+  >
+    <div
+      class="govuk-error-summary"
+      aria-labelledby="error-summary-title"
+      role="alert"
+      tabindex="-1"
+      data-module="govuk-error-summary"
+    >
       <h2 class="govuk-error-summary__title" id="error-summary-title">
-        {{'There is a problem' | rpxTranslate}}
+        {{ "There is a problem" | rpxTranslate }}
       </h2>
       <div class="govuk-error-summary__body">
         <ul class="govuk-list govuk-error-summary__list">
           <li>
             <span id="error-answers-not-correct" class="govuk-error-message">
-              {{"Enter the client details exactly as they're written on the case, including any mistakes" | rpxTranslate}}
+              {{
+                "Enter the client details exactly as they're written on the case, including any mistakes"
+                  | rpxTranslate
+              }}
             </span>
           </li>
         </ul>
@@ -18,17 +33,30 @@
 
   <div class="hmcts-page-heading">
     <div class="hmcts-page-heading__title">
-      <h1 class="govuk-heading-l">{{'Enter details' | rpxTranslate}}</h1>
+      <h1 class="govuk-heading-l">
+        {{ "Enter your client's details" | rpxTranslate }}
+      </h1>
     </div>
   </div>
 
   <p>
-    {{"You must enter the client details exactly as they're written on the case, including any mistakes. For example, if the client's last name is Smyth but it has been spelled 'Smith', you should enter Smith." | rpxTranslate}}
+    {{
+      "You must enter the client details exactly as they're written on the case, including any mistakes. If the client's name is Smyth but it has been labelled \"Smith\", you should enter Smith. Please ensure that you are only performing a notice of change on behalf of the client that you are representing."
+        | rpxTranslate
+    }}
   </p>
 
-  <ng-container *ngIf="(lastError$ | async)?.error.code === 'answers-not-matched-any-litigant' || allAnswerEmpty">
+  <ng-container
+    *ngIf="
+      (lastError$ | async)?.error.code === 'answers-not-matched-any-litigant' ||
+      allAnswerEmpty
+    "
+  >
     <span id="error-answers-not-matched" class="govuk-error-message">
-      {{"Enter the client details exactly as they're written on the case, including any mistakes" | rpxTranslate}}
+      {{
+        "Enter the client details exactly as they're written on the case, including any mistakes"
+          | rpxTranslate
+      }}
     </span>
   </ng-container>
 
@@ -37,10 +65,12 @@
       <ng-container *ngFor="let question of questions$ | async">
         <div>
           <ng-container>
-            <exui-noc-field [questionField]="question"
-                            [answerValue$]="answerInStore(question.question_id)"
-                            [formGroup]="formGroup"
-                            [idPrefix]=""></exui-noc-field>
+            <exui-noc-field
+              [questionField]="question"
+              [answerValue$]="answerInStore(question.question_id)"
+              [formGroup]="formGroup"
+              [idPrefix]=""
+            ></exui-noc-field>
           </ng-container>
         </div>
       </ng-container>
