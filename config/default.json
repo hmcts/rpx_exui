@@ -35,7 +35,7 @@
     "hearings": {
       "hearingsJurisdictions": "SSCS,PRIVATELAW,CIVIL,IA",
       "sscs": {
-        "serviceApi": "http://sscs-hearings-api-prod.service.core-compute-prod.internal",
+        "serviceApi": "http://sscs-tribunals-api-prod.service.core-compute-prod.internal",
         "caseTypes": "Benefit"
       },
       "privatelaw": {

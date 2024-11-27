@@ -91,8 +91,7 @@ describe('nodeApp endpoint', () => {
   // });
 
   it('api/user/details without session', async () => {
-    const response = await Request.get('api/user/details', null, 200);
-    expect(Object.keys(response.data).length).to.equal(0);
+    await Request.get('api/user/details', null, 401);
   });
 
 

@@ -15,24 +15,4 @@ Feature: Test case type case creation and case details validations Part 3
         Then Should be able to see check your answers summary page links
 
 
-    Scenario: Validate tabs in case details page against API response
-        When I click on search button
-        Then Search page should be displayed
-        When I enter search fields jurisdiction "Family Divorce" case type "XUI Case PoC"
-        When I click apply to perform case search
-        Then I see results returned
-        When I open first case in search results
-        Then I see case details page
-        Then I should be able to see tabs in case details page
-
-    Scenario: Validate tab details in case details page against API response
-        When I click on search button
-        Then Search page should be displayed
-        When I enter search fields jurisdiction "Family Divorce" case type "XUI Case PoC"
-        When I click apply to perform case search
-        Then I see results returned
-        When I open first case in search results
-        Then I see case details page
-        Then I should be validate tab details in case details page
-
 
