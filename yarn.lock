@@ -12653,12 +12653,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"exception-formatter@npm:1.0.7":
-  version: 1.0.7
-  resolution: "exception-formatter@npm:1.0.7"
+"exception-formatter@npm:2.1.2":
+  version: 2.1.2
+  resolution: "exception-formatter@npm:2.1.2"
   dependencies:
     colors: "npm:^1.0.3"
-  checksum: 10/ad7325fae381639e34718d2e7e85931237784cd85546c8f4a3b223554dd877fa0612271ac799e22178964fe09636d4ff7945e69e93df91501e1aaee9af877a19
+  checksum: 10/01de8d58d36e1d72f9532babac223dd83347b3fd8cb5570fef9f14b77c7ac437164ce507a55f23e55cfe283701e57c116509491514bcde6cbeede865ec4e3d95
   languageName: node
   linkType: hard
 
@@ -22259,7 +22259,7 @@ __metadata:
     eligrey-classlist.js: "npm:^1.2.20180112"
     eslint: "npm:^8.37.0"
     exceljs: "npm:^4.4.0"
-    exception-formatter: "npm:1.0.7"
+    exception-formatter: "npm:2.1.2"
     file-saver: "npm:^2.0.2"
     form-data: "npm:^2.5.1"
     get-port: "npm:^5.1.1"
