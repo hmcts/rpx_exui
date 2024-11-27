@@ -14095,10 +14095,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"govuk-frontend@npm:^3.12.0":
-  version: 3.14.0
-  resolution: "govuk-frontend@npm:3.14.0"
-  checksum: 10/30dba85fd85a23936b9578dbf13541c538ffd1dba289603b373b761d30a6acfa4993b52ad4622bdb9b55183b4e677687c25dee185dca32d87db79b4ac5b674ba
+"govuk-frontend@npm:^5.0.0":
+  version: 5.7.1
+  resolution: "govuk-frontend@npm:5.7.1"
+  checksum: 10/4d11eeff588888644d734653388bde148ef911b35ebf6f2d192488ac8e5c87f813875f0421bf5b69e06fcc425597521fa495dcf7a10966897eb6477ba5732d82
   languageName: node
   linkType: hard
 
@@ -22266,7 +22266,7 @@ __metadata:
     git-rev-sync: "npm:^3.0.2"
     global-agent: "npm:^2.1.7"
     govuk-elements-sass: "npm:^3.1.3"
-    govuk-frontend: "npm:^3.12.0"
+    govuk-frontend: "npm:^5.0.0"
     govuk_frontend_toolkit: "npm:^9.0.0"
     helmet: "npm:^3.21.3"
     http-proxy-middleware: "npm:1.1.x"
