@@ -10,7 +10,9 @@ import { Observable, Subscription } from 'rxjs';
 })
 
 export class AlertComponent implements OnInit, OnDestroy {
-  public message = '';
+  public successMessage = '';
+  public errorMessage = '';
+  public warningMessage = '';
   public level = '';
   public alertMessageSubscription: Subscription;
 
@@ -23,12 +25,17 @@ export class AlertComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.alertMessageObservable = this.alertService.alerts.pipe(select((alert) => alert));
     this.alertMessageSubscription = this.alertMessageObservable.subscribe((alert) => {
-      if (alert) {
-        const msg = alert.message;
+      if (alert?.level === 'success') {
         this.level = alert.level;
-        this.message = this.hyphenate(msg);
+        this.successMessage = this.hyphenate(alert.message);
+      } else if (alert?.level === 'warning') {
+        this.level = alert.level;
+        this.warningMessage = this.hyphenate(alert.message);
+      } else if (alert?.level === 'error') {
+        this.level = alert.level;
+        this.errorMessage = this.hyphenate(alert.message);
       } else {
-        this.message = '';
+        this.successMessage = '';
       }
     });
   }
