@@ -16,7 +16,7 @@ if (showFeature(FEATURE_APP_INSIGHTS_ENABLED)) {
     .setAutoCollectPerformance(true)
     .setAutoCollectExceptions(true)
     .setAutoCollectDependencies(true)
-    .setAutoCollectConsole(true)
+    .setAutoCollectConsole(true, true)
     .setUseDiskRetryCaching(true)
     .setSendLiveMetrics(true)
     .start();

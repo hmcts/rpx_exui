@@ -83,7 +83,7 @@ class MockSessionService {
                 break;
               }
             } catch (err) {
-              console.error ('Error reading session JSON file: ' + sessionFile + ' sessionJson: ' + sessionJson, err);
+            //   console.error ('Error reading session JSON file: ' + sessionFile + ' sessionJson: ' + sessionJson, err);
             }
         }
         return authSessionFile;
