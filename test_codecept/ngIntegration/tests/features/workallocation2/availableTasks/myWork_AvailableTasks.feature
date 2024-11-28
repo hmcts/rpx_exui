@@ -1,5 +1,5 @@
 
-@ng @functional_enabled 
+@ng @functional_enabled
 Feature: WA Release 2: My work -  Available tasks
 
     Background: Mock and browser setup
@@ -123,7 +123,6 @@ Feature: WA Release 2: My work -  Available tasks
         Then I validate task list page results text displayed as "Showing 1 to 25 of 140 results"
         Then I validate task list table sorted with column "Case name" in order "asc"
 
-
     Scenario Outline:  Available Tasks, columns width "<UserType>"
         Given I set MOCK with user "<UserIdentifier>" and roles "<Roles>,task-supervisor,case-allocator" with reference "userDetails"
         
@@ -133,9 +132,9 @@ Feature: WA Release 2: My work -  Available tasks
         
         
         Given I set MOCK user with reference "userDetails" roleAssignmentInfo
-            | jurisdiction | substantive | roleType     | baseLocation |
-            | IA           | Y           | ORGANISATION | 20001        |
-            | SSCS         | Y           | ORGANISATION | 20001        |
+            | jurisdiction | substantive | roleType     | baseLocation | roleCategory   |
+            | IA           | Y           | ORGANISATION | 20001        | <roleCategory> |
+            | SSCS         | Y           | ORGANISATION | 20001        | <roleCategory> |
 
         Given I set MOCK tasks with permissions for view "Available Tasks" and assigned state ""
             | Permissions | Count |
