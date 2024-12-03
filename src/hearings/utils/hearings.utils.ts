@@ -8,6 +8,8 @@ import { HearingDateEnum } from '../models/hearings.enum';
 import { IndividualDetailsModel } from '../models/individualDetails.model';
 import { LovRefDataModel } from '../models/lovRefData.model';
 import { PartyDetailsModel } from '../models/partyDetails.model';
+import { ServiceHearingValuesModel } from '../models/serviceHearingValues.model';
+import { PartyType } from 'api/hearings/models/hearings.enum';
 
 export class HearingsUtils {
   public static hasPropertyAndValue(conditions: HearingConditions, propertyName: string, propertyValue: any): boolean {
@@ -219,5 +221,14 @@ export class HearingsUtils {
 
   static convertStringToDate(date: string): number {
     return new Date(date).setHours(0, 0, 0, 0);
+  }
+
+  public static checkHearingPartiesConsistency(hearingRequestMainModel: HearingRequestMainModel, serviceHearingValuesModel: ServiceHearingValuesModel): boolean {
+    const individualPartiesInHMC = hearingRequestMainModel.partyDetails.filter((party) => party.partyType === PartyType.IND);
+    const individualHMCPartyIds = individualPartiesInHMC.map((party) => party.partyID);
+    const individualPartiesInSHV = serviceHearingValuesModel.parties.filter((party) => party.partyType === PartyType.IND);
+    const individualSHVPartyIds = individualPartiesInSHV.map((party) => party.partyID);
+    const contains = individualHMCPartyIds.some((hmcParty) => individualSHVPartyIds.includes(hmcParty));
+    return contains;
   }
 }

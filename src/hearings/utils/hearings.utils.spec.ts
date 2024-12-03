@@ -7,6 +7,7 @@ import { PartyDetailsModel } from '../models/partyDetails.model';
 import { HearingsUtils } from './hearings.utils';
 import { UnavailabilityRangeModel } from '../models/unavailabilityRange.model';
 import { HearingWindowModel } from '../models/hearingWindow.model';
+import { ServiceHearingValuesModel } from '../models/serviceHearingValues.model';
 
 describe('HearingsUtils', () => {
   it('should return true if has the right property', () => {
@@ -384,6 +385,7 @@ describe('HearingsUtils', () => {
       expect(HearingsUtils.hasPartyUnavailabilityDatesChanged(party1, party2)).toEqual(true);
     });
   });
+
   describe('Test of change of hearing window dates', () => {
     it('no difference in first date time must be, no change in hearing window found', () => {
       const hearingWindow1: HearingWindowModel = {
@@ -435,6 +437,72 @@ describe('HearingsUtils', () => {
         dateRangeEnd: '2021-12-20T09:00:00.000Z'
       };
       expect(HearingsUtils.hasHearingDatesChanged(hearingWindow1, hearingWindow2)).toEqual(true);
+    });
+  });
+
+  describe('checkHearingPartiesConsistency', () => {
+    it('should return true if SHV contains same partyIDs as HMC', () => {
+      const hearingRequestMainModel: HearingRequestMainModel = {
+        ...initialState.hearings.hearingRequest.hearingRequestMainModel,
+        partyDetails: [{
+          partyID: 'testParty1',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        },
+        {
+          partyID: 'testParty2',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        }]
+      };
+      const serviceHearingValuesModel: ServiceHearingValuesModel = {
+        ...initialState.hearings.hearingValues.serviceHearingValuesModel,
+        parties: [{
+          partyID: 'testParty1',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        },
+        {
+          partyID: 'testParty2',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        }]
+      };
+      expect(
+        HearingsUtils.checkHearingPartiesConsistency(hearingRequestMainModel, serviceHearingValuesModel)
+      ).toBeTruthy();
+    });
+
+    it('should return false if SHV contains no matching partyIDs in HMC', () => {
+      const hearingRequestMainModel: HearingRequestMainModel = {
+        ...initialState.hearings.hearingRequest.hearingRequestMainModel,
+        partyDetails: [{
+          partyID: 'testParty1',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        },
+        {
+          partyID: 'testParty2',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        }]
+      };
+      const serviceHearingValuesModel: ServiceHearingValuesModel = {
+        ...initialState.hearings.hearingValues.serviceHearingValuesModel,
+        parties: [{
+          partyID: 'testParty3',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        },
+        {
+          partyID: 'testParty4',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        }]
+      };
+      expect(
+        HearingsUtils.checkHearingPartiesConsistency(hearingRequestMainModel, serviceHearingValuesModel)
+      ).toBeFalsy();
     });
   });
 });
