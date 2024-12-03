@@ -149,9 +149,9 @@ Feature: WA Release 2: My work - My Tasks
             | locationId | locationName           |
             | 20001      | IA Court Aldgate Tower |
         Given I set MOCK user with reference "userDetails" roleAssignmentInfo
-            | jurisdiction | substantive | roleType     | baseLocation |
-            | IA           | Y           | ORGANISATION | 20001        |
-            | SSCS         | Y           | ORGANISATION | 30001        |
+            | jurisdiction | substantive | roleType     | baseLocation |  roleCategory  |
+            | IA           | Y           | ORGANISATION | 20001        | <roleCategory> |
+            | SSCS         | Y           | ORGANISATION | 30001        | <roleCategory> |
         Given I set MOCK tasks with permissions for view "My Tasks" and assigned state ""
             | Permissions | Count |
             | Manage      | 10    |
