@@ -173,7 +173,7 @@
     "@angular/language-service": "~17.3.6",
     "@axe-core/playwright": "^4.9.1",
     "@ngrx/schematics": "^17.2.0",
-    "@pact-foundation/pact": "^9.11.1",
+    "@pact-foundation/pact": "^13.0.0",
     "@pact-foundation/pact-node": "^10.9.7",
     "@playwright/test": "^1.42.0",
     "@stryker-mutator/api": "^8.0.0",
