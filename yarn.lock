@@ -6473,7 +6473,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/http-proxy@npm:^1.17.5, @types/http-proxy@npm:^1.17.8, @types/http-proxy@npm:^1.17.9":
+"@types/http-proxy@npm:^1.17.15":
+  version: 1.17.15
+  resolution: "@types/http-proxy@npm:1.17.15"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10/fa86d5397c021f6c824d1143a206009bfb64ff703da32fb30f6176c603daf6c24ce3a28daf26b3945c94dd10f9d76f07ea7a6a2c3e9b710e00ff42da32e08dea
+  languageName: node
+  linkType: hard
+
+"@types/http-proxy@npm:^1.17.8, @types/http-proxy@npm:^1.17.9":
   version: 1.17.11
   resolution: "@types/http-proxy@npm:1.17.11"
   dependencies:
@@ -14581,19 +14590,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http-proxy-middleware@npm:1.1.x":
-  version: 1.1.2
-  resolution: "http-proxy-middleware@npm:1.1.2"
-  dependencies:
-    "@types/http-proxy": "npm:^1.17.5"
-    http-proxy: "npm:^1.18.1"
-    is-glob: "npm:^4.0.1"
-    is-plain-obj: "npm:^3.0.0"
-    micromatch: "npm:^4.0.2"
-  checksum: 10/cd960ebb27dadae6e3895103a26c8393b79c75fa95b2ce8885145ce8ba2b0b109e5bf72da5a8a38d593f7f30f40532c8ee1cefe65f5d6b554b49e340b7e31955
-  languageName: node
-  linkType: hard
-
 "http-proxy-middleware@npm:2.0.7":
   version: 2.0.7
   resolution: "http-proxy-middleware@npm:2.0.7"
@@ -14609,6 +14605,20 @@ __metadata:
     "@types/express":
       optional: true
   checksum: 10/4a51bf612b752ad945701995c1c029e9501c97e7224c0cf3f8bf6d48d172d6a8f2b57c20fec469534fdcac3aa8a6f332224a33c6b0d7f387aa2cfff9b67216fd
+  languageName: node
+  linkType: hard
+
+"http-proxy-middleware@npm:3.0.x":
+  version: 3.0.3
+  resolution: "http-proxy-middleware@npm:3.0.3"
+  dependencies:
+    "@types/http-proxy": "npm:^1.17.15"
+    debug: "npm:^4.3.6"
+    http-proxy: "npm:^1.18.1"
+    is-glob: "npm:^4.0.3"
+    is-plain-object: "npm:^5.0.0"
+    micromatch: "npm:^4.0.8"
+  checksum: 10/32f58c29288ca63e109909fb998bd0f6f50eb15a98dec9487eac07dfc4f09d8507dbfa00b44442d868bafa904bd633c8bbd55686bb13b4d4af4f5c5b3bbca430
   languageName: node
   linkType: hard
 
@@ -15318,6 +15328,13 @@ __metadata:
   dependencies:
     isobject: "npm:^3.0.1"
   checksum: 10/2a401140cfd86cabe25214956ae2cfee6fbd8186809555cd0e84574f88de7b17abacb2e477a6a658fa54c6083ecbda1e6ae404c7720244cd198903848fca70ca
+  languageName: node
+  linkType: hard
+
+"is-plain-object@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "is-plain-object@npm:5.0.0"
+  checksum: 10/e32d27061eef62c0847d303125440a38660517e586f2f3db7c9d179ae5b6674ab0f469d519b2e25c147a1a3bc87156d0d5f4d8821e0ce4a9ee7fe1fcf11ce45c
   languageName: node
   linkType: hard
 
@@ -18175,7 +18192,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micromatch@npm:^4.0.5":
+"micromatch@npm:^4.0.5, micromatch@npm:^4.0.8":
   version: 4.0.8
   resolution: "micromatch@npm:4.0.8"
   dependencies:
@@ -22261,7 +22278,7 @@ __metadata:
     govuk-frontend: "npm:^3.12.0"
     govuk_frontend_toolkit: "npm:^9.0.0"
     helmet: "npm:^3.21.3"
-    http-proxy-middleware: "npm:1.1.x"
+    http-proxy-middleware: "npm:3.0.x"
     isomorphic-fetch: "npm:^3.0.0"
     jasmine-core: "npm:~3.99.0"
     jasmine-marbles: "npm:^0.9.1"
