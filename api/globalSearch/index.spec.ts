@@ -14,7 +14,7 @@ chai.use(sinonChai);
 
 describe('Jurisdiction', () => {
   let sandbox: sinon.SinonSandbox;
-  const fefDataHMCTS: RefDataHMCTSService[] = [
+  const refDataHMCTS: RefDataHMCTSService[] = [
     {
       jurisdiction: 'Immigration and Asylum Chamber',
       service_id: 39,
@@ -190,7 +190,8 @@ describe('Jurisdiction', () => {
   });
 
   it('should return global search services2', async() => {
-    const services = globalSearchServices.generateServices(fefDataHMCTS);
+    console.log ('refDataHMCTS size: ' + refDataHMCTS.length);
+    const services = globalSearchServices.generateServices(refDataHMCTS);
     expect(services).to.deep.equal(serviceList);
   });
 

@@ -27,7 +27,7 @@ Feature:  Hearings: Feature toggles
         When I click tab with label "Hearings" in case details page, to see element with css selector "exui-case-hearings"
         Then I am on hearings tab page
         Then I see hearings table for "Current and upcoming" in hearings tab page
-        When In hearings tab, I click action "View or edit" for hearing "TEST_LISTED" under table "Current and upcoming"
+        When In hearings tab, I click action "View details" for hearing "TEST_LISTED" under table "Current and upcoming"
         Then I validate view hearing page displayed
 
     Scenario:  Hearings in feature toggle mc-hearings-jurisdictions is enabled,  mc-enable-hearings-amendments-service disabled

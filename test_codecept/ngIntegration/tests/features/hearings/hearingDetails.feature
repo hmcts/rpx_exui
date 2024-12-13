@@ -52,7 +52,7 @@ Feature:  Hearings CR84: Hearing View details
             | jsonpath          | value |
             | $.publicCaseName | Mock case public name |
 
-        When In hearings tab, I click action "View or edit" for hearing "<HearingType>" under table "<Table>"
+        When In hearings tab, I click action "View details" for hearing "<HearingType>" under table "<Table>"
 
         Then I validate view hearing page displayed
         Then I validate view hearing page Edit hearing button displayed is "TEST_<EditHearing>"
