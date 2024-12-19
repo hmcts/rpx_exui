@@ -228,7 +228,7 @@
     "karma-sonarqube-unit-reporter": "^0.0.23",
     "karma-spec-reporter": "0.0.36",
     "mocha": "^8.1.1",
-    "mochawesome": "^6.2.1",
+    "mochawesome": "^7.0.0",
     "mochawesome-merge": "^4.3.0",
     "mochawesome-report-generator": "^5.1.0",
     "ngrx-store-freeze": "^0.2.4",
