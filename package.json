@@ -203,7 +203,7 @@
     "axe-html-reporter": "^2.2.3",
     "base-64": "^0.1.0",
     "chai": "^4.3.10",
-    "chai-as-promised": "7.1.2",
+    "chai-as-promised": "8.0.1",
     "codeceptjs": "3.5.6",
     "codeceptjs-cucumber-json-reporter": "^1.0.14",
     "codelyzer": "^5.1.2",
