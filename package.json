@@ -121,7 +121,7 @@
     "exception-formatter": "1.0.7",
     "file-saver": "^2.0.2",
     "form-data": "^2.5.1",
-    "get-port": "^5.1.1",
+    "get-port": "^7.0.0",
     "git-rev-sync": "^3.0.2",
     "global-agent": "^2.1.7",
     "govuk-elements-sass": "^3.1.3",
