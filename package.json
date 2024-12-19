@@ -118,7 +118,7 @@
     "ejs": "^3.1.10",
     "eligrey-classlist.js": "^1.2.20180112",
     "exceljs": "^4.4.0",
-    "exception-formatter": "1.0.7",
+    "exception-formatter": "2.1.2",
     "file-saver": "^2.0.2",
     "form-data": "^2.5.1",
     "get-port": "^5.1.1",
