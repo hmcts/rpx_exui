@@ -262,7 +262,7 @@
     "crypto": false
   },
   "resolutions": {
-    "flat": "~5.0.1",
+    "flat": "~6.0.0",
     "loader-utils": "~2.0.3",
     "minimist": "^1.2.8",
     "typed-rest-client": "^1.8.0",
