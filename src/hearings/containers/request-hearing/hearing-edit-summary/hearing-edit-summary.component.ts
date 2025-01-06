@@ -171,6 +171,57 @@ export class HearingEditSummaryComponent extends RequestHearingPageFlow implemen
     });
   }
 
+  private removeEmpty(object) {
+    for (const item in object) {
+      if (object[item] === null || object[item] === undefined) {
+        delete object[item];
+      }
+    }
+    return object;
+  }
+
+  // The below function acts as a comparitor between 2 objects
+  // It allows for slight variance where Object Keys differ
+  // Allowing for :-
+  // - Different types of empty
+  // - New Keys with new empty values
+  // - Values that are Objects or Arrays to have extra empty values
+  public areObjectsfunctionallyDifferentCheck(object1: any, object2: any): boolean {
+    if (typeof object1 !== typeof object2) {
+      return true;
+    }
+    if (_.isEqual(object1, object2)) {
+      return false;
+    }
+    for (const [key, value] of Object.entries(object1)) {
+      if (typeof value === 'object') {
+        this.removeEmpty(value);
+        this.removeEmpty(object2[key]);
+      }
+      if (Array.isArray(value)) {
+        const valueObject = value;
+        const objectInCompareObject = object2[key];
+
+        valueObject.forEach((element) => {
+          if (Array.isArray(element)) {
+            element.forEach((item) => this.removeEmpty(item));
+          }
+          this.removeEmpty(element);
+        });
+        objectInCompareObject.forEach((element) => {
+          if (Array.isArray(element)) {
+            element.forEach((item) => this.removeEmpty(item));
+          }
+          this.removeEmpty(element);
+        });
+      }
+    }
+    return !_.isEqual(
+      JSON.parse(JSON.stringify(object1, this.replacer)),
+      JSON.parse(JSON.stringify(object2, this.replacer))
+    );
+  }
+
   private hasHearingRequestObjectChanged(): boolean {
     let partyDetailsModels: PartyDetailsModel[] = [];
     let partyDetailsCompareModels: PartyDetailsModel[] = [];
@@ -204,10 +255,7 @@ export class HearingEditSummaryComponent extends RequestHearingPageFlow implemen
       partyDetails: [...partyDetailsCompareModels]
     };
 
-    return !_.isEqual(
-      JSON.parse(JSON.stringify(hearingRequestMainModel, this.replacer)),
-      JSON.parse(JSON.stringify(hearingRequestToCompareMainModel, this.replacer))
-    );
+    return this.areObjectsfunctionallyDifferentCheck(hearingRequestMainModel, hearingRequestToCompareMainModel);
   }
 
   hasHearingRequestPartiesUnavailableDatesChanged(): boolean {
@@ -248,13 +296,13 @@ export class HearingEditSummaryComponent extends RequestHearingPageFlow implemen
     if (key === 'partyName' || key === 'isPaperHearing' || value === null) {
       return undefined;
     }
+
     return value;
   }
 
   private setPropertiesUpdatedAutomatically(): void {
     // Set properties updated on page visit
     this.setPropertiesUpdatedOnPageVisit(this.serviceHearingValuesModel);
-
     this.hearingRequestMainModel = {
       ...this.hearingRequestMainModel,
       caseDetails: {
@@ -274,7 +322,6 @@ export class HearingEditSummaryComponent extends RequestHearingPageFlow implemen
         ...this.updatePartyDetails(this.serviceHearingValuesModel.parties)
       ]
     };
-
     // Set banner
     this.setBanner();
 

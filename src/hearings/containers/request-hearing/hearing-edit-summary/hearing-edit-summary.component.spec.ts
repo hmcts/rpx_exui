@@ -1451,6 +1451,93 @@ describe('HearingEditSummaryComponent', () => {
     expect(isDifference).toEqual(true);
   });
 
+  it('should return false from areObjectsfunctionallyDifferentCheck, when objects are the same', () => {
+    const obj1 = { a: 1, b: 2, c: 3 };
+    const obj2 = { a: 1, b: 2, c: 3 };
+    const result = component.areObjectsfunctionallyDifferentCheck(obj1, obj2);
+    expect(result).toBe(false);
+  });
+
+  it('should return true from areObjectsfunctionallyDifferentCheck, when objects are the same length but with value changes', () => {
+    const obj1 = { a: 1, b: 2 };
+    const obj2 = { a: 1, b: 3 };
+    const result = component.areObjectsfunctionallyDifferentCheck(obj1, obj2);
+    expect(result).toBe(true);
+  });
+
+  it('should return false from areObjectsfunctionallyDifferentCheck, when object1 has new keys not in object2 but no values', () => {
+    const obj1 = { a: 1, b: null };
+    const obj2 = { a: 1 };
+    const result = component.areObjectsfunctionallyDifferentCheck(obj1, obj2);
+    expect(result).toBe(false);
+  });
+
+  it('should handle nested objects correctly in the areObjectsfunctionallyDifferentCheck', () => {
+    const obj1 = { a: { x: 1, y: 2 }, b: 3 };
+    const obj2 = { a: { x: 1, y: 2 }, b: 3 };
+    const result = component.areObjectsfunctionallyDifferentCheck(obj1, obj2);
+    expect(result).toBe(false);
+  });
+
+  it('should return true from areObjectsfunctionallyDifferentCheck, for arrays with new values', () => {
+    const obj1 = { a: [1, 2, 3] };
+    const obj2 = { a: [1, 2] };
+    const result = component.areObjectsfunctionallyDifferentCheck(obj1, obj2);
+    expect(result).toBe(true);
+  });
+
+  it('should return false form areObjectsfunctionallyDifferentCheck, when arrays contain empty values', () => {
+    const obj1 = { a: [null, 1, 2] };
+    const obj2 = { a: [null, 1, 2] };
+    const result = component.areObjectsfunctionallyDifferentCheck(obj1, obj2);
+    expect(result).toBe(false);
+  });
+
+  it('should handle objects with deeply nested values in the areObjectsfunctionallyDifferentCheck', () => {
+    const obj1 = { a: { b: { c: 1 } } };
+    const obj2 = { a: { b: { c: 1 } } };
+    const result = component.areObjectsfunctionallyDifferentCheck(obj1, obj2);
+    expect(result).toBe(false);
+  });
+
+  it('should return true for deeply nested unequal objects in the areObjectsfunctionallyDifferentCheck', () => {
+    const obj1 = { a: { b: { c: 1 } } };
+    const obj2 = { a: { b: { c: 2 } } };
+    const result = component.areObjectsfunctionallyDifferentCheck(obj1, obj2);
+    expect(result).toBe(true);
+  });
+
+  it('should return false for deeply nested unequal length objects with array and null values in the areObjectsfunctionallyDifferentCheck', () => {
+    const obj1 = { a: [{ b: 1, c: null, d: null }], b: null };
+    const obj2 = { a: [{ b: 1 }] };
+    const result = component.areObjectsfunctionallyDifferentCheck(obj1, obj2);
+    expect(result).toBe(false);
+  });
+
+  it('should return true for nested differencee in the areObjectsfunctionallyDifferentCheck', () => {
+    const obj1 = { a: [{ b: 1 }, { c: 1 }] };
+    const obj2 = { a: [{ b: 1 }] };
+    const result = component.areObjectsfunctionallyDifferentCheck(obj1, obj2);
+    expect(result).toBe(true);
+  });
+
+  it('should return true for nested differencee in the areObjectsfunctionallyDifferentCheck', () => {
+    const obj1 = {
+      a: { a1: 'test 1', a2: 'test 2', a3: ['a string', 'another string', null] },
+      b: { b1: 'testing 1', b2: 'testing 2' },
+      c: { c1: 'just this' },
+      d: [{ d1: null, d2: 'test string', d3: undefined, d4: 'another test string' }]
+    };
+    const obj2 = {
+      a: { a1: 'test 1', a2: 'test 2', a3: ['a string', 'another string'] },
+      b: { b1: 'testing 1', b2: 'testing 2' },
+      c: { c1: 'just this' },
+      d: [{ d4: 'another test string', d2: 'test string' }]
+    };
+    const result = component.areObjectsfunctionallyDifferentCheck(obj1, obj2);
+    expect(result).toBe(true);
+  });
+
   function createSHVEntry() {
     const partiesSHV: PartyDetailsModel[] = [
       {
