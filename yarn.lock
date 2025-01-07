@@ -3455,12 +3455,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/ccd-case-ui-toolkit@npm:7.1.23":
-  version: 7.1.23
-  resolution: "@hmcts/ccd-case-ui-toolkit@npm:7.1.23"
+"@hmcts/ccd-case-ui-toolkit@npm:7.1.23-exui-2667-rc1":
+  version: 7.1.23-exui-2667-rc1
+  resolution: "@hmcts/ccd-case-ui-toolkit@npm:7.1.23-exui-2667-rc1"
   dependencies:
     tslib: "npm:^2.3.0"
-  checksum: 10/d638eaee2fb7422fa607cde761280dbfba4f777f42fd1c0e8616e9d04deba354b15f23955b79fd275d9d21e31fc6d065046071e8a11e8a7da1c23fd35401fb31
+  checksum: 10/de6f9345981478600455966fdb525dce3ce169ff1b7f5bc138411503941e720466e4d9ebd303e9daa02b735d3856367a40124afa1bb723bff590fa71bf07a2ad
   languageName: node
   linkType: hard
 
@@ -3483,13 +3483,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/media-viewer@npm:4.0.9":
-  version: 4.0.9
-  resolution: "@hmcts/media-viewer@npm:4.0.9"
+"@hmcts/media-viewer@npm:4.0.9-exui-2667-rc1":
+  version: 4.0.9-exui-2667-rc1
+  resolution: "@hmcts/media-viewer@npm:4.0.9-exui-2667-rc1"
   dependencies:
     "@swimlane/ngx-datatable": "npm:^20.0.0"
     mutable-div: "npm:^2.0.0"
-    pdfjs-dist: "npm:^4.8.69"
+    pdfjs-dist: "npm:^4.10.38"
     socket.io-client: "npm:^4.8.0"
     tslib: "npm:^2.3.0"
     uuid: "npm:^11.0.3"
@@ -3504,7 +3504,7 @@ __metadata:
     "@ngrx/router-store": ^17.0.0
     "@ngrx/store": ^17.0.0
     "@ngrx/store-devtools": ^17.0.0
-  checksum: 10/2366868102b9b06f15c1dfc96ffcd0cfd72e51c795c492566d3e438e8b5a80408b5e87586b93fe5331f308eddc5cfab88ac8b8bd9ed69da965ea456557ba4152
+  checksum: 10/b7655f049ded9c644d46683994e3507ed93942228b743855a20e3d34f93a85665b5501284b9f80c9a925334b08fcea7f12045f984a0eb6532cca2ef93fdfdb33
   languageName: node
   linkType: hard
 
@@ -5008,7 +5008,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@napi-rs/canvas@npm:^0.1.64":
+"@napi-rs/canvas@npm:^0.1.65":
   version: 0.1.65
   resolution: "@napi-rs/canvas@npm:0.1.65"
   dependencies:
@@ -20573,15 +20573,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pdfjs-dist@npm:^4.8.69":
-  version: 4.9.124
-  resolution: "pdfjs-dist@npm:4.9.124"
+"pdfjs-dist@npm:^4.10.38":
+  version: 4.10.38
+  resolution: "pdfjs-dist@npm:4.10.38"
   dependencies:
-    "@napi-rs/canvas": "npm:^0.1.64"
+    "@napi-rs/canvas": "npm:^0.1.65"
   dependenciesMeta:
     "@napi-rs/canvas":
       optional: true
-  checksum: 10/f7a894319eff7df2d266f75c14573430cbcdba136888dd5f662bac046d20b8e73cf9e77b4aefa19dd0ff00a90142e3e027e454f16ba99013fed1ce188dc45278
+  checksum: 10/2fee929540863a32a368c02fe445550ce6f0992a08ccfaa05f2e2e185e8ac98b43eda6f88c94c366b86fe99149478eeff7ebb57793270b030c7af54169a4a54c
   languageName: node
   linkType: hard
 
@@ -22271,10 +22271,10 @@ __metadata:
     "@cucumber/cucumber": "npm:^10.8.0"
     "@edium/fsm": "npm:^2.1.2"
     "@faker-js/faker": "npm:^9.2.0"
-    "@hmcts/ccd-case-ui-toolkit": "npm:7.1.23"
+    "@hmcts/ccd-case-ui-toolkit": "npm:7.1.23-exui-2667-rc1"
     "@hmcts/ccpay-web-component": "npm:6.2.1"
     "@hmcts/frontend": "npm:0.0.50-alpha"
-    "@hmcts/media-viewer": "npm:4.0.9"
+    "@hmcts/media-viewer": "npm:4.0.9-exui-2667-rc1"
     "@hmcts/nodejs-healthcheck": "npm:1.7.0"
     "@hmcts/properties-volume": "npm:^0.0.13"
     "@hmcts/rpx-xui-common-lib": "npm:2.0.30"
