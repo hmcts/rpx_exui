@@ -77,10 +77,11 @@
     "waWorkflowApi": "http://wa-workflow-api-prod.service.core-compute-prod.internal",
     "idam": {
       "idamApiUrl": "https://idam-api.platform.hmcts.net",
-      "idamClientID": "xuiwebapp",
+      "idamClientID": "xuiwebapp_passport_0_7",
       "idamLoginUrl": "https://hmcts-access.service.gov.uk",
       "indexUrl": "/",
       "oauthCallbackUrl": "oauth2/callback",
+      "serviceOverride": false,
       "iss": "https://forgerock-am.service.core-compute-idam-prod.internal:8443/openam/oauth2/hmcts"
     },
     "location_api": "http://rd-location-ref-api-prod.service.core-compute-prod.internal",

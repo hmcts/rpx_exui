@@ -38,7 +38,7 @@
         "em_anno_api": "http://localhost:8080",
         "idam": {
             "idamApiUrl": "https://idam-api.aat.platform.hmcts.net",
-            "idamClientID": "xuiwebapp",
+            "idamClientID": "xuiwebapp_passport_0_7",
             "idamLoginUrl": "https://idam-web-public.aat.platform.hmcts.net",
             "indexUrl": "/",
             "oauthCallbackUrl": "/oauth2/callback",

@@ -49,7 +49,7 @@
   "urls": {
     "idam": {
       "idamApiUrl": "https://idam-api.ithc.platform.hmcts.net",
-      "idamClientID": "xuiwebapp",
+      "idamClientID": "xuiwebapp_passport_0_7",
       "idamLoginUrl": "https://idam-web-public.ithc.platform.hmcts.net",
       "indexUrl": "/",
       "oauthCallbackUrl": "oauth2/callback"
