@@ -154,7 +154,7 @@ class CaseManager {
     var nextStepSelectoption = null;
     if (stepName){
       nextStepSelectoption = element(by.xpath('//*[@id=\'next-step\']//option[text() = \'' + stepName + '\']'));
-    }else{
+    } else {
       nextStepSelectoption = element(by.xpath('//*[@id=\'next-step\']//option[2]'));
     }
     await BrowserWaits.waitForElement(nextStepSelectoption);

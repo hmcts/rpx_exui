@@ -1,22 +1,22 @@
 <xuilib-loading-spinner *ngIf="showSpinner"></xuilib-loading-spinner>
-<a class="govuk-back-link" href="javascript:void(0)" (click)="onBack()">Back</a>
-<xuilib-hmcts-error-summary [errorMessages]="serverErrors" [header]="'There is a problem'" *ngIf="error$ | async"></xuilib-hmcts-error-summary>
+<a class="govuk-back-link" href="javascript:void(0)" (click)="onBack()">{{ 'Back' | rpxTranslate }}</a>
+<xuilib-hmcts-error-summary [errorMessages]="serverErrors" [header]="'There is a problem' | rpxTranslate" *ngIf="error$ | async"></xuilib-hmcts-error-summary>
 <exui-linked-hearings-case-title [caseId]="caseId" [caseName]="caseName" mode="mode"></exui-linked-hearings-case-title>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">{{isManageLink && !isManageJourneyFinalPage && linkedCaseHearingsResults.length > 0 ? 'Linked hearings' :'Check your answers'}}</h1>
+    <h1 class="govuk-heading-l">{{isManageLink && !isManageJourneyFinalPage && linkedCaseHearingsResults.length > 0 ? 'Linked hearings' :'Check your answers' | rpxTranslate }}</h1>
     <div *ngIf="!isManageLink">
-      <h2 class="govuk-heading-m">Linked hearings</h2>
+      <h2 class="govuk-heading-m">{{ 'Linked hearings' | rpxTranslate }}</h2>
       <span class="govuk-body align-right">
-        <a href="javascript:void(0)" class="govuk-link" id="hearing-link-change" (click)="onChange()">Change</a>
+        <a href="javascript:void(0)" class="govuk-link" id="hearing-link-change" (click)="onChange()">{{ 'Change' | rpxTranslate }}</a>
       </span>
     </div>
     <table class="govuk-table" *ngIf="linkedCaseHearingsResults.length > 0">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header">Case name and number</th>
-          <th scope="col" class="govuk-table__header">Stage of hearing</th>
-          <th scope="col" class="govuk-table__header" *ngIf="showPositionColumn">Position</th>
+          <th scope="col" class="govuk-table__header">{{ 'Case name and number' | rpxTranslate }}</th>
+          <th scope="col" class="govuk-table__header">{{ 'Stage of hearing' | rpxTranslate }}</th>
+          <th scope="col" class="govuk-table__header" *ngIf="showPositionColumn">{{ 'Position' | rpxTranslate }}</th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
@@ -32,19 +32,19 @@
       </tbody>
     </table>
     <div class="no-linked-hearings" *ngIf="isManageLink && linkedCaseHearingsResults.length === 0">
-      <h2 class="govuk-heading-m">Linked hearings</h2>
+      <h2 class="govuk-heading-m">{{ 'Linked hearings' | rpxTranslate }}</h2>
       <br>
-      No linked hearings.
+      {{ 'No linked hearings.' | rpxTranslate }}
     </div>
   </div>
 </div>
 <br>
 <div class="govuk-grid-row linked-hearings-button">
   <div class="govuk-button-group">
-    <button *ngIf="!isManageLink" class="govuk-button primary" data-module="govuk-button" (click)="onLinkHearings()">Link hearings</button>
-    <button *ngIf="isManageJourneyFinalPage && linkedCaseHearingsResults.length > 0" class="govuk-button primary" data-module="govuk-button" (click)="onManageLinkHearings()">Link hearings</button>
-    <button *ngIf="isManageLink && !isManageJourneyFinalPage && linkedCaseHearingsResults.length > 0" class="govuk-button primary" data-module="govuk-button" (click)="onEdit()">Edit</button>
-    <button *ngIf="isManageJourneyFinalPage && linkedCaseHearingsResults.length === 0" class="govuk-button primary" data-module="govuk-button" (click)="onUnlinkHearings()">Unlink hearings</button>
-    <a href="javascript:void(0)" class="link-cancel" (click)="onCancel()">{{cancelButtonText}}</a>
+    <button *ngIf="!isManageLink" class="govuk-button primary" data-module="govuk-button" (click)="onLinkHearings()">{{ 'Link hearings' | rpxTranslate }}</button>
+    <button *ngIf="isManageJourneyFinalPage && linkedCaseHearingsResults.length > 0" class="govuk-button primary" data-module="govuk-button" (click)="onManageLinkHearings()">{{ 'Link hearings' | rpxTranslate }}</button>
+    <button *ngIf="isManageLink && !isManageJourneyFinalPage && linkedCaseHearingsResults.length > 0" class="govuk-button primary" data-module="govuk-button" (click)="onEdit()">{{ 'Edit' | rpxTranslate }}</button>
+    <button *ngIf="isManageJourneyFinalPage && linkedCaseHearingsResults.length === 0" class="govuk-button primary" data-module="govuk-button" (click)="onUnlinkHearings()">{{ 'Unlink hearings' | rpxTranslate }}</button>
+    <a href="javascript:void(0)" class="link-cancel" (click)="onCancel()">{{cancelButtonText | rpxTranslate}}</a>
   </div>
 </div>

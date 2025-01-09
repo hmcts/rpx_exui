@@ -1,23 +1,23 @@
-<xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem'">
+<xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem' | rpxTranslate">
 </xuilib-hmcts-error-summary>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <exui-hearing-parties-title></exui-hearing-parties-title>
-    <h1 class="govuk-heading-l">Do you want a specific judge?</h1>
+    <h1 class="govuk-heading-l">{{ specificJudgeQuestion | rpxTranslate }}</h1>
     <form class="form" [formGroup]="hearingJudgeForm">
       <div class="govuk-form-group govuk-!-margin-top-5"
         [ngClass]="{'govuk-form-group--error': !!specificJudgeSelectionError}">
         <fieldset class="govuk-fieldset" id="specific-judge-selection">
           <span class="govuk-error-message" *ngIf="specificJudgeSelectionError">
-            <span class="govuk-visually-hidden">Error:</span> {{specificJudgeSelectionError}}
+            <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span> {{specificJudgeSelectionError | rpxTranslate }}
           </span>
           <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="specificJudgeName" name="specificJudge"
                 (change)="showSpecificJudge('Yes');" formControlName="specificJudge" type="radio" value="Yes"
                 data-aria-controls="conditional-judge">
-              <label class="govuk-label govuk-radios__label" for="specificJudgeName">Yes</label>
+              <label class="govuk-label govuk-radios__label" for="specificJudgeName">{{ specificJudgeQuestion | rpxTranslate : null : 'Yes' }}</label>
             </div>
             <div class="govuk-radios__conditional"
               [ngClass]="{'govuk-radios__conditional--hidden': specificJudgeSelection !=='Yes'}">
@@ -25,10 +25,10 @@
                 [ngClass]="{'govuk-form-group--error': !!selectJudgeNameError}">
                 <fieldset class="govuk-fieldset" aria-describedby="sub-title-hint">
                   <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                    <h1 class="govuk-fieldset__heading">Name of the judge</h1>
+                    <h1 class="govuk-fieldset__heading">{{ 'Name of the judge' | rpxTranslate }}</h1>
                   </legend>
                   <span id="validation-error" class="govuk-error-message" *ngIf="selectJudgeNameError">
-                    <span class="govuk-visually-hidden">Error:</span>
+                    <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span>
                     {{selectJudgeNameError}}
                   </span>
                   <xuilib-search-judicials id="judicialSearch"
@@ -43,17 +43,17 @@
               <input class="govuk-radios__input" id="noSpecificJudge" name="specificJudge"
                 (change)="showSpecificJudge('No');" formControlName="specificJudge" type="radio" value="No"
                 data-aria-controls="conditional-judge-type">
-              <label class="govuk-label govuk-radios__label" for="noSpecificJudge">No</label>
+              <label class="govuk-label govuk-radios__label" for="noSpecificJudge">{{ specificJudgeQuestion | rpxTranslate : null : 'No' }}</label>
             </div>
             <div class="govuk-radios__conditional"
               [ngClass]="{'govuk-radios__conditional--hidden': specificJudgeSelection !=='No'}">
               <div class="govuk-form-group" [ngClass]="{'govuk-form-group--error': !!selectJudgeTypesError}">
                 <fieldset class="govuk-fieldset">
                   <span class="govuk-error-message" *ngIf="selectJudgeTypesError">
-                    <span class="govuk-visually-hidden">Error:</span> {{selectJudgeTypesError}}
+                    <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span> {{selectJudgeTypesError | rpxTranslate }}
                   </span>
                   <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                    <h1 class="govuk-fieldset__heading">Select all judge types that apply</h1>
+                    <h1 class="govuk-fieldset__heading">{{ 'Select all judge types that apply' | rpxTranslate }}</h1>
                   </legend>
                   <div class="govuk-form-group" id="judgeTypes">
                     <fieldset class="govuk-fieldset">

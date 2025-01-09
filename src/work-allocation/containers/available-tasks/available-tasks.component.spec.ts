@@ -20,7 +20,6 @@ import { TaskActionIds, TaskContext } from '../../enums';
 import * as dtos from '../../models/dtos';
 import { InvokedTaskAction, Task } from '../../models/tasks';
 import { CaseworkerDataService, LocationDataService, WASupportedJurisdictionsService, WorkAllocationTaskService } from '../../services';
-import { CheckReleaseVersionService } from '../../services/check-release-version.service';
 import { MockRouter, getMockLocations, getMockTasks } from '../../tests/utils.spec';
 import { TaskListComponent } from '../task-list/task-list.component';
 import { AvailableTasksComponent } from './available-tasks.component';
@@ -61,19 +60,13 @@ describe('AvailableTasksComponent', () => {
   const mockRouter = new MockRouter();
   const mockAlertService = jasmine.createSpyObj('mockAlertService', ['destroy']);
   const mockFilterService = jasmine.createSpyObj('mockFilterService', ['getStream']);
-  const mockCaseworkerDataService = jasmine.createSpyObj('mockCaseworkerDataService', ['getCaseworkersForServices']);
+  const mockCaseworkerDataService = jasmine.createSpyObj('mockCaseworkerDataService', ['getUsersFromServices']);
   const mockSessionStorageService = jasmine.createSpyObj('mockSessionStorageService', ['getItem', 'setItem']);
   const mockFeatureToggleService = jasmine.createSpyObj('mockFeatureToggleService', ['isEnabled', 'getValue']);
   const mockLoadingService = jasmine.createSpyObj('mockLoadingService', ['register', 'unregister']);
   const mockWASupportedJurisdictionsService = jasmine.createSpyObj('mockWASupportedJurisdictionsService', ['getWASupportedJurisdictions']);
   const mockRoleService = jasmine.createSpyObj('mockRolesService', ['getCaseRolesUserDetails']);
-  const mockCheckReleaseVersionService = {
-    isRelease4: () => {
-      return {
-        subscribe: () => true
-      };
-    }
-  };
+
   let storeMock: jasmine.SpyObj<Store<fromActions.State>>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let store: Store<fromActions.State>;
@@ -107,8 +100,7 @@ describe('AvailableTasksComponent', () => {
         { provide: WASupportedJurisdictionsService, useValue: mockWASupportedJurisdictionsService },
         { provide: AllocateRoleService, useValue: mockRoleService },
         { provide: Store, useValue: storeMock },
-        { provide: RpxTranslationService, useFactory: rpxTranslationServiceStub },
-        { provide: CheckReleaseVersionService, useValue: mockCheckReleaseVersionService }
+        { provide: RpxTranslationService, useFactory: rpxTranslationServiceStub }
       ]
     }).compileComponents();
     fixture = TestBed.createComponent(WrapperComponent);
@@ -133,7 +125,7 @@ describe('AvailableTasksComponent', () => {
         }
       ]
     };
-    mockCaseworkerDataService.getCaseworkersForServices.and.returnValue(of([]));
+    mockCaseworkerDataService.getUsersFromServices.and.returnValue(of([]));
     mockFilterService.getStream.and.returnValue(of(filterFields));
     mockWASupportedJurisdictionsService.getWASupportedJurisdictions.and.returnValue(of(['Service1', 'Service2']));
     const tasks: Task[] = getMockTasks();

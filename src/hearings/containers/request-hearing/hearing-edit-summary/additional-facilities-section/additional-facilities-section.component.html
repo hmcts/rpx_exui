@@ -1,0 +1,44 @@
+<h2 class="govuk-heading-m">
+  Additional facilities
+  <exui-amendment-label *ngIf="pageTitleDisplayLabel"
+    [displayLabel]="pageTitleDisplayLabel">
+  </exui-amendment-label>
+</h2>
+<div class="govuk-summary-list govuk-!-margin-bottom-9">
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Will additional security be required?
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ additionalFacilitiesRequiredText }}
+      <exui-amendment-label *ngIf="caseAdditionalSecurityFlagChanged" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="additionalSecurityRequired"
+        class="govuk-link"
+        href="javascript:void(0)"
+        (click)="onChange('additionalSecurityRequired')">Change</a>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Select any additional facilities required
+    </div>
+    <div class="govuk-summary-list__value">
+      <ul>
+        <li *ngFor="let additionalFacility of additionalFacilities">
+          {{ additionalFacility }}
+          <exui-amendment-label *ngIf="showAmendedForFacilitiesRequired(additionalFacility)" [displayLabel]="amendmentLabelEnum.AMENDED">
+          </exui-amendment-label>
+        </li>
+      </ul>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="additionalFacilitiesRequired"
+        class="govuk-link"
+        href="javascript:void(0)"
+        (click)="onChange('additionalFacilitiesRequired')">Change</a>
+    </div>
+  </div>
+</div>

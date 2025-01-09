@@ -3,6 +3,7 @@ import { WindowService } from '@hmcts/ccd-case-ui-toolkit';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Observable } from 'rxjs';
 import { SessionStorageService } from '../../services/session-storage/session-storage.service';
+import { Title } from '@angular/platform-browser';
 
 const MEDIA_VIEWER = 'media-viewer-info';
 
@@ -28,7 +29,8 @@ export class MediaViewerWrapperComponent implements OnInit {
   public constructor(
         private readonly windowService: WindowService,
         private readonly featureToggleService: FeatureToggleService,
-        private readonly sessionStorageService: SessionStorageService
+        private readonly sessionStorageService: SessionStorageService,
+        private readonly titleService: Title
   ) {}
 
   public async ngOnInit() {
@@ -62,6 +64,8 @@ export class MediaViewerWrapperComponent implements OnInit {
     this.icpJurisdictions$ = this.featureToggleService.getValue('icp-jurisdictions', []);
     this.icpEnabled$ = this.featureToggleService.isEnabled('icp-enabled');
     this.enableRedactSearch$ = this.featureToggleService.isEnabled('enable-redact-search');
+
+    this.titleService.setTitle(this.mediaFilename + ' - View Document');
   }
 
   /**

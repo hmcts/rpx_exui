@@ -1,8 +1,8 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NavigationEnd, Router } from '@angular/router';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store, StoreModule } from '@ngrx/store';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { AppConstants } from '../../app.constants';
 import { ApplicationThemeLogo } from '../../enums';
@@ -13,7 +13,8 @@ import { AppHeaderComponent } from './app-header.component';
 const storeMock = {
   pipe: () => of([]),
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  dispatch: () => {}
+  dispatch: () => {},
+  select: () => of(null) // Mocking select method
 };
 
 const loggerServiceMock = jasmine.createSpyObj('loggerService', ['error']);
@@ -29,9 +30,9 @@ describe('AppHeaderComponent', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let store: Store<fromActions.State>;
   const subscriptionMock: Subscription = new Subscription();
-  const stateStoreMock: Store<fromActions.State> = new Store<fromActions.State>(null, null, null);
   const eventsSub = new BehaviorSubject<any>(null);
   const featureToggleServiceMock = jasmine.createSpyObj('FeatureToggleService', ['getValue']);
+  let stateStoreMock: Store<fromActions.State>;
 
   beforeEach(async () => {
     dispatchSpy = spyOn(storeMock, 'dispatch');
@@ -39,12 +40,12 @@ describe('AppHeaderComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot({})
+        StoreModule.forRoot({}),
+        HttpClientTestingModule
       ],
       declarations: [
         AppHeaderComponent
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         {
           provide: Store,
@@ -65,13 +66,22 @@ describe('AppHeaderComponent', () => {
           provide: LoggerService,
           useValue: loggerServiceMock
         },
+        {
+          provide: Window,
+          useValue: window
+        },
         AppHeaderComponent
       ]
     }).compileComponents();
 
     store = TestBed.inject(Store);
-    featureToggleServiceSpy = TestBed.inject(FeatureToggleService) as jasmine.SpyObj<FeatureToggleService>;
 
+    // Reset spies
+    dispatchSpy.calls.reset();
+    subscribeSpy.calls.reset();
+
+    featureToggleServiceSpy = TestBed.inject(FeatureToggleService) as jasmine.SpyObj<FeatureToggleService>;
+    stateStoreMock = TestBed.inject(Store);
     featureToggleServiceSpy.getValue.and.returnValue(of(AppConstants.DEFAULT_MENU_ITEMS));
     fixture = TestBed.createComponent(AppHeaderComponent);
     component = fixture.componentInstance;
@@ -92,41 +102,34 @@ describe('AppHeaderComponent', () => {
 
   describe('setAppHeaderProperties()', () => {
     it('should take a theme and update the app header properties.', () => {
-      const defaultTheme = AppConstants.DEFAULT_USER_THEME;
-      const menuItems = AppConstants.DEFAULT_MENU_ITEMS;
+      component.userRoles = ['testrole'];
+      component.setApplicationThemeForUser();
 
-      component.setAppHeaderProperties(defaultTheme, menuItems);
-
-      expect(component.appHeaderTitle).toBe(AppConstants.DEFAULT_USER_THEME.appTitle);
+      expect(component.appHeaderTitle).toEqual(AppConstants.DEFAULT_USER_THEME.appTitle);
       expect(component.navItems).toEqual(AppConstants.DEFAULT_MENU_ITEMS);
       expect(component.backgroundColor).toBe(AppConstants.DEFAULT_USER_THEME.backgroundColor);
       expect(component.logo).toBe(AppConstants.DEFAULT_USER_THEME.logo);
       expect(component.logoIsUsed).toBe(AppConstants.DEFAULT_USER_THEME.logo !== ApplicationThemeLogo.NONE);
     });
 
+    it('should take a theme and update the app header properties with role judge.', () => {
+      component.userRoles = ['judge'];
+      component.setApplicationThemeForUser();
+
+      expect(component.appHeaderTitle).toEqual({ name: 'Judicial Case Manager', url: '/' });
+      expect(component.backgroundColor).toBe('#8d0f0e');
+      expect(component.logo).toBe('judicial');
+      expect(component.logoIsUsed).toBe(true);
+    });
+
     it('should set app header content', async () => {
-      const themeSpy = spyOn(component, 'getApplicationThemeForUser').and.returnValue(of(AppConstants.DEFAULT_USER_THEME));
+      const themeSpy = spyOn(component, 'setApplicationThemeForUser').and.returnValue();
 
       const userDetails = {
         userInfo: ['pui-organisation-manager', 'caseworker-publiclaw', 'caseworker-divorce-financialremedy-solicitor', 'caseworker']
       };
       component.setHeaderContent(userDetails);
       expect(themeSpy).toHaveBeenCalled();
-    });
-
-    it('should call userThems on getApplicationThemeForUser', () => {
-      const userThemeSpy = spyOn(component, 'getUsersTheme').and.callThrough();
-
-      component.getApplicationThemeForUser();
-      expect(userThemeSpy).toHaveBeenCalled();
-    });
-
-    it('should call usersTheme on getApplicationThemeForUser with no roles', () => {
-      const userThemeSpy = spyOn(component, 'getUsersTheme').and.callThrough();
-
-      component.getApplicationThemeForUser();
-      expect(userThemeSpy).toHaveBeenCalled();
-      expect(component.userNav.items).toEqual([]);
     });
 
     it('should update theme app header properties.', () => {
@@ -136,10 +139,10 @@ describe('AppHeaderComponent', () => {
     });
 
     it('should update navItems app header properties.', () => {
-      const defaultTheme = AppConstants.DEFAULT_USER_THEME;
-      component.setAppHeaderTheme(defaultTheme);
+      component.userRoles = ['testrole'];
+      component.setApplicationThemeForUser();
 
-      expect(component.appHeaderTitle).toBe(AppConstants.DEFAULT_USER_THEME.appTitle);
+      expect(component.appHeaderTitle).toEqual(AppConstants.DEFAULT_USER_THEME.appTitle);
       expect(component.backgroundColor).toBe(AppConstants.DEFAULT_USER_THEME.backgroundColor);
       expect(component.logo).toBe(AppConstants.DEFAULT_USER_THEME.logo);
       expect(component.logoIsUsed).toBe(AppConstants.DEFAULT_USER_THEME.logo !== ApplicationThemeLogo.NONE);

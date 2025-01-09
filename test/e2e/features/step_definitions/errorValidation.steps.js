@@ -1,7 +1,7 @@
 
 const CucumberReportLogger = require('../../support/reportLogger');
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const ArrayUtil = require('../../utils/ArrayUtil');
 const BrowserWaits = require('../../support/customWaits');
 const SoftAssert = require('../../../ngIntegration/util/softAssert');
@@ -10,7 +10,7 @@ const MessageBanner = require('../pageObjects/messageBanner');
 const exuiErrorMessage = require('../pageObjects/common/exuiErrorMessage');
 const headerPage = require('../pageObjects/headerPage');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   const messageBanner = new MessageBanner($('exui-root'));
   Then('I see error message of type {string} displayed with message {string}', async function(errorType, errorMessage){
     const errorTypePage = errorType.toLowerCase();
@@ -47,5 +47,4 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
       }
     });
   });
-});
 

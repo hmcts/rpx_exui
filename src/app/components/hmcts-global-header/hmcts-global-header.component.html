@@ -1,5 +1,5 @@
-<div class="hmcts-header transparent-background">
-  <div class="hmcts-header__container" [ngClass]="{ 'set-min-height': items?.length === 0}">
+<div class="hmcts-header">
+  <div class="hmcts-header__container">
     <ng-container [ngSwitch]="logo">
 
       <!-- Logo for Judicial Users -->
@@ -33,9 +33,17 @@
           {{headerTitle?.name | rpxTranslate}}
         </a>
       </ng-container>
-
       <!-- Logo for Users (Default) -->
       <ng-container *ngSwitchDefault>
+        <div *ngIf="!headerTitle?.name" class="govuk-header__logo">
+          <a href="#" class="govuk-header__link govuk-header__link--homepage">
+            <span class="govuk-header__logotype">
+              <span class="govuk-header__logotype-text">
+                MyHMCTS
+              </span>
+            </span>
+          </a>
+        </div>
         <div class="hmcts-header__logo">
           <a class="hmcts-header__link" [routerLink]="'/'"
              [attr.aria-label]="headerTitle?.name | rpxTranslate">
@@ -48,9 +56,9 @@
 
     <!-- HMCTS header navigation items displayed in top right-hand corner (currently, just one: "Sign out") -->
     <div class="hmcts-header__content">
-      <nav class="hmcts-header__navigation" attr.aria-label="{{navigation.label | rpxTranslate}}">
+      <nav class="hmcts-header__navigation" attr.aria-label="{{navigation?.label | rpxTranslate}}">
         <ul class="hmcts-header__navigation-list">
-          <li *ngFor="let item of navigation.items; let i = index" class="hmcts-header__navigation-item">
+          <li *ngFor="let item of navigation?.items; let i = index" class="hmcts-header__navigation-item">
             <a class="hmcts-header__navigation-link" (click)="onEmitEvent(i)" *ngIf="userValue"
                [routerLink]="">
               {{item.text | rpxTranslate}}
@@ -69,7 +77,7 @@
       <nav class="hmcts-primary-navigation transparent-background" aria-label="Primary navigation">
         <ul class="hmcts-primary-navigation__list">
           <li class="hmcts-primary-navigation__item" *ngFor="let item of (leftItems | async)">
-            <a class="hmcts-primary-navigation__link" (click)="onEmitSubMenu(item)" [attr.aria-current]="item.active ? true : null" [routerLink]="item.href">
+            <a class="hmcts-primary-navigation__link" (click)="onEmitSubMenu(item)" [attr.aria-current]="item?.active ? true : null" [routerLink]="item?.href">
               {{item.text | rpxTranslate}}
             </a>
           </li>

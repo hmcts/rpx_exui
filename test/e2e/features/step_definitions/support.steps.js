@@ -1,12 +1,12 @@
 
 const BrowserWaits = require('../../support/customWaits');
 const ArrayUtil = require('../../utils/ArrayUtil');
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const { browser } = require('protractor');
 const BrowserLogs = require('../../support/browserLogs');
 
 const cucumberReporter = require('../../support/reportLogger');
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   Given('I switch to new window opened', async function(){
     let retryCounter = 1;
     await BrowserWaits.retryWithActionCallback(async () => {
@@ -54,4 +54,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
     const unKnownWindowHandles = await ArrayUtil.filter(allWindowHandles, async (handle) => !knownWindowHandles.includes(handle));
     return unKnownWindowHandles;
   }
-});

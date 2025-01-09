@@ -2,9 +2,9 @@
 var CaseListPage = require('../pageObjects/CaseListPage');
 const CucumberReportLogger = require('../../support/reportLogger');
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   Given('I update object values in reference {string}', async function (objectReference, datatable){
     const objectAtReference = global.scenarioData[objectReference];
     if (!objectAtReference){
@@ -17,4 +17,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
       objectAtReference[rowKey] = rowhash[rowKey];
     }
   });
-});

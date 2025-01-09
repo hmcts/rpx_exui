@@ -13,7 +13,8 @@ describe('Jurisdiction Service', () => {
       ],
       providers: [
         JurisdictionService
-      ]
+      ],
+      teardown: { destroyAfterEach: false }
     });
 
     httpClientGetSpy = jasmine.createSpyObj('HttpClient', ['get']);

@@ -126,6 +126,7 @@ export class LoadTermsConditionsFail implements Action {
 
 export class LoadUserDetails implements Action {
   public readonly type = LOAD_USER_DETAILS;
+  constructor(public payload?: boolean) {}
 }
 
 // TODO: strong type the payload

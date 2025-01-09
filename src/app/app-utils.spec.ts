@@ -238,6 +238,11 @@ describe('getUserRole', () => {
     const role = AppUtils.convertDomainToLabel(UserRole.Admin);
     expect(role).toBe('Admin');
   });
+
+  it('should return the CTSC domain from the user list', () => {
+    const role = AppUtils.convertDomainToLabel(UserRole.Ctsc);
+    expect(role).toBe('CTSC');
+  });
 });
 
 describe('setThemeBasedOnUserType', () => {

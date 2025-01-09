@@ -10,10 +10,10 @@ module.exports = {
        
     },
     judicial:{
-        "WA2": ["task-supervisor","caseworker", "caseworker-ia", "caseworker-ia-iacjudge"],
-        "WA2-SUPERVISOR": ["caseworker", "caseworker-ia", "caseworker-ia-iacjudge", "task-supervisor"],
-        "NON-WA": ["caseworker", "caseworker-divorce", "caseworker-divorce-financialremedy","caseworker-divorce-judge"],
-        "GLOBAL-SEARCH": ["caseworker", "caseworker-ia", "caseworker-ia-iacjudge"]
+        "WA2": ["task-supervisor","caseworker", "caseworker-ia", "caseworker-ia-iacjudge", "judge"],
+        "WA2-SUPERVISOR": ["caseworker", "caseworker-ia", "caseworker-ia-iacjudge", "task-supervisor", "judge"],
+        "NON-WA": ["caseworker", "caseworker-divorce", "caseworker-divorce-financialremedy","caseworker-divorce-judge", "judge"],
+        "GLOBAL-SEARCH": ["caseworker", "caseworker-ia", "caseworker-ia-iacjudge", "judge"]
     },
     solicitor:{
         "NOC": ["pui-caa", "pui-case-manager", "pui-user-manager","pui-organisation-manager","caseworker", "caseworker-divorce", "caseworker-divorce-financialremedy","caseworker-divorce-solicitor"],

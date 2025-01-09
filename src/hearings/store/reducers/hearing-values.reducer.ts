@@ -23,7 +23,7 @@ export function hearingValuesReducer(currentState = initialHearingValuesState,
     }
     case fromActions.LOAD_HEARING_VALUES_FAILURE: {
       return {
-        ...currentState,
+        ...initialHearingValuesState,
         lastError: action.payload
       };
     }

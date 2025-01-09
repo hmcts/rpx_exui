@@ -14,7 +14,8 @@ describe('Share Case Service', () => {
         StoreModule.forRoot({}),
         HttpClientTestingModule
       ],
-      providers: [CaseShareService]
+      providers: [CaseShareService],
+      teardown: { destroyAfterEach: false }
     });
     httpClientGetSpy = jasmine.createSpyObj('HttpClient', ['get']);
     httpClientPostSpy = jasmine.createSpyObj('HttpClient', ['post']);

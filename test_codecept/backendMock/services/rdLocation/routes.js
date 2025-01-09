@@ -28,11 +28,10 @@ router.get('/court-venues/venue-search?', (req, res) => {
 });
 
 router.get('/court-venues/services', (req, res) => {
-    
     const service_code = req.query.service_code
     userApiData.sendResponse(req, res, "onServiceLocations", () => service.getServiceLocations(service_code))
 
-   
+
 });
 
 

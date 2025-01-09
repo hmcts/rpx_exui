@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { CaseNotifier, CaseView } from '@hmcts/ccd-case-ui-toolkit';
-import { WAFeatureConfig } from '../../../work-allocation/models/common/service-config.model';
 
 import { CaseRole, RoleCategory, RoleExclusion } from '../../../role-access/models';
 import { Caseworker } from '../../../work-allocation/models/dtos';
@@ -13,11 +12,14 @@ export class RolesAndAccessComponent implements OnInit, OnChanges {
   public exclusionsNotNamed = false;
   public legalRolesNotNamed = false;
   public ctscRolesNotNamed = false;
+  public adminRolesNotNamed = false;
   public legalOpsRoles: CaseRole[] = [];
   public ctscRoles: CaseRole[] = [];
   public adminRoles: CaseRole[] = [];
   public namedLegalRoles: CaseRole[];
   public namedAdminRoles: CaseRole[];
+  public existingAdminUsers: string[];
+  public existingCTSCUsers: string[];
   public namedCTSCRoles: CaseRole[];
   public judicialRoles: CaseRole[] = [];
   public namedExclusions: RoleExclusion[];
@@ -25,13 +27,11 @@ export class RolesAndAccessComponent implements OnInit, OnChanges {
   public judicial = RoleCategory.JUDICIAL;
   public caseId: string;
   public jurisdiction: string;
-  public isCTSCRoleEnabled: boolean;
 
   @Input() public exclusions: RoleExclusion[] = [];
   @Input() public showAllocateRoleLink: boolean = false;
   @Input() public caseDetails: CaseView;
   @Input() public caseworkers: Caseworker[];
-  @Input() public waServiceConfig: WAFeatureConfig;
 
   private pRoles: CaseRole[] = [];
   public jurisdictionFieldId = '[JURISDICTION]';
@@ -50,6 +50,11 @@ export class RolesAndAccessComponent implements OnInit, OnChanges {
       this.adminRoles = this.roles.filter((role) => role.roleCategory === RoleCategory.ADMIN);
       this.ctscRoles = this.roles.filter((role) => role.roleCategory === RoleCategory.CTSC);
     }
+    // Get unique array of existing admin user id's
+    this.existingAdminUsers = [... new Set(this.adminRoles.map((ar) => ar.actorId))];
+    // Get unique array of existing CTSC user id's
+    this.existingCTSCUsers = [... new Set(this.ctscRoles.map((ar) => ar.actorId))];
+
     this.showLegalOpsAllocate = this.showAllocateRoleLink && this.legalOpsRoles.length === 0;
   }
 
@@ -72,12 +77,16 @@ export class RolesAndAccessComponent implements OnInit, OnChanges {
     // All of the below is in order to ensure the name is shown for roles if present
     // if not present this will be ignored
     if (this.legalOpsRoles && this.legalOpsRoles.length > 0 && !this.legalOpsRoles[0].name) {
-      // checking one name will reveal whether caseworker names are avaiable
+      // checking one name will reveal whether caseworker names are available
       this.legalRolesNotNamed = true;
     }
     if (this.ctscRoles && this.ctscRoles.length > 0 && !this.ctscRoles[0].name) {
-      // checking one name will reveal whether caseworker names are avaiable
+      // checking one name will reveal whether caseworker names are available
       this.ctscRolesNotNamed = true;
+    }
+    if (this.adminRoles && this.adminRoles.length > 0 && !this.adminRoles[0].name) {
+      // checking one name will reveal whether caseworker names are available
+      this.adminRolesNotNamed = true;
     }
     if (this.exclusions && this.exclusions.length > 0) {
       for (const exclusion of this.exclusions) {
@@ -100,14 +109,8 @@ export class RolesAndAccessComponent implements OnInit, OnChanges {
     if (this.caseworkers && this.ctscRoles && this.ctscRoles.length > 0) {
       this.namedCTSCRoles = this.checkSetNamedRoles(this.ctscRoles, this.ctscRolesNotNamed);
     }
-    if (this.waServiceConfig) {
-      const caseJurisdiction = this.caseDetails && this.caseDetails.case_type && this.caseDetails.case_type.jurisdiction ? this.caseDetails.case_type.jurisdiction.id : null;
-      const caseType = this.caseDetails && this.caseDetails.case_type ? this.caseDetails.case_type.id : null;
-      this.waServiceConfig.configurations.forEach((serviceConfig) => {
-        if (serviceConfig.serviceName === caseJurisdiction && serviceConfig.caseTypes.includes(caseType) && parseFloat(serviceConfig.releaseVersion) >= 3.5) {
-          this.isCTSCRoleEnabled = true;
-        }
-      });
+    if (this.caseworkers && this.adminRoles && this.adminRoles.length > 0) {
+      this.namedAdminRoles = this.checkSetNamedRoles(this.adminRoles, this.adminRolesNotNamed);
     }
   }
 

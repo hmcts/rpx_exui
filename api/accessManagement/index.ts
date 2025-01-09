@@ -12,6 +12,7 @@ import { createSpecificAccessApprovalRole, deleteRoleByAssignmentId, restoreSpec
 import { RoleAssignment } from '../user/interfaces/roleAssignment';
 import { postTaskCompletionForAccess } from '../workAllocation';
 import { getFullLocationsForServices } from '../workAllocation/locationService';
+import { logAccessRequest } from '../services/lau';
 
 export async function getBookings(req, resp: Response, next: NextFunction) {
   if (req.body.bookableServices && req.body.bookableServices.length === 0) {
@@ -88,6 +89,10 @@ export async function approveSpecificAccessRequest(req, res: Response, next: Nex
       // restore specific access requested role and delete two created roles
       return restoreDeletedRole(req, res, next, taskResponse, rolesToDelete);
     }
+
+    //do not await. This is a fire and forget call
+    logAccessRequest(req, false);
+
     // if everything has worked send the last response back to the user
     return res.send(taskResponse.data).status(taskResponse.status);
   } catch (error) {

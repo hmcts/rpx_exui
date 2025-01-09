@@ -1,8 +1,8 @@
 var CookieBanner = require('../pageObjects/common/cookieBanner');
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   When('I click \'Accept additional cookies\'', async function () {
     await CookieBanner.acceptCookies();
   });
@@ -20,4 +20,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
     expect(await CookieBanner.isCookiePresent('_ga')).to.be.false;
     expect(await CookieBanner.isCookiePresent('_gid')).to.be.false;
   });
-});

@@ -18,6 +18,7 @@ import { HearingAdditionalInstructionsComponent } from './containers/request-hea
 import { HearingAttendanceComponent } from './containers/request-hearing/hearing-attendance/hearing-attendance.component';
 import { HearingChangeReasonsComponent } from './containers/request-hearing/hearing-change-reasons/hearing-change-reasons.component';
 import { HearingCreateEditSummaryComponent } from './containers/request-hearing/hearing-create-edit-summary/hearing-create-edit-summary.component';
+import { HearingEditSummaryComponent } from './containers/request-hearing/hearing-edit-summary/hearing-edit-summary.component';
 import { HearingFacilitiesComponent } from './containers/request-hearing/hearing-facilities/hearing-facilities.component';
 import { HearingFinalConfirmationComponent } from './containers/request-hearing/hearing-final-confirmation/hearing-final-confirmation.component';
 import { HearingJudgeComponent } from './containers/request-hearing/hearing-judge/hearing-judge.component';
@@ -36,8 +37,9 @@ import { HearingCancelledSummaryComponent } from './containers/view-hearing/hear
 import { HearingCompletedSummaryComponent } from './containers/view-hearing/hearing-completed-summary/hearing-completed-summary.component';
 import { HearingRequestFailedSummaryComponent } from './containers/view-hearing/hearing-request-failed-summary/hearing-request-failed-summary.component';
 import { HearingViewActualSummaryComponent } from './containers/view-hearing/hearing-view-actual-summary/hearing-view-actual-summary.component';
-import { HearingViewSummaryComponent } from './containers/view-hearing/hearing-view-summary/hearing-view-summary.component';
+import { HearingViewSummaryComponent } from './containers/request-hearing/hearing-view-summary/hearing-view-summary.component';
 import { ViewHearingComponent } from './containers/view-hearing/view-hearing.component';
+import { HearingAmendmentsGuard } from './guards/hearing-amendments-guard';
 import { HearingsEditGuard } from './guards/hearings-edit-guard';
 import { HearingsViewGuard } from './guards/hearings-view-guard';
 import { HearingCategory, MemberType, Mode } from './models/hearings.enum';
@@ -198,10 +200,10 @@ export const ROUTES: Routes = [
       {
         path: 'hearing-actual-edit-summary',
         resolve: {
-          caseType: CaseTypesResolver,
           hearingTypes: RefDataResolver,
           actualPartHeardReasonCodes: AdjournHearingActualReasonResolver,
-          cancelHearingActualReasons: CancelHearingActualReasonResolver
+          cancelHearingActualReasons: CancelHearingActualReasonResolver,
+          caseType: CaseTypesResolver
         },
         component: HearingActualsEditSummaryComponent,
         data: {
@@ -409,6 +411,53 @@ export const ROUTES: Routes = [
         }
       },
       {
+        path: 'hearing-view-summary',
+        resolve: {
+          hearingPriorities: RefDataResolver,
+          caseType: CaseTypesResolver,
+          caseFlags: CaseFlagsResolver,
+          hearingStageOptions: HearingStageResolver,
+          additionFacilitiesOptions: AdditionalFacilitiesResolver,
+          partyChannels: PartyChannelsResolverService,
+          partySubChannels: PartySubChannelsResolverService,
+          judgeTypes: JudgeTypesResolverService,
+          judicialUsers: JudicialUserSearchResolver,
+          judicialResponseUsers: JudicialUserSearchResponseResolver,
+          panelMemberResponseUsers: PanelMemberSearchResponseResolver,
+          otherPanelRoles: PanelRolesResolverService,
+          courtLocation: CourtLocationsDataResolver
+        },
+        component: HearingViewSummaryComponent,
+        data: {
+          title: 'HMCTS Hearings | View Hearing | Summary',
+          isChildRequired: [HearingCategory.PanelMemberType, HearingCategory.CaseType]
+        }
+      },
+      {
+        path: 'hearing-edit-summary',
+        resolve: {
+          hearingPriorities: RefDataResolver,
+          caseType: CaseTypesResolver,
+          caseFlags: CaseFlagsResolver,
+          hearingStageOptions: HearingStageResolver,
+          additionFacilitiesOptions: AdditionalFacilitiesResolver,
+          partyChannels: PartyChannelsResolverService,
+          partySubChannels: PartySubChannelsResolverService,
+          judgeTypes: JudgeTypesResolverService,
+          judicialUsers: JudicialUserSearchResolver,
+          judicialResponseUsers: JudicialUserSearchResponseResolver,
+          panelMemberResponseUsers: PanelMemberSearchResponseResolver,
+          otherPanelRoles: PanelRolesResolverService,
+          courtLocation: CourtLocationsDataResolver
+        },
+        component: HearingEditSummaryComponent,
+        canActivate: [HearingsEditGuard, HearingAmendmentsGuard],
+        data: {
+          title: 'HMCTS Hearings | Amend Hearing',
+          isChildRequired: [HearingCategory.PanelMemberType, HearingCategory.CaseType]
+        }
+      },
+      {
         path: 'hearing-change-reason',
         resolve: {
           hearingTypes: RefDataResolver,
@@ -438,29 +487,6 @@ export const ROUTES: Routes = [
         component: null,
         data: {
           title: 'HMCTS Hearings | View Hearing'
-        }
-      },
-      {
-        path: 'hearing-view-summary',
-        resolve: {
-          hearingPriorities: RefDataResolver,
-          caseType: CaseTypesResolver,
-          caseFlags: CaseFlagsResolver,
-          hearingStageOptions: HearingStageResolver,
-          additionFacilitiesOptions: AdditionalFacilitiesResolver,
-          partyChannels: PartyChannelsResolverService,
-          partySubChannels: PartySubChannelsResolverService,
-          judgeTypes: JudgeTypesResolverService,
-          judicialUsers: JudicialUserSearchResolver,
-          judicialResponseUsers: JudicialUserSearchResponseResolver,
-          panelMemberResponseUsers: PanelMemberSearchResponseResolver,
-          otherPanelRoles: PanelRolesResolverService,
-          courtLocation: CourtLocationsDataResolver
-        },
-        component: HearingViewSummaryComponent,
-        data: {
-          title: 'HMCTS Hearings | View Hearing | Summary',
-          isChildRequired: [HearingCategory.PanelMemberType, HearingCategory.CaseType]
         }
       },
       {
@@ -498,6 +524,7 @@ export const ROUTES: Routes = [
           partyChannels: PartyChannelsResolverService,
           partySubChannels: PartySubChannelsResolverService,
           judgeTypes: JudgeTypesResolverService,
+          judicialResponseUsers: JudicialUserSearchResponseResolver,
           otherPanelRoles: PanelRolesResolverService,
           courtLocation: CourtLocationsDataResolver
         },
@@ -574,6 +601,29 @@ export const ROUTES: Routes = [
         component: HearingRequestFailedSummaryComponent,
         data: {
           title: 'HMCTS Hearings | View Hearing | Request failed '
+        }
+      },
+      {
+        path: 'hearing-view-summary',
+        resolve: {
+          hearingPriorities: RefDataResolver,
+          caseType: CaseTypesResolver,
+          caseFlags: CaseFlagsResolver,
+          hearingStageOptions: HearingStageResolver,
+          additionFacilitiesOptions: AdditionalFacilitiesResolver,
+          partyChannels: PartyChannelsResolverService,
+          partySubChannels: PartySubChannelsResolverService,
+          judgeTypes: JudgeTypesResolverService,
+          judicialUsers: JudicialUserSearchResolver,
+          judicialResponseUsers: JudicialUserSearchResponseResolver,
+          panelMemberResponseUsers: PanelMemberSearchResponseResolver,
+          otherPanelRoles: PanelRolesResolverService,
+          courtLocation: CourtLocationsDataResolver
+        },
+        component: HearingViewSummaryComponent,
+        data: {
+          title: 'HMCTS Hearings | View Hearing | Summary',
+          isChildRequired: [HearingCategory.PanelMemberType, HearingCategory.CaseType]
         }
       }
     ]

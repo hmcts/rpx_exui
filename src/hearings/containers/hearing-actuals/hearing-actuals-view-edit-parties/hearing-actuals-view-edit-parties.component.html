@@ -1,11 +1,11 @@
   <xuilib-loading-spinner *ngIf="showSpinner$ | async"></xuilib-loading-spinner>
-  <a class="govuk-back-link" [routerLink]="['../../hearing-actual-add-edit-summary']">Back</a>
+  <a class="govuk-back-link" [routerLink]="['../../hearing-actual-add-edit-summary']">{{ 'Back' | rpxTranslate }}</a>
   <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
     <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert"
          *ngIf="errors && errors.length"
          data-module="govuk-error-summary">
       <h2 class="govuk-error-summary__title" id="error-summary-title">
-        There is a problem
+        {{ 'There is a problem' | rpxTranslate }}
       </h2>
       <div class="govuk-error-summary__body">
         <ul class="govuk-list govuk-error-summary__list">
@@ -20,7 +20,7 @@
         <exui-hearing-actuals-case-title *ngIf="caseTitle"
                                          [caseTitle]="caseTitle"></exui-hearing-actuals-case-title>
         <h1 class="govuk-heading-l">
-          Participants
+          {{ 'Participants' | rpxTranslate }}
         </h1>
         <br>
 
@@ -38,7 +38,7 @@
               <tr class="error-row" *ngIf="submitted && rowHasErrors(i) && !group.hasError('duplicateEntries')">
                 <td colspan="7">
                   <span class="govuk-error-message govuk-!-margin-top-2">
-                    <span class="govuk-visually-hidden">Error:</span> {{ displayRowErrors(i) }}
+                    <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span> {{ displayRowErrors(i) | rpxTranslate }}
                   </span>
                 </td>
               </tr>
@@ -46,7 +46,7 @@
               <tr class="error-row" *ngIf="submitted && group.hasError('duplicateEntries')">
                 <td colspan="7">
                   <span class="govuk-error-message govuk-!-margin-top-2">
-                    <span class="govuk-visually-hidden">Error:</span> {{ group.getError('duplicateEntries').message }}
+                    <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span> {{ group.getError('duplicateEntries').message | rpxTranslate }}
                   </span>
                 </td>
               </tr>
@@ -58,7 +58,7 @@
                 <td class="govuk-table__cell">
                   <select class="govuk-select" formControlName="attendanceType" aria-label="Attendee type"
                           [ngClass]="{'govuk-select--error': highlightRowError(i, 'attendanceType')}">
-                    <option [ngValue]="null">Please select</option>
+                    <option [ngValue]="null">{{ 'Please select' | rpxTranslate }}</option>
                     <ng-container *ngFor="let reason of partyChannels">
                       <option *ngIf="!reason.child_nodes" [ngValue]="reason.key">{{reason.value_en}}</option>
                       <ng-container *ngIf="reason.child_nodes">
@@ -87,14 +87,14 @@
                 <td class="govuk-table__cell">
                   <select class="govuk-select" formControlName="role" aria-label="Attendee role"
                           [ngClass]="{'govuk-select--error': highlightRowError(i, 'role')}">
-                    <option [ngValue]="null">Please select</option>
+                    <option [ngValue]="null">{{ 'Please select' | rpxTranslate }}</option>
                     <option *ngFor="let role of mutablePartyRoles" [ngValue]="role.key">{{role.value_en}}</option>
                   </select>
                 </td>
                 <td class="govuk-table__cell">
                   <select class="govuk-select" formControlName="attendanceType" aria-label="Attendee type"
                           [ngClass]="{'govuk-select--error': highlightRowError(i, 'attendanceType')}">
-                    <option [ngValue]="null">Please select</option>
+                    <option [ngValue]="null">{{ 'Please select' | rpxTranslate }}</option>
                     <ng-container *ngFor="let reason of partyChannels">
                       <option *ngIf="!reason.child_nodes" [ngValue]="reason.key">{{reason.value_en}}</option>
                       <ng-container *ngIf="reason.child_nodes">
@@ -114,7 +114,7 @@
                   <select class="govuk-select" formControlName="attendeeRepresenting"
                           aria-label="Who was this attendee representing?"
                           [ngClass]="{'govuk-select--error': highlightRowError(i, 'attendeeRepresenting')}">
-                    <option value="Please select">Please select</option>
+                    <option value="Please select">{{ 'Please select' | rpxTranslate }}</option>
                     <option *ngFor="let participant of participants" value="{{ participant.id }}"
                             selected="">{{ participant.name }}</option>
                   </select>
@@ -129,13 +129,13 @@
 
           <button class="govuk-button govuk-button--secondary btn-add" data-module="govuk-button"
                   (click)="addRow($event)" [disabled]="parties.hasError('maxlength')">
-            Add a participant
+            {{ 'Add a participant' | rpxTranslate }}
           </button>
 
           <br><br>
 
           <button class="govuk-button primary" data-module="govuk-button" (click)="submitForm(form.value, form.valid)">
-            Save and continue
+            {{ 'Save and continue' | rpxTranslate }}
           </button>
 
         </form>

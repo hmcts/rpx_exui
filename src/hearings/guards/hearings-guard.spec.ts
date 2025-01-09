@@ -5,10 +5,11 @@ import { of } from 'rxjs';
 import { UserDetails } from '../../app/models';
 import { SessionStorageService } from '../../app/services';
 import * as fromAppStore from '../../app/store';
+import { FeatureVariation } from '../../cases/models/feature-variation.model';
 import { HearingsGuard } from './hearings-guard';
 
 describe('HearingsGuard', () => {
-  const USER_1: UserDetails = {
+  const USER: UserDetails = {
     canShareCases: true,
     sessionTimeout: {
       idleModalDisplayTime: 10,
@@ -26,32 +27,12 @@ describe('HearingsGuard', () => {
       ]
     }
   };
-  const USER_2: UserDetails = {
-    canShareCases: true,
-    sessionTimeout: {
-      idleModalDisplayTime: 10,
-      totalIdleTime: 50
-    },
-    userInfo: {
-      id: '41a90c39-d756-4eba-8e85-5b5bf56b31f5',
-      forename: 'Luke',
-      surname: 'Wilson',
-      email: 'lukesuperuserxui@mailnesia.com',
-      active: true,
-      roles: [
-        'caseworker',
-        'caseworker-iac-judge'
-      ]
-    }
-  };
 
-  const FEATURE_FLAG = [
+  const FEATURE_FLAG: FeatureVariation[] = [
     {
       jurisdiction: 'SSCS',
-      caseType: 'Benefit',
-      roles: [
-        'caseworker-sscs',
-        'caseworker-sscs-judge'
+      includeCaseTypes: [
+        'Benefit'
       ]
     }
   ];
@@ -70,13 +51,13 @@ describe('HearingsGuard', () => {
   });
 
   it('guard truthy', () => {
-    storeMock.pipe.and.returnValue(of(USER_1));
+    storeMock.pipe.and.returnValue(of(USER));
     hearingsGuard = new HearingsGuard(storeMock, sessionStorageMock, featureToggleMock);
     expect(hearingsGuard).toBeTruthy();
   });
 
   it('should return false if feature is toggled off', () => {
-    storeMock.pipe.and.returnValue(of(USER_1));
+    storeMock.pipe.and.returnValue(of(USER));
     featureToggleMock.getValueOnce.and.returnValue(of([]));
     sessionStorageMock.getItem.and.returnValue(JSON.stringify(CASE_INFO));
     hearingsGuard = new HearingsGuard(storeMock, sessionStorageMock, featureToggleMock);
@@ -87,7 +68,7 @@ describe('HearingsGuard', () => {
   });
 
   it('should return false if case info is null', () => {
-    storeMock.pipe.and.returnValue(of(USER_1));
+    storeMock.pipe.and.returnValue(of(USER));
     featureToggleMock.getValueOnce.and.returnValue(of(FEATURE_FLAG));
     sessionStorageMock.getItem.and.returnValue(JSON.stringify([]));
     hearingsGuard = new HearingsGuard(storeMock, sessionStorageMock, featureToggleMock);
@@ -98,7 +79,7 @@ describe('HearingsGuard', () => {
   });
 
   it('should return false if case jurisdiction do not match', () => {
-    storeMock.pipe.and.returnValue(of(USER_1));
+    storeMock.pipe.and.returnValue(of(USER));
     featureToggleMock.getValueOnce.and.returnValue(of(FEATURE_FLAG));
     sessionStorageMock.getItem.and.returnValue(JSON.stringify({ cid: '1546518523959179', caseType: 'Benefit', jurisdiction: 'IA' }));
     hearingsGuard = new HearingsGuard(storeMock, sessionStorageMock, featureToggleMock);
@@ -109,7 +90,7 @@ describe('HearingsGuard', () => {
   });
 
   it('should return false if case type do not match', () => {
-    storeMock.pipe.and.returnValue(of(USER_1));
+    storeMock.pipe.and.returnValue(of(USER));
     featureToggleMock.getValueOnce.and.returnValue(of(FEATURE_FLAG));
     sessionStorageMock.getItem.and.returnValue(JSON.stringify({ cid: '1546518523959179', caseType: 'PRLAPPS', jurisdiction: 'SSCS' }));
     hearingsGuard = new HearingsGuard(storeMock, sessionStorageMock, featureToggleMock);
@@ -119,19 +100,8 @@ describe('HearingsGuard', () => {
     expect(result$).toBeObservable(expected);
   });
 
-  it('should return false if user role do not match', () => {
-    storeMock.pipe.and.returnValue(of(USER_2));
-    featureToggleMock.getValueOnce.and.returnValue(of(FEATURE_FLAG));
-    sessionStorageMock.getItem.and.returnValue(JSON.stringify(CASE_INFO));
-    hearingsGuard = new HearingsGuard(storeMock, sessionStorageMock, featureToggleMock);
-    const result$ = hearingsGuard.hasMatchedPermissions();
-    const canActive = false;
-    const expected = cold('(b|)', { b: canActive });
-    expect(result$).toBeObservable(expected);
-  });
-
-  it('should return true if feature is toggled on and user role match jurisdiction', () => {
-    storeMock.pipe.and.returnValue(of(USER_1));
+  it('should return true if feature is toggled on and jurisdiction matches', () => {
+    storeMock.pipe.and.returnValue(of(USER));
     featureToggleMock.getValueOnce.and.returnValue(of(FEATURE_FLAG));
     sessionStorageMock.getItem.and.returnValue(JSON.stringify(CASE_INFO));
     hearingsGuard = new HearingsGuard(storeMock, sessionStorageMock, featureToggleMock);

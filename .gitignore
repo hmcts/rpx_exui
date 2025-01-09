@@ -34,6 +34,7 @@ speed-measure-plugin.json
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+.last-run.json
 
 # misc
 /.sass-cache
@@ -93,3 +94,11 @@ ignore/
 !.yarn/versions
 
 /infrastructure/.terraform/
+.angular/cache/*
+.yarn/install-state.gz
+
+.nx/cache/
+
+#playwright
+test-results/
+

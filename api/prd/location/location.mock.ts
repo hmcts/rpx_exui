@@ -1,4 +1,4 @@
-import MockAdapter from 'axios-mock-adapter';
+import * as MockAdapter from 'axios-mock-adapter';
 import { HttpMockAdapter } from '../../common/httpMockAdapter';
 import { ALL_COURT_LOCATIONS } from './data/location.mock.data';
 import { toEpimmsLocation } from './models/location.model';

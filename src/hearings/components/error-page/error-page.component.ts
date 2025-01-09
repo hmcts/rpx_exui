@@ -17,7 +17,7 @@ export class ErrorPageComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.sub = this.hearingStore.select(fromHearingStore.getHearingsFeatureState).subscribe(
       (state) => {
-        this.caseId = state.hearingList.hearingListMainModel.caseRef;
+        this.caseId = state.hearingList?.hearingListMainModel?.caseRef;
       }
     );
     // Reset errors

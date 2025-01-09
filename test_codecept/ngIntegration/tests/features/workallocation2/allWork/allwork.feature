@@ -80,7 +80,7 @@ Feature: WA Release 2: All work
         Examples:
             | UserIdentifier     | UserType   | Roles                                              |roleCategory|
             | IAC_CaseOfficer_R2 | Caseworker | caseworker-ia,caseworker-ia-caseofficer,caseworker-ia-admofficer |LEGAL_OPERATIONS|
-            | IAC_Judge_WA_R2 | Judge | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker |JUDICIAL|
+            | IAC_Judge_WA_R2 | Judge | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker,judge |JUDICIAL|
 
     Scenario Outline: Tasks pagnation control display with only 1 page of items
          
@@ -106,7 +106,7 @@ Feature: WA Release 2: All work
         Examples:
             | UserIdentifier  | UserType | Roles                                           |roleCategory|
             # | IAC_CaseOfficer_R2 | Caseworker | caseworker-ia-caseofficer,caseworker-ia-admofficer |LEGAl_OPERATIONS|
-            | IAC_Judge_WA_R2 | Judge | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker |JUDICIAL|
+            | IAC_Judge_WA_R2 | Judge | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker,judge |JUDICIAL|
 
     Scenario:  Tasks sort column persist in session with Caseworker user
        
@@ -197,4 +197,4 @@ Feature: WA Release 2: All work
         Examples:
             | UserIdentifier     | UserType   | Roles                                                            |roleCategory|
             | IAC_CaseOfficer_R2 | Caseworker | caseworker-ia,caseworker-ia-caseofficer,caseworker-ia-admofficer |LEGAL_OPERATIONS|
-            | IAC_Judge_WA_R2    | Judge      | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker    |JUDICIAL|
+            | IAC_Judge_WA_R2    | Judge      | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker,judge    |JUDICIAL|

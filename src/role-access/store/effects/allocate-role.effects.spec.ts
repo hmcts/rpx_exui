@@ -9,6 +9,9 @@ import { RoleAllocationMessageText } from '../../models/enums/allocation-text';
 import { AllocateRoleService } from '../../services';
 import * as allocateRoleAction from '../actions/allocate-role.action';
 import { AllocateRoleEffects } from './allocate-role.effects';
+import { StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../../app/store';
 
 describe('Allocate Role Effects', () => {
   let actions$;
@@ -16,9 +19,11 @@ describe('Allocate Role Effects', () => {
   const allocateRoleServiceMock = jasmine.createSpyObj('AllocateRoleService', [
     'confirmAllocation', 'backUrl'
   ]);
-
+  let store: Store;
+  let dispatchSpy;
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [StoreModule.forRoot({})],
       providers: [
         {
           provide: AllocateRoleService,
@@ -28,38 +33,38 @@ describe('Allocate Role Effects', () => {
         provideMockActions(() => actions$)
       ]
     });
+    store = TestBed.inject(Store);
+    dispatchSpy = spyOn(store, 'dispatch');
     allocateRoleServiceMock.backUrl = 'work/my-work/cases';
     effects = TestBed.inject(AllocateRoleEffects);
   });
 
   describe('confirmAllocation$', () => {
-    it('should return SetSubmissionSuccessPending', () => {
+    it('should return CreateCaseGo action with correct message text when allocate', () => {
       const STATE_DATA = {
         caseId: '111111',
         jurisdiction: 'IA',
         state: AllocateRoleState.CHOOSE_ROLE,
         typeOfRole: null,
-        allocateTo: AllocateTo.RESERVE_TO_ME,
+        allocateTo: AllocateTo.ALLOCATE_TO_ME,
         person: null,
         durationOfRole: DurationOfRole.SEVEN_DAYS,
         action: Actions.Allocate,
         period: null
       };
-      allocateRoleServiceMock.confirmAllocation.and.returnValue(of({
-      }));
+      allocateRoleServiceMock.confirmAllocation.and.returnValue(of({}));
       const action = new allocateRoleAction.ConfirmAllocation(STATE_DATA);
-      const message: any = {
-        type: 'success',
-        message: RoleAllocationMessageText.Add
-      };
       const completion = new routeAction.CreateCaseGo({
-        path: ['work/my-work/cases'],
+        path: [allocateRoleServiceMock.backUrl],
         caseId: '111111',
         extras: {
           state: {
             showMessage: true,
             retainMessages: true,
-            message,
+            message: {
+              type: 'success',
+              message: RoleAllocationMessageText.Add
+            },
             messageText: RoleAllocationMessageText.Add
           }
         }
@@ -67,6 +72,42 @@ describe('Allocate Role Effects', () => {
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });
       expect(effects.confirmAllocation$).toBeObservable(expected);
+      expect(dispatchSpy).toHaveBeenCalledWith(new fromRoot.LoadUserDetails(true));
+    });
+
+    it('should return CreateCaseGo action with correct message text when reallocate', () => {
+      const STATE_DATA = {
+        caseId: '111111',
+        jurisdiction: 'IA',
+        state: AllocateRoleState.CHOOSE_ROLE,
+        typeOfRole: null,
+        allocateTo: AllocateTo.ALLOCATE_TO_ME,
+        person: null,
+        durationOfRole: DurationOfRole.SEVEN_DAYS,
+        action: Actions.Reallocate,
+        period: null
+      };
+      allocateRoleServiceMock.confirmAllocation.and.returnValue(of({}));
+      const action = new allocateRoleAction.ConfirmAllocation(STATE_DATA);
+      const completion = new routeAction.CreateCaseGo({
+        path: [allocateRoleServiceMock.backUrl],
+        caseId: '111111',
+        extras: {
+          state: {
+            showMessage: true,
+            retainMessages: true,
+            message: {
+              type: 'success',
+              message: RoleAllocationMessageText.Reallocate
+            },
+            messageText: RoleAllocationMessageText.Reallocate
+          }
+        }
+      });
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.confirmAllocation$).toBeObservable(expected);
+      expect(dispatchSpy).toHaveBeenCalledWith(new fromRoot.LoadUserDetails(true));
     });
   });
 

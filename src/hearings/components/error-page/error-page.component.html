@@ -1,14 +1,17 @@
 <exui-app-header></exui-app-header>
 <div class="govuk-width-container">
-  <a class="govuk-back-link" [routerLink]="['/', 'cases', 'case-details', caseId, 'hearings']" href="javascript:void(0)">Back</a>
+  <a class="govuk-back-link" [routerLink]="['/', 'cases', 'case-details', caseId, 'hearings']" href="javascript:void(0)">{{ 'Back' | rpxTranslate }}</a>
   <main class="govuk-main-wrapper govuk-main-wrapper--l" id="content" role="main">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">There was a system error and your request could not be processed.</h1>
-        <p class="govuk-body">Please try again.</p>
+        <h1 class="govuk-heading-xl">{{ 'There was a system error and your request could not be processed.' | rpxTranslate }}</h1>
+        <p class="govuk-body">{{ 'Please try again.' | rpxTranslate }}</p>
         <br><br>
         <p class="govuk-body" *ngIf="caseId">
-          Go back to the <a class="govuk-link" [routerLink]="['/', 'cases', 'case-details', caseId, 'hearings']" href="javascript:void(0)">hearings tab</a>.
+          {{ 'Go back to the' | rpxTranslate }} 
+          <a class="govuk-link" [routerLink]="['/', 'cases', 'case-details', caseId, 'hearings']" href="javascript:void(0)">
+            {{ 'hearings tab' | rpxTranslate }}
+          </a>.
         </p>
       </div>
     </div>

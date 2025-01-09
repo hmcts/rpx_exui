@@ -45,4 +45,64 @@ describe('ActualHearingsUtils', () => {
     const attendingRepresentative3 = ActualHearingsUtils.getRepresentingAttendee('3', hearingActualsMainModel, hearingDate);
     expect(attendingRepresentative3).toEqual('');
   });
+
+  it('should return the correct pause start time when state is "start"', () => {
+    const mainModel = _.cloneDeep(hearingActualsMainModel);
+    const day = mainModel.hearingActuals.actualHearingDays[0];
+    day.pauseDateTimes = [
+      {
+        pauseStartTime: '2021-03-12T09:20:00.000Z',
+        pauseEndTime: '2021-03-12T09:30:00.000Z'
+      }
+    ];
+    const result = ActualHearingsUtils.getPauseDateTime(day, 'start');
+    expect(result).toBe('2021-03-12T09:20:00.000Z');
+  });
+
+  it('should return the correct pause end time when state is "end"', () => {
+    const mainModel = _.cloneDeep(hearingActualsMainModel);
+    const day = mainModel.hearingActuals.actualHearingDays[0];
+    day.pauseDateTimes = [
+      {
+        pauseStartTime: '2021-03-12T09:20:00.000Z',
+        pauseEndTime: '2021-03-12T09:30:00.000Z'
+      }
+    ];
+    const result = ActualHearingsUtils.getPauseDateTime(day, 'end');
+    expect(result).toBe('2021-03-12T09:30:00.000Z');
+  });
+
+  it('should return null when pauseDateTimes is undefined', () => {
+    const mainModel = _.cloneDeep(hearingActualsMainModel);
+    const day = mainModel.hearingActuals.actualHearingDays[0];
+    day.pauseDateTimes = null;
+    const result = ActualHearingsUtils.getPauseDateTime(day, 'start');
+    expect(result).toBeNull();
+  });
+
+  it('should return null when pauseDateTimes is an empty array', () => {
+    const mainModel = _.cloneDeep(hearingActualsMainModel);
+    const day = mainModel.hearingActuals.actualHearingDays[0];
+    day.pauseDateTimes = [];
+    const result = ActualHearingsUtils.getPauseDateTime(day, 'start');
+    expect(result).toBeNull();
+  });
+
+  it('should format time with custom format', () => {
+    const time = '2021-03-12T09:30:00.000Z';
+    const result = ActualHearingsUtils.formatTime(time, 'h:mm A');
+    expect(result).toBe('9:30 AM');
+  });
+
+  it('should format time with default format', () => {
+    const time = '2021-03-12T09:30:00.000Z';
+    const result = ActualHearingsUtils.formatTime(time);
+    expect(result).toBe('09:30');
+  });
+
+  it('should handle invalid time input', () => {
+    const time = 'invalidTime';
+    const result = ActualHearingsUtils.formatTime(time);
+    expect(result).toBe('Invalid date');
+  });
 });

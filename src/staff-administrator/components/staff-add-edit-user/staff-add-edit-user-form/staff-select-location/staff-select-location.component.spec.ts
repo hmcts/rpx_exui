@@ -1,7 +1,7 @@
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/material/legacy-autocomplete';
 import { RefDataService } from '@hmcts/rpx-xui-common-lib';
 import { of } from 'rxjs';
 import { LocationByEpimmsModelWithServiceCodes } from '../../../../models/location-by-service-code-model';

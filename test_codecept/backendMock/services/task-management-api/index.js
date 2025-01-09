@@ -17,7 +17,7 @@ class TaskManagementApi{
 
     setDefaultData(){
         this.searchTasksResponse = this.getSearchTasks(25, 140)
-        this.searchCompletableTasksRes = { task_required_for_event: true, tasks: [] }
+        this.searchCompletableTasksRes = { task_required_for_event: false, tasks: [] }
     }
 
     setOnSearchTasks(token, response){

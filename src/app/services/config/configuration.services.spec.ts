@@ -13,7 +13,8 @@ describe('Configuration Service', () => {
         StoreModule.forRoot({}),
         HttpClientTestingModule
       ],
-      providers: [AppConfigService]
+      providers: [AppConfigService],
+      teardown: { destroyAfterEach: false }
     });
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
   });

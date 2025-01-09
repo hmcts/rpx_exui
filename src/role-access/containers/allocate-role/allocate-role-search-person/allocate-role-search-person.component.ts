@@ -18,6 +18,7 @@ import {
 } from '../../../models';
 import * as fromFeature from '../../../store';
 import { getTitleText } from '../../../utils';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'exui-allocate-role-search-person',
@@ -27,9 +28,9 @@ export class AllocateRoleSearchPersonComponent implements OnInit {
   public allocateAction = 'Allocate';
   public ERROR_MESSAGE = PERSON_ERROR_MESSAGE;
   @Input() public navEvent: AllocateRoleNavigation;
+  @Input() public existingUsers: string[] = [];
   public domain = PersonRole.JUDICIAL;
   public title: string;
-  public assignedUser: string;
   public userIncluded: boolean = true;
   public boldTitle: string = 'Find the person';
   public formGroup: FormGroup = new FormGroup({});
@@ -40,8 +41,9 @@ export class AllocateRoleSearchPersonComponent implements OnInit {
   public subscription: Subscription;
   public roleType: SpecificRole;
   public services: string;
+  public assignedUser: string;
 
-  constructor(private readonly store: Store<fromFeature.State>) {}
+  constructor(private readonly store: Store<fromFeature.State>, private route: ActivatedRoute) {}
 
   public ngOnInit(): void {
     this.subscription = this.store.pipe(select(fromFeature.getAllocateRoleState)).subscribe((allocateRoleStateData) => this.setData(allocateRoleStateData));
@@ -61,7 +63,14 @@ export class AllocateRoleSearchPersonComponent implements OnInit {
     this.person = allocateRoleStateData.person;
     // hide user when allocate as user can select allocate to me
     this.userIncluded = !(allocateRoleStateData.action === Actions.Allocate);
-    this.assignedUser = allocateRoleStateData.personToBeRemoved ? allocateRoleStateData.personToBeRemoved.id : null;
+    // Set assigned user from state data.
+    this.assignedUser = allocateRoleStateData && allocateRoleStateData.personToBeRemoved && allocateRoleStateData.personToBeRemoved.id;
+
+    // Add assigned user to existingUsers array if both are given
+    if (this.existingUsers && this.existingUsers.length > 0 && this.assignedUser) {
+      this.existingUsers.push(this.assignedUser);
+    }
+
     this.roleType = allocateRoleStateData.typeOfRole;
     this.services = allocateRoleStateData.jurisdiction;
   }

@@ -52,7 +52,7 @@ describe('IsAmendedPipe', () => {
   it('should transform is amended for additional security required', () => {
     const STATE: State = _.cloneDeep(initialStateImmutable.hearings);
     const result$ = isAmendedPipe.transform(AnswerSource.ADDITIONAL_SECURITY_REQUIRED, of(STATE));
-    const isAmended = false;
+    const isAmended = true;
     const expected = cold('(b|)', { b: isAmended });
     expect(result$).toBeObservable(expected);
   });

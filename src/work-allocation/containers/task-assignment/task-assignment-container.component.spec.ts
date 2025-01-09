@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, Pipe, PipeTransform, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/material/legacy-autocomplete';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PaginationModule, SessionStorageService } from '@hmcts/ccd-case-ui-toolkit';
@@ -20,7 +20,6 @@ import { TaskActionConstants } from '../../components/constants';
 import { TaskActionType } from '../../enums';
 import { Task } from '../../models/tasks';
 import { WorkAllocationTaskService } from '../../services';
-import { CheckReleaseVersionService } from '../../services/check-release-version.service';
 import { getMockTasks } from '../../tests/utils.spec';
 import { TaskAssignmentContainerComponent } from './task-assignment-container.component';
 
@@ -66,13 +65,7 @@ describe('TaskAssignmentContainerComponent2', () => {
     assignTask: jasmine.createSpy('assignTask').and.returnValue(of({}))
   };
   const mockSessionStorageService = jasmine.createSpyObj('SessionStorageService', ['getItem']);
-  const mockCheckReleaseVersionService = {
-    isRelease4: () => {
-      return {
-        subscribe: () => true
-      };
-    }
-  };
+
   const MESSAGE_SERVICE_METHODS = ['addMessage', 'emitMessages', 'getMessages', 'nextMessage', 'removeAllMessages'];
   const mockInfoMessageCommService = jasmine.createSpyObj('mockInfoMessageCommService', MESSAGE_SERVICE_METHODS);
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -108,7 +101,6 @@ describe('TaskAssignmentContainerComponent2', () => {
         { provide: Location, useValue: locationStub },
         { provide: WorkAllocationTaskService, useValue: mockWorkAllocationService },
         { provide: SessionStorageService, useValue: mockSessionStorageService },
-        { provide: CheckReleaseVersionService, useValue: mockCheckReleaseVersionService },
         {
           provide: ActivatedRoute,
           useValue: {

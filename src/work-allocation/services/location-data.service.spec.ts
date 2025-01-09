@@ -14,10 +14,14 @@ describe('WorkAllocation', () => {
 
     it('getLocations should make correct api call', () => {
       const service = new LocationDataService(mockHttpService, sessionStorageService);
+      const options = {
+        params: new HttpParams()
+          .set('serviceCodes', 'CIVIL')
+      };
       sessionStorageService.getItem.and.returnValue(null);
       mockHttpService.get.and.returnValue(of([]));
-      service.getLocations();
-      expect(mockHttpService.get).toHaveBeenCalledWith(LocationDataService.locationUrl);
+      service.getLocations(['CIVIL']);
+      expect(mockHttpService.get).toHaveBeenCalledWith(LocationDataService.locationUrl, options);
     });
 
     it('getLocationsByRegion should make correct api call', () => {

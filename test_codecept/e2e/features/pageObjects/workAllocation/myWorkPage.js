@@ -4,6 +4,7 @@ var cucumberReporter = require('../../../../codeceptCommon/reportLogger');
 
 var TaskMessageBanner = require('../messageBanner');
 const { LOG_LEVELS } = require('../../../support/constants');
+const { constant } = require('lodash');
 
 class MyWorkPage extends TaskList {
 
@@ -312,20 +313,27 @@ class MyWorkPage extends TaskList {
         
     }
 
-    async isWorkFilterOfTypeDisplayed(filterType){
+    getFilterContainer(filterType){
 
         const filterTypeNormalized = filterType.toLowerCase().split(' ').join('');
 
         let filterContainer = null;
-        if (filterTypeNormalized.includes('service')){
+        if (filterTypeNormalized.includes('service')) {
             filterContainer = this.workFilterServicesContainer;
-        } else if (filterTypeNormalized.includes('location')){
+        } else if (filterTypeNormalized.includes('location')) {
             filterContainer = this.workFiltersLocationsContainer;
         } else if (filterTypeNormalized.includes('worktype')) {
             filterContainer = this.workFilterWorkTypesContainer;
-        }else {
+        } else {
             throw new Error(`${filterType} is not implemented in test. Please check Page object myWorkPage.js`);
         }
+        return filterContainer;
+    }
+
+    async isWorkFilterOfTypeDisplayed(filterType){
+
+
+        const filterContainer = this.getFilterContainer(filterType);
 
         return (await filterContainer.isPresent()) && (await filterContainer.isDisplayed());
 

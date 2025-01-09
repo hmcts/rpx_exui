@@ -22,4 +22,5 @@ export interface HearingDetailsModel {
   amendReasonCodes: string[];
   hearingChannels: string[];
   listingAutoChangeReasonCode: string;
+  isPaperHearing?: boolean;
 }

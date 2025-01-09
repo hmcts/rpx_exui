@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+
 import { LocationModel } from '@hmcts/rpx-xui-common-lib/lib/models/location.model';
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
@@ -10,7 +10,7 @@ import * as fromHearingStore from '../store';
 @Injectable({
   providedIn: 'root'
 })
-export class CourtLocationsDataResolver implements Resolve<LocationModel> {
+export class CourtLocationsDataResolver {
   constructor(
     protected readonly locationsDataService: LocationsDataService,
     protected readonly hearingStore: Store<fromHearingStore.State>

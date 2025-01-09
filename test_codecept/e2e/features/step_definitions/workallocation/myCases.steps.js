@@ -20,7 +20,8 @@ const { DataTableArgument } = require('codeceptjs');
         reportLogger.reportDatatable(datatable)
         const columnHeadersHash = datatable.parse().hashes();
         const expectdColHeaders = await ArrayUtil.map(columnHeadersHash, (headerhash) => headerhash.ColumnHeader);
-        const actualHeadeColumns = await casesListTable.getColumnHeaderNames();
+        let actualHeadeColumns = await casesListTable.getColumnHeaderNames();
+        actualHeadeColumns = actualHeadeColumns.map(c => c.trim()).filter((colName) => colName !== '')
         expect(actualHeadeColumns.length, `Actual Cols ||${actualHeadeColumns}|| !== Expected Cols ||${expectdColHeaders}|| `).to.equal(expectdColHeaders.length);
         expect(actualHeadeColumns, `Actual Cols ||${actualHeadeColumns}|| !== Expected Cols ||${expectdColHeaders}|| `).to.include.members(expectdColHeaders);
 

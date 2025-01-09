@@ -184,6 +184,10 @@ export class AppUtils {
         userRole = 'Admin';
         break;
       }
+      case UserRole.Ctsc: {
+        userRole = 'CTSC';
+        break;
+      }
       default:
         break;
     }

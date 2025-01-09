@@ -1,8 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
+import { Subscription, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { $enum as EnumUtil } from 'ts-enum-util';
 import { UserDetails } from '../../../../app/models';
@@ -74,7 +73,7 @@ export class SpecificAccessReviewComponent implements OnInit, OnDestroy {
       );
     } else {
       this.waSupportedJurisdictionsService.getWASupportedJurisdictions().subscribe((services) => {
-        this.caseworkerDataService.getCaseworkersForServices(services).subscribe(
+        this.caseworkerDataService.getUsersFromServices(services).subscribe(
           (caseworkers) => {
             const caseworker = caseworkers.find((thisCaseworker) => thisCaseworker.idamId === this.specificAccessStateData.actorId);
             if (caseworker) {

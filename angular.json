@@ -14,10 +14,14 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
+            "buildOptimizer": true,
             "outputPath": "dist/rpx-exui",
+            "sourceMap": true,
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "src/tsconfig.app.json",
             "allowedCommonJsDependencies": [
               "hammerjs"
@@ -25,18 +29,19 @@
             "stylePreprocessorOptions": {
               "includePaths": [
                 "node_modules/govuk_frontend_toolkit/stylesheets",
-                "node_modules/govuk-elements-sass/public/sass"
+                "node_modules/govuk-elements-sass/public/sass",
+                "node_modules"
               ]
             },
             "assets": [
               {
                 "glob": "**/*",
-                "input": "node_modules/@hmcts/media-viewer/assets",
+                "input": "node_modules/@hmcts/media-viewer/assets/",
+                "ignore": ["**/*.sass"],
                 "output": "/assets"
               },
               "src/favicon.ico",
-              "src/assets",
-              "src/web.config"
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss"
@@ -52,7 +57,14 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
@@ -71,37 +83,53 @@
                   "maximumWarning": "6kb"
                 }
               ]
+            },
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "buildOptimizer": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": false,
+              "vendorChunk": false
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "rpx-exui:build",
-            "proxyConfig": "./proxy.config.json"
+            "proxyConfig": "./proxy.config.json",
+            "buildTarget": "rpx-exui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "rpx-exui:build:production"
+              "buildTarget": "rpx-exui:build:production"
             }
           }
         },
         "serveTest": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "rpx-exui:build",
-            "proxyConfig": "./proxyTest.config.json"
+            "proxyConfig": "./proxyTest.config.json",
+            "buildTarget": "rpx-exui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "rpx-exui:build:production"
+              "buildTarget": "rpx-exui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "rpx-exui:build"
+            "buildTarget": "rpx-exui:build"
           }
         },
         "test": {
@@ -116,18 +144,26 @@
               "src/environments/**"
             ],
             "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "stylePreprocessorOptions": {
               "includePaths": [
                 "node_modules/govuk_frontend_toolkit/stylesheets",
-                "node_modules/govuk-elements-sass/public/sass"
+                "node_modules/govuk-elements-sass/public/sass",
+                "node_modules"
               ]
             },
             "styles": [
               "src/styles.scss"
             ],
+            "include": [
+              "src/**/*.spec.*"
+            ],
+            "exclude": [],
             "scripts": [],
             "assets": [
               "src/favicon.ico",
@@ -136,15 +172,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "**/api/**"
+            "eslintConfig": ".eslintrc.cjs",
+            "lintFilePatterns": [
+              "src/**/*.ts"
             ]
           }
         }
@@ -168,8 +200,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig": ".eslintrc.js",
             "tsConfig": "e2e/tsconfig.e2e.json",
             "exclude": [
               "**/node_modules/**"
@@ -179,7 +212,6 @@
       }
     }
   },
-  "defaultProject": "rpx-exui",
   "schematics": {
     "@schematics/angular:component": {
       "style": "scss"

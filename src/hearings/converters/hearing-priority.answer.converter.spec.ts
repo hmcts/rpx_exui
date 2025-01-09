@@ -43,4 +43,18 @@ describe('HearingPriorityAnswerConverter', () => {
     const expected = cold('(b|)', { b: hearingPriorityType });
     expect(result$).toBeObservable(expected);
   });
+
+  it('should transform hearing stage when hearings amendment is enabled', () => {
+    const STATE = {
+      ...initialStateImmutable.hearings,
+      hearingConditions: {
+        ...initialStateImmutable.hearings.hearingConditions,
+        isHearingAmendmentsEnabled: true
+      }
+    };
+    const result$ = converter.transformAnswer(of(STATE));
+    const hearingPriorityType = 'Urgent';
+    const expected = cold('(b|)', { b: hearingPriorityType });
+    expect(result$).toBeObservable(expected);
+  });
 });

@@ -1,43 +1,119 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { inject, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { EnvironmentService } from './environment.service';
-import { EnvironmentConfig } from '../../../models/environmentConfig.model';
-import { Observable } from 'rxjs';
+import { DeploymentEnvironmentEnum } from '../../enums/deployment-environment-enum';
+
+/*
+  PROD = 'prod',
+  AAT = 'aat',
+  DEMO = 'demo',
+  PERFTEST = 'perftest',
+  ITHC = 'ithc',
+  PREVIEW = 'preview',
+  LOCAL = 'local'
+*/
+const dummyWindowProd = { location: new URL('https://manage-case.platform.hmcts.net') };
+const dummyWindowAat = { location: new URL('https://manage-case.aat.platform.hmcts.net') };
+const dummyWindowDemo = { location: new URL('https://manage-case.demo.platform.hmcts.net') };
+const dummyWindowPerftest = { location: new URL('https://manage-case.perftest.platform.hmcts.net') };
+const dummyWindowIthc = { location: new URL('https://manage-case.ithc.platform.hmcts.net') };
+const dummyWindowPreview = { location: new URL('https://pr-666.preview.platform.hmcts.net') };
+const dummyWindowLocalhost = { location: new URL('http://localhost:3000') };
 
 describe('EnvironmentService', () => {
-  beforeEach(() => {
+  it('should be created', () => {
     TestBed.configureTestingModule({
-      providers: [EnvironmentService],
+      providers: [
+        { provide: Window, useValue: dummyWindowAat },
+        EnvironmentService
+      ],
       imports: [HttpClientTestingModule]
     });
+    const service = TestBed.inject(EnvironmentService);
+    expect(service).toBeTruthy();
   });
 
-  it('should be created', inject([EnvironmentService], (service: EnvironmentService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should detect the prod environment correctly', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Window, useValue: dummyWindowProd },
+        EnvironmentService
+      ],
+      imports: [HttpClientTestingModule]
+    });
+    const service = TestBed.inject(EnvironmentService);
+    expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.PROD);
+  });
 
-  it('should detect the production environment correctly', inject([EnvironmentService], (service: EnvironmentService) => {
-    const dummyWithData = {
-      data: {
-        ccdGatewayUrl: ''
-      },
-      isProd: () => {
-        return false;
-      }
-    };
+  it('should detect the aat environment correctly', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Window, useValue: dummyWindowAat },
+        EnvironmentService
+      ],
+      imports: [HttpClientTestingModule]
+    });
+    const service = TestBed.inject(EnvironmentService);
+    expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.AAT);
+  });
 
-    dummyWithData.isProd = service.isProd.bind(dummyWithData);
+  it('should detect the demo environment correctly', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Window, useValue: dummyWindowDemo },
+        EnvironmentService
+      ],
+      imports: [HttpClientTestingModule]
+    });
+    const service = TestBed.inject(EnvironmentService);
+    expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.DEMO);
+  });
 
-    dummyWithData.data.ccdGatewayUrl = 'https://gateway.ccd.AAT.platform.hmcts.net';
-    expect(dummyWithData.isProd()).toBe(false);
+  it('should detect the perftest environment correctly', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Window, useValue: dummyWindowPerftest },
+        EnvironmentService
+      ],
+      imports: [HttpClientTestingModule]
+    });
+    const service = TestBed.inject(EnvironmentService);
+    expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.PERFTEST);
+  });
 
-    dummyWithData.data.ccdGatewayUrl = '';
-    expect(dummyWithData.isProd()).toBe(true);
+  it('should detect the ithc environment correctly', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Window, useValue: dummyWindowIthc },
+        EnvironmentService
+      ],
+      imports: [HttpClientTestingModule]
+    });
+    const service = TestBed.inject(EnvironmentService);
+    expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.ITHC);
+  });
 
-    dummyWithData.data.ccdGatewayUrl = null;
-    expect(dummyWithData.isProd()).toBe(true);
+  it('should detect the preview environment correctly', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Window, useValue: dummyWindowPreview },
+        EnvironmentService
+      ],
+      imports: [HttpClientTestingModule]
+    });
+    const service = TestBed.inject(EnvironmentService);
+    expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.PREVIEW);
+  });
 
-    dummyWithData.data.ccdGatewayUrl = 'https://gateway.ccd.platform.hmcts.net';
-    expect(dummyWithData.isProd()).toBe(true);
-  }));
+  it('should detect the local environment correctly', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Window, useValue: dummyWindowLocalhost },
+        EnvironmentService
+      ],
+      imports: [HttpClientTestingModule]
+    });
+    const service = TestBed.inject(EnvironmentService);
+    expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.LOCAL);
+  });
 });

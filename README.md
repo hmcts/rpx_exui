@@ -6,10 +6,12 @@ Setting up Secrets locally as documented below.
 Then follow: 
 ## Startup the Node service locally
 
+
 1. Make sure you have local-development.json within /config, if you do not you can get this from an XUI team member.
 2. Start the Node service locally using: 
 `export IDAM_SECRET=* && export S2S_SECRET=* && export NODE_CONFIG_DIR=../config && export NODE_CONFIG_ENV=development
 && export ALLOW_CONFIG_MUTATIONS=1 && npm run start:node`
+
 
 Explanation: 
 
@@ -162,7 +164,7 @@ Property 'cookies' does not exist on type 'EnhancedRequest' - you will need to m
 sure @types/express-session is added ie.
 `yarn add @types/express-session`
 
-### The following is legacy readme.
+### The following is the legacy readme.
 
 ## Code scaffolding
 
@@ -175,6 +177,11 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Running pure playwright end-to-end tests
+
+Run `HEAD=true TEST_URL=https://manage-case.aat.platform.hmcts.net yarn test:playwrightE2E` to execute the pure playwright end-to-end tests on aat via [Playwright](https://playwright.dev/).
+Add `ENABLE_AXE_TESTS=true` to activate Axe Accessibility testing
 
 ## Running Consumer Driven Contract tests (pact)
 

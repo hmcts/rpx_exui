@@ -7,7 +7,7 @@ const CaseListPage = require('../pageObjects/CaseListPage');
 const { LOG_LEVELS } = require('../../support/constants');
 class caseEditPage {
   constructor() {
-    this.userName = 'lukesuperuserxui@mailnesia.com';
+    this.userName = 'lukesuperuserxui_new@mailnesia.com';
     this.password = 'Monday01';
     this.searchResultsTopPagination = $('ccd-search-result .pagination-top');
     this.ccdCaseEdit = $('ccd-case-edit');

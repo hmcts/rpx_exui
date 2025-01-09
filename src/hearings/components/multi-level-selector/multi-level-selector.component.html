@@ -38,11 +38,11 @@
     <span *ngIf=" !checkValidationWhenRequested"
             id="party-selection-error"
             class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> Select a specialism for the panel member(s).
+            <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span>{{ 'Select a specialism for the panel member(s).' | rpxTranslate }}
     </span>
-    <label class="govuk-label">Choose specialism</label>
+    <label class="govuk-label">{{ 'Choose specialism' | rpxTranslate }}</label>
     <select formControlName="item" class="govuk-select" id="select1" name="select-name">
-      <option value="" selected>Please select</option>
+      <option value="" selected>{{ 'Please select' | rpxTranslate }}</option>
       <option *ngFor="let childNode of multiLevelSelect.controls; let i=index" [ngValue]="childNode.value.key">{{childNode.value.value_en}}</option>
     </select>
   </div>

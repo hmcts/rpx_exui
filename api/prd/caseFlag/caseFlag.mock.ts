@@ -1,4 +1,4 @@
-import MockAdapter from 'axios-mock-adapter';
+import * as MockAdapter from 'axios-mock-adapter';
 import { HttpMockAdapter } from '../../common/httpMockAdapter';
 import { CASE_FLAG_REFERENCE_VALUES } from './data/caseFlagReference.mock.data';
 

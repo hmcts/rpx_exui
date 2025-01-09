@@ -19,14 +19,14 @@ const data = {
     users: {
         aat: [
             {
-                idamId: "12b6a360-7f19-4985-b065-94320a891eaa",
-                email: "lukesuperuserxui@mailnesia.com",
+                idamId: "2d8727c0-44f7-4c2b-99b3-e3d53f90cded",
+                email: "xui_auto_test_user_solicitor@mailinator.com",
                 release: "general", userIdentifier: "PROD_LIKE",
                 key:"Monday01"
             },
             {
-                idamId: "12b6a360-7f19-4985-b065-94320a891eaa",
-                email: "lukesuperuserxui@mailnesia.com",
+                idamId: "2d8727c0-44f7-4c2b-99b3-e3d53f90cded",
+                email: "xui_auto_test_user_solicitor@mailinator.com",
                 release: "general", userIdentifier: "SOLICITOR",
                 key: "Monday01"
             },
@@ -88,26 +88,23 @@ const data = {
                 key: "Welcome01"
             },
             {
-                idamId: "ba02568f-6a46-478d-9f1a-1ce4dea496aa",
-                email: "test@mailnesia.com",
+                idamId: "ae28c49a-ad0f-467a-a480-15fcaa66165d",
+                email: "exuigsuser@mailinator.com",
                 release: "general", userIdentifier: "CASEWORKER_GLOBALSEARCH",
                 key: "Welcome01"
             },
-
             {
-                idamId: "4beb7bbe-5cc9-4f92-9c4d-620bd705dc8a",
-                email: "test@mailnesia.com",
+                idamId: "ae28c49a-ad0f-467a-a480-15fcaa66165d",
+                email: "exuigsuser@mailinator.com",
                 release: "general", userIdentifier: "WA2",
                 key: "Welcome01"
             },
-
             {
-                idamId: "810b5601-4a8a-4c82-9294-34f087f2e67f",
-                email: "test@mailnesia.com",
+                idamId: "ae28c49a-ad0f-467a-a480-15fcaa66165d",
+                email: "exuigsuser@mailinator.com",
                 release: "general", userIdentifier: "WA2_GLOBAL-SEARCH",
                 key: "Welcome01"
             },
-
             {
                 idamId: "7381c1ae-9cc9-4251-b283-727feef94a3d",
                 email: "xui_bookingui_on@hmcts.net",
@@ -119,6 +116,48 @@ const data = {
                 email: "xui_caseofficer@justice.gov.uk",
                 release: "general", userIdentifier: "STAFF_ADMIN",
                 key: "Welcome01"
+            },
+            {
+                idamId: "978dd13c-112a-4920-a7b9-8b8b83a0a243",
+                email: "xui_restricted_case_access_on@mailinator.com",
+                release: "restricted-case-access-on", userIdentifier: "RESTRICTED_CASE_ACCESS_ON",
+                key: "Welcome01"
+            },
+            {
+                idamId: "2dacadcc-1c6a-4251-87f8-8c0ef4d68ba7",
+                email: "xui_restricted_case_access_off@mailinator.com",
+                release: "restricted-case-access-off", userIdentifier: "RESTRICTED_CASE_ACCESS_OFF",
+                key: "Welcome01"
+            },
+            {
+                idamId: "80004966-1d94-456b-8e09-05730a1d9f5e",
+                email: "xui_casefileview_v11_on@mailinator.com",
+                release: "restricted-case-file-view-v1.1-on", userIdentifier: "RESTRICTED_CASE_FILE_VIEW_V1.1_ON",
+                key: "Welcome01"
+            },
+            {
+                idamId: "6bd95a7f-9065-42a0-af4b-c0b6ed84e960",
+                email: "xui_casefileview_v11_off@mailinator.com",
+                release: "restricted-case-file-view-v1.1-off", userIdentifier: "RESTRICTED_CASE_FILE_VIEW_V1.1_OFF",
+                key: "Welcome01"
+            },
+            {
+                idamId: "e6cfb5e9-10c4-456c-ad51-160f077bda79",
+                email: "xui_hearing_manager_cr84_on@justice.gov.uk",
+                release: "hearing_CR84", userIdentifier: "HEARING_MANAGER_CR84_ON",
+                key: "Monday01"
+            },
+            {
+                idamId: "45295735-175a-45f0-94de-cdb805fccff3",
+                email: "xui_hearing_manager_cr84_off@justice.gov.uk",
+                release: "hearing_CR84", userIdentifier: "HEARING_MANAGER_CR84_OFF",
+                key: "Monday01"
+            },
+            {
+                idamId: "11111111-1111-1111-1111-111111111111",
+                email: "henry_fr_harper@yahoo.com",
+                release: "flagsTest", userIdentifier: "USER_WITH_FLAGS",
+                key: "Nagoya0102"
             }
 
 
@@ -132,7 +171,7 @@ const data = {
             },
             {
                 idamId: "12b6a360-7f19-4985-b065-94320a891eaa",
-                email: "lukesuperuserxui@mailnesia.com",
+                email: "lukesuperuserxui_new@mailnesia.com",
                 release: "general", userIdentifier: "SOLICITOR"
             },
             {
@@ -214,6 +253,12 @@ const data = {
                 email: "xui_caseofficer@justice.gov.uk",
                 release: "general", userIdentifier: "STAFF_ADMIN",
                 key: "Welcome01"
+            },
+            {
+                idamId: "11111111-1111-1111-1111-111111111111",
+                email: "henry_fr_harper@yahoo.com",
+                release: "flagsTest", userIdentifier: "USER_WITH_FLAGS",
+                key: "Nagoya0102"
             }
 
 

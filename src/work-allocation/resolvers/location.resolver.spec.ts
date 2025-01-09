@@ -3,20 +3,18 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { metaReducers } from '../../app/app.module';
 import { UserDetails } from '../../app/models';
 import { SessionStorageService } from '../../app/services';
 import { reducers } from '../../app/store';
 import * as fromCaseList from '../../app/store/reducers';
-import { RoleCategory } from '../../role-access/models';
 import { AllocateRoleService } from '../../role-access/services';
-import { LocationsByRegion, LocationsByService } from '../models/dtos';
-import { CaseworkerDataService, LocationDataService } from '../services';
+import { LocationsByRegion } from '../models/dtos';
+import { LocationDataService } from '../services';
 import { LocationResolver } from './location-resolver.service';
 
 describe('LocationResolver', () => {
-  let caseworkerDataService: CaseworkerDataService;
   let judicialWorkerDataService: AllocateRoleService;
   let locationService: LocationDataService;
   let sessionStorageService: SessionStorageService;
@@ -277,21 +275,6 @@ describe('LocationResolver', () => {
     }
   ];
 
-  const CASE_WORKERS = [
-    {
-      email: 'CWR-func-test-user1-#s@justice.gov.uk',
-      firstName: 'IAC',
-      idamId: '998db99b-08aa-43d4-bc6b-0aabbb0e3c6f',
-      lastName: 'CW2',
-      location: {
-        id: '231596',
-        locationName: 'Birmingham',
-        services: null
-      },
-      roleCategory: RoleCategory.LEGAL_OPERATIONS
-    }
-  ];
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -301,7 +284,6 @@ describe('LocationResolver', () => {
       ],
       providers: [
         LocationResolver,
-        CaseworkerDataService,
         AllocateRoleService,
         LocationDataService,
         SessionStorageService,
@@ -309,7 +291,6 @@ describe('LocationResolver', () => {
       ]
     }
     );
-    caseworkerDataService = TestBed.inject(CaseworkerDataService) as CaseworkerDataService;
     judicialWorkerDataService = TestBed.inject(AllocateRoleService) as AllocateRoleService;
     locationService = TestBed.inject(LocationDataService) as LocationDataService;
     sessionStorageService = TestBed.inject(SessionStorageService) as SessionStorageService;
@@ -327,14 +308,6 @@ describe('LocationResolver', () => {
     service.getRegionLocations(CASE_WORKER);
     expect(locationService.getLocationsByRegion).toHaveBeenCalledWith(['IA']);
   });
-
-  it('resolves caseworkers location', inject([LocationResolver], (service: LocationResolver) => {
-    spyOn(store, 'pipe').and.returnValue(of(CASE_WORKER));
-    spyOn(caseworkerDataService, 'getAll').and.returnValue(of(CASE_WORKERS));
-    service.resolve().subscribe((location: any) => {
-      expect(location.court_name).toEqual(CASE_WORKERS[0].location.locationName);
-    });
-  }));
 
   it('resolves judicialworkers location', inject([LocationResolver], (service: LocationResolver) => {
     spyOn(store, 'pipe').and.returnValue(of(JUDICIAL_WORKER));
@@ -446,7 +419,6 @@ describe('LocationResolver', () => {
     // EUI-7909 - Remove next five lines of code
     const locationsByRegion: LocationsByRegion[] = [{ regionId: '4', locations: ['12345', '2341'] }, { regionId: '3', locations: ['54321'] }];
     const expectedLocation = [{ id: null, userId: '998db99b-08aa-43d4-bc6b-0aabbb0e3c6f', locationName: '', locationId: null, services: ['IA'] }];
-    const expectedUserLocations = [];
     expect(service.getJudicialWorkersOrCaseWorkers(locationsByRegion, CASE_WORKER_SHOULD_HAVE_ALL_LOCATIONS)).toEqual(expectedLocation);
     expect(sessionStorageService.setItem).toHaveBeenCalledWith('userLocations', '[]');
   }));
@@ -495,7 +467,6 @@ describe('LocationResolver', () => {
     spyOn(sessionStorageService, 'setItem');
     const locationsByRegion: LocationsByRegion[] = [{ regionId: '4', locations: ['12345', '2341'] }, { regionId: '3', locations: ['54321'] }];
     const expectedLocation = [{ id: null, userId: '998db99b-08aa-43d4-bc6b-0aabbb0e3c6f', locationName: '', locationId: null, services: ['IA'] }];
-    const expectedUserLocations = [];
     expect(service.getJudicialWorkersOrCaseWorkers(locationsByRegion, CASE_WORKER_SHOULD_HAVE_ALL_LOCATIONS)).toEqual(expectedLocation);
     expect(sessionStorageService.setItem).toHaveBeenCalledWith('userLocations', '[]');
   }));

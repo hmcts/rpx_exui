@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store } from '@ngrx/store';
 import { ACTION, HearingInstructionsEnum } from '../../../models/hearings.enum';
 import { HearingsService } from '../../../services/hearings.service';
@@ -15,11 +16,12 @@ export class HearingAdditionalInstructionsComponent extends RequestHearingPageFl
   public instructionsForm: FormGroup;
   public instructionLength: number = HearingInstructionsEnum.InstructionLength;
 
-  constructor(protected readonly hearingStore: Store<fromHearingStore.State>,
+  constructor(private readonly formBuilder: FormBuilder,
+              protected readonly hearingStore: Store<fromHearingStore.State>,
               protected readonly hearingsService: HearingsService,
-              private readonly formBuilder: FormBuilder,
+              protected readonly featureToggleService: FeatureToggleService,
               protected readonly route: ActivatedRoute) {
-    super(hearingStore, hearingsService, route);
+    super(hearingStore, hearingsService, featureToggleService, route);
   }
 
   public ngOnInit(): void {
@@ -48,11 +50,17 @@ export class HearingAdditionalInstructionsComponent extends RequestHearingPageFl
       ...this.hearingRequestMainModel,
       hearingDetails: {
         ...this.hearingRequestMainModel.hearingDetails,
-        listingComments: this.instructionsForm.value.instructions,
+        listingComments: this.santiseHTML(this.instructionsForm.value.instructions),
         autolistFlag: this.getAutoListFlag(),
         listingAutoChangeReasonCode: this.getListingAutoChangeReasonCode()
       }
     };
+  }
+
+  public santiseHTML(string: string) {
+    const tempDivElement = document.createElement('div');
+    tempDivElement.innerHTML = string;
+    return tempDivElement.textContent || tempDivElement.innerText || '';
   }
 
   public getAutoListFlag(): boolean {

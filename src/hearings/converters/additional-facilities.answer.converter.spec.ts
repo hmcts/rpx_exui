@@ -36,4 +36,18 @@ describe('AdditionalFacilitiesAnswerConverter', () => {
     const expected = cold('(b|)', { b: additionalFacilities });
     expect(result$).toBeObservable(expected);
   });
+
+  it('should transform additional facilities when hearings amendment is enabled', () => {
+    const STATE = {
+      ...initialState.hearings,
+      hearingConditions: {
+        ...initialState.hearings.hearingConditions,
+        isHearingAmendmentsEnabled: true
+      }
+    };
+    const result$ = converter.transformAnswer(of(STATE));
+    const additionalFacilities = '<ul><li>Same-sex courtroom</li><li>Secure dock</li></ul>';
+    const expected = cold('(b|)', { b: additionalFacilities });
+    expect(result$).toBeObservable(expected);
+  });
 });

@@ -26,7 +26,7 @@ export async function loadServiceHearingValues(req: EnhancedRequest, res: Respon
   const markupPath: string = `${servicePath}/serviceHearingValues`;
   try {
     const { status, data }: { status: number, data: ServiceHearingValuesModel } = await sendPost(markupPath, reqBody, req);
-    let dataByDefault = data;
+    let dataByDefault = mapDataByDefault(data);
     // If service don't supply the screenFlow pre-set the default screen flow from ExUI
     if (!data.screenFlow) {
       dataByDefault = {
@@ -38,6 +38,27 @@ export async function loadServiceHearingValues(req: EnhancedRequest, res: Respon
   } catch (error) {
     next(error);
   }
+}
+
+export function mapDataByDefault(data: ServiceHearingValuesModel): ServiceHearingValuesModel {
+  // There is an inconsistency with the PartyFlagsModel data provided by the services
+  // i.e., PrL provides partyId and CIVIL provides partyID
+  // Resolving this to copy over partyID into partyId
+  if (data?.caseFlags?.flags?.length > 0) {
+    return {
+      ...data,
+      caseFlags: {
+        ...data.caseFlags,
+        flags: data.caseFlags.flags.map((flag) => (
+          {
+            ...flag,
+            partyId: flag.partyID ? flag.partyID : flag.partyId
+          }
+        ))
+      }
+    };
+  }
+  return data;
 }
 
 /**

@@ -8,7 +8,7 @@ import { SpecificRole } from './specific-role.model';
 export interface AllocateRoleStateData {
   caseId: string;
   jurisdiction: string;
-  assignmentId?: string;
+  assignmentId?: string | string[];
   state: AllocateRoleState;
   typeOfRole: SpecificRole;
   allocateTo: AllocateTo;

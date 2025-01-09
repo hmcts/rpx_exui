@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { SpecificAccessState } from '../../models';
 import { AllocateRoleService } from '../../services';
@@ -9,7 +9,7 @@ import { AllocateRoleEffects } from './allocate-role.effects';
 
 @Injectable()
 export class SpecificAccessEffects {
-  @Effect() public approveSpecificAccessRequest$ = this.actions$
+  public approveSpecificAccessRequest$ = createEffect(() => this.actions$
     .pipe(
       ofType<ApproveSpecificAccessRequest>(SpecificAccessActionTypes.APPROVE_SPECIFIC_ACCESS_REQUEST),
       mergeMap(
@@ -24,9 +24,9 @@ export class SpecificAccessEffects {
             )
           )
       )
-    );
+    ));
 
-  @Effect() public requestMoreInfoSpecificAccessRequest$ = this.actions$
+  public requestMoreInfoSpecificAccessRequest$ = createEffect(() => this.actions$
     .pipe(
       ofType<RequestMoreInfoSpecificAccessRequest>(SpecificAccessActionTypes.REQUEST_MORE_INFO_SPECIFIC_ACCESS_REQUEST),
       mergeMap(
@@ -40,7 +40,7 @@ export class SpecificAccessEffects {
             })
           )
       )
-    );
+    ));
 
   constructor(
     private readonly actions$: Actions,

@@ -11,6 +11,7 @@ import { UserDetails, UserInfo } from '../../models';
 import { LoggerService } from '../../services/logger/logger.service';
 import { EnvironmentService } from '../../shared/services/environment.service';
 import * as fromRoot from '../../store';
+import { InitialisationSyncService } from '../../services/ccd-config/initialisation-sync-service';
 
 @Component({
   selector: 'exui-root',
@@ -45,7 +46,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private readonly loggerService: LoggerService,
     private readonly cookieService: CookieService,
     private readonly environmentService: EnvironmentService,
-    private readonly sessionStorageService: SessionStorageService
+    private readonly sessionStorageService: SessionStorageService,
+    private readonly initialisationSyncService: InitialisationSyncService
   ) {
     this.router.events.subscribe((data) => {
       if (data instanceof RoutesRecognized) {
@@ -106,7 +108,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * Load and Listen for User Details
    */
   public loadAndListenForUserDetails() {
-    this.store.dispatch(new fromRoot.LoadUserDetails());
+    this.store.dispatch(new fromRoot.LoadUserDetails(true));
     const userDetails$ = this.store.pipe(select(fromRoot.getUserDetails));
     const envConfigAndUserDetails$ = combineLatest([this.environmentService.config$, userDetails$]);
     envConfigAndUserDetails$.subscribe((envConfigAndUserDetails) => {
@@ -129,8 +131,10 @@ export class AppComponent implements OnInit, OnDestroy {
    * }
    */
   public userDetailsHandler(ldClientId: string, userDetails: UserDetails) {
-    if (userDetails) {
+    if (userDetails?.userInfo) {
       this.initializeFeature(userDetails.userInfo, ldClientId);
+      console.log('userDetailsHandler initialiseFeature is complete for user ' + userDetails.userInfo?.email);
+      this.initialisationSyncService.initialisationComplete();
       if (propsExist(userDetails, ['sessionTimeout']) && userDetails.sessionTimeout.totalIdleTime > 0) {
         const { idleModalDisplayTime, totalIdleTime } = userDetails.sessionTimeout;
         /**
@@ -153,12 +157,13 @@ export class AppComponent implements OnInit, OnDestroy {
     if (userInfo) {
       const featureUser: FeatureUser = {
         key: userInfo.id || userInfo.uid,
-        custom: {
-          roles: userInfo.roles,
-          orgId: '-1'
-        }
+        roles: userInfo?.roles,
+        orgId: '-1'
       };
+      console.log(`LD Client: ${ldClientId}`);
       this.featureService.initialize(featureUser, ldClientId);
+    } else {
+      console.error('Cannot initialise featureService, no userInfo');
     }
   }
 

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AppConstants } from '../../app/app.constants';
 
 @Injectable()
-export class WorkAllocationAccessGuard implements CanActivate {
+export class WorkAllocationAccessGuard {
   public static defaultUrl: string = '/cases';
   constructor(private readonly featureToggleService: FeatureToggleService,
               private readonly router: Router) {}

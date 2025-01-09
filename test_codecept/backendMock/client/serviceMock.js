@@ -1,6 +1,7 @@
 
 
 const client = require('./index')
+const reportLogger = require('../../codeceptCommon/reportLogger')
 
 class ServiceMock{
 
@@ -14,8 +15,14 @@ class ServiceMock{
         return await client.setUserApiData(authToken, apiMethod, response)
     }
 
+    async getRequestBodyForApiMethod(apiMethod){
+        const authToken = await this.getAuthToken()
+        return await client.getRequestBody(authToken, apiMethod)
+    }
+
     async updateCaseData(data, status){
-        await this.updateMockServer('OnCaseDetails', { status: status ? status:200, data: data });
+        const res = await this.updateMockServer('OnCaseDetails', { status: status ? status:200, data: data });
+        reportLogger.AddMessage(`Case data updated to mock, Status code ${res.status}`)
     }
 
     async updateSearchForCompletableTasks(data, status){
@@ -33,7 +40,21 @@ class ServiceMock{
     async setCaseHearings(data, status) {
         await this.updateMockServer('OnCaseHearings', { status: status ? status : 200, data: data })
     }
-    
+
+    async setOnGetHearing(data, status) {
+        await this.updateMockServer('OnGetHearing', { status: status ? status : 200, data: data })
+    }
+
+    async setHearingServiceHearingValues(data, status){
+        await this.updateMockServer('OnServiceHearingValues', { status: status ? status : 200, data: data })
+    }
+
+
+    async addRoleAssignments(data) {
+        await this.updateMockServer('AddMockRoleAssignments', { status: 200, data: data })
+    }
+
+
 
 }
 

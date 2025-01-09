@@ -7,7 +7,7 @@
   [selectedPerson]="personName"
   [domain]="domain"
   [userIncluded]="userIncluded"
-  [assignedUser]="assignedUser"
+  [assignedUser]="existingUsers && existingUsers.length > 0 ? existingUsers : assignedUser"
   [services]="services"
 >
 </xuilib-find-person>

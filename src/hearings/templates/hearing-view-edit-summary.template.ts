@@ -4,6 +4,7 @@ import { Section } from '../models/section';
 export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
   {
     sectionHTMLTitle: '<h1 class="govuk-heading-l">View or edit hearing</h1>',
+    screenName: 'edit-hearing',
     answers: [
       {
         id: 'caseName',
@@ -43,11 +44,13 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
   },
   {
     sectionHTMLTitle: HearingTemplate.LISTING_INFORMATION,
+    screenName: 'hearing-listing-info',
     isHiddenSource: IsHiddenSource.NOT_LISTED,
     isHiddenMargin: true
   },
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Hearing requirements</h2>',
+    screenName: 'hearing-requirements',
     insetInfo: 'To update this request, select change in the relevant section on this page then resubmit the request.',
     answers: [
       {
@@ -55,12 +58,13 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
         answerTitle: 'Reasonable adjustments',
         answerSource: AnswerSource.CASE_FLAGS,
         changeLink: '/hearings/request/hearing-requirements#linkAmendFlags',
-        isAmendedSource: AnswerSource.CASE_FLAGS
+        isAmendedSource: AnswerSource.REASONABLE_ADJUSTMENTS
       }
     ]
   },
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Additional facilities</h2>',
+    screenName: 'hearing-facilities',
     answers: [
       {
         id: 'additionalSecurityRequired',
@@ -80,6 +84,7 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
   },
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Stage</h2>',
+    screenName: 'hearing-stage',
     answers: [
       {
         id: 'stage',
@@ -92,6 +97,7 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
   },
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Participant attendance</h2>',
+    screenName: 'hearing-attendance',
     answers: [
       {
         id: 'paperHearing',
@@ -99,14 +105,6 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
         answerSource: AnswerSource.IS_PAPER_HEARING,
         changeLink: '/hearings/request/hearing-attendance#paperHearingYes',
         isAmendedSource: AnswerSource.IS_PAPER_HEARING
-      },
-      {
-        id: 'howParticipantsAttendant',
-        answerTitle: 'What will be the methods of attendance for this hearing?',
-        answerSource: AnswerSource.HOW_PARTICIPANTS_ATTEND,
-        changeLink: '/hearings/request/hearing-attendance#hearingLevelChannelList',
-        isHiddenSource: IsHiddenSource.PAPER_HEARING,
-        isAmendedSource: AnswerSource.HOW_PARTICIPANTS_ATTEND
       },
       {
         id: 'howParticipantsAttendant',
@@ -136,6 +134,7 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
   },
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Hearing venue</h2>',
+    screenName: 'hearing-venue',
     answers: [
       {
         id: 'venue',
@@ -148,6 +147,7 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
   },
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Language requirements</h2>',
+    screenName: 'hearing-welsh',
     answers: [
       {
         id: 'needWelsh',
@@ -161,6 +161,7 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
   },
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Judge details</h2>',
+    screenName: 'hearing-judge',
     answers: [
       {
         id: 'needJudge',
@@ -197,6 +198,7 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
   },
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Panel details</h2>',
+    screenName: 'hearing-panel',
     answers: [
       {
         id: 'hearingPanel',
@@ -234,6 +236,7 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
   },
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Length, date and priority level of hearing</h2>',
+    screenName: 'hearing-timing',
     answers: [
       {
         id: 'hearingLength',
@@ -260,6 +263,7 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
   },
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Linked hearings</h2>',
+    screenName: 'hearing-link',
     answers: [
       {
         id: 'linkedHearings',
@@ -272,6 +276,7 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
   },
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Additional instructions</h2>',
+    screenName: 'hearing-additional-instructions',
     answers: [
       {
         id: 'additionalInstruction',

@@ -12,14 +12,15 @@
   "slow": 75,
   "timeout": 180000,
   "ui": "bdd",
-  "spec" : ["./test/integration/tests/**/*.spec.ts"],
+  "spec" : ["./test_codecept/integration/tests/**/*.spec.ts"],
   "exclude": [
-        "./test/integration/tests/workallocation/release2.spec.ts",
-        "./test/integration/tests/workallocation/release2Cases.spec.ts",
-        "./test/integration/tests/workallocation/release2Tasks.spec.ts",
-        "./test/integration/tests/workallocation/release2CaseRoles.spec.ts",
-        "./test/integration/tests/workallocation/person.spec.ts",
-        "./test/integration/tests/workallocation/findPerson.spec.ts"
+        "./test_codecept/integration/tests/workallocation/release2.spec.ts",
+        "./test_codecept/integration/tests/workallocation/release2Cases.spec.ts",
+        "./test_codecept/integration/tests/workallocation/release2Tasks.spec.ts",
+        "./test_codecept/integration/tests/workallocation/release2CaseRoles.spec.ts",
+        "./test_codecept/integration/tests/workallocation/person.spec.ts",
+        "./test_codecept/integration/tests/workallocation/findPerson.spec.ts",
+        "./test_codecept/integration/tests/evidenceManager.spec.ts"
   ],
-  "file": ["./test/integration/tests/utils/helper.ts"]
+  "file": ["./test_codecept/integration/tests/utils/helper.ts"]
 }

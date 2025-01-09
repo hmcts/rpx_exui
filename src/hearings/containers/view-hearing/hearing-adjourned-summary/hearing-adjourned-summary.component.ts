@@ -18,11 +18,13 @@ export class HearingAdjournedSummaryComponent implements OnInit, OnDestroy {
   public adjournReasons: LovRefDataModel[];
   public subscription: Subscription;
   public showSpinner$ : Observable<boolean>;
+  public hearingStageOptions: LovRefDataModel[];
 
   constructor(private readonly hearingStore: Store<fromHearingStore.State>,
               private readonly route: ActivatedRoute,
               private readonly loadingService: LoadingService) {
     this.adjournReasons = this.route.snapshot.data.adjournReasons;
+    this.hearingStageOptions = this.route.snapshot.data.hearingStageOptions;
   }
 
   public ngOnInit(): void {

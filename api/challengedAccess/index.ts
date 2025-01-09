@@ -4,6 +4,7 @@ import { http } from '../lib/http';
 import { EnhancedRequest } from '../lib/models';
 import { setHeaders } from '../lib/proxy';
 import { refreshRoleAssignmentForUser } from '../user';
+import { logAccessRequest } from '../services/lau';
 
 export async function challengedAccessRouter(req: EnhancedRequest, resp, next) {
   const basePath = getConfigValue(SERVICES_ROLE_ASSIGNMENT_API_PATH);
@@ -13,6 +14,9 @@ export async function challengedAccessRouter(req: EnhancedRequest, resp, next) {
   try {
     const response = await http.post(fullPath, req.body, { headers });
     await refreshRoleAssignmentForUser(req.session.passport.user.userinfo, req);
+
+    //do not await. This is a fire and forget call
+    logAccessRequest(req, true);
 
     return resp.status(response.status).send(response.data);
   } catch (error) {

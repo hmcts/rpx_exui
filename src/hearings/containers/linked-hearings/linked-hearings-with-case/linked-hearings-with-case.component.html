@@ -1,26 +1,25 @@
 <xuilib-loading-spinner *ngIf="showSpinner"></xuilib-loading-spinner>
-<a class="govuk-back-link" href="javascript:void(0)" (click)="onBack()">Back</a>
-<xuilib-hmcts-error-summary [errorMessages]="errors" [header]="'There is a problem'" *ngIf="errors && errors.length">
+<a class="govuk-back-link" href="javascript:void(0)" (click)="onBack()">{{ 'Back' | rpxTranslate }}</a>
+<xuilib-hmcts-error-summary [errorMessages]="errors" [header]="'There is a problem' | rpxTranslate" *ngIf="errors && errors.length">
 </xuilib-hmcts-error-summary>
 <exui-linked-hearings-case-title [caseId]="caseId" [caseName]="caseName"></exui-linked-hearings-case-title>
-<h1 class="govuk-heading-l" *ngIf="!linkedCases?.length">{{linkedHearingEnum.NoLinkedCases}}</h1>
+<h1 class="govuk-heading-l" *ngIf="!linkedCases?.length">{{linkedHearingEnum.NoLinkedCases | rpxTranslate }}</h1>
 <h1 class="govuk-heading-l" *ngIf="linkedCases?.length">
-  {{isHearingsAvailable ? linkedHearingEnum.HearingSelection : linkedHearingEnum.NoHearingSelection}}
+  {{isHearingsAvailable ? linkedHearingEnum.HearingSelection : linkedHearingEnum.NoHearingSelection | rpxTranslate }}
 </h1>
 <p class="govuk-hint" *ngIf="linkedCases?.length && isHearingsAvailable">
-  Hearings may be unavailable due to their status, or if they are already
-  linked to another hearing.<br>Only hearings from cases linked to this case will appear in this list.
+  {{ message | rpxTranslate }}
 </p>
 <p class="govuk-hint" *ngIf="!isHearingsAvailable">
-  {{linkedHearingEnum.NoHearingsAvailable}}
+  {{linkedHearingEnum.NoHearingsAvailable | rpxTranslate }}
 </p>
 <div class="govuk-!-margin-top-5" *ngIf="linkedCases && linkedCases.length">
-  <h3 class="govuk-heading-m">Linked cases</h3>
+  <h3 class="govuk-heading-m">{{ 'Linked cases' | rpxTranslate }}</h3>
   <form class="form" [formGroup]="linkHearingForm" id="linked-form">
     <div class="govuk-form-group" formArrayName="linkedCasesWithHearings"
          [ngClass]="{'govuk-form-group--error': !!linkedHearingSelectionError}">
       <span class="govuk-error-message" *ngIf="linkedHearingSelectionError">
-        <span class="govuk-visually-hidden">Error:</span> {{linkedHearingSelectionError}}
+        <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span> {{linkedHearingSelectionError | rpxTranslate }}
       </span>
       <div [formGroupName]="i" *ngFor="let case of linkedCases; let i = index">
         <table class="govuk-table">
@@ -31,7 +30,7 @@
                 {{case.caseName}} &nbsp;{{case.caseRef | caseReference}}
               </th>
               <th scope="col" class="govuk-table__header" width="80px" *ngIf="mode === pageMode.MANAGE_HEARINGS">
-                <a href="javascript:void(0)" class="clear-link" (click)="clearHearings(i)">Clear</a>
+                <a href="javascript:void(0)" class="clear-link" (click)="clearHearings(i)">{{ 'Clear' | rpxTranslate }}</a>
               </th>
             </tr>
             <tr class="govuk-table__row" *ngIf="case.caseHearings.length === 0">
@@ -51,7 +50,7 @@
                     <img src="../../../../assets/images/link_icon_slanted.png" width="20px;" class="align-middle"
                         alt="Linked">&nbsp;
                     <a class="govuk-link" [routerLink]="['/', 'cases', 'case-details', case.caseRef, 'hearings']"
-                      href="javascript:void(0)">Manage Link</a>
+                      href="javascript:void(0)">{{ 'Manage Link' | rpxTranslate }}</a>
                   </span>
                  </td>
                  <td scope="row" class="govuk-table__cell align-middle govuk-table-width-45-percent">
@@ -80,7 +79,7 @@
                   <img src="../../../../assets/images/link_icon_slanted.png" width="20px;" class="align-middle"
                       alt="Linked">&nbsp;
                   <a class="govuk-link" [routerLink]="['/', 'cases', 'case-details', case.caseRef, 'hearings']"
-                    href="javascript:void(0)">Manage Link</a>
+                    href="javascript:void(0)">{{ 'Manage Link' | rpxTranslate }}</a>
                 </span>
               </td>
               <td scope="row" class="govuk-table__cell align-middle govuk-table-width-45-percent">
@@ -103,7 +102,7 @@
           </ng-container>
 
           <tr class="govuk-table__row" class="govuk-table__row" *ngIf="case.caseHearings.length === 0">
-            <td scope="row" class="govuk-table__cell align-middle">No hearings requested</td>
+            <td scope="row" class="govuk-table__cell align-middle">{{ 'No hearings requested' | rpxTranslate }}</td>
           </tr>
           </tbody>
         </table>
@@ -112,8 +111,8 @@
   </form>
 </div>
 <div class=" govuk-!-margin-top-9" *ngIf="linkedCasesWithNoAccessToLoggedInUser && linkedCasesWithNoAccessToLoggedInUser.length">
-  <h3 class="govuk-heading-m">Other cases</h3>
-  You do not have access to the following cases.
+  <h3 class="govuk-heading-m">{{ 'Other cases' | rpxTranslate }}</h3>
+  {{ 'You do not have access to the following cases.' | rpxTranslate }}
   <div class="govuk-form-group govuk-!-margin-top-3">
     <table class="govuk-table">
       <tr class="govuk-table__row" *ngFor="let case of linkedCasesWithNoAccessToLoggedInUser">
@@ -127,13 +126,14 @@
 <br>
 
 <div *ngIf="!linkedCases?.length" class="no-linked-cases">
-  <p>You can only link to hearings from other linked cases.<br>Case links can be created from the 'Linked cases' tab</p>
+  <p>{{ 'You can only link to hearings from other linked cases.' | rpxTranslate }}
+    <br>{{ 'Case links can be created from the \'Linked cases\' tab' | rpxTranslate }}</p>
   <div class="govuk-button-group">
-    <a href="javascript:history.back()" class="govuk-link">Return to hearings</a>
+    <a href="javascript:history.back()" class="govuk-link">{{ 'Return to hearings' | rpxTranslate }}</a>
   </div>
 </div>
 
 <div *ngIf="linkedCases?.length">
-  <button class="govuk-button" data-module="govuk-button" (click)="onSubmit()">Continue</button>
-  <a href="javascript:void(0)" class="link-cancel" (click)="onCancel()">Cancel</a>
+  <button class="govuk-button" data-module="govuk-button" (click)="onSubmit()">{{ 'Continue' | rpxTranslate }}</button>
+  <a href="javascript:void(0)" class="link-cancel" (click)="onCancel()">{{ 'Cancel' | rpxTranslate }}</a>
 </div>

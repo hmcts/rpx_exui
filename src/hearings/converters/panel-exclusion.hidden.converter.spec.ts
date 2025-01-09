@@ -22,8 +22,7 @@ describe('PanelExclusionHiddenConverter', () => {
     const STATE: State = _.cloneDeep(initialState.hearings);
     STATE.hearingRequest.hearingRequestMainModel.hearingDetails.panelRequirements = null;
     const result$ = panelExclusionHiddenConverter.transformHidden(of(STATE));
-    const showWelshPage = true;
-    const expected = cold('(b|)', { b: showWelshPage });
+    const expected = cold('(b|)', { b: true });
     expect(result$).toBeObservable(expected);
   });
 
@@ -33,8 +32,7 @@ describe('PanelExclusionHiddenConverter', () => {
       panelPreferences: JUDICAIL_USER_DETAILS
     };
     const result$ = panelExclusionHiddenConverter.transformHidden(of(STATE));
-    const showWelshPage = false;
-    const expected = cold('(b|)', { b: showWelshPage });
+    const expected = cold('(b|)', { b: false });
     expect(result$).toBeObservable(expected);
   });
 });

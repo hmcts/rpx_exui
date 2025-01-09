@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
+import { MockRpxTranslatePipe } from '../../../../app/shared/test/mock-rpx-translate.pipe';
 import { initialState } from '../../../hearing.test.data';
 import { ACTION } from '../../../models/hearings.enum';
 import { LovRefDataByServiceModel } from '../../../models/lovRefData.model';
@@ -12,7 +13,6 @@ import { CaseReferencePipe } from '../../../pipes/case-reference.pipe';
 import { ConvertArrayToStringPipe } from '../../../pipes/convert-array-to-string.pipe';
 import { HearingsService } from '../../../services/hearings.service';
 import { HearingLinkComponent } from './hearing-link.component';
-
 import createSpyObj = jasmine.createSpyObj;
 
 const reasons: LovRefDataByServiceModel = {
@@ -90,7 +90,8 @@ describe('HearingLinkComponent', () => {
       declarations: [
         CaseReferencePipe,
         ConvertArrayToStringPipe,
-        HearingLinkComponent
+        HearingLinkComponent,
+        MockRpxTranslatePipe
       ],
       providers: [
         provideMockStore({ initialState }),

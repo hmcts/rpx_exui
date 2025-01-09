@@ -1,4 +1,4 @@
-import MockAdapter from 'axios-mock-adapter';
+import * as MockAdapter from 'axios-mock-adapter';
 import { HttpMockAdapter } from '../common/httpMockAdapter';
 import { CASEROLES } from './constants/roles.mock.data';
 

@@ -1,4 +1,4 @@
-import MockAdapter from 'axios-mock-adapter';
+import * as MockAdapter from 'axios-mock-adapter';
 import { HttpMockAdapter } from '../../common/httpMockAdapter';
 import { ALL_JUDICIAL_USERS, RAW_JUDICIAL_USERS } from './data/judicial.mock.data';
 import { JudicialUserModel, RawJudicialUserModel } from './models/judicialUser.model';

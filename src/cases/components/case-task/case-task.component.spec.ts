@@ -1,45 +1,66 @@
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { RoleCategory } from '../../../role-access/models';
+import { PriorityLimits } from '../../../work-allocation/enums';
 import { Caseworker } from '../../../work-allocation/models/dtos';
 import { Task } from '../../../work-allocation/models/tasks';
 import { getMockTasks } from '../../../work-allocation/tests/utils.spec';
 import { CaseTaskComponent } from './case-task.component';
 
 describe('CaseTaskComponent', () => {
-  const mockAlertService = jasmine.createSpyObj('alertService', ['success', 'warning']);
-  const mockSessionStorage = jasmine.createSpyObj('mockSessionStorage', ['getItem']);
-  const mockRouter = jasmine.createSpyObj('router', ['navigate', 'url']);
-  const mockTaskService = jasmine.createSpyObj('taskService', ['claimTask']);
-  const mockFeatureToggleService = jasmine.createSpyObj('FeatureToggleService', ['getValue']);
-  mockRouter.url = '/case-details/123243430403904/tasks';
-  const component = new CaseTaskComponent(mockAlertService, mockRouter, mockSessionStorage, mockTaskService, mockFeatureToggleService);
-  mockFeatureToggleService.getValue.and.returnValue(of({
-    configurations: [
-      {
-        caseTypes: [
-          'Asylum'
-        ],
-        releaseVersion: '3.5',
-        serviceName: 'IA'
-      },
-      {
-        caseTypes: [
-          'PRIVATELAW',
-          'PRLAPPS'
-        ],
-        releaseVersion: '2.1',
-        serviceName: 'PRIVATELAW'
-      },
-      {
-        caseTypes: [
-          'CIVIL',
-          'GENERALAPPLICATION'
-        ],
-        releaseVersion: '2.1',
-        serviceName: 'CIVIL'
-      }
-    ]
-  }));
+  let mockAlertService: any;
+  let mockSessionStorage: any;
+  let mockRouter: any;
+  let mockTaskService: any;
+  let mockFeatureToggleService: any;
+  let mockWindow: any;
+  let component: CaseTaskComponent;
+
+  beforeEach(() => {
+    mockAlertService = jasmine.createSpyObj('alertService', ['success', 'warning']);
+    mockSessionStorage = jasmine.createSpyObj('mockSessionStorage', ['getItem']);
+    mockRouter = jasmine.createSpyObj('router', ['navigate', 'url']);
+    mockTaskService = jasmine.createSpyObj('taskService', ['claimTask']);
+    mockFeatureToggleService = jasmine.createSpyObj('FeatureToggleService', ['getValue']);
+    mockRouter.url = '/case-details/123243430403904/tasks';
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    mockRouter.navigate.and.callFake(() => new Promise((resolve, reject) => resolve(true)));
+    mockWindow = { location: new URL('https://manage-case.hmcts.platform.net') };
+    component = new CaseTaskComponent(mockAlertService, mockRouter, mockSessionStorage, mockTaskService, mockWindow);
+    mockFeatureToggleService.getValue.and.returnValue(of({
+      configurations: [
+        {
+          caseTypes: [
+            'Asylum'
+          ],
+          releaseVersion: '3.5',
+          serviceName: 'IA'
+        },
+        {
+          caseTypes: [
+            'PRIVATELAW',
+            'PRLAPPS'
+          ],
+          releaseVersion: '2.1',
+          serviceName: 'PRIVATELAW'
+        },
+        {
+          caseTypes: [
+            'CIVIL',
+            'GENERALAPPLICATION'
+          ],
+          releaseVersion: '2.1',
+          serviceName: 'CIVIL'
+        },
+        {
+          caseTypes: [
+            'Test'
+          ],
+          releaseVersion: '4',
+          serviceName: 'TEST'
+        }
+      ]
+    }));
+  });
 
   it('ngOnInit', () => {
     component.task = {} as Task;
@@ -162,6 +183,68 @@ describe('CaseTaskComponent', () => {
     expect(result).toBe(`[Link the appeal](/cases/case-details/1620409659381330/trigger/linkAppeal/linkAppealreasonForLinkAppealPageId?tid=${task.id})`);
   });
 
+  it('should set isTaskUrgent based on the task priority', () => {
+    component.task = {
+      assignee: '44d5d2c2-7112-4bef-8d05-baaa610bf463',
+      assigneeName: 'Some Name',
+      permissions: { values: ['Own'] },
+      id: null,
+      description: null,
+      case_id: null,
+      caseName: null,
+      caseCategory: null,
+      location: null,
+      taskName: null,
+      dueDate: new Date(),
+      actions: [],
+      warnings: false,
+      derivedIcon: null,
+      major_priority: PriorityLimits.Urgent
+    };
+    expect(component.isTaskUrgent).toBe(true);
+    component.task = {
+      assignee: '44d5d2c2-7112-4bef-8d05-baaa610bf463',
+      assigneeName: 'Some Name',
+      permissions: { values: ['Own'] },
+      id: null,
+      description: null,
+      case_id: null,
+      caseName: null,
+      caseCategory: null,
+      location: null,
+      taskName: null,
+      dueDate: new Date(),
+      actions: [],
+      warnings: false,
+      derivedIcon: null,
+      major_priority: PriorityLimits.High
+    };
+    expect(component.isTaskUrgent).toBe(false);
+  });
+
+  it('should get the correct returnUrl', () => {
+    expect(component.returnUrl).toEqual(mockRouter.url);
+    mockRouter = null;
+    component = new CaseTaskComponent(mockAlertService, mockRouter, mockSessionStorage, mockTaskService, mockWindow);
+    component.task = {
+      assignee: '44d5d2c2-7112-4bef-8d05-baaa610bf463',
+      assigneeName: 'Some Name',
+      permissions: { values: ['Own'] },
+      id: null,
+      description: null,
+      case_id: '1111222233334444',
+      caseName: null,
+      caseCategory: null,
+      location: null,
+      taskName: null,
+      dueDate: new Date(),
+      actions: [],
+      warnings: false,
+      derivedIcon: null
+    };
+    expect(component.returnUrl).toEqual('case-details/1111222233334444/tasks');
+  });
+
   it('getDueDateTitle should be Task created', () => {
     component.isUserJudicial = true;
     expect(component.getDueDateTitle()).toEqual('Task created');
@@ -183,8 +266,22 @@ describe('CaseTaskComponent', () => {
       // need to check that navigate has not been called
       component.onActionHandler(exampleTask, firstOption);
       expect(mockRouter.navigate).not.toHaveBeenCalled();
+      expect(mockTaskService.claimTask).toHaveBeenCalledWith(exampleTask.id);
       expect(refreshTasksSpy).toHaveBeenCalled();
       expect(mockAlertService.success).toHaveBeenCalled();
+    });
+
+    it('should handle a claim action failure', () => {
+      mockTaskService.claimTask.and.returnValue(throwError(() => new Error('Error')));
+      const refreshTasksSpy = spyOn(component.taskRefreshRequired, 'emit');
+      spyOn(component, 'claimTaskErrors');
+      // need to check that navigate has not been called
+      component.onActionHandler(exampleTask, firstOption);
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+      expect(mockTaskService.claimTask).toHaveBeenCalledWith(exampleTask.id);
+      expect(refreshTasksSpy).not.toHaveBeenCalled();
+      expect(mockAlertService.success).not.toHaveBeenCalled();
+      expect(component.claimTaskErrors).toHaveBeenCalled();
     });
 
     it('should handle an action that redirects', () => {
@@ -238,6 +335,10 @@ describe('CaseTaskComponent', () => {
       expect(component.toDate('')).toBe(null);
     });
 
+    it('should return null if the date string is not valid', () => {
+      expect(component.toDate('abc')).toBe(null);
+    });
+
     it('should return a date if there is a date value', () => {
       const firstDate = new Date('01-01-2000');
       const secondDate = new Date('03-12-2020');
@@ -246,10 +347,22 @@ describe('CaseTaskComponent', () => {
     });
   });
 
-  describe('onClick()', () => {
+  describe('onClick() with no tid', () => {
     it('should navigate correctly on click', () => {
-      component.onClick('exampleUrl(firstUrlPart?secondUrlPart=equalPart)end');
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['firstUrlPart'], { queryParams: { tid: 'equalPart' } });
+      component.onClick('exampleUrl(http://firsturlpart/?foo=fooparam)end');
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['http://firsturlpart/?foo=fooparam'], { queryParams: {} });
+    });
+  });
+  describe('onClick() with tid', () => {
+    it('should navigate correctly on click', () => {
+      component.onClick('exampleUrl(http://firsturlpart/?tid=1234)end');
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['http://firsturlpart/'], { queryParams: { tid: '1234' } });
+    });
+  });
+  describe('onClick() with relative URL and tid', () => {
+    it('should navigate correctly on click', () => {
+      component.onClick('exampleUrl(/firsturlpart/?tid=1234)end');
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['https://manage-case.hmcts.platform.net/firsturlpart/'], { queryParams: { tid: '1234' } });
     });
   });
 });

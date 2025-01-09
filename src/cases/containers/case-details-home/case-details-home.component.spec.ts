@@ -13,17 +13,20 @@ import { CaseDetailsHomeComponent } from '..';
 import { reducers } from '../../../app/store';
 import * as fromFeature from '../../store';
 import { InfoMessage } from '../../../app/shared/enums/info-message';
+import { LoggerService } from 'src/app/services/logger/logger.service';
+
 describe('CaseDetailsHomeComponent', () => {
   let component: CaseDetailsHomeComponent;
   let fixture: ComponentFixture<CaseDetailsHomeComponent>;
   const mockAlertService = jasmine.createSpyObj('alertService', ['success', 'setPreserveAlerts', 'error']);
   const mockErrorNotifierService = jasmine.createSpyObj('ErrorNotifierService', ['announceError']);
-  const mockActivatedRoute = { data: of({ case: { case_id: '1234', case_type: { id: 'caseTypeId', jurisdiction: { id: 'IA' } } } }) };
+  const mockActivatedRoute: any = { data: of({ case: { case_id: '1234', case_type: { id: 'caseTypeId', jurisdiction: { id: 'IA' } } } }) };
   const mockSessionStorageService = jasmine.createSpyObj('SessionStorageService', ['setItem']);
   let mockRouter: any;
   let store: Store<fromFeature.State>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let storeDispatchMock: any;
+  const mockLoggerService = jasmine.createSpyObj('LoggerService', ['log']);
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -37,7 +40,8 @@ describe('CaseDetailsHomeComponent', () => {
         { provide: AlertService, useValue: mockAlertService },
         { provide: ErrorNotifierService, useValue: mockErrorNotifierService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        { provide: SessionStorageService, useValue: mockSessionStorageService }
+        { provide: SessionStorageService, useValue: mockSessionStorageService },
+        { provide: LoggerService, useValue: mockLoggerService }
       ]
     })
       .compileComponents();
@@ -63,6 +67,12 @@ describe('CaseDetailsHomeComponent', () => {
 
     it('should not have a success message that is shown', () => {
       expect(mockAlertService.success).not.toHaveBeenCalled();
+    });
+
+    it('should log a message when no data available in route', () => {
+      mockActivatedRoute.data = of({});
+      component.ngOnInit();
+      expect(mockLoggerService.log).toHaveBeenCalledWith('CaseDetailsHomeComponent: No data available to add caseInfo details in session storage');
     });
   });
 

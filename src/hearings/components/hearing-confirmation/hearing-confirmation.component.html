@@ -2,19 +2,22 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <div class="govuk-panel govuk-panel--confirmation">
-        <h1 class="govuk-panel__title">{{heading}}</h1>
-        <div class="govuk-panel__body">{{headingDescription}}</div>
+        <h1 class="govuk-panel__title">{{heading | rpxTranslate}}</h1>
+        <div class="govuk-panel__body">{{headingDescription | rpxTranslate}}</div>
       </div>
       <div>
-        <h2 class="govuk-heading-m">{{subheading}}</h2>
+        <h2 class="govuk-heading-m">{{subheading | rpxTranslate}}</h2>
         <div class="govuk-body" *ngIf="subheadingDescription">
-          {{subheadingDescription}}
+          {{subheadingDescription | rpxTranslate}}
         </div>
         <div class="govuk-body" *ngIf="caseId">
-          You can <a (click)="$event.preventDefault();" [routerLink]="['/', 'cases', 'case-details', caseId, 'hearings']" class="govuk-link">view the status of this hearing in the hearings tab</a>.
+          {{ 'You can' | rpxTranslate }} 
+          <a (click)="$event.preventDefault();" [routerLink]="['/', 'cases', 'case-details', caseId, 'hearings']" class="govuk-link">
+            {{ 'view the status of this hearing in the hearings tab' | rpxTranslate }}
+          </a>.
         </div>
         <div class="govuk-body" *ngIf="additionalDescription"
-          [innerHtml]="additionalDescription"></div>
+          [innerHtml]="additionalDescription | rpxTranslate"></div>
       </div>
     </div>
   </div>

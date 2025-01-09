@@ -6,18 +6,17 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AlertService, LoadingService, PaginationModule } from '@hmcts/ccd-case-ui-toolkit';
 import { ExuiCommonLibModule, FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store, StoreModule } from '@ngrx/store';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { SessionStorageService } from '../../../app/services';
 import { InfoMessageCommService } from '../../../app/shared/services/info-message-comms.service';
 import * as fromActions from '../../../app/store';
 import { CaseRoleDetails } from '../../../role-access/models/case-role-details.interface';
 import { AllocateRoleService } from '../../../role-access/services';
-import { CheckReleaseVersionService } from '../../../work-allocation/services/check-release-version.service';
 import { JurisdictionsService } from '../../../work-allocation/services/juridictions.service';
 import { WorkAllocationComponentsModule } from '../../components/work-allocation.components.module';
 import { Case } from '../../models/cases';
-import { CaseworkerDataService, LocationDataService, WASupportedJurisdictionsService, WorkAllocationCaseService, WorkAllocationFeatureService } from '../../services';
+import { CaseworkerDataService, LocationDataService, WASupportedJurisdictionsService, WorkAllocationCaseService } from '../../services';
 import { getMockCaseRoles, getMockCases } from '../../tests/utils.spec';
 import { MyAccessComponent } from '../my-access/my-access.component';
 import { MyCasesComponent } from '../my-cases/my-cases.component';
@@ -70,13 +69,6 @@ describe('WorkCaseListWrapperComponent', () => {
   const mockFeatureToggleService = jasmine.createSpyObj('mockLoadingService', ['isEnabled']);
   const mockCaseworkerDataService = jasmine.createSpyObj('mockCaseworkerDataService', ['getAll']);
   const mockAllocateRoleService = jasmine.createSpyObj('mockAllocateRoleService', ['getCaseRolesUserDetails', 'getValidRoles']);
-  const mockCheckReleaseVersionService = {
-    isRelease4: () => {
-      return {
-        subscribe: () => true
-      };
-    }
-  };
   let storeMock: jasmine.SpyObj<Store<fromActions.State>>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let store: Store<fromActions.State>;
@@ -103,14 +95,12 @@ describe('WorkCaseListWrapperComponent', () => {
         { provide: InfoMessageCommService, useValue: mockInfoMessageCommService },
         { provide: SessionStorageService, useValue: mockSessionStorageService },
         { provide: AlertService, useValue: mockAlertService },
-        { provide: WorkAllocationFeatureService, useValue: mockFeatureService },
         { provide: LoadingService, useValue: mockLoadingService },
         { provide: FeatureToggleService, useValue: mockFeatureToggleService },
         { provide: CaseworkerDataService, useValue: mockCaseworkerDataService },
         { provide: AllocateRoleService, useValue: mockAllocateRoleService },
         { provide: WASupportedJurisdictionsService, useValue: mockWASupportedJurisdictionService },
-        { provide: Store, useValue: storeMock },
-        { provide: CheckReleaseVersionService, useValue: mockCheckReleaseVersionService }
+        { provide: Store, useValue: storeMock }
       ]
     }).compileComponents();
     fixture = TestBed.createComponent(WorkCaseListWrapperComponent);
@@ -157,5 +147,21 @@ describe('WorkCaseListWrapperComponent', () => {
       component.onActionHandler(secondCaseAction);
       expect(mockRouter.navigateByUrl).toHaveBeenCalledWith(jasmine.stringMatching('remove'), { state: { backUrl: null } });
     }));
+
+    it('should filter out duplicates values', () => {
+      const loadSpy = spyOn(component, 'loadSupportedJurisdictions');
+      let jurisdictionValue = [];
+      component.waSupportedJurisdictions$ = new Observable((jr) => {
+        jr.next(['Public Law', 'Immigration', 'Public Law']);
+      });
+
+      component.waSupportedJurisdictions$.subscribe((rst) => {
+        jurisdictionValue = [...new Set(rst)];
+      });
+
+      component.ngOnInit();
+      expect(loadSpy).toHaveBeenCalled();
+      expect(jurisdictionValue.length).toEqual(2);
+    });
   });
 });

@@ -189,7 +189,7 @@ describe('ParticipantAttendenceAnswerConverter', () => {
       hearingLinks: null
     };
     const result$ = converter.transformAnswer(of(STATE), 0);
-    const room = 'Error: P1 - Error: invalidChannel';
+    const room = 'Jane Smith - Error: invalidChannel';
     const expected = cold('(b|)', { b: room });
     expect(result$).toBeObservable(expected);
   });
@@ -338,7 +338,7 @@ describe('ParticipantAttendenceAnswerConverter', () => {
       hearingLinks: null
     };
     const result$ = converter.transformAnswer(of(STATE), 0);
-    const room = 'Error: P1 - Error: invalidChannel';
+    const room = 'Jane Smith - Error: invalidChannel';
     const expected = cold('(b|)', { b: room });
     expect(result$).toBeObservable(expected);
   });

@@ -21,7 +21,8 @@ import {
 import { getEmail, getJudicialUsersFromApi, getUserName, mapRoleCategory } from './exclusionService';
 import { CaseRoleRequestPayload } from './models/caseRoleRequestPayload';
 import { release2ContentType } from './models/release2ContentType';
-import { getSubstantiveRoles } from './roleAssignmentService';
+import { Role } from './models/roleType';
+import { getAllRoles, getSubstantiveRoles } from './roleAssignmentService';
 
 const baseRoleAccessUrl = getConfigValue(SERVICES_ROLE_ASSIGNMENT_API_PATH);
 const SUPPORTED_ROLE_CATEGORIES = ['LEGAL_OPERATIONS', 'JUDICIAL', 'CTSC', 'ADMIN'];
@@ -55,7 +56,7 @@ export async function getRolesByCaseId(req: EnhancedRequest, res: Response, next
   }
 }
 
-export async function getAccessRolesByCaseId(req: EnhancedRequest, res: Response, next: NextFunction): Promise<Response> {
+export async function getAccessRoles(req: EnhancedRequest, res: Response, next: NextFunction): Promise<Response> {
   const requestPayload = getAccessRolesRequestPayload(req.body.caseId, req.body.jurisdiction, req.body.caseType);
   const basePath = getConfigValue(SERVICES_ROLE_ASSIGNMENT_API_PATH);
   const fullPath = `${basePath}/am/role-assignments/query`;
@@ -68,6 +69,36 @@ export async function getAccessRolesByCaseId(req: EnhancedRequest, res: Response
       req
     );
     return res.status(response.status).send(finalRoles);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getAccessRolesByCaseId(req: EnhancedRequest, res: Response, next: NextFunction): Promise<Response> {
+  const requestPayload = getAccessRolesRequestPayloadForCaseId(req.body.caseId);
+  const basePath = getConfigValue(SERVICES_ROLE_ASSIGNMENT_API_PATH);
+  const fullPath = `${basePath}/am/role-assignments/query`;
+  const headers = setHeaders(req, release2ContentType);
+  try {
+    const response: AxiosResponse = await http.post(fullPath, requestPayload, { headers });
+    const finalRoles: CaseRole[] = mapResponseToCaseRoles(
+      response.data.roleAssignmentResponse,
+      req.body.assignmentId,
+      req
+    );
+    if (finalRoles) {
+      const rolesResponse = await getAllRoles(req);
+      const roles = (rolesResponse.data as Role[]);
+      finalRoles?.forEach((finalRole) => {
+        const role = roles?.find((role) => role.name === finalRole.roleName);
+        if (role) {
+          finalRole.roleName = role.label;
+        }
+      });
+    }
+    // filter out any users with role professional
+    const filteredRoles = finalRoles.filter((role) => role.roleCategory !== 'PROFESSIONAL');
+    return res.status(response.status).send(filteredRoles);
   } catch (error) {
     next(error);
   }
@@ -105,10 +136,7 @@ export async function getJudicialUsers(req: EnhancedRequest, res: Response, next
 
 export async function getMyAccessNewCount(req, resp, next) {
   try {
-    if (!req.session || !req.session.roleAssignmentResponse) {
-      return resp.status(401).send();
-    }
-
+    await refreshRoleAssignmentForUser(req.session.passport.user.userinfo, req);
     const roleAssignments = req.session.roleAssignmentResponse as RoleAssignment[];
     const cases = await getMyAccessMappedCaseList(roleAssignments, req);
     const newAssignments = cases.filter((item) => item.isNew);
@@ -121,9 +149,7 @@ export async function getMyAccessNewCount(req, resp, next) {
 
 export async function manageLabellingRoleAssignment(req: EnhancedRequest, resp: Response, next: NextFunction) {
   try {
-    if (!req.session || !req.session.roleAssignmentResponse) {
-      return resp.status(500).send();
-    }
+    await refreshRoleAssignmentForUser(req.session.passport.user.userinfo, req);
     const currentUserAssignments = (req.session.roleAssignmentResponse as RoleAssignment[]);
     const challengedAccessRequest = currentUserAssignments.find((roleAssignment) => roleAssignment.attributes
       && roleAssignment.attributes.caseId === req.params.caseId
@@ -325,6 +351,18 @@ export function getAccessRolesRequestPayload(caseId: string,
           jurisdiction: [jurisdiction]
         },
         roleName: ['specific-access-requested']
+      }
+    ]
+  };
+}
+
+export function getAccessRolesRequestPayloadForCaseId(caseId: string): CaseRoleRequestPayload {
+  return {
+    queryRequests: [
+      {
+        attributes: {
+          caseId: [caseId]
+        }
       }
     ]
   };

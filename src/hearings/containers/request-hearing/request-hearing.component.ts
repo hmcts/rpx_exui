@@ -1,9 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { ACTION } from '../../models/hearings.enum';
+import { select, Store } from '@ngrx/store';
+import { ACTION, HearingRequestPageRouteNames } from '../../models/hearings.enum';
 import { HearingsService } from '../../services/hearings.service';
 import * as fromHearingStore from '../../store';
 import { AbstractPageFlow } from '../../utils/abstract-page-flow';
+import { HearingsUtils } from '../../utils/hearings.utils';
+import { HearingRequestMainModel } from '../../models/hearingRequestMain.model';
+import { ServiceHearingValuesModel } from '../../models/serviceHearingValues.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'exui-request-hearing',
@@ -11,58 +15,102 @@ import { AbstractPageFlow } from '../../utils/abstract-page-flow';
   styleUrls: ['./request-hearing.component.scss']
 })
 export class RequestHearingComponent implements OnDestroy {
-  private static readonly HEARING_CREATE_EDIT_SUMMARY = 'hearing-create-edit-summary';
-  private static readonly HEARING_VIEW_EDIT_SUMMARY = 'hearing-view-edit-summary';
-  private static readonly HEARING_CHANGE_REASON = 'hearing-change-reason';
-  private static readonly HEARING_CONFIRMATION = 'hearing-confirmation';
+  private readonly reloadMessage = 'The Party IDs for this request appear mismatched, please reload and start the request again.';
+  public action = ACTION;
+  public caseId: string;
+  public hearingStateSub: Subscription;
+  public serviceHearingValuesModel: ServiceHearingValuesModel;
+  public hearingRequestMainModel: HearingRequestMainModel;
+  public showMismatchErrorMessage: boolean;
+  public validationErrors: { id: string, message: string };
 
   constructor(private readonly hearingStore: Store<fromHearingStore.State>,
-              private readonly pageFlow: AbstractPageFlow,
-              private readonly hearingsService: HearingsService) {}
+    private readonly pageFlow: AbstractPageFlow,
+    private readonly hearingsService: HearingsService) {
+    this.hearingStateSub = this.hearingStore.pipe(select(fromHearingStore.getHearingsFeatureState)).subscribe(
+      (hearingState) => {
+        this.serviceHearingValuesModel = { ...hearingState.hearingValues.serviceHearingValuesModel };
+        this.hearingRequestMainModel = { ...hearingState.hearingRequest.hearingRequestMainModel };
+      });
+  }
 
   public onBack(): void {
     this.hearingsService.navigateAction(ACTION.BACK);
   }
 
+  public resetFocus(): void {
+    (document.getElementsByClassName('govuk-back-link')[0] as HTMLElement).focus();
+  }
+
   public onContinue(): void {
     this.hearingsService.navigateAction(ACTION.CONTINUE);
+    this.resetFocus();
   }
 
-  public submitNewRequest(): void {
-    this.hearingsService.navigateAction(ACTION.SUBMIT);
+  public submitRequest(action: ACTION): void {
+    if (action === ACTION.VIEW_EDIT_REASON) {
+      this.hearingsService.submitUpdatedRequestClicked = true;
+      this.hearingsService.navigateAction(action);
+    } else if (action === ACTION.SUBMIT) {
+      if (!HearingsUtils.checkHearingPartiesConsistency(this.hearingRequestMainModel, this.serviceHearingValuesModel)) {
+        this.showMismatchErrorMessage = true;
+        this.validationErrors = { id: 'reload-error-message', message: this.reloadMessage };
+      } else {
+        this.hearingsService.hearingRequestForSubmitValid = true;
+        this.hearingsService.navigateAction(action);
+      }
+    } else {
+      // if we are submitting and awaiting backend process
+      this.hearingsService.hearingRequestForSubmitValid = false;
+      this.hearingsService.navigateAction(action);
+    }
   }
 
-  public submitUpdatedRequest(): void {
-    this.hearingsService.navigateAction(ACTION.VIEW_EDIT_REASON);
-  }
-
-  public submitChangeRequest(): void {
-    this.hearingsService.navigateAction(ACTION.VIEW_EDIT_SUBMIT);
-  }
-
-  public get isSummary(): boolean {
-    return this.isCreateEditSummary || this.isViewEditSummary;
+  public buttonDisabled(action: ACTION): boolean {
+    if (action === ACTION.VIEW_EDIT_SUBMIT || action === ACTION.SUBMIT) {
+      return this.hearingsService.hearingRequestForSubmitValid;
+    }
+    return false;
   }
 
   public get isCreateEditSummary(): boolean {
-    return this.pageFlow.getCurrentPage() === RequestHearingComponent.HEARING_CREATE_EDIT_SUMMARY;
+    return this.pageFlow.getCurrentPage() === HearingRequestPageRouteNames.HEARING_CREATE_EDIT_SUMMARY;
   }
 
   public get isViewEditSummary(): boolean {
-    return this.pageFlow.getCurrentPage() === RequestHearingComponent.HEARING_VIEW_EDIT_SUMMARY;
+    return this.pageFlow.getCurrentPage() === HearingRequestPageRouteNames.HEARING_VIEW_EDIT_SUMMARY;
+  }
+
+  public get isViewSummary(): boolean {
+    return this.pageFlow.getCurrentPage() === HearingRequestPageRouteNames.HEARING_VIEW_SUMMARY;
+  }
+
+  public get isEditSummary(): boolean {
+    return this.pageFlow.getCurrentPage() === HearingRequestPageRouteNames.HEARING_EDIT_SUMMARY;
   }
 
   public get isViewEditReason(): boolean {
-    return this.pageFlow.getCurrentPage() === RequestHearingComponent.HEARING_CHANGE_REASON;
+    return this.pageFlow.getCurrentPage() === HearingRequestPageRouteNames.HEARING_CHANGE_REASON;
   }
 
   public get isConfirmationPage(): boolean {
-    return this.pageFlow.getCurrentPage() === RequestHearingComponent.HEARING_CONFIRMATION;
+    return this.pageFlow.getCurrentPage() === HearingRequestPageRouteNames.HEARING_CONFIRMATION;
+  }
+
+  public get isChildPage(): boolean {
+    return !this.isCreateEditSummary &&
+      !this.isViewEditSummary &&
+      !this.isViewSummary &&
+      !this.isEditSummary &&
+      !this.isViewEditReason &&
+      !this.isConfirmationPage;
   }
 
   public ngOnDestroy(): void {
     this.hearingStore.dispatch(new fromHearingStore.ResetHearingRequest());
     this.hearingStore.dispatch(new fromHearingStore.ResetHearingValues());
     this.hearingStore.dispatch(new fromHearingStore.ResetHearingConditions());
+    this.hearingsService.propertiesUpdatedAutomatically = { pageless: {}, withinPage: {} };
+    this.hearingsService.propertiesUpdatedOnPageVisit = null;
   }
 }

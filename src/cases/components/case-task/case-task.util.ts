@@ -19,10 +19,20 @@ export const appendTaskIdAsQueryStringToTaskDescription = (task: Task): string =
     markdownList.forEach((markdown) => {
       if (markdown) {
         const taskIdQueryString = markdown.includes('?') ? `&tid=${task.id}` : `?tid=${task.id}`;
-        newTaskDescription += markdown.includes('/') ? `${markdown}${taskIdQueryString})` : `${markdown})`;
+        if (markdown.includes('#')) {
+          const hashText = markdown.substring(markdown.indexOf('#'));
+          const taskDescription = markdown.slice(0, markdown.indexOf('#'));
+          newTaskDescription += `${taskDescription}${taskIdQueryString}${hashText})`;
+        } else if (markdown.includes('/')) {
+          newTaskDescription += `${markdown}${taskIdQueryString})`;
+        } else {
+          newTaskDescription += `${markdown})`;
+        }
       }
     });
     return newTaskDescription;
+  } else if (task?.description) {
+    return task?.description;
   }
   return '';
 };

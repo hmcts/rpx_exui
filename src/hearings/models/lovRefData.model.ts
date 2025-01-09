@@ -12,6 +12,7 @@ export interface LovRefDataModel {
   child_nodes?: LovRefDataModel[];
   selected?: boolean;
   from?: string;
+  showAmendedLabel?: boolean;
 }
 
 export interface LovRefDataByServiceModel {

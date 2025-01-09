@@ -19,9 +19,9 @@ var ProbateCase = require('../pageObjects/ProbateCase');
 
 var CaseManager = require('../pageObjects/common/CaseManager');
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   let createCaseStartPage = new CreateCaseStartPage();
   let createWizardPage = new CreateCaseWizardPage();
   let appealCreatedPage = new AppealCreatedPage();
@@ -136,4 +136,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
     await createCaseStartPage.selectEvent('Consent Order Application');
     await createCaseStartPage.clickStartButton();
   });
-});

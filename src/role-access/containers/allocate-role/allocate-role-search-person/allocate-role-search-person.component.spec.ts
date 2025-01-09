@@ -11,14 +11,16 @@ import {
 } from '../../../models';
 import { ChoosePersonAndGo } from '../../../store';
 import { AllocateRoleSearchPersonComponent } from './allocate-role-search-person.component';
+import { ActivatedRoute } from '@angular/router';
 
 describe('AllocateRolePersonComponent', () => {
   let component: AllocateRoleSearchPersonComponent;
   let mockStore: any;
+  let mockRoute: ActivatedRoute;
 
   beforeEach((() => {
     mockStore = jasmine.createSpyObj('mockStore', ['pipe', 'dispatch']);
-    component = new AllocateRoleSearchPersonComponent(mockStore);
+    component = new AllocateRoleSearchPersonComponent(mockStore, mockRoute);
   }));
 
   it('navigationHandler raises invalid Error when person not selected', () => {
@@ -70,7 +72,7 @@ describe('AllocateRolePersonComponent', () => {
       assignmentId: 'a123456',
       state: AllocateRoleState.CHOOSE_ALLOCATE_TO,
       typeOfRole: { id: 'ctsc', name: 'CTSC' },
-      allocateTo: AllocateTo.RESERVE_TO_ME,
+      allocateTo: AllocateTo.ALLOCATE_TO_ME,
       personToBeRemoved: {
         id: 'p111111',
         name: 'test1',
@@ -105,7 +107,7 @@ describe('AllocateRolePersonComponent', () => {
       assignmentId: 'a123456',
       state: AllocateRoleState.CHOOSE_ALLOCATE_TO,
       typeOfRole: { id: '', name: '' },
-      allocateTo: AllocateTo.RESERVE_TO_ME,
+      allocateTo: AllocateTo.ALLOCATE_TO_ME,
       personToBeRemoved: {
         id: 'p111111',
         name: 'test1',
@@ -140,7 +142,7 @@ describe('AllocateRolePersonComponent', () => {
       assignmentId: 'a123456',
       state: AllocateRoleState.CHOOSE_ALLOCATE_TO,
       typeOfRole: { id: 'admin', name: 'Admin' },
-      allocateTo: AllocateTo.RESERVE_TO_ME,
+      allocateTo: AllocateTo.ALLOCATE_TO_ME,
       personToBeRemoved: {
         id: 'p111111',
         name: 'test1',
@@ -175,7 +177,7 @@ describe('AllocateRolePersonComponent', () => {
       assignmentId: 'a123456',
       state: AllocateRoleState.CHOOSE_ALLOCATE_TO,
       typeOfRole: { id: 'lead-judge', name: 'Lead judge' },
-      allocateTo: AllocateTo.RESERVE_TO_ME,
+      allocateTo: AllocateTo.ALLOCATE_TO_ME,
       personToBeRemoved: {
         id: 'p111111',
         name: 'test1',

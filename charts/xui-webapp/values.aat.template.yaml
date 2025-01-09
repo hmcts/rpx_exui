@@ -1,8 +1,13 @@
 nodejs:
+  devmemoryRequests: 512Mi
+  devcpuRequests: 250m
+  devmemoryLimits: 2Gi
+  devcpuLimits: 2
   image: ${IMAGE_NAME}
   ingressHost: ${SERVICE_FQDN}
   environment:
      NODE_TLS_REJECT_UNAUTHORIZED: 1
+     FEATURE_JRD_E_LINKS_V2_ENABLED: true
      HEALTH_CCD_COMPONENT_API: https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net
      HEALTH_CCD_DATA_API: http://ccd-data-store-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
      HEALTH_DOCUMENTS_API: http://dm-store-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/health

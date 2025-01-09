@@ -13,7 +13,7 @@ class CreateCaseStartPage {
     this._jurisdiction = new Dropdown('#cc-jurisdiction');
     this._caseType = new Dropdown('#cc-case-type');
     this._event = new Dropdown('#cc-event');
-    this._submitButton = element('#content button');
+    this._submitButton = $('#content button');
     this._jurisdictionSelector = '#cc-jurisdiction' ;
 
     this._startBtn = element(by.xpath("//button[text() = 'Start']"));

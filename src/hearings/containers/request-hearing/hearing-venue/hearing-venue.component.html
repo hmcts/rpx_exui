@@ -7,24 +7,37 @@
          tabindex="-1"
          data-module="govuk-error-summary">
       <h2 class="govuk-error-summary__title" id="error-summary-title">
-        There is a problem
+        {{ 'There is a problem' | rpxTranslate }}
       </h2>
       <div class="govuk-error-summary__body">
         <ul class="govuk-list govuk-error-summary__list">
           <li>
-            <a href="javascript:void(0)"
-               [routerLink]="['/', 'hearings', 'request', 'hearing-venue']"
-               [fragment]="'inputLocationSearch'">Enter a valid location</a>
+            <span *ngIf="!findLocationFormGroup.controls.locationSelectedFormControl.valid &&
+                             findLocationFormGroup.controls.locationSelectedFormControl.errors.required &&
+                             findLocationFormGroup.controls.locationSelectedFormControl.dirty"
+                  class="govuk-error-message">
+              <a href="javascript:void(0)"
+                 [routerLink]="['/', 'hearings', 'request', 'hearing-venue']"
+                 [fragment]="'inputLocationSearch'">{{ 'Enter a valid location' | rpxTranslate }}</a>
+            </span>
+            <span *ngIf="!findLocationFormGroup.controls.locationSelectedFormControl.valid &&
+                             findLocationFormGroup.controls.locationSelectedFormControl.errors.addLocation &&
+                             findLocationFormGroup.controls.locationSelectedFormControl.dirty"
+                  class="govuk-error-message">
+              <a href="javascript:void(0)"
+                 [routerLink]="['/', 'hearings', 'request', 'hearing-venue']"
+                 [fragment]="'inputLocationSearch'">{{ findLocationFormGroup.controls.locationSelectedFormControl.errors.addLocation | rpxTranslate }}</a>
+            </span>
           </li>
         </ul>
       </div>
     </div>
     <exui-hearing-parties-title></exui-hearing-parties-title>
     <h1 class="govuk-heading-l">
-      What are the hearing venue details?
+      {{ 'What are the hearing venue details?' | rpxTranslate }}
     </h1>
     <div id="location-hint" class="govuk-hint govuk-!-margin-bottom-7">
-      If this is a fully remote hearing you must still select the court or tribunal which will be managing the case.
+      {{ 'If this is a fully remote hearing you must still select the court or tribunal which will be managing the case.' | rpxTranslate }}
     </div>
     <div>
       <form [formGroup]="findLocationFormGroup" class="form" action="hearing-judge">
@@ -38,7 +51,7 @@
             <div class="location-picker-custom">
               <div class="search-location">
                 <label id="input-selected-location-label" class="govuk-body">
-                  Search for a location by name
+                  {{ 'Search for a location by name' | rpxTranslate }}
                 </label>
                 <br>
                 <span *ngIf="!findLocationFormGroup.controls.locationSelectedFormControl.valid &&
@@ -46,7 +59,14 @@
                                    findLocationFormGroup.controls.locationSelectedFormControl.dirty"
                       id="event-name-error"
                       class="govuk-error-message">
-                      <span class="govuk-visually-hidden">Error:</span> Enter a valid location
+                      <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span> {{ 'Enter a valid location' | rpxTranslate }}
+                    </span>
+                <span *ngIf="!findLocationFormGroup.controls.locationSelectedFormControl.valid &&
+                                   findLocationFormGroup.controls.locationSelectedFormControl.errors.addLocation &&
+                                   findLocationFormGroup.controls.locationSelectedFormControl.dirty"
+                      id="add-name-error"
+                      class="govuk-error-message">
+                      <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span> {{ findLocationFormGroup.controls.locationSelectedFormControl.errors.addLocation | rpxTranslate }}
                     </span>
                 <xuilib-search-venue id="inputLocationSearch"
                                       class="search-location"
@@ -56,7 +76,7 @@
                                       [locationType]="'hearing'"></xuilib-search-venue>
                 <a href="javascript:void(0)" (click)="addSelection()" class="govuk-button govuk-button--secondary"
                    data-module="govuk-button">
-                  Add location
+                  {{ 'Add location' | rpxTranslate }}
                 </a>
               </div>
               <ul *ngIf="selectedLocations.length" class="hmcts-filter-tags selection-container">
@@ -72,9 +92,9 @@
       </form>
     </div>
     <div class="govuk-inset-text">
-      You can check the venue has the required facilities or reasonable adjustments using<br/>
+      {{ 'You can check the venue has the required facilities or reasonable adjustments using' | rpxTranslate }}<br/>
       <a href="https://www.find-court-tribunal.service.gov.uk/search-by-name" target="_blank">
-        Court Finder (opens in new tab)
+        {{ 'Court Finder (opens in new tab)' | rpxTranslate }}
       </a>
     </div>
   </div>

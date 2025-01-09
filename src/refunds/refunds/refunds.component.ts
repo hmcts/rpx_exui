@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../app/services/user/user.service';
+import { select, Store } from '@ngrx/store';
+import * as fromRoot from '../../app/store';
 
 @Component({
   selector: 'exui-refunds',
@@ -15,12 +16,15 @@ export class RefundsComponent implements OnInit {
   public userDataLoaded = false;
   public apiRoot = '/payments';
 
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly store: Store<fromRoot.State>) {}
 
   public ngOnInit() {
-    this.userService.getUserDetails().subscribe((details) => {
+    // Update the store with the user details
+    this.store.dispatch(new fromRoot.LoadUserDetails(true));
+    const userDetails$ = this.store.pipe(select(fromRoot.getUserDetails));
+    userDetails$.subscribe((details) => {
       this.userEmail = details.userInfo.email;
-      this.userRoles = details.userInfo.roles;
+      this.userRoles = details?.userInfo?.roles;
       this.userDataLoaded = true;
     });
   }

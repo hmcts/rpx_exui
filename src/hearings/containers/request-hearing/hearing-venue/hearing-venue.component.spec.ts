@@ -9,6 +9,7 @@ import { ErrorMessage } from '@hmcts/ccd-case-ui-toolkit';
 import { LocationByEPIMMSModel, SearchLocationComponent } from '@hmcts/rpx-xui-common-lib';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
+import { MockRpxTranslatePipe } from '../../../../app/shared/test/mock-rpx-translate.pipe';
 import { initialState } from '../../../hearing.test.data';
 import { ACTION } from '../../../models/hearings.enum';
 import { HearingsService } from '../../../services/hearings.service';
@@ -79,7 +80,7 @@ describe('HearingVenueComponent', () => {
   beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule],
-      declarations: [HearingVenueComponent, MockLocationSearchContainerComponent, MockHearingPartiesComponent],
+      declarations: [HearingVenueComponent, MockLocationSearchContainerComponent, MockHearingPartiesComponent, MockRpxTranslatePipe],
       providers: [
         provideMockStore({ initialState }),
         { provide: HearingsService, useValue: hearingsService },
@@ -139,6 +140,30 @@ describe('HearingVenueComponent', () => {
     fixture.detectChanges();
     const formValid = component.isFormValid();
     expect(formValid).toEqual(true);
+  });
+
+  it('should return false when calling isFormValid with location selected', () => {
+    component.findLocationFormGroup.controls.locationSelectedFormControl.setValue('Hatt');
+    const formValid = component.isFormValid();
+    expect(formValid).toEqual(false);
+    expect(component.findLocationFormGroup.controls.locationSelectedFormControl.errors)
+      .toEqual({ addLocation: 'Add a location' });
+  });
+
+  it('should return false when calling isFormValid with location selected is undefined', () => {
+    component.findLocationFormGroup.controls.locationSelectedFormControl.markAsDirty();
+    const formValid = component.isFormValid();
+    expect(formValid).toEqual(false);
+    expect(component.findLocationFormGroup.controls.locationSelectedFormControl.errors)
+      .toEqual({ addLocation: 'Enter a location' });
+  });
+
+  it('should return false when calling isFormValid with location not selected', () => {
+    component.findLocationFormGroup.controls.locationSelectedFormControl.markAsPristine();
+    component.selectedLocations = [];
+    const formValid = component.isFormValid();
+    expect(formValid).toEqual(false);
+    expect(component.validationErrors.length).toEqual(1);
   });
 
   it('should return false for isFormValid when a location is selected and not added', () => {

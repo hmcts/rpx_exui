@@ -1,5 +1,5 @@
 @import '_typography';
-@import '~govuk-frontend/govuk/all';
+@import 'govuk-frontend/govuk/all';
 @import 'shims';
 @import 'conditionals';
 @import 'measurements';
@@ -416,6 +416,15 @@ form.check-your-answers table td .markdown p {
     text-decoration: underline;
   }
 }
+
+header {
+  .govuk-skip-link {
+    &:link, &:visited {
+      color: #fff;
+    }
+  }
+}
+
 
 .show-condition-grey-bar {
   border-left: 10px solid #bfc1c3;

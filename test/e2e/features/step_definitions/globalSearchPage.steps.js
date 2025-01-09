@@ -1,6 +1,6 @@
 'use strict';
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const CucumberReportLogger = require('../../../e2e/support/reportLogger');
 const BrowserUtil = require('../../../ngIntegration/util/browserUtil');
 const errorPage = require('../pageObjects/common/errorPage');
@@ -12,7 +12,6 @@ const headerPage = require('../pageObjects/headerPage');
 const SoftAssert = require('../../../ngIntegration/util/softAssert');
 const CaseManager = require('../pageObjects/common/CaseManager');
 
-defineSupportCode(function ({ Given, When, Then }) {
   const caseManager = new CaseManager();
   When('I input case reference in header search field {string}', async function(caseRef){
     await headerPage.headerSearch.input.clear();
@@ -354,4 +353,3 @@ defineSupportCode(function ({ Given, When, Then }) {
     }
     softAssert.finally();
   });
-});

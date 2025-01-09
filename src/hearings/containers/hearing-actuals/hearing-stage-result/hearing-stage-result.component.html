@@ -1,19 +1,19 @@
-<xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem'"></xuilib-hmcts-error-summary>
-<a class="govuk-back-link" [routerLink]="['../hearing-actual-add-edit-summary']">Back</a>
+<xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem' | rpxTranslate"></xuilib-hmcts-error-summary>
+<a class="govuk-back-link" [routerLink]="['../hearing-actual-add-edit-summary']">{{ 'Back' | rpxTranslate }}</a>
 <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <exui-hearing-actuals-case-title *ngIf="caseTitle"
         [caseTitle]="caseTitle"></exui-hearing-actuals-case-title>
       <h1 class="govuk-heading-l">
-        Hearing stage and result
+        {{ 'Hearing stage and result' | rpxTranslate }}
       </h1>
       <br>
       <form class="form" [formGroup]="hearingStageResultForm" (ngSubmit)="onSubmit()">
         <!-- Hearing stage -->
         <div class="govuk-form-group">
           <label class="govuk-label govuk-!-font-weight-bold" for="hearing-stage">
-            Hearing stage
+            {{ 'Hearing stage' | rpxTranslate }}
           </label>
           <select class="govuk-select govuk-!-width-one-third" id="hearing-stage" name="hearingStage" formControlName="hearingStage">
             <option *ngFor="let hearingType of hearingTypes" [ngValue]="hearingType.key" [selected]="">{{hearingType.value_en}}</option>
@@ -25,10 +25,10 @@
           <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               <h1 class="govuk-fieldset__heading">
-                Hearing result
+                {{ 'Hearing result' | rpxTranslate }}
               </h1>
               <div class="govuk-error-message" *ngIf="submitted && !formControls.valid && !formControls.hearingResult.valid">
-                {{hearingStageResultEnum.HearingResultError}}
+                {{ hearingStageResultEnum.HearingResultError | rpxTranslate }}
               </div>
             </legend>
             <div class="govuk-radios" data-module="govuk-radios">
@@ -36,14 +36,14 @@
                 <input class="govuk-radios__input" id="completed" formControlName="hearingResult" name="hearingResult"
                   type="radio" value="COMPLETED" data-aria-controls="conditional-completed" (change)="onHearingResult(hearingResultEnum.COMPLETED)">
                 <label class="govuk-label govuk-radios__label" for="completed">
-                  Heard
+                  {{ 'Heard' | rpxTranslate }}
                 </label>
               </div>
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="adjourned" formControlName="hearingResult" name="hearingResult"
                   type="radio" value="ADJOURNED" data-aria-controls="conditional-adjourned" (change)="onHearingResult(hearingResultEnum.ADJOURNED)">
                 <label class="govuk-label govuk-radios__label" for="adjourned">
-                  Part-heard, adjourned or postponed
+                  {{ 'Part-heard, adjourned or postponed' | rpxTranslate }}
                 </label>
               </div>
               <div class="govuk-radios__conditional govuk-!-padding-bottom-1 govuk-!-padding-top-3" *ngIf="hearingResult === hearingResultEnum.ADJOURNED">
@@ -51,10 +51,10 @@
                   [ngClass]="{'govuk-form-group--error': submitted && adjournHearingErrorMessage.length > 0}">
                   <label class="govuk-label govuk-!-font-weight-bold" for="adjourned-reason">Select a reason for this result</label>
                   <div class="govuk-error-message" *ngIf="submitted && adjournHearingErrorMessage.length > 0">
-                    {{adjournHearingErrorMessage}}
+                    {{ adjournHearingErrorMessage | rpxTranslate }}
                   </div>
                   <select formControlName="adjournedReason" class="govuk-select" id="adjourned-reason" name="adjournedReason">
-                    <option value="" selected>Please select</option>
+                    <option value="" selected>{{ 'Please select' | rpxTranslate }}</option>
                     <option *ngFor="let reason of actualPartHeardReasonCodes" [ngValue]="reason.key">{{reason.value_en}}</option>
                   </select>
                 </div>
@@ -63,18 +63,18 @@
                 <input class="govuk-radios__input" id="cancelled" formControlName="hearingResult" name="hearingResult"
                   type="radio" value="CANCELLED" data-aria-controls="conditional-cancelled" (change)="onHearingResult(hearingResultEnum.CANCELLED)">
                 <label class="govuk-label govuk-radios__label" for="cancelled">
-                  Withdrawn, settled or vacated
+                  {{ 'Withdrawn, settled or vacated' | rpxTranslate }}
                 </label>
               </div>
               <div class="govuk-radios__conditional govuk-!-padding-bottom-1 govuk-!-padding-top-3" *ngIf="hearingResult === hearingResultEnum.CANCELLED">
                 <div class="govuk-form-group"
                   [ngClass]="{'govuk-form-group--error': submitted && cancelHearingErrorMessage.length > 0}">
-                  <label class="govuk-label govuk-!-font-weight-bold" for="cancelled-reason">Select a reason for this result</label>
+                  <label class="govuk-label govuk-!-font-weight-bold" for="cancelled-reason">{{ 'Select a reason for this result' | rpxTranslate }}</label>
                   <div class="govuk-error-message" *ngIf="submitted && cancelHearingErrorMessage.length > 0">
-                    {{cancelHearingErrorMessage}}
+                    {{ cancelHearingErrorMessage | rpxTranslate }}
                   </div>
                   <select formControlName="cancelledReason" class="govuk-select" id="cancelled-reason" name="cancelledReason">
-                    <option value="" selected>Please select</option>
+                    <option value="" selected>{{ 'Please select' | rpxTranslate }}</option>
                     <option *ngFor="let reason of actualCancellationReasonCodes" [ngValue]="reason.key">{{reason.value_en}}</option>
                   </select>
                 </div>
@@ -85,7 +85,7 @@
         <br>
         <div class="govuk-button-group">
           <button type="submit" class="govuk-button primary" data-module="govuk-button">
-            Save and continue
+            {{ 'Save and continue' | rpxTranslate }}
           </button>
         </div>
       </form>

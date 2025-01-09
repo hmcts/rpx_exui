@@ -31,7 +31,6 @@ describe('CaseShareCompleteComponent', () => {
   }];
   let mockStore: any;
   const mockFeatureToggleService = jasmine.createSpyObj('FeatureToggleService', ['getValue']);
-
   beforeEach(waitForAsync(() => {
     mockStore = jasmine.createSpyObj('store', ['dispatch', 'pipe']);
     mockStore.pipe.and.returnValue(of(SHARED_CASE));

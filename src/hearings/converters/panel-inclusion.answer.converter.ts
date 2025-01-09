@@ -14,8 +14,10 @@ export class PanelInclusionAnswerConverter implements AnswerConverter {
 
     return hearingState$.pipe(
       map((state) => {
-        const panelRequirements = state.hearingRequest.hearingRequestMainModel.hearingDetails.panelRequirements;
-        const includedJudges: string[] = panelRequirements && panelRequirements.panelPreferences.filter((preferences) => preferences.memberType === MemberType.PANEL_MEMBER && preferences.requirementType === RequirementType.MUSTINC).map((preferences) => preferences.memberID);
+        const panelRequirements = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.hearingDetails.panelRequirements
+          : state.hearingRequest.hearingRequestMainModel.hearingDetails.panelRequirements;
+        const includedJudges: string[] = panelRequirements?.panelPreferences.filter((preferences) => preferences.memberType === MemberType.PANEL_MEMBER && preferences.requirementType === RequirementType.MUSTINC).map((preferences) => preferences.memberID);
         const includedJudgeNames: string[] = [];
         judicialUsersList.forEach((judgeInfo) => {
           if (includedJudges.includes(judgeInfo.personalCode)) {

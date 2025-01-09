@@ -103,3 +103,13 @@ export async function assignTaskToUser(taskUrl: string, payLoad: any) {
 
   return await axios.post(taskUrl, payLoad, axiosConfig);
 }
+
+export async function postS2SLease(S2SUrl: string, payload: any): Promise<any> {
+  const axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'ServiceAuthorization': 'ServiceAuthToken'
+    }
+  };
+  return await axios.post(S2SUrl, payload, axiosConfig);
+}

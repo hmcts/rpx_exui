@@ -3,9 +3,9 @@ var HearingRecordingsCase = require('../pageObjects/hearingRecordingsCase');
 const headerPage = require('../pageObjects/headerPage');
 const browserWaits = require('../../support/customWaits');
 const cucumberReporter = require('../../support/reportLogger');
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   let hearingRecordingsCase = new HearingRecordingsCase();
 
   When('I click on Case Hearing Files tab', async function () {
@@ -50,4 +50,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
       await hearingRecordingsCase.checkFile();
     });
   });
-});

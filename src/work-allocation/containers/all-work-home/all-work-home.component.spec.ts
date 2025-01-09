@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ExuiCommonLibModule, FilterService } from '@hmcts/rpx-xui-common-lib';
 import { RpxTranslationModule } from 'rpx-xui-translation';
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { ALL_LOCATIONS } from '../../components/constants/locations';
 import { WorkAllocationComponentsModule } from '../../components/work-allocation.components.module';
 import { LocationDataService, WorkAllocationTaskService } from '../../services';

@@ -8,6 +8,7 @@ const BrowserWaits = require("../../support/customWaits");
 const headerPage = require("../pageObjects/headerPage");
 const browserUtil = require("../../../ngIntegration/util/browserUtil");
 const { LOG_LEVELS } = require("../../support/constants");
+const browser = require("../../../codeceptCommon/browser");
 
 
 
@@ -85,6 +86,10 @@ const { LOG_LEVELS } = require("../../support/constants");
 
     When('I open first case in case list page', async function () {
         await caseListPage.clickFirstCaseLink();
+    })
+
+    When('I navigate to case details page for case {string}', async function (caseId) {
+        await browser.get(`${process.env.TEST_URL}cases/case-details/${caseId}`)
     })
 
     Then('I wait to see no case results displayed', async function () {

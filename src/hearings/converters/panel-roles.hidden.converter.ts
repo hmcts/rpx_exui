@@ -6,8 +6,10 @@ import { HiddenConverter } from './hidden.converter';
 export class PanelRolesHiddenConverter implements HiddenConverter {
   public transformHidden(hearingState$: Observable<State>): Observable<boolean> {
     return hearingState$.pipe(map((state) => {
-      const panelRequirements = state.hearingRequest.hearingRequestMainModel.hearingDetails.panelRequirements;
-      if (panelRequirements && panelRequirements.panelSpecialisms) {
+      const panelRequirements = state.hearingConditions?.isHearingAmendmentsEnabled
+        ? state.hearingRequestToCompare.hearingRequestMainModel.hearingDetails.panelRequirements
+        : state.hearingRequest.hearingRequestMainModel.hearingDetails.panelRequirements;
+      if (panelRequirements?.panelSpecialisms) {
         return !panelRequirements.panelSpecialisms.length;
       }
       return true;

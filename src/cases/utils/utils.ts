@@ -57,11 +57,12 @@ export class Utils {
     });
   }
 
-  public static hasMatchedPermissions(featureVariation: FeatureVariation, jurisdictionId: string, caseType: string, userRoles: string[]): boolean {
-    if (featureVariation.jurisdiction === jurisdictionId && featureVariation.caseType === caseType) {
-      if (userRoles) {
-        return featureVariation.roles ? userRoles.some((userRole) =>
-          featureVariation.roles.some((role) => role === userRole)) : false;
+  public static hasMatchedJurisdictionAndCaseType(featureVariation: FeatureVariation, jurisdictionId: string, caseType: string): boolean {
+    if (featureVariation.jurisdiction === jurisdictionId) {
+      if ((featureVariation?.caseType === caseType) ||
+        (featureVariation?.includeCaseTypes?.length > 0 &&
+          featureVariation?.includeCaseTypes.some((ct) => ct === caseType || new RegExp('^'+ ct + '$').test(caseType)))) {
+        return true;
       }
     }
     return false;

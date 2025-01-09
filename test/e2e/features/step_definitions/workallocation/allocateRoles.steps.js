@@ -1,4 +1,4 @@
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const reportLogger = require('../../../support/reportLogger');
 const BrowserWaits = require('../../../support/customWaits');
 const SoftAssert = require('../../../../ngIntegration/util/softAssert');
@@ -10,7 +10,7 @@ const ArrayUtil = require('../../../utils/ArrayUtil');
 
 const workFlowPage = require('../../pageObjects/workAllocation/workFlow');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   Then('I see Allocate role work flow page {string} with caption {string} is displayed', async function (workFlowPageType, captionHeader) {
     let workFlowPageObject = getWorkflowPageObject(workFlowPageType);
     await BrowserWaits.retryWithActionCallback(async () => {
@@ -145,5 +145,4 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
     const durationOptionInput = workFlowPage.durationOfRolePage.getRadioOptionInputElement(durationOption);
     expect(await durationOptionInput.isSelected()).to.be.true;
   });
-});
 

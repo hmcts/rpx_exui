@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { EMPTY, forkJoin, Observable } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { Caseworker } from '../models/dtos';
@@ -9,7 +9,7 @@ import { CaseworkerDataService, WorkAllocationTaskService } from '../services';
 import { handleFatalErrors, WILDCARD_SERVICE_DOWN } from '../utils';
 
 @Injectable({ providedIn: 'root' })
-export class TaskResolver implements Resolve<{ task: Task; caseworkers: Caseworker[]; } > {
+export class TaskResolver {
   constructor(
     private readonly service: WorkAllocationTaskService,
     private readonly router: Router,
@@ -26,7 +26,7 @@ export class TaskResolver implements Resolve<{ task: Task; caseworkers: Casework
     const caseworker$ = task$
       .pipe(
         mergeMap((task) => {
-          return this.caseworkerService.getCaseworkersForServices([task.task.jurisdiction]);
+          return this.caseworkerService.getUsersFromServices([task.task.jurisdiction]);
         })
       );
     return forkJoin({ task: task$, caseworkers: caseworker$ });

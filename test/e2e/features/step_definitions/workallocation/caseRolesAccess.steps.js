@@ -1,4 +1,4 @@
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const reportLogger = require('../../../support/reportLogger');
 const BrowserWaits = require('../../../support/customWaits');
 const SoftAssert = require('../../../../ngIntegration/util/softAssert');
@@ -10,7 +10,7 @@ const ArrayUtil = require('../../../utils/ArrayUtil');
 
 const checkYourAnswersPage = require('../../pageObjects/workAllocation/common/checkYourAnswersPage');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   Then('I see Roles and access page is displayed', async function(){
     expect(await caseRolesAndAccessPage.isPageDisplayed()).to.be.true;
   });
@@ -177,4 +177,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
       expect(actualCaption, 'Caption did not match').to.include(caption);
     });
   });
-});

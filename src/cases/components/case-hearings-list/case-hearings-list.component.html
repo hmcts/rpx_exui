@@ -1,16 +1,16 @@
 <table class="govuk-table" *ngIf="hearingStageOptions">
   <thead class="govuk-table__head">
   <tr class="govuk-table__row">
-    <th class="govuk-table__header govuk-body-lead">{{ status }}</th>
-    <th *ngIf="(hearingList$ | async)?.length" class="govuk-table__header">Hearing date</th>
-    <th *ngIf="(hearingList$ | async)?.length" class="govuk-table__header">Status</th>
-    <th *ngIf="(hearingList$ | async)?.length" class="govuk-table__header">Actions</th>
+    <th class="govuk-table__header govuk-body-lead">{{ status | rpxTranslate }}</th>
+    <th *ngIf="(hearingList$ | async)?.length" class="govuk-table__header">{{ 'Hearing date' | rpxTranslate }}</th>
+    <th *ngIf="(hearingList$ | async)?.length" class="govuk-table__header">{{ 'Status' | rpxTranslate }}</th>
+    <th *ngIf="(hearingList$ | async)?.length" class="govuk-table__header">{{ 'Actions' | rpxTranslate }}</th>
   </tr>
   </thead>
   <tbody class="govuk-table__body">
   <tr *ngIf="!(hearingList$ | async)?.length" class="govuk-table__row">
     <td colspan="4">
-      No {{ status.toLowerCase() }} hearings found
+      {{ 'No ' + status.toLowerCase() + ' hearings found' | rpxTranslate }}
     </td>
   </tr>
   <tr class="govuk-table__row" *ngFor="let hearing of hearingList$ | async">
@@ -31,33 +31,33 @@
         <ng-container *ngIf="!isAwaitingActual(hearing.exuiDisplayStatus) && !isNonCancellable(hearing.exuiDisplayStatus)">
           <a id="link-view-or-edit-{{hearing.hearingID}}"
              href="javascript:void(0)"
-             (click)="viewAndEdit(hearing.hearingID)">View or edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+             (click)="viewAndEdit(hearing.hearingID)">{{ 'View or edit' | rpxTranslate }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
         </ng-container>
         <ng-container *ngIf="isAwaitingActual(hearing.exuiDisplayStatus)">
           <a id="link-add-or-edit-{{hearing.hearingID}}"
              href="javascript:void(0)"
-             (click)="addAndEdit(hearing.hearingID)">Add or edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             (click)="addAndEdit(hearing.hearingID)">{{ 'Add or edit' | rpxTranslate }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </ng-container>
       </div>
       <div *ngIf="hasDeleteAction && !isNonCancellable(hearing.exuiDisplayStatus) && !isAwaitingActual(hearing.exuiDisplayStatus)" class="div-action">
         <a id="link-cancel-{{hearing.hearingID}}"
            href="javascript:void(0)"
-           (click)="cancelHearing(hearing.hearingID)">Cancel</a>&nbsp;&nbsp;&nbsp;&nbsp;
+           (click)="cancelHearing(hearing.hearingID)">{{ 'Cancel' | rpxTranslate }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
       <div *ngIf="hasUpdateAction && !isNonCancellable(hearing.exuiDisplayStatus) && hearing.hearingIsLinkedFlag && !isManageLinksEnabled(hearing.hearingGroupRequestId) && isLinkableStatus(hearing.exuiDisplayStatus)" class="div-action">
         <a id="link-hearing-link-{{hearing.hearingID}}"
            href="javascript:void(0)"
-           (click)="linkHearing(hearing.hearingID)">Link hearing</a>&nbsp;&nbsp;&nbsp;&nbsp;
+           (click)="linkHearing(hearing.hearingID)">{{ 'Link hearing' | rpxTranslate }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
       <div *ngIf="hasUpdateAction && !isNonCancellable(hearing.exuiDisplayStatus) && isManageLinksEnabled(hearing.hearingGroupRequestId) && isLinkableStatus(hearing.exuiDisplayStatus)" class="div-action">
         <a id="link-manage-links-{{hearing.hearingID}}"
            href="javascript:void(0)"
-           (click)="manageLinks(hearing)">Manage links</a>&nbsp;&nbsp;&nbsp;&nbsp;
+           (click)="manageLinks(hearing)">{{ 'Manage links' | rpxTranslate }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
       <div *ngIf="hasReadOnlyAction || isNonCancellable(hearing.exuiDisplayStatus)" class="div-action">
         <a id="link-view-details-{{hearing.hearingID}}"
            href="javascript:void(0)"
-           (click)="viewDetails(hearing)">View details</a>
+           (click)="viewDetails(hearing)">{{ 'View details' | rpxTranslate }}</a>
       </div>
     </td>
   </tr>

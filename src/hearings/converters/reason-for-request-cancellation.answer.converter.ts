@@ -14,9 +14,9 @@ export class ReasonForRequestCancellationAnswerConverter implements AnswerConver
 
     return hearingState$.pipe(
       map((state) => {
-        const cancellationReasonCodes = state.hearingRequest.hearingRequestMainModel
-          && state.hearingRequest.hearingRequestMainModel.requestDetails
-          && state.hearingRequest.hearingRequestMainModel.requestDetails.cancellationReasonCodes;
+        const cancellationReasonCodes = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel?.requestDetails?.cancellationReasonCodes
+          : state.hearingRequest.hearingRequestMainModel?.requestDetails?.cancellationReasonCodes;
         const values: string[] = HearingsUtils.getValues(cancellationReasonCodes, cancelHearingReasons);
         return values && values.length ? values.join('<br>') : '';
       })

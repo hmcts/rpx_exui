@@ -16,8 +16,11 @@ export class CaseFlagAnswerConverter implements AnswerConverter {
   public transformAnswer(hearingState$: Observable<State>): Observable<string> {
     return hearingState$.pipe(
       map((state: State) => {
+        const partyDetails = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.partyDetails
+          : state.hearingRequest.hearingRequestMainModel.partyDetails;
         return CaseFlagsUtils.convertPartiesToPartyWithFlags(this.caseFlagsRefData,
-          state.hearingRequest.hearingRequestMainModel.partyDetails, state.hearingValues.serviceHearingValuesModel.parties);
+          partyDetails, state.hearingValues.serviceHearingValuesModel.parties);
       }
       ),
       take(1),

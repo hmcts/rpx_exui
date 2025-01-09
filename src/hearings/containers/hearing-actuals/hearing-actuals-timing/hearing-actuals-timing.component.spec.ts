@@ -6,16 +6,17 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
+import * as _ from 'lodash';
 import { of } from 'rxjs/internal/observable/of';
+import { MockRpxTranslatePipe } from '../../../../app/shared/test/mock-rpx-translate.pipe';
 import { initialState } from '../../../hearing.test.data';
 import { HearingsService } from '../../../services/hearings.service';
 import { ValidatorsUtils } from '../../../utils/validators.utils';
 import { HearingActualsTimingComponent } from './hearing-actuals-timing.component';
-
-import * as _ from 'lodash';
+import { DatePipe, FormatTranslatorService } from '@hmcts/ccd-case-ui-toolkit';
 
 @Component({ selector: 'exui-app-blank', template: '' })
-class BlankComponent {}
+class BlankComponent { }
 
 const mockActivatedRoute = {
   paramMap: of(convertToParamMap({
@@ -44,10 +45,12 @@ describe('HearingActualsTimingComponent', () => {
           provide: ActivatedRoute,
           useValue: mockActivatedRoute
         },
-        ValidatorsUtils
+        ValidatorsUtils,
+        DatePipe,
+        FormatTranslatorService
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [HearingActualsTimingComponent, BlankComponent]
+      declarations: [HearingActualsTimingComponent, BlankComponent, MockRpxTranslatePipe]
     })
       .compileComponents();
   }));
@@ -162,6 +165,24 @@ describe('HearingActualsTimingComponent', () => {
     expect(component.formGroup.hasError('invalidPauseStartTimeRange')).toBeTruthy();
     expect(component.formGroup.hasError('invalidPauseEndTimeRange')).toBeTruthy();
   });
+
+  it('should format time with default parameters', () => {
+    const time = '2021-03-12T09:20:00.000Z';
+    const formattedTime = component.getTime(time);
+    expect(formattedTime).toBe('09:20');
+  });
+
+  it('should format time with custom format', () => {
+    const time = '2021-03-12T09:20:00.000Z';
+    const formattedTime = component.getTime(time, 'local', 'h:mm A');
+    expect(formattedTime).toBe('9:20 AM');
+  });
+
+  it('should format time to local time', () => {
+    const time = '2021-03-12T09:20:00.000Z';
+    const formattedTime = component.getTime(time, 'local');
+    expect(formattedTime).toBe('09:20');
+  });
 });
 
 describe('HearingActualsTimingComponent', () => {
@@ -188,10 +209,12 @@ describe('HearingActualsTimingComponent', () => {
           provide: ActivatedRoute,
           useValue: mockActivatedRoute
         },
-        ValidatorsUtils
+        ValidatorsUtils,
+        DatePipe,
+        FormatTranslatorService
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [HearingActualsTimingComponent, BlankComponent]
+      declarations: [HearingActualsTimingComponent, BlankComponent, MockRpxTranslatePipe]
     })
       .compileComponents();
   }));

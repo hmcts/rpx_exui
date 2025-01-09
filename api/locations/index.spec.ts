@@ -33,7 +33,7 @@ describe('Fee Pay Judge', () => {
       const req = mockReq({
         body: {
           searchTerm: 'Gla',
-          serviceIds: ['IA', 'CIVIL', 'SSCS'],
+          serviceIds: ['IA', 'CIVIL', 'SSCS', 'BHA1', 'ABA1', 'AAA1'],
           locationType: 'hearing',
           userLocations: [{ service: 'IA', locations: [{ id: '1234' }] }, { service: 'CIVIL', locations: [{ id: '2345' }] }],
           bookingLocations: ['1234', '2343']
@@ -59,7 +59,7 @@ describe('Fee Pay Judge', () => {
       const req = mockReq({
         body: {
           searchTerm: 'Gla',
-          serviceIds: ['IA', 'CIVIL', 'SSCS'],
+          serviceIds: ['IA', 'CIVIL', 'SSCS', 'BHA1', 'ABA1', 'AAA1'],
           locationType: 'hearing',
           userLocations: [],
           bookingLocations: ['1234', '2343']
@@ -85,7 +85,7 @@ describe('Fee Pay Judge', () => {
       const req = mockReq({
         body: {
           searchTerm: 'Gla',
-          serviceIds: ['IA', 'CIVIL'],
+          serviceIds: ['IA', 'CIVIL', 'BHA1', 'ABA1', 'AAA1'],
           locationType: 'hearing',
           userLocations: [{ service: 'IA', locations: [] }],
           bookingLocations: []
@@ -111,7 +111,7 @@ describe('Fee Pay Judge', () => {
       const req = mockReq({
         body: {
           searchTerm: 'Gla',
-          serviceIds: ['IA', 'CIVIL'],
+          serviceIds: ['IA', 'CIVIL', 'BHA1', 'ABA1', 'AAA1'],
           locationType: 'hearing',
           userLocations: [{ service: 'IA', locations: [{ regionId: '11' }] }],
           bookingLocations: []
@@ -137,7 +137,7 @@ describe('Fee Pay Judge', () => {
       const req = mockReq({
         body: {
           searchTerm: 'Gla',
-          serviceIds: ['IA', 'CIVIL'],
+          serviceIds: ['IA', 'CIVIL', 'BHA1', 'ABA1', 'AAA1'],
           locationType: 'hearing',
           userLocations: [{ service: 'IA', locations: [] }],
           bookingLocations: []
@@ -163,7 +163,7 @@ describe('Fee Pay Judge', () => {
       const req = mockReq({
         body: {
           searchTerm: 'Gla',
-          serviceIds: ['IA', 'CIVIL'],
+          serviceIds: ['IA', 'CIVIL', 'BHA1', 'ABA1', 'AAA1'],
           locationType: 'hearing',
           userLocations: [{ service: 'IA', locations: [{ regionId: '11' }] }],
           bookingLocations: []
@@ -189,7 +189,7 @@ describe('Fee Pay Judge', () => {
       const req = mockReq({
         body: {
           searchTerm: 'Gla',
-          serviceIds: ['IA', 'CIVIL', 'SCSS'],
+          serviceIds: ['IA', 'CIVIL', 'SCSS', 'BHA1', 'ABA1', 'AAA1'],
           locationType: 'hearing',
           userLocations: [{ service: 'IA', locations: [{ id: '1234' }] }],
           bookingLocations: null

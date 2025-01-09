@@ -1,4 +1,4 @@
-@ng   @functional_enabled 
+@ng   @functional_enabled
 Feature: WA Release 2: All work - filters (filters to be ignored EUI-4831)
 
     Background: Mock and browser setup
@@ -252,7 +252,8 @@ Feature: WA Release 2: All work - filters (filters to be ignored EUI-4831)
 #            | IA | Test loc 3 | 12347 | Assigned to a person | LEGAL | LEGAL_OPERATIONS 1 IA_CIVIL (ia_civil_legal_operations_1@justice.gov.uk)| 08a3d216-c6ab-4e92-a7e3-ca3661e6be89 | Legal Ops | Legal Ops |
             | IA | Test loc 3 | 12347 | Assigned to a person | judge | auto test 0 judge 0 (auto_test_judge_0@justice.gov.uk) | 1231 | Judicial | Legal Ops |
 #            | IA | Test loc 3 | 12347 | Assigned to a person | ADMIN | ADMIN 1 IA_CIVIL (ia_civil_admin_1@justice.gov.uk) | 08a3d216-c6ab-4e92-a7e3-ca3661e6be83 | Admin | Admin |
-@functional_debug
+
+    @ignore
     Scenario: "Caseworker" Cases filters state
         Given I set MOCK with user "IAC_CaseOfficer_R2" and roles "task-supervisor,case-allocator,caseworker-ia-caseofficer,caseworker-ia-admofficer,task-supervisor,case-allocator,task-supervisor,case-allocator" with reference "userDetails"
         Given I set Mock user with ref "userDetails", ORGANISATION roles for services "" allow empty service

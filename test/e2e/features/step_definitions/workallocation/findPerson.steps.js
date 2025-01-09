@@ -1,4 +1,4 @@
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const reportLogger = require('../../../support/reportLogger');
 const BrowserWaits = require('../../../support/customWaits');
 const SoftAssert = require('../../../../ngIntegration/util/softAssert');
@@ -12,7 +12,7 @@ const workflowUtil = require('../../pageObjects/common/workflowUtil');
 const exclusionWorkFlow = require('../../pageObjects/workAllocation/exclusionRolesWorkFlow');
 const findPersonPage = require('../../pageObjects/workAllocation/common/findPersonComponent');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   Then('In workflow {string}, I see find person page displayed with caption {string}', async function (workflow, findPersonCaption) {
     const workFlowPage = workflowUtil.getWorlflowPageObject(workflow);
     expect(await workFlowPage.findPersonPage.amOnPage()).to.be.true;
@@ -70,4 +70,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
     const workFlowPage = workflowUtil.getWorlflowPageObject(workflow);
     expect(await workFlowPage.findPersonPage.isPersonSelected(caseworker.email), `${caseworker.email} is not selected`).to.be.true;
   });
-});

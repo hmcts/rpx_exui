@@ -7,7 +7,7 @@ export const CASEROLES: CaseRole[] = [
       { 'id': 'reallocate', 'title': 'Reallocate' },
       { 'id': 'remove', 'title': 'Remove Allocation' }
     ],
-    actorId: '38eb0c5e-29c7-453e-b92d-f2029aaed6c3',
+    actorId: '37eb0c5e-29c7-453e-b92d-f2029aaed6c3',
     email: 'Judge.Beech@mail.com',
     end: '2021-07-23T00:29:10.656Z',
     id: 'cc311b32-5aea-4cd1-8b72-911fb47c8a2e',
@@ -37,7 +37,7 @@ export const CASEROLES: CaseRole[] = [
       { 'id': 'reallocate', 'title': 'Reallocate' },
       { 'id': 'remove', 'title': 'Remove Allocation' }
     ],
-    actorId: '38eb0c5e-29c7-453e-b92d-f2029aaed6c3',
+    actorId: '1',
     email: 'Bisa.Bulter@mail.com',
     end: '2021-08-22T00:29:10.656Z',
     id: 'cbe74919-e9f0-4c8b-8d90-7da6aede9fe9',

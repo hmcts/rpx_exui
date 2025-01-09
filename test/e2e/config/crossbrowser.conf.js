@@ -17,12 +17,12 @@ const config = {
   sauceRegion: 'eu',
   port: 80,
   sauceConnect: true,
-  specs: ['../features/**/*.feature'],
+  specs: ['../features/**/*.feature', '../features/app/loginLogout.feature'],
 
-  baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
+  baseUrl: 'https://manage-case.aat.platform.hmcts.net',
 
   params: {
-    serverUrls: process.env.TEST_URL || 'http://localhost:3000/',
+    serverUrls: 'https://manage-case.aat.platform.hmcts.net',
     targetEnv: argv.env || 'local'
     //username: process.env.TEST_EMAIL,
     //password: process.env.TEST_PASSWORD,
@@ -47,33 +47,11 @@ const config = {
       maxInstances: 1
     },
 
-    {
-      browserName: 'firefox',
-      version: 'latest',
-      platform: 'Windows 10',
-      name: 'firefox-win-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
-
     // {
-    //   browserName: 'internet explorer',
-    //   platform: 'Windows 10',
+    //   browserName: 'firefox',
     //   version: 'latest',
-    //   name: 'IE-TEST',
-    //   tunnelIdentifier: 'reformtunnel',
-    //   extendedDebugging: true,
-    //   sharedTestFiles: false,
-    //   maxInstances: 1
-    // },
-
-    // {
-    //   browserName: 'safari',
-    //   platform: 'macOS 10.15',
-    //   version: '13.1',
-    //   name: 'Safari-TEST',
+    //   platform: 'Windows 10',
+    //   name: 'firefox-win-tests',
     //   tunnelIdentifier: 'reformtunnel',
     //   extendedDebugging: true,
     //   sharedTestFiles: false,
@@ -100,27 +78,19 @@ const config = {
       extendedDebugging: true,
       sharedTestFiles: false,
       maxInstances: 1
-    },
-
-    {
-      browserName: 'firefox',
-      version: 'latest',
-      platform: 'macOS 10.15',
-      name: 'ff-mac-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      sharedTestFiles: false,
-      maxInstances: 1
     }
   ],
 
   exclude: [],
 
   cucumberOpts: {
-    strict: true,
-    format: ['node_modules/cucumber-pretty', 'json:cb_reports/saucelab_results.json'],
-    require: ['../support/world.js', '../support/*.js', '../features/step_definitions/**/*.steps.js', '../features/step_definitions/**/*.steps.js'],
-    tags: ['@crossbrowser', 'not @Flaky']
+    format: ['json:cb_reports/saucelab_results.json'],
+    require: [
+      '../features/step_definitions/loginLogout.steps.js',
+      '../features/step_definitions/**/*.steps.js',
+      '../support/timeout.js'
+    ],
+    tags: ['@crossbrowser']
   },
 
   plugins: [

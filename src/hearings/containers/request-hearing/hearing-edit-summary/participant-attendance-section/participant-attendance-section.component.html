@@ -1,0 +1,85 @@
+<h2 class="govuk-heading-m">
+  Participant attendance
+  <exui-amendment-label *ngIf="pageTitleDisplayLabel"
+    [displayLabel]="pageTitleDisplayLabel">
+  </exui-amendment-label>
+</h2>
+<div class="govuk-summary-list govuk-!-margin-bottom-9">
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Will this be a paper hearing?
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ isPaperHearing }}
+      <exui-amendment-label *ngIf="isPaperHearingChanged"
+        [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="paperHearing"
+        class="govuk-link"
+        href="javascript:void(0)"
+        (click)="onChange('paperHearing')">Change</a>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row" *ngIf="isPaperHearing === 'No'">
+    <div class="govuk-summary-list__key">
+      What will be the methods of attendance for this hearing?
+    </div>
+    <div class="govuk-summary-list__value">
+      <ul id="participant-channels">
+        <li *ngFor="let participantChannel of participantChannels">
+          {{ participantChannel  }}
+        </li>
+      </ul>
+      <exui-amendment-label *ngIf="methodOfAttendanceChanged"
+        [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="howParticipantsAttendant"
+        class="govuk-link"
+        href="javascript:void(0)"
+        (click)="onChange('howParticipantsAttendant')">Change</a>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row" *ngIf="isPaperHearing === 'No'">
+    <div class="govuk-summary-list__key">
+      How will each participant attend the hearing?
+    </div>
+    <div class="govuk-summary-list__value">
+      <ul>
+        <li *ngFor="let participantAttendanceMode of participantAttendanceModes">
+          {{ participantAttendanceMode.partyName }}{{ participantAttendanceMode.channel }}
+          <exui-amendment-label
+            *ngIf="participantAttendanceMode.partyNameChanged || participantAttendanceMode.partyChannelChanged"
+            [displayLabel]="amendmentLabelEnum.AMENDED">
+          </exui-amendment-label>
+        </li>
+      </ul>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="howAttendant"
+        class="govuk-link"
+        href="javascript:void(0)"
+        (click)="onChange('howAttendant')">Change</a>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row" *ngIf="isPaperHearing === 'No'">
+    <div class="govuk-summary-list__key">
+      How many people will attend the hearing in person?
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ numberOfPhysicalAttendees }}
+      <exui-amendment-label *ngIf="numberOfPhysicalAttendeesChanged"
+        [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="attendantPersonAmount"
+        class="govuk-link"
+        href="javascript:void(0)"
+        (click)="onChange('attendantPersonAmount')">Change</a>
+    </div>
+  </div>
+</div>

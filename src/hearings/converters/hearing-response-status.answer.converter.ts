@@ -7,7 +7,9 @@ export class HearingResponseStatusAnswerConverter implements AnswerConverter {
   public transformAnswer(hearingState$: Observable<State>): Observable<string> {
     return hearingState$.pipe(
       map((state) => {
-        return state.hearingRequest.hearingRequestMainModel.hearingResponse.laCaseStatus;
+        return state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.hearingResponse.laCaseStatus
+          : state.hearingRequest.hearingRequestMainModel.hearingResponse.laCaseStatus;
       })
     );
   }

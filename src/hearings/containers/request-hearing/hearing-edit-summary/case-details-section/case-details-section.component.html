@@ -1,0 +1,59 @@
+<div class="govuk-summary-list govuk-!-margin-bottom-9">
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Case internal name
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ hearingRequestMainModel.caseDetails.hmctsInternalCaseName }}
+      <exui-amendment-label *ngIf="withinPage.hmctsInternalCaseName" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Case public name
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ hearingRequestMainModel.caseDetails.publicCaseName }}
+      <exui-amendment-label *ngIf="withinPage.publicCaseName" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Case Type
+    </div>
+    <div class="govuk-summary-list__value">
+      <div *ngFor="let caseCategory of caseTypes">
+        {{ caseCategory.categoryDisplayValue }}
+        <exui-amendment-label *ngIf="withinPage.caseCategories?.includes(caseCategory.categoryValue)" [displayLabel]="amendmentLabelEnum.AMENDED">
+        </exui-amendment-label>
+        <ul>
+          <li *ngFor="let childNode of caseCategory.childNodes">
+            - {{ childNode.categoryDisplayValue }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Private hearing required
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ hearingRequestMainModel.hearingDetails.privateHearingRequiredFlag ? 'Yes' : 'No' }}
+      <exui-amendment-label *ngIf="withinPage.privateHearingRequiredFlag" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Case restriction
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ hearingRequestMainModel.caseDetails?.caserestrictedFlag ? 'Yes' : 'No' }}
+      <exui-amendment-label *ngIf="withinPage.caserestrictedFlag" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+  </div>
+</div>

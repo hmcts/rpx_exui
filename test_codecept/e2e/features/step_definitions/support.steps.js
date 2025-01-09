@@ -46,6 +46,26 @@ const cucumberReporter = require('../../../codeceptCommon/reportLogger');
         cucumberReporter.AddMessage(`********** ${behaviour} ***********`);
         cucumberReporter.AddMessage(`${border}`);
     });
+       Then('debug sleep minutes {int}', async function(minutes){
+        await new Promise((resolve,reject) => {
+            setTimeout(() => {
+                resolve(true)
+            }, minutes*60*1000)
+        })
+    });
+
+
+
+    
+
+
+     Then('I wait for seconds for {int}', async function(waitSeconds){
+        await new Promise((resolve,reject) => {
+            setTimeout(() => {
+                resolve(true)
+            }, waitSeconds*1000 )
+        })
+    });
 
     async function getUnknownWindowHandles(){
         const scenarioDataKeys = Object.keys(global.scenarioData);
@@ -55,3 +75,15 @@ const cucumberReporter = require('../../../codeceptCommon/reportLogger');
         const unKnownWindowHandles = await ArrayUtil.filter(allWindowHandles, async (handle) => !knownWindowHandles.includes(handle));
         return unKnownWindowHandles;
     }
+
+
+   Then('debug sleep minutes {int}', async function(minutes){
+        await new Promise((resolve,reject) => {
+            setTimeout(() => {
+                resolve(true)
+            }, minutes*60*1000)
+        })
+    });
+
+
+

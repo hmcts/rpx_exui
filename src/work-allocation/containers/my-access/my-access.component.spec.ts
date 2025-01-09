@@ -11,7 +11,7 @@ import { SessionStorageService } from '../../../app/services';
 import { reducers } from '../../../app/store';
 import { WorkAllocationComponentsModule } from '../../components/work-allocation.components.module';
 import { Case } from '../../models/cases';
-import { CaseworkerDataService, WorkAllocationCaseService, WorkAllocationFeatureService } from '../../services';
+import { CaseworkerDataService, WorkAllocationCaseService } from '../../services';
 import { getMockCases } from '../../tests/utils.spec';
 import { WorkCaseListComponent } from '../work-case-list/work-case-list.component';
 import { MyAccessComponent } from './my-access.component';
@@ -52,7 +52,6 @@ xdescribe('MyAccessComponent', () => {
         { provide: AlertService, useValue: mockAlertService },
         { provide: SessionStorageService, useValue: mockSessionStorageService },
         { provide: CaseworkerDataService, useValue: mockCaseworkerService },
-        { provide: WorkAllocationFeatureService, useValue: mockFeatureService },
         { provide: LoadingService, useValue: mockLoadingService },
         { provide: FeatureToggleService, useValue: mockFeatureToggleService }
       ]

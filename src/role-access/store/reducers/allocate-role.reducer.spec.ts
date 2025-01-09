@@ -9,7 +9,7 @@ describe('Allocate Role Reducer', () => {
       jurisdiction: 'IA',
       state: AllocateRoleState.CHOOSE_ROLE,
       typeOfRole: null,
-      allocateTo: AllocateTo.RESERVE_TO_ME,
+      allocateTo: AllocateTo.ALLOCATE_TO_ME,
       person: null,
       durationOfRole: DurationOfRole.SEVEN_DAYS,
       action: Actions.Allocate,
@@ -64,7 +64,7 @@ describe('Allocate Role Reducer', () => {
         const initialState = fromReducer.allocateRoleInitialState;
         const action = new fromActions.AllocateRoleInstantiate(STATE_DATA);
         const state = fromReducer.allocateRoleReducer(initialState, action);
-        expect(state.allocateTo).toEqual(AllocateTo.RESERVE_TO_ME);
+        expect(state.allocateTo).toEqual(AllocateTo.ALLOCATE_TO_ME);
       });
     });
 
@@ -80,9 +80,9 @@ describe('Allocate Role Reducer', () => {
     describe('ChooseAllocateToAndGo action', () => {
       it('should set correct object', () => {
         const initialState = fromReducer.allocateRoleInitialState;
-        const action = new fromActions.ChooseAllocateToAndGo({ allocateTo: AllocateTo.RESERVE_TO_ME, allocateRoleState: AllocateRoleState.SEARCH_PERSON });
+        const action = new fromActions.ChooseAllocateToAndGo({ allocateTo: AllocateTo.ALLOCATE_TO_ME, allocateRoleState: AllocateRoleState.SEARCH_PERSON });
         const state = fromReducer.allocateRoleReducer(initialState, action);
-        expect(state.allocateTo).toEqual(AllocateTo.RESERVE_TO_ME);
+        expect(state.allocateTo).toEqual(AllocateTo.ALLOCATE_TO_ME);
       });
     });
 

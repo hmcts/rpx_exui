@@ -2,14 +2,14 @@
 var CaseListPage = require('../pageObjects/CaseListPage');
 const CucumberReportLogger = require('../../support/reportLogger');
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const { browser } = require('protractor');
 const BrowserWaits = require('../../support/customWaits');
 const headerPage = require('../pageObjects/headerPage');
 const browserUtil = require('../../../ngIntegration/util/browserUtil');
 const { LOG_LEVELS } = require('../../support/constants');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   var caseListPage = new CaseListPage();
 
   Then('I am on case list page', async function () {
@@ -172,4 +172,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
   async function validateNoResultsDisplayed(){
     expect(await caseListPage.hasCaseListAnyResults()).to.be.false;
   }
-});

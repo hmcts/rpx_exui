@@ -55,4 +55,51 @@ describe('HearingSpecificDateAmendedConverter', () => {
     const expected = cold('(b|)', { b: isAmended });
     expect(result$).toBeObservable(expected);
   });
+
+  it('should transform hearing specific date amended flag based on start date changed', () => {
+    const STATE: State = _.cloneDeep(initialState.hearings);
+    STATE.hearingRequest.hearingRequestMainModel.hearingDetails.hearingWindow = {
+      dateRangeStart: '2022-01-02'
+    };
+    STATE.hearingRequestToCompare.hearingRequestMainModel.hearingDetails.hearingWindow = {
+      dateRangeStart: '2022-01-01'
+    };
+
+    const result$ = hearingSpecificDateAmendedConverter.transformIsAmended(of(STATE));
+    const isAmended = true;
+    const expected = cold('(b|)', { b: isAmended });
+    expect(result$).toBeObservable(expected);
+  });
+
+  it('should transform hearing specific date amended flag based on end date changed', () => {
+    const STATE: State = _.cloneDeep(initialState.hearings);
+    STATE.hearingRequest.hearingRequestMainModel.hearingDetails.hearingWindow = {
+      dateRangeStart: '2022-01-01',
+      dateRangeEnd: '2022-01-05'
+    };
+    STATE.hearingRequestToCompare.hearingRequestMainModel.hearingDetails.hearingWindow = {
+      dateRangeStart: '2022-01-01',
+      dateRangeEnd: '2022-01-06'
+    };
+
+    const result$ = hearingSpecificDateAmendedConverter.transformIsAmended(of(STATE));
+    const isAmended = true;
+    const expected = cold('(b|)', { b: isAmended });
+    expect(result$).toBeObservable(expected);
+  });
+
+  it('should not transform hearing specific date amended flag based on no changed', () => {
+    const STATE: State = _.cloneDeep(initialState.hearings);
+    STATE.hearingRequest.hearingRequestMainModel.hearingDetails.hearingWindow = {
+      dateRangeStart: '2022-01-01T09:00:00.000Z'
+    };
+    STATE.hearingRequestToCompare.hearingRequestMainModel.hearingDetails.hearingWindow = {
+      dateRangeStart: '2022-01-01'
+    };
+
+    const result$ = hearingSpecificDateAmendedConverter.transformIsAmended(of(STATE));
+    const isAmended = false;
+    const expected = cold('(b|)', { b: isAmended });
+    expect(result$).toBeObservable(expected);
+  });
 });

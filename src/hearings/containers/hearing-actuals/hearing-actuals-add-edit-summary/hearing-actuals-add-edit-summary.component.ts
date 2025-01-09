@@ -7,11 +7,14 @@ import { HearingsService } from '../../../services/hearings.service';
 import * as fromHearingStore from '../../../store';
 import { ActualHearingsUtils } from '../../../utils/actual-hearings.utils';
 import { HearingActualsSummaryBaseComponent } from '../hearing-actuals-summary-base/hearing-actuals-summary-base.component';
+import { DatePipe } from '@hmcts/ccd-case-ui-toolkit';
+import { SessionStorageService } from 'src/app/services';
 
 @Component({
   selector: 'exui-hearing-actuals-add-edit-summary',
   templateUrl: './hearing-actuals-add-edit-summary.component.html',
-  styleUrls: ['./hearing-actuals-add-edit-summary.component.scss']
+  styleUrls: ['./hearing-actuals-add-edit-summary.component.scss'],
+  providers: [DatePipe]
 })
 export class HearingActualsAddEditSummaryComponent extends HearingActualsSummaryBaseComponent {
   public successBanner = false;
@@ -19,27 +22,42 @@ export class HearingActualsAddEditSummaryComponent extends HearingActualsSummary
   constructor(public readonly hearingStore: Store<fromHearingStore.State>,
     public readonly hearingsService: HearingsService,
     public readonly route: ActivatedRoute,
-    public readonly router: Router
+    public readonly router: Router,
+    public readonly ccdDatePipe: DatePipe,
+    public readonly sessionStorageService: SessionStorageService
   ) {
-    super(hearingStore, hearingsService, route, router);
+    super(hearingStore, hearingsService, route, router, ccdDatePipe);
     this.partyChannels = [...this.route.snapshot.data.partyChannels, ...this.route.snapshot.data.partySubChannels];
   }
 
-  /**
-   * TODO: Navigate to check your answers page if not cancelled and valid
-   * Determines whether submit hearing details on
-   */
-  public async onSubmitHearingDetails(): Promise<void> {
+  public onSubmitHearingDetails(): void {
     if (this.hearingResult === HearingResult.CANCELLED || this.isValid()) {
-      await this.router.navigate(['/', 'hearings', 'actuals', this.hearingRequestID, 'hearing-actual-edit-summary']);
+      this.router.navigate(['/', 'hearings', 'actuals', this.hearingRequestID, 'hearing-actual-edit-summary']);
     }
   }
 
   public changeWasThisHearingDayRequired(hearingDay: ActualHearingDayModel) {
-    this.validationErrors = [];
+    this.resetErrorMessages();
+
+    const dayRequired = !hearingDay.notRequired;
+    let updatedActuals;
+
+    if (!dayRequired) {
+      updatedActuals = {
+        hearingStartTime: '',
+        hearingEndTime: '',
+        pauseDateTimes: [],
+        notRequired: dayRequired,
+        actualDayParties: []
+      } as ActualHearingDayModel;
+    } else {
+      updatedActuals = { notRequired: dayRequired } as ActualHearingDayModel;
+    }
+
     const patchedHearingActuals = ActualHearingsUtils.mergeSingleHearingPartActuals(
-      this.hearingActualsMainModel, hearingDay.hearingDate, { notRequired: !hearingDay.notRequired } as ActualHearingDayModel
+      this.hearingActualsMainModel, hearingDay.hearingDate, updatedActuals
     );
+
     this.hearingStore.dispatch(new fromHearingStore.UpdateHearingActuals({
       hearingId: this.id,
       hearingActuals: patchedHearingActuals
@@ -105,5 +123,27 @@ export class HearingActualsAddEditSummaryComponent extends HearingActualsSummary
   private showSuccessBannerMessage(): void {
     this.successBanner = true;
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }
+
+  public hearingIsInFuture(comparisonDateString: string): boolean {
+    return (new Date(comparisonDateString) > new Date());
+  }
+
+  public onBack(): void {
+    const caseInfoStr = this.sessionStorageService.getItem('caseInfo');
+    if (caseInfoStr) {
+      const caseInfo = JSON.parse(caseInfoStr);
+      const caseId = caseInfo.cid;
+      this.router.navigate(['/', 'cases', 'case-details', caseId, 'hearings']);
+    } else {
+      window.history.back();
+    }
+  }
+
+  public haveParticipantsBeenAdded(hearingDay: ActualHearingDayModel): boolean {
+    const individualParties = this.individualParties;
+    if (hearingDay && this.individualParties){
+      return individualParties?.length !== hearingDay?.actualDayParties?.length;
+    }
   }
 }

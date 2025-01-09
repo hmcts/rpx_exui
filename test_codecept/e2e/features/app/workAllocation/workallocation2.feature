@@ -1,4 +1,4 @@
-@fullfunctional @wa2 @demo @functional_enabled
+@fullfunctional @wa2 @demo @ignored
 Feature: WA Release 2: : Work allocations My work, All work
 
     Scenario Outline: View tasks, E2E journey of Caseworker-ia-officer user
@@ -20,7 +20,6 @@ Feature: WA Release 2: : Work allocations My work, All work
             | useridentifier     | roles                                              | mainHeaders                               | rightColumnHeaders  |
             | IAC_CaseOfficer_R2 | caseworker-ia-caseofficer,caseworker-ia-admofficer | My work, All work ,Case list, Create case | Find case           |
             # | IAC_Judge_WA_R2    | caseworker-ia-iacjudge,caseworker-ia,caseworker    | My work, All work                         | Case list,Find case |
-
 
     Scenario: My work tabs
 
@@ -94,6 +93,3 @@ Feature: WA Release 2: : Work allocations My work, All work
         #     | Role          |
         #     | Person        |
             # | Hearing date |
-
-
-

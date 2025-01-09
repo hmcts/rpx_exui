@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store } from '@ngrx/store';
 import * as fromHearingStore from '../../../../hearings/store';
 import { ACTION, HearingStageEnum } from '../../../models/hearings.enum';
@@ -19,11 +20,12 @@ export class HearingStageComponent extends RequestHearingPageFlow implements OnI
   public hearingStageSelectionError: string;
   public validationErrors: { id: string, message: string }[] = [];
 
-  constructor(protected readonly route: ActivatedRoute,
+  constructor(private readonly fb: FormBuilder,
               protected readonly hearingStore: Store<fromHearingStore.State>,
               protected readonly hearingsService: HearingsService,
-              private readonly fb: FormBuilder) {
-    super(hearingStore, hearingsService, route);
+              protected readonly featureToggleService: FeatureToggleService,
+              protected readonly route: ActivatedRoute) {
+    super(hearingStore, hearingsService, featureToggleService, route);
   }
 
   public ngOnInit() {

@@ -48,6 +48,10 @@ describe('Hearing List Effects', () => {
     store = TestBed.inject(Store) as Store<fromHearingStore.State>;
   });
 
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
   describe('loadHearingList$', () => {
     it('should return a response with hearings list', () => {
       const HEARING_DAY_SCHEDULE_1: HearingDayScheduleModel = {

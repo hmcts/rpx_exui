@@ -256,6 +256,11 @@ describe('getJudicialUsersFromApi', () => {
   });
 
   it('should get the judicial users successfully', async () => {
+    req = mockReq({
+      headers: {
+        accept: 'application/json'
+      }
+    });
     const response = await getJudicialUsersFromApi(req, userIds, 'BFA1');
     expect(response.data.length).to.equal(2);
     expect(response.data).to.deep.equal(data);

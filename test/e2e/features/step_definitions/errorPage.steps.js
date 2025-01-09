@@ -1,12 +1,11 @@
 'use strict';
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 
 const BrowserUtil = require('../../../ngIntegration/util/browserUtil');
 const errorPage = require('../pageObjects/common/errorPage');
 const validationError = require('../pageObjects/common/exuiErrorMessage');
 
-defineSupportCode(function ({ Given, When, Then }) {
   Then('I see error page with message {string}', async function (errorMessage) {
     const errorMessageDisplayed = await errorPage.getErrorMessage();
     expect(errorMessageDisplayed).to.include(errorMessage);
@@ -21,4 +20,3 @@ defineSupportCode(function ({ Given, When, Then }) {
     const actualMessage = await validationError.getFieldLevelErrorMessage(fieldText);
     expect(actualMessage).to.include(errorMessage);
   });
-});

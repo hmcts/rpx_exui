@@ -9,7 +9,6 @@ Feature: Staff UI Manager user
         Then I click on primary navigation header tab "Staff", I see selected tab page displayed
         Then I see basic search displayed in staff UI
         Then I validate basic search in Staff UI
-
         Then I validate staff UI search results displayed
         Then I validate staff user details display
 

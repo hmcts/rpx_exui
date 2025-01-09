@@ -101,7 +101,7 @@ const RuntimetestData = require("./runtimeTestData");
 defineSupportCode(({ Before,After }) => {
     Before(function (scenario) {
         RuntimetestData.init();
-        global.scenarioData = {};
+        // global.scenarioData = {};
         const world = this
         
         CucumberReportLog.setScenarioWorld(this);

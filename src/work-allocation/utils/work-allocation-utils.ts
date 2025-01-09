@@ -135,7 +135,8 @@ export const servicesMap: { [key: string]: string } = {
   SSCS: 'Social security and child support',
   CIVIL: 'Civil',
   PRIVATELAW: 'Private Law',
-  PUBLICLAW: 'Public Law'
+  PUBLICLAW: 'Public Law',
+  EMPLOYMENT: 'Employment'
 };
 
 export function getOptions(taskRoles: TaskRole[], sessionStorageService: ISessionStorageService): OptionsModel[] {

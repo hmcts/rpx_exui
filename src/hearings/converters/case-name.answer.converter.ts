@@ -6,7 +6,11 @@ import { AnswerConverter } from './answer.converter';
 export class CaseNameAnswerConverter implements AnswerConverter {
   public transformAnswer(hearingState$: Observable<State>): Observable<string> {
     return hearingState$.pipe(
-      map((state) => state.hearingRequest.hearingRequestMainModel.caseDetails.hmctsInternalCaseName)
+      map((state) => {
+        return state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.caseDetails.hmctsInternalCaseName
+          : state.hearingRequest.hearingRequestMainModel.caseDetails.hmctsInternalCaseName;
+      })
     );
   }
 }

@@ -8,7 +8,6 @@ import {
   PlannedDayPartyModel,
   PlannedHearingDayModel
 } from '../models/hearingActualsMainModel';
-import { HearingDateEnum } from '../models/hearings.enum';
 
 export class ActualHearingsUtils {
   public static getDate(dateTime: string): string {
@@ -226,6 +225,10 @@ export class ActualHearingsUtils {
   public static getPauseDateTime(day: ActualHearingDayModel, state: 'start' | 'end'): string {
     const pauseTimeState = state === 'start' ? 'pauseStartTime' : 'pauseEndTime';
     return day.pauseDateTimes && day.pauseDateTimes.length && day.pauseDateTimes[0] && day.pauseDateTimes[0].pauseStartTime
-      ? moment(day.pauseDateTimes[0][pauseTimeState]).format(HearingDateEnum.DisplayTime) : null;
+      ? day.pauseDateTimes[0][pauseTimeState] : null;
+  }
+
+  public static formatTime(time: string, format: string = 'HH:mm'): string {
+    return time ? moment(time).format(format) : null;
   }
 }

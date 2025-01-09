@@ -3,7 +3,7 @@ import { assert } from 'chai';
 import mockResponse from '../../mocks/openid-well-known-configuration.mock';
 import { PactTestSetup } from '../settings/provider.mock';
 
-const pactSetUp = new PactTestSetup({ provider: 'Idam_api', port: 8000 });
+const pactSetUp = new PactTestSetup({ provider: 'idamApi_oidc', port: 8000 });
 
 describe('OpenId Connect API', () => {
   // Write Pact when all tests done
@@ -13,7 +13,7 @@ describe('OpenId Connect API', () => {
     before(async () => {
       await pactSetUp.provider.setup();
       pactSetUp.provider.addInteraction({
-        state: 'a well-known endpoint',
+        state: '.well-known endpoint',
         uponReceiving: 'a request for configuration',
         withRequest: {
           method: 'GET',

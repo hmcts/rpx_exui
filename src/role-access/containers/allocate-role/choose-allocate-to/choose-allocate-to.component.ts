@@ -48,8 +48,8 @@ export class ChooseAllocateToComponent implements OnInit {
     this.formGroup = new FormGroup({ [this.radioControlName]: this.radioOptionControl });
     this.optionsList = [
       {
-        optionId: EnumUtil(AllocateTo).getKeyOrDefault(AllocateTo.RESERVE_TO_ME),
-        optionValue: AllocateTo.RESERVE_TO_ME
+        optionId: EnumUtil(AllocateTo).getKeyOrDefault(AllocateTo.ALLOCATE_TO_ME),
+        optionValue: AllocateTo.ALLOCATE_TO_ME
       },
       {
         optionId: EnumUtil(AllocateTo).getKeyOrDefault(AllocateTo.ALLOCATE_TO_ANOTHER_PERSON),

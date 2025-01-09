@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MultiLevelSelectorComponent } from '..';
+import { MockRpxTranslatePipe } from '../../../app/shared/test/mock-rpx-translate.pipe';
 import { ControlTypeEnum } from '../../models/hearings.enum';
 import { LovRefDataModel } from '../../models/lovRefData.model';
 
@@ -233,7 +234,7 @@ describe('MultiLevelSelectorComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
-      declarations: [MultiLevelSelectorComponent],
+      declarations: [MultiLevelSelectorComponent, MockRpxTranslatePipe],
       providers: [
         FormBuilder
       ]

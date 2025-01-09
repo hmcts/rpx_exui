@@ -1,0 +1,70 @@
+<h2 class="govuk-heading-m">Judge details
+  <exui-amendment-label  *ngIf="showAmendedLabelForPageTitle" [displayLabel]="amendmentLabelEnum.AMENDED">
+  </exui-amendment-label>
+</h2>
+<div class="govuk-summary-list govuk-!-margin-bottom-9">
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Do you want a specific judge?
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ needJudge }}
+      <exui-amendment-label *ngIf="showAmmendedForNeedJudge" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="needJudge"
+        class="change-link"
+        href="javascript:void(0)"
+        (click)="onChange('needJudge')">Change</a>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row" *ngIf="judgeName?.length > 0">
+    <div class="govuk-summary-list__key">
+      Name of the judge
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ judgeName }}
+      <exui-amendment-label *ngIf="showAmmendedForJudgeName" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="judgeName"
+        class="change-link"
+        href="javascript:void(0)"
+        (click)="onChange('judgeName')">Change</a>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row" *ngIf="judgeTypes?.length > 0">
+    <div class="govuk-summary-list__key">
+      Select all judge types that apply
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ judgeTypes }}
+      <exui-amendment-label *ngIf="showAmmendedForJudgeType" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="judgeTypes"
+        class="change-link"
+        href="javascript:void(0)"
+        (click)="onChange('judgeTypes')">Change</a>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row" *ngIf="excludedJudgeNames?.length > 0">
+    <div class="govuk-summary-list__key">
+      Exclude a judge
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ excludedJudgeNames }}
+      <exui-amendment-label *ngIf="showAmmendedForExcludedJudgeNames" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="judgeExclusion"
+        class="change-link"
+        href="javascript:void(0)"
+        (click)="onChange('judgeExclusion')">Change</a>
+    </div>
+  </div>
+</div>

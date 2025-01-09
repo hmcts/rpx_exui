@@ -32,9 +32,9 @@ import { CasesCreateComponent } from './case-create.component';
 class MockSortService {
   public features = {};
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public getFeatureToggle() {}
+  public getFeatureToggle() { }
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public getEditorConfiguration() {}
+  public getEditorConfiguration() { }
 }
 
 describe('CaseCreateComponent', () => {
@@ -88,7 +88,7 @@ describe('CaseCreateComponent', () => {
           useClass: MockSortService
         },
         ScrollToService
-      ]
+      ], teardown: { destroyAfterEach: false }
     })
       .compileComponents();
   }));
@@ -103,7 +103,7 @@ describe('CaseCreateComponent', () => {
 
   afterEach(() => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    spyOn(component, 'ngOnDestroy').and.callFake(() => {});
+    spyOn(component, 'ngOnDestroy').and.callFake(() => { });
     fixture.destroy();
   });
 

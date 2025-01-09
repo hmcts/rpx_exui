@@ -3,8 +3,8 @@ import * as express from 'express';
 import { NextFunction, Response } from 'express';
 import { UserInfo } from '../auth/interfaces/UserInfo';
 import { sendPost } from '../common/crudService';
-import { getConfigValue } from '../configuration';
-import { SERVICES_CASE_JUDICIAL_REF_PATH, SERVICES_ROLE_ASSIGNMENT_API_PATH } from '../configuration/references';
+import { getConfigValue, showFeature } from '../configuration';
+import { FEATURE_JRD_E_LINKS_V2_ENABLED, SERVICES_CASE_JUDICIAL_REF_PATH, SERVICES_ROLE_ASSIGNMENT_API_PATH } from '../configuration/references';
 import { http } from '../lib/http';
 import { EnhancedRequest } from '../lib/models';
 import { setHeaders } from '../lib/proxy';
@@ -14,6 +14,8 @@ import { RoleCategory } from './models/allocate-role.enum';
 import { CaseRoleRequestPayload, RoleExclusion } from './models/caseRoleRequestPayload';
 import { release2ContentType } from './models/release2ContentType';
 
+const HEADER_ACCEPT_V1 = 'application/json';
+const HEADER_ACCEPT_V2 = 'application/vnd.jrd.api+json;Version=2.0';
 const baseRoleAccessUrl = getConfigValue(SERVICES_ROLE_ASSIGNMENT_API_PATH);
 const JUDICIAL_REF_URL = getConfigValue(SERVICES_CASE_JUDICIAL_REF_PATH);
 
@@ -152,6 +154,8 @@ export function mapRoleCategory(roleCategory: string): RoleCategory {
       return RoleCategory.ADMIN;
     case 'CTSC':
       return RoleCategory.CTSC;
+    case 'PROFESSIONAL':
+      return RoleCategory.PROFESSIONAL;
     default:
       throw new Error('Invalid roleCategory');
   }
@@ -170,8 +174,11 @@ export function getCorrectRoleCategory(domain: string): RoleCategory {
   }
 }
 
-export function
-getJudicialUsersFromApi(req: express.Request, ids: string[], serviceCode: string): Promise<AxiosResponse<JudicialUserDto[]>> {
+export function getJudicialUsersFromApi(req: express.Request, ids: string[], serviceCode: string): Promise<AxiosResponse<JudicialUserDto[]>> {
+  // Judicial User search API version to be used depends upon the config entry FEATURE_JRD_E_LINKS_V2_ENABLED's value
+  req.headers.accept = showFeature(FEATURE_JRD_E_LINKS_V2_ENABLED)
+    ? HEADER_ACCEPT_V2
+    : HEADER_ACCEPT_V1;
   const headers = setHeaders(req);
   return http.post(`${JUDICIAL_REF_URL}/refdata/judicial/users`, { sidam_ids: ids, serviceCode }, { headers });
 }

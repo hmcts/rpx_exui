@@ -3,6 +3,7 @@ import { HearingRequestMainModel } from '../../models/hearingRequestMain.model';
 import { HearingRequestStateData } from '../../models/hearingRequestStateData.model';
 import { Mode } from '../../models/hearings.enum';
 import * as fromActions from '../actions';
+import { PartyDetailsModel } from '../../models/partyDetails.model';
 
 export const initialHearingRequestState: HearingRequestStateData = {
   hearingRequestMainModel: {
@@ -49,7 +50,8 @@ export const initialHearingRequestState: HearingRequestStateData = {
     },
     partyDetails: []
   },
-  lastError: null
+  lastError: null,
+  getJudicialUsersError: null
 };
 
 export function hearingRequestReducer(currentState = initialHearingRequestState,
@@ -61,9 +63,24 @@ export function hearingRequestReducer(currentState = initialHearingRequestState,
       };
     }
     case fromActions.INITIALIZE_HEARING_REQUEST: {
+      const hearingRequestMainModel = action.payload;
+      const updatedPartyDetails: PartyDetailsModel[] = [];
+      hearingRequestMainModel.partyDetails.forEach((party) => {
+        let updateParty = party;
+        if (party.partyName === undefined && party?.individualDetails?.firstName !== undefined) {
+          updateParty = {
+            ...party,
+            partyName: `${party?.individualDetails?.firstName} ${party?.individualDetails?.lastName}`
+          };
+        }
+        updatedPartyDetails.push(updateParty);
+      });
       return {
         ...currentState,
-        hearingRequestMainModel: action.payload
+        hearingRequestMainModel: {
+          ...action.payload,
+          partyDetails: updatedPartyDetails
+        }
       };
     }
     case fromActions.UPDATE_HEARING_REQUEST: {
@@ -105,6 +122,12 @@ export function hearingRequestReducer(currentState = initialHearingRequestState,
       return {
         ...currentState,
         lastError: action.payload
+      };
+    }
+    case fromActions.GET_JUDICIAL_USER_FAILURE: {
+      return {
+        ...currentState,
+        getJudicialUsersError: action.payload
       };
     }
     case fromActions.RESET_HEARING_REQUEST_LAST_ERROR: {

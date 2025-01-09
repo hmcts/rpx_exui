@@ -25,7 +25,7 @@ export interface LocationApi {
   location_id: string;
   location: string;
   is_primary: boolean;
-  services: string[];
+  services?: string[];
 }
 
 export interface CaseworkersByService {
@@ -41,6 +41,16 @@ export interface Caseworker {
   location: Location;
   roleCategory: string;
   service?: string;
+}
+
+export interface CachedCaseworker {
+  firstName: string;
+  lastName: string;
+  idamId: string;
+  email: string;
+  locations: Location[];
+  roleCategory: string;
+  services?: string[];
 }
 
 export interface Judicialworker {

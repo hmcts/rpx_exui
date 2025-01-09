@@ -6,7 +6,6 @@ import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { AppUtils } from '../../../app/app-utils';
-import { AppConstants } from '../../../app/app.constants';
 import { UserRole } from '../../../app/models';
 import * as fromAppStore from '../../../app/store';
 import { getRoleCategory } from '../../utils';
@@ -27,7 +26,6 @@ export class TaskManagerFilterComponent implements OnInit, OnDestroy {
   public filterSub: Subscription;
   public roleType: string;
   public userRole: UserRole;
-  public isRelease4: boolean;
 
   public fieldsConfig: FilterConfig = {
     persistence: 'local',
@@ -241,10 +239,9 @@ export class TaskManagerFilterComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.checkForReleaseVersion();
     this.appStoreSub = this.appStore.pipe(select(fromAppStore.getUserDetails)).subscribe(
       (userDetails) => {
-        this.userRole = userDetails.userInfo && userDetails.userInfo.roles ? AppUtils.getUserRole(userDetails.userInfo.roles) : null;
+        this.userRole = AppUtils.getUserRole(userDetails?.userInfo?.roles || []);
         this.roleType = AppUtils.convertDomainToLabel(this.userRole);
         this.fieldsConfig.cancelSetting.fields.push({
           name: 'taskType',
@@ -269,12 +266,9 @@ export class TaskManagerFilterComponent implements OnInit, OnDestroy {
       TaskManagerFilterComponent.initPersonFilter(),
       TaskManagerFilterComponent.initRoleTypeFilter(),
       TaskManagerFilterComponent.findPersonFilter(this.waSupportedJurisdictions),
-      TaskManagerFilterComponent.initTaskTypeFilter()
+      TaskManagerFilterComponent.initTaskTypeFilter(),
+      TaskManagerFilterComponent.initTaskNameFilter()
     ];
-
-    if (this.isRelease4) {
-      this.fieldsConfig.fields.push(TaskManagerFilterComponent.initTaskNameFilter());
-    }
 
     this.filterSub = this.filterService.getStream(TaskManagerFilterComponent.FILTER_NAME)
       .pipe(
@@ -310,11 +304,5 @@ export class TaskManagerFilterComponent implements OnInit, OnDestroy {
     if (this.filterSub && !this.filterSub.closed) {
       this.filterSub.unsubscribe();
     }
-  }
-
-  public checkForReleaseVersion(): void {
-    this.featureToggleService.getValue(AppConstants.FEATURE_NAMES.waServiceConfig, null).subscribe((features) => {
-      this.isRelease4 = features.configurations.findIndex((serviceConfig) => parseFloat(serviceConfig.releaseVersion) === 4) > -1;
-    });
   }
 }

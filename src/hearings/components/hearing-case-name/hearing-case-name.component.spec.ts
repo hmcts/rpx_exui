@@ -27,7 +27,7 @@ describe('HearingPartiesTitleComponent', () => {
   });
 
   it('should return title', () => {
-    expect(component.caseName).toBe('Jane vs DWP');
+    expect(component.caseName).toBe('Jane Smith vs DWP');
   });
 
   it('should destroy subscription', () => {

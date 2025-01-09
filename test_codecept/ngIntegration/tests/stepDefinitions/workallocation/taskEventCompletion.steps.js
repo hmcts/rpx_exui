@@ -32,7 +32,7 @@ const { DataTableArgument } = require('codeceptjs');
     });
 
     Given('I set MOCK tasks required for event', async function (tasksDatatable) {
-        taskApiMockService.setTaskRequiredForEventTasks(tasksDatatable.parse().hashes());
+        await taskApiMockService.setTaskRequiredForEventTasks(tasksDatatable.parse().hashes());
     });
 
     When('I complete and submit test event {string}', async function(eventId){

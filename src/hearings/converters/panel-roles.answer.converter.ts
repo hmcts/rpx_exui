@@ -13,7 +13,9 @@ export class PanelRolesAnswerConverter implements AnswerConverter {
 
     return hearingState$.pipe(
       map((state) => {
-        const panelRequirements = state.hearingRequest.hearingRequestMainModel.hearingDetails.panelRequirements;
+        const panelRequirements = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.hearingDetails.panelRequirements
+          : state.hearingRequest.hearingRequestMainModel.hearingDetails.panelRequirements;
         const panelSpecialism: string[] = panelRequirements && panelRequirements.panelSpecialisms;
         const selectedSpecialisms: string[] = [];
         panelSpecialism.forEach((specialismName) => {

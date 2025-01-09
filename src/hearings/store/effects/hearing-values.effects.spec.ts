@@ -130,14 +130,14 @@ describe('Hearing Values Effects', () => {
       caseFlags: {
         flags: [
           {
-            partyID: 'P1',
+            partyId: 'P1',
             partyName: 'Jane and Smith',
             flagId: 'Language Interpreter',
             flagDescription: 'Spanish interpreter required',
             flagStatus: 'ACTIVE'
           },
           {
-            partyID: 'P2',
+            partyId: 'P2',
             partyName: 'DWP',
             flagId: 'case flag 1',
             flagDescription: 'case flag 1 description',

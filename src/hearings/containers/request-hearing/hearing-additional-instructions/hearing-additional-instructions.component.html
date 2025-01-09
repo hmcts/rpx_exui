@@ -3,16 +3,16 @@
     <div class="govuk-form-group">
       <exui-hearing-parties-title></exui-hearing-parties-title>
       <h1 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label--l" for="additionalInstructionsTextarea">Enter any additional instructions for the hearing</label>
+        <label class="govuk-label govuk-label--l" for="additionalInstructionsTextarea">{{ 'Enter any additional instructions for the hearing' | rpxTranslate }}</label>
       </h1>
-      <div id="event-name-hint" class="govuk-hint">Add details of any additional facilities or instructions for this hearing.</div>
+      <div id="event-name-hint" class="govuk-hint">{{ 'Add details of any additional facilities or instructions for this hearing.' | rpxTranslate }}</div>
       <div class="govuk-inset-text">
-          This hearing request will need to be manually reviewed before listing if you enter additional details.
+          {{ 'This hearing request will need to be manually reviewed before listing if you enter additional details.' | rpxTranslate }}
       </div>
       <form class="form" [formGroup]="instructionsForm">
         <textarea class="govuk-textarea govuk-!-margin-bottom-1" id="additionalInstructionsTextarea" formControlName="instructions" name="additional-instructions-text" value="" rows="10" maxlength="{{instructionLength}}"></textarea>
         <div id="with-hint-info" class="govuk-hint govuk-character-count__message govuk-!-margin-bottom-7" aria-live="polite">
-            You can enter up to {{instructionLength | number: '' : 'en' }} characters
+            {{ 'You can enter up to ' | rpxTranslate }} {{instructionLength | number: '' : 'en' }} {{ ' characters' | rpxTranslate }}
         </div>
       </form>
     </div>

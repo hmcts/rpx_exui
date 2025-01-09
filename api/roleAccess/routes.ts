@@ -5,6 +5,7 @@ import {
   confirmAllocateRole,
   createSpecificAccessApprovalRole,
   deleteRoleByCaseAndRoleId,
+  getAccessRoles,
   getAccessRolesByCaseId,
   getJudicialUsers,
   getMyAccessNewCount,
@@ -27,7 +28,8 @@ router.post('/allocate-role/delete', deleteRoleByCaseAndRoleId);
 
 router.post('/allocate-role/valid-roles', getPossibleRoles);
 router.post('/roles/post', getRolesByCaseId);
-router.post('/roles/access-get', getAccessRolesByCaseId);
+router.post('/roles/access-get', getAccessRoles);
+router.post('/roles/access-get-by-caseId', getAccessRolesByCaseId);
 router.post('/roles/getJudicialUsers', getJudicialUsers);
 
 router.get('/roles/get-my-access-new-count', getMyAccessNewCount);

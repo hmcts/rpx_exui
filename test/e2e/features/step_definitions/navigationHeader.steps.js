@@ -1,7 +1,7 @@
 const headerPage = require('../pageObjects/headerPage');
 const browserWaits = require('../../support/customWaits');
 const cucumberReporter = require('../../support/reportLogger');
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const SoftAssert = require('../../../ngIntegration/util/softAssert');
 const constants = require('../../support/constants');
 const featureToggleUtil = require('../../../ngIntegration/util/featureToggleUtil');
@@ -13,7 +13,7 @@ const { LOG_LEVELS } = require('../../support/constants');
 
 const appTestData = require('../../config/appTestConfig');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   Then('I see header tab Task list', async function () {
     expect(await headerPage.isTabPresent('Task list'), 'Task list tab is not present').to.be.true;
   });
@@ -219,4 +219,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
       await headerPage.headerCaseRefSearch.clickFind();
     });
   });
-});

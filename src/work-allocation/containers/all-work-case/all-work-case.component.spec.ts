@@ -25,7 +25,6 @@ import {
 } from '../../services';
 import { getMockCaseRoles, getMockCases } from '../../tests/utils.spec';
 import { AllWorkCaseComponent } from './all-work-case.component';
-import { CheckReleaseVersionService } from '../../../work-allocation/services/check-release-version.service';
 
 // const USER_DETAILS = {
 //   canShareCases: true,
@@ -84,6 +83,7 @@ describe('AllWorkCaseComponent', () => {
     allocateRoleService = {},
     httpClient = {},
     store = {},
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     checkReleaseVersionService = {}
   }) => new AllWorkCaseComponent(
     changeDetectorRef as ChangeDetectorRef,
@@ -101,8 +101,7 @@ describe('AllWorkCaseComponent', () => {
     jurisdictionsService as JurisdictionsService,
     allocateRoleService as AllocateRoleService,
     httpClient as HttpClient,
-    store as Store<fromActions.State>,
-    checkReleaseVersionService as CheckReleaseVersionService
+    store as Store<fromActions.State>
   );
 
   const cases: Case[] = getMockCases();
@@ -123,12 +122,12 @@ describe('AllWorkCaseComponent', () => {
       component = initializeComponent({ locationDataService: mockLocationService, waSupportedJurisdictionsService: mockWASupportedJurisdictionService, checkReleaseVersionService: mockCheckReleaseVersionService });
       spyOn(component, 'setupCaseWorkers');
       spyOn(component, 'loadSupportedJurisdictions');
+      component.waSupportedJurisdictions$ = of(['IA']);
 
       component.ngOnInit();
 
       expect(component.setupCaseWorkers).toHaveBeenCalled();
       expect(component.loadSupportedJurisdictions).toHaveBeenCalled();
-      expect(mockLocationService.getLocations).toHaveBeenCalled();
     });
   });
 

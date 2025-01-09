@@ -78,20 +78,19 @@ class CaseRolesTable{
     }
 
     async getLinkElementWithTextAtRow(rowIndex,linkText){
-        const linkElement = element(by.xpath(`${this.parentXpath}//table//tbody//tr[contains(@class,'govuk-table__row')][${rowIndex}]//td//a[contains(text(),'${linkText}')]`));
+        const linkElement = element(by.xpath(`${this.parentXpath}//table//tbody//tr[contains(@class,'govuk-table__row')][${rowIndex}]//td//span[not(contains(@class,'hidden'))]//a[contains(text(),'${linkText}')]`));
         
-        reportLogger.AddMessage(`Case role table link with text element at row : ${linkElement.locator().toString()}`, LOG_LEVELS.Debug);
+        reportLogger.AddMessage(`Case role table link with text element at row : ${linkElement.selector.xpath}`, LOG_LEVELS.Debug);
         return linkElement;
     }
 
     async isLinkWithTextPresentAtRow(rowIndex,linkText){
         const linkElement = await this.getLinkElementWithTextAtRow(rowIndex,linkText);
         try{
-            await BrowserWaits.waitForElement(linkElement);
-            return true;
+            return await linkElement.isDisplayed(linkElement);
         }
         catch(err){
-            reportLogger.AddMessage(`error checking ${linkElement.locator().toString()}`, LOG_LEVELS.Error);
+            reportLogger.AddMessage(`error checking ${linkElement.selector}`, LOG_LEVELS.Error);
 
             return false;
         }
@@ -112,9 +111,7 @@ class CaseRolesTable{
 
     async isActionRowDisplayed(atRow){
         const actionRowDatas = element.all(by.xpath(`${this.parentXpath}//table//tbody//tr[contains(@class,'govuk-table__row')][${atRow}]/following-sibling::tr[position()=1]//td`));
-        reportLogger.AddMessage(`Action at row ${atRow} locator : ${actionRowDatas.locator().toString()}`, LOG_LEVELS.Debug);
         const tdCountOfRow = await actionRowDatas.count();
-        reportLogger.AddMessage(`Action at row ${atRow} locator : ${actionRowDatas.locator().toString()} has ${tdCountOfRow} data colums`, LOG_LEVELS.Debug);
         return tdCountOfRow === 1;
     }
 

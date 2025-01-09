@@ -13,7 +13,6 @@ import { AllocateRoleService } from '../../../role-access/services';
 import { ConfigConstants, ListConstants, SortConstants } from '../../../work-allocation/components/constants';
 import { SortOrder } from '../../../work-allocation/enums';
 import { CaseworkerDataService, LocationDataService, WASupportedJurisdictionsService, WorkAllocationCaseService } from '../../services';
-import { CheckReleaseVersionService } from '../../services/check-release-version.service';
 import { JurisdictionsService } from '../../services/juridictions.service';
 import { MyCasesComponent } from './my-cases.component';
 
@@ -46,6 +45,7 @@ describe('MyCasesComponent', () => {
     allocateRoleService = {},
     httpClient = {},
     store = {},
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     checkReleaseVersionService = {}
   }) => new MyCasesComponent(
     changeDetectorRef as ChangeDetectorRef,
@@ -63,8 +63,7 @@ describe('MyCasesComponent', () => {
     jurisdictionsService as JurisdictionsService,
     allocateRoleService as AllocateRoleService,
     httpClient as HttpClient,
-    store as Store<fromActions.State>,
-    checkReleaseVersionService as CheckReleaseVersionService
+    store as Store<fromActions.State>
   );
 
   it('should create', () => {

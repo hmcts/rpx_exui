@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
+import { MockRpxTranslatePipe } from '../../../app/shared/test/mock-rpx-translate.pipe';
 import { Mode } from '../../models/hearings.enum';
 import { HearingsPipesModule } from '../../pipes/hearings.pipes.module';
 import { LinkedHearingsCaseTitleComponent } from './linked-hearings-case-title.component';
@@ -19,7 +20,7 @@ describe('LinkedHearingsCaseTitleComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HearingsPipesModule],
-      declarations: [LinkedHearingsCaseTitleComponent],
+      declarations: [LinkedHearingsCaseTitleComponent, MockRpxTranslatePipe],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [{ provide: ActivatedRoute, useValue: mockRoute }]
     })

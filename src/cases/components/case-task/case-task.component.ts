@@ -1,10 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService } from '@hmcts/ccd-case-ui-toolkit';
-import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
-import { first } from 'rxjs/operators';
 import { AppUtils } from '../../../app/app-utils';
-import { AppConstants } from '../../../app/app.constants';
 import { UserInfo, UserRole } from '../../../app/models';
 import { SessionStorageService } from '../../../app/services';
 import { InfoMessage } from '../../../app/shared/enums/info-message';
@@ -26,23 +23,22 @@ export class CaseTaskComponent implements OnInit {
   private static readonly CASE_ID_VARIABLE = '${[case_id]}';
   private static readonly TASK_ID_VARIABLE = '${[id]}';
   private static readonly VARIABLES: string[] = [
-    CaseTaskComponent.CASE_REFERENCE_VARIABLE,
-    CaseTaskComponent.CASE_ID_VARIABLE,
-    CaseTaskComponent.TASK_ID_VARIABLE
+    CaseTaskComponent?.CASE_REFERENCE_VARIABLE,
+    CaseTaskComponent?.CASE_ID_VARIABLE,
+    CaseTaskComponent?.TASK_ID_VARIABLE
   ];
 
   public manageOptions: { id: string, title: string }[];
   public isUserJudicial: boolean;
   public isTaskUrgent: boolean;
   private pTask: Task;
-  public isRelease4: boolean;
   public userRoleCategory: string;
 
   constructor(private readonly alertService: AlertService,
               private readonly router: Router,
               private readonly sessionStorageService: SessionStorageService,
               protected taskService: WorkAllocationTaskService,
-              private featureToggleService: FeatureToggleService) {
+              private readonly window: Window) {
   }
 
   public get returnUrl(): string {
@@ -87,7 +83,6 @@ export class CaseTaskComponent implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     this.manageOptions = this.task.actions;
-    await this.setReleaseVersion();
   }
 
   public getAssigneeName(task: Task): string {
@@ -112,11 +107,14 @@ export class CaseTaskComponent implements OnInit {
 
   public onActionHandler(task: Task, option: any): void {
     if (option.id === 'claim') {
-      this.taskService.claimTask(task.id).subscribe(() => {
-        this.alertService.success({ phrase: InfoMessage.ASSIGNED_TASK_AVAILABLE_IN_MY_TASKS });
-        this.taskRefreshRequired.emit();
-      }, (error) => {
-        this.claimTaskErrors(error.status);
+      this.taskService.claimTask(task.id).subscribe({
+        next: () => {
+          this.alertService.success({ phrase: InfoMessage.ASSIGNED_TASK_AVAILABLE_IN_MY_TASKS });
+          this.taskRefreshRequired.emit();
+        },
+        error: (error) => {
+          this.claimTaskErrors(error.status);
+        }
       });
       return;
     }
@@ -126,7 +124,9 @@ export class CaseTaskComponent implements OnInit {
       showAssigneeColumn: true
     };
     const actionUrl = `/work/${task.id}/${option.id}`;
-    this.router.navigate([actionUrl], { queryParams: { service: task.jurisdiction }, state });
+    // Had to add then() due to the below Sonarcloud failure
+    // "Promises must be awaited, end with a call to .catch, or end with a call to .then with a rejection handler."
+    this.router.navigate([actionUrl], { queryParams: { service: task.jurisdiction }, state }).then(undefined, undefined);
   }
 
   /**
@@ -154,21 +154,23 @@ export class CaseTaskComponent implements OnInit {
 
   public async onClick(event: string) {
     const url = event.substring(event.indexOf('(') + 1, event.indexOf(')'));
-    const urls = url.split('?');
-    await this.router.navigate([urls[0]], {
-      queryParams: {
-        tid: urls[1].split('=')[1]
+    let qp = {};
+    let base = null;
+    if (!url.startsWith('http')) {
+      base = this.window.location.origin;
+    }
+    try {
+      const u = base ? new URL(url, base) : new URL(url);
+      const tid = u.searchParams.get('tid');
+      if (tid) {
+        qp = { tid: tid };
+        u.searchParams.delete('tid');
       }
-    });
-  }
-
-  public async setReleaseVersion(): Promise<void> {
-    const featureConfigurations = await this.featureToggleService
-      .getValue(AppConstants.FEATURE_NAMES.waServiceConfig, null)
-      .pipe(first())
-      .toPromise();
-    const jurisdictionConfiguration = featureConfigurations.configurations
-      .find((serviceConfig) => serviceConfig.serviceName === this.task.jurisdiction);
-    this.isRelease4 = jurisdictionConfiguration?.releaseVersion === '4';
+      await this.router.navigate([u.toString()], {
+        queryParams: qp
+      });
+    } catch (e) {
+      console.log('Invalid url found in task onClick', e);
+    }
   }
 }

@@ -5,21 +5,17 @@ export  const config =  {
             {
                 id: 'DIVORCE',
                 caseTypeIds: [
-                    'DIVORCE',
-                    'FinancialRemedyMVP2',
-                    'FinancialRemedyContested'
+                    'xuiTestCaseType'
                 ]
             },
             {
                 id: 'IA',
                 caseTypeIds: [
-                    'Asylum'
                 ]
             },
             {
                 id: 'PROBATE',
                 caseTypeIds: [
-                    'GrantOfRepresentation'
                 ]
             }
         ],
@@ -61,7 +57,7 @@ export  const config =  {
     testEnv: process.env.TEST_ENV !== undefined && (process.env.TEST_ENV.includes('aat') || process.env.TEST_ENV.includes('demo')) ? process.env.TEST_ENV : 'aat',
     users : {
        aat: {
-            solicitor: { e: 'lukesuperuserxui@mailnesia.com', sec: 'Monday01'},
+            solicitor: { e: 'xui_auto_test_user_solicitor@mailinator.com', sec: 'Monday01'},
             caseOfficer_r1: { e: 'xui_auto_co_r1@justice.gov.uk', sec: 'Welcome01' },
             caseOfficer_r2: { e: 'xui_auto_co_r2@justice.gov.uk', sec: 'Welcome01' }
        },
@@ -72,8 +68,8 @@ export  const config =  {
        }
     },
     configuratioUi: {
-        aat: ['clientId', 'idamWeb', 'launchDarklyClientId', 'oAuthCallback', 'oidcEnabled', 'paymentReturnUrl', 'protocol', 'ccdGatewayUrl', 'substantiveEnabled', 'accessManagementEnabled', 'judicialBookingApi','waWorkflowApi'],
-        demo: ['clientId', 'idamWeb', 'launchDarklyClientId', 'oAuthCallback', 'oidcEnabled', 'paymentReturnUrl', 'protocol', 'ccdGatewayUrl', 'substantiveEnabled', 'accessManagementEnabled', 'judicialBookingApi', 'waWorkflowApi']
+        aat: ['clientId', 'headerConfig', 'idamWeb', 'launchDarklyClientId', 'oAuthCallback', 'oidcEnabled', 'paymentReturnUrl', 'protocol', 'ccdGatewayUrl', 'substantiveEnabled', 'accessManagementEnabled', 'judicialBookingApi', 'waWorkflowApi'],
+        demo: ['clientId', 'headerConfig', 'idamWeb', 'launchDarklyClientId', 'oAuthCallback', 'oidcEnabled', 'paymentReturnUrl', 'protocol', 'ccdGatewayUrl', 'substantiveEnabled', 'accessManagementEnabled', 'judicialBookingApi', 'waWorkflowApi']
     },
     workallocation:{
         aat:{

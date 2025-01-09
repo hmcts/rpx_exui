@@ -1,5 +1,5 @@
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 
 const headerPage = require('../../pageObjects/headerPage');
 const myWorkPage = require('../../pageObjects/workAllocation/myWorkPage');
@@ -11,7 +11,7 @@ const taskCheckYourChangesPage = require('../../pageObjects/workAllocation/taskC
 
 const workflowUtil = require('../../pageObjects/common/workflowUtil');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   When('I navigate to My work sub navigation tab {string}', async function (secondaryNavTab) {
     await BrowserWaits.retryWithActionCallback(async () => {
       try{
@@ -93,4 +93,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
       expect(await allWorkPage.allworkCasesMessage.getText()).to.contains(message);
     });
   });
-});

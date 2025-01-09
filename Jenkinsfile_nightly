@@ -20,23 +20,46 @@ def channel   = '#xui-pipeline'
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
+def secrets = [
+  'rpx-${env}': [
+    secret('mc-s2s-client-secret', 'S2S_SECRET'),
+    secret('mc-idam-client-secret', 'IDAM_SECRET'),
+    secret('webapp-redis6-connection-string', 'REDISCLOUD_URL'),
+    secret('test-email', 'TEST_EMAIL'),
+    secret('test-password', 'TEST_PASSWORD'),
+    secret('appinsights-instrumentationkey-mc', 'APPINSIGHTS_INSTRUMENTATIONKEY'),
+    secret('appinsights-connection-string-mc', 'APPINSIGHTS_CONNECTION_STRING'),
+    secret('system-user-name', 'SYSTEM_USER_NAME'),
+    secret('system-user-password', 'SYSTEM_USER_PASSWORD'),
+    secret('launch-darkly-client-id', 'LAUNCH_DARKLY_CLIENT_ID'),
+  ],
+  ]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [ $class: 'AzureKeyVaultSecret',
+      secretType: 'Secret',
+      name: secretName,
+      version: '',
+      envVariable: envVar
+    ]
+}
+
 withNightlyPipeline(type, product, component) {
+
     enableSlackNotifications(channel)
+    loadVaultSecrets(secrets)
+    env.TEST_URL = 'https://manage-case.aat.platform.hmcts.net'
     enableFortifyScan('rpx-aat')
     enableFullFunctionalTest(120)
-    //enableSecurityScan()
-    //enableMutationTest()
-    enableCrossBrowserTest()
 
-    env.TEST_URL = 'https://manage-case.aat.platform.hmcts.net/'
-  
+
       afterSuccess('checkout') {
         yarnBuilder.yarn('cache clean')
     }
-  
+
     afterSuccess('build') {
         yarnBuilder.yarn('build')
-      
+
         publishHTML([
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -53,7 +76,23 @@ withNightlyPipeline(type, product, component) {
             reportFiles          : 'index.html',
             reportName           : 'ng lint Report'
         ])
-
+        stage('Cross Browser Test') {
+            try {
+              yarnBuilder.yarn('test:crossbrowser')
+            } catch (Error) {
+              unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+            } finally {
+              publishHTML([
+              allowMissing         : true,
+              alwaysLinkToLastBuild: true,
+              keepAll              : true,
+              reportDir            : "reports/tests/crossbrowser/",
+              reportFiles          : 'index.html',
+              reportName           : 'XUI Manage Cases Cross Browser Tests'
+              ])
+              steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/CaseAPIFunctional/*'
+            }
+        }
         // yarnBuilder.yarn('test:a11y')
         // publishHTML([
         //     allowMissing         : true,
@@ -108,17 +147,6 @@ withNightlyPipeline(type, product, component) {
             reportName           : 'XUI Manage Cases Mutation tests'
         ])
     }
-
-  afterSuccess('crossBrowserTest') {
-    publishHTML([
-      allowMissing         : true,
-      alwaysLinkToLastBuild: true,
-      keepAll              : true,
-      reportDir            : "reports/tests/crossbrowser/",
-      reportFiles          : 'index.html',
-      reportName           : 'XUI Manage Cases Cross Browser Tests'
-    ])
-  }
 
   afterSuccess('securityScan') {
     publishHTML([

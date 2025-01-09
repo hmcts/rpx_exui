@@ -1,8 +1,8 @@
 var IacCase = require('../pageObjects/iacCase');
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   let iacCase = new IacCase();
 
   When('I check all fields IAC case', async function () {
@@ -22,5 +22,4 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
     await iacCase.appealAgainstOtherDecisionsPage();
     await iacCase.legalRepDetailsPage();
   });
-});
 

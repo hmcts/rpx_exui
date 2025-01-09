@@ -66,7 +66,7 @@ export class RejectedRequestViewComponent implements OnInit {
       );
     } else {
       this.waSupportedJurisdictionsService.getWASupportedJurisdictions().subscribe((services) => {
-        this.caseworkerDataService.getCaseworkersForServices(services).subscribe(
+        this.caseworkerDataService.getUsersFromServices(services).subscribe(
           (caseworkers) => {
             const caseworker = caseworkers.find((thisCaseworker) => thisCaseworker.idamId === this.reviewer);
             if (caseworker) {

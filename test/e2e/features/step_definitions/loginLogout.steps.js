@@ -3,7 +3,7 @@
 const loginPage = require('../pageObjects/loginLogoutObjects');
 const headerPage = require('../pageObjects/headerPage');
 
-const { defineSupportCode } = require('cucumber');
+const { Then, When, Given } = require('@cucumber/cucumber');
 const { AMAZING_DELAY, SHORT_DELAY, MID_DELAY, LONG_DELAY, LOG_LEVELS } = require('../../support/constants');
 const config = require('../../config/conf.js');
 const EC = protractor.ExpectedConditions;
@@ -12,14 +12,12 @@ const CucumberReportLogger = require('../../support/reportLogger');
 
 const BrowserUtil = require('../../../ngIntegration/util/browserUtil');
 const testConfig = require('../../config/appTestConfig');
-
 async function waitForElement(el) {
   await browser.wait((result) => {
     return element(by.className(el)).isPresent();
   }, 20000);
 }
 
-defineSupportCode(function ({ Given, When, Then }) {
   let invalidCredentialsCounter = 0;
   let testCounter = 0;
 
@@ -102,8 +100,6 @@ defineSupportCode(function ({ Given, When, Then }) {
 
   When('I navigate to Expert UI Url', async function () {
     await BrowserWaits.retryWithActionCallback(async function(){
-      await browser.driver.manage()
-        .deleteAllCookies();
       CucumberReportLogger.AddMessage('App base url : ' + config.config.baseUrl, LOG_LEVELS.Info);
       await browser.get(config.config.baseUrl);
       await BrowserWaits.waitForElement(loginPage.signinTitle);
@@ -122,11 +118,9 @@ defineSupportCode(function ({ Given, When, Then }) {
   });
 
   Then(/^I am on Idam login page$/, async function () {
-    await waitForElement('heading-large');
     await expect(loginPage.signinTitle.isDisplayed()).to.eventually.be.true;
-    await expect(loginPage.signinTitle.getText())
+    await expect(await loginPage.signinTitle.getText())
       .to
-      .eventually
       .contains('Sign in');
     await expect(loginPage.emailAddress.isDisplayed()).to.eventually.be.true;
     await expect(loginPage.password.isDisplayed()).to.eventually.be.true;
@@ -173,12 +167,8 @@ defineSupportCode(function ({ Given, When, Then }) {
   });
 
   Then('I should be redirected to EUI dashboard page', async function () {
-    const world = this;
-
     await BrowserWaits.retryWithActionCallback(async () => {
       try{
-        await BrowserUtil.waitForLD();
-        await BrowserWaits.waitForElement($('exui-header .hmcts-primary-navigation__item'));
         await expect(loginPage.dashboard_header.isDisplayed()).to.eventually.be.true;
 
         await BrowserUtil.waitForLD();
@@ -187,55 +177,53 @@ defineSupportCode(function ({ Given, When, Then }) {
         throw new Error(err);
       }
     });
+    console.log("step completed ....")
   });
 
   Given('I am logged into Expert UI with valid user details', async function () {
     const matchingUsers = testConfig.users[testConfig.testEnv].filter((user) => user.userIdentifier === 'PROD_LIKE');
 
     await loginPage.givenIAmLoggedIn(matchingUsers[0].email, matchingUsers[0].key);
-    const world = this;
 
     loginAttempts++;
-    await loginattemptCheckAndRelogin(matchingUsers[0].email, matchingUsers[0].key, this);
+    // await loginattemptCheckAndRelogin(matchingUsers[0].email, matchingUsers[0].key, this);
 
     await BrowserWaits.retryForPageLoad($('exui-app-header'), function (message) {
-      world.attach('Login success page load load attempt : ' + message);
+      console.log("Login success page load load attempt : " + message)
     });
   });
 
   Given('I am logged into Expert UI with valid Probate back office user credentials', async function () {
     await loginPage.givenIAmLoggedIn(config.config.params.usernameProbate, config.config.params.password);
-    const world = this;
 
     loginAttempts++;
     await loginattemptCheckAndRelogin(config.config.params.usernameProbate, config.config.params.password, this);
 
     await BrowserWaits.retryForPageLoad($('exui-app-header'), function (message) {
-      world.attach('Login success page load load attempt : ' + message);
+      console.log("Login success page load load attempt : " + message)
+
     });
   });
 
   Given('I am logged into Expert UI with non professional user details', async function () {
     await loginPage.givenIAmLoggedIn(this.config.caseworkerUser, this.config.caseworkerPassword);
-    const world = this;
 
     loginAttempts++;
     await loginattemptCheckAndRelogin(this.config.caseworkerUser, this.config.caseworkerPassword, this);
 
     await BrowserWaits.retryForPageLoad($('exui-app-header'), function (message) {
-      world.attach('Login success page load load attempt : ' + message);
+            console.log("Login success page load load attempt : " + message)
     });
   });
 
   Given('I am logged into Expert UI with FPL user details', async function () {
     await loginPage.givenIAmLoggedIn('kurt@swansea.gov.uk', 'Password12');
-    const world = this;
 
     loginAttempts++;
     await loginattemptCheckAndRelogin('kurt@swansea.gov.uk', 'Password12', this);
 
     await BrowserWaits.retryForPageLoad($('exui-app-header'), function (message) {
-      world.attach('Login success page load load attempt : ' + message);
+            console.log("Login success page load load attempt : " + message)
     });
   });
 
@@ -281,30 +269,27 @@ defineSupportCode(function ({ Given, When, Then }) {
 
   Given('I am logged into Expert UI caseworker-ia-adm user details', async function () {
     await loginPage.givenIAmLoggedIn(config.config.params.caseworker_iac_adm_username, config.config.params.caseworker_iac_adm_password);
-    const world = this;
 
     loginAttempts++;
     await loginattemptCheckAndRelogin(config.config.params.caseworker_iac_adm_username, config.config.params.caseworker_iac_adm_password, this);
 
     await BrowserWaits.retryForPageLoad($('exui-app-header'), function (message) {
-      world.attach('Login success page load load attempt : ' + message);
+            console.log("Login success page load load attempt : " + message)
     });
   });
 
   Given('I am logged into Expert UI caseworker-ia-caseofficer user details', async function () {
     await loginPage.givenIAmLoggedIn(config.config.params.caseworker_iac_off_username, config.config.params.caseworker_iac_off_password);
-    const world = this;
 
     loginAttempts++;
     await loginattemptCheckAndRelogin(config.config.params.caseworker_iac_off_username, config.config.params.caseworker_iac_off_password, this);
 
     await BrowserWaits.retryForPageLoad($('exui-app-header'), function (message) {
-      world.attach('Login success page load load attempt : ' + message);
+            console.log("Login success page load load attempt : " + message)
     });
   });
 
   Given('I am logged into Expert UI with test user identified as {string}', async function (testUserIdentifier) {
-    const world = this;
 
     const matchingUsers = testConfig.users[testConfig.testEnv].filter((user) => user.userIdentifier === testUserIdentifier);
     if (matchingUsers.length === 0){
@@ -319,7 +304,7 @@ defineSupportCode(function ({ Given, When, Then }) {
     loginAttempts++;
     await loginattemptCheckAndRelogin(userEmail, key, this);
     await BrowserWaits.retryForPageLoad($('exui-app-header'), function (message) {
-      world.attach('Login success page load load attempt : ' + message);
+            console.log("Login success page load load attempt : " + message)
     });
 
     await BrowserWaits.retryWithActionCallback(async () => {
@@ -330,13 +315,12 @@ defineSupportCode(function ({ Given, When, Then }) {
 
   Given('I am logged into Expert UI with hrs testes user details', async function () {
     await loginPage.givenIAmLoggedIn(config.config.params.hrsTesterUser, config.config.params.hrsTesterPassword);
-    const world = this;
 
     loginAttempts++;
     await loginattemptCheckAndRelogin(config.config.params.hrsTesterUser, config.config.params.hrsTesterPassword, this);
 
     await BrowserWaits.retryForPageLoad($('exui-app-header'), function (message) {
-      world.attach('Login success page load load attempt : ' + message);
+            console.log("Login success page load load attempt : " + message)
     });
   });
 
@@ -355,4 +339,3 @@ defineSupportCode(function ({ Given, When, Then }) {
       .contains('Sign in');
     browser.sleep(LONG_DELAY);
   });
-});

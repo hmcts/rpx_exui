@@ -1,63 +1,63 @@
 @import 'node_modules/govuk_frontend_toolkit/stylesheets/_colours.scss';
 @import 'node_modules/govuk_frontend_toolkit/stylesheets/_typography';
 
-@mixin core-24pt($line-height: (30 / 24), $line-height-640: (24 / 20), $tabular-numbers: false, $font-weight: 400) {
+@mixin core-24pt($line-height: calc(30 / 24), $line-height-640: calc(24 / 20), $tabular-numbers: false, $font-weight: 400) {
   $font-size: 24pt;
   $font-size-640: 18pt;
   $font-size-print: 16pt;
   @include _core-font-generator($font-size, $font-size-640, $font-size-print, $line-height, $line-height-640, $tabular-numbers, $font-weight);
 }
 
-@mixin core-20pt($line-height: (26 / 20), $line-height-640: (20 / 16), $tabular-numbers: false, $font-weight: 400) {
+@mixin core-20pt($line-height: calc(26 / 20), $line-height-640: calc(20 / 16), $tabular-numbers: false, $font-weight: 400) {
   $font-size: 20pt;
   $font-size-640: 16pt;
   $font-size-print: 12pt;
   @include _core-font-generator($font-size, $font-size-640, $font-size-print, $line-height, $line-height-640, $tabular-numbers, $font-weight);
 }
 
-@mixin core-18pt($line-height: (23 / 18), $line-height-640: (18 / 16), $tabular-numbers: false, $font-weight: 400) {
+@mixin core-18pt($line-height: calc(23 / 18), $line-height-640: calc(18 / 16), $tabular-numbers: false, $font-weight: 400) {
   $font-size: 18pt;
   $font-size-640: 14pt;
   $font-size-print: 12pt;
   @include _core-font-generator($font-size, $font-size-640, $font-size-print, $line-height, $line-height-640, $tabular-numbers, $font-weight);
 }
 
-@mixin core-17pt($line-height: (20 / 17), $line-height-640: (16 / 14), $tabular-numbers: false, $font-weight: 400) {
+@mixin core-17pt($line-height: calc(20 / 17), $line-height-640: calc(16 / 14), $tabular-numbers: false, $font-weight: 400) {
   $font-size: 17pt;
   $font-size-640: 14pt;
   $font-size-print: 12pt;
   @include _core-font-generator($font-size, $font-size-640, $font-size-print, $line-height, $line-height-640, $tabular-numbers, $font-weight);
 }
 
-@mixin core-16pt($line-height: (20 / 16), $line-height-640: (16 / 14), $tabular-numbers: false, $font-weight: 400) {
+@mixin core-16pt($line-height: calc(20 / 16), $line-height-640: calc(16 / 14), $tabular-numbers: false, $font-weight: 400) {
   $font-size: 16pt;
   $font-size-640: 14pt;
   $font-size-print: 12pt;
   @include _core-font-generator($font-size, $font-size-640, $font-size-print, $line-height, $line-height-640, $tabular-numbers, $font-weight);
 }
 
-@mixin core-15pt($line-height: (20 / 15), $line-height-640: (16 / 14), $tabular-numbers: false, $font-weight: 400) {
+@mixin core-15pt($line-height: calc(20 / 15), $line-height-640: calc(16 / 14), $tabular-numbers: false, $font-weight: 400) {
   $font-size: 15pt;
   $font-size-640: 14pt;
   $font-size-print: 12pt;
   @include _core-font-generator($font-size, $font-size-640, $font-size-print, $line-height, $line-height-640, $tabular-numbers, $font-weight);
 }
 
-@mixin core-14pt($line-height: (20 / 14), $line-height-640: (15 / 12), $tabular-numbers: false, $font-weight: 400) {
+@mixin core-14pt($line-height: calc(20 / 14), $line-height-640: calc(15 / 12), $tabular-numbers: false, $font-weight: 400) {
   $font-size: 14pt;
   $font-size-640: 12pt;
   $font-size-print: 11pt;
   @include _core-font-generator($font-size, $font-size-640, $font-size-print, $line-height, $line-height-640, $tabular-numbers, $font-weight);
 }
 
-@mixin core-12pt($line-height: (16 / 12), $line-height-640: (14 / 11), $tabular-numbers: false, $font-weight: 400) {
+@mixin core-12pt($line-height: calc(16 / 12), $line-height-640: calc(14 / 11), $tabular-numbers: false, $font-weight: 400) {
   $font-size: 12pt;
   $font-size-640: 11pt;
   $font-size-print: 10pt;
   @include _core-font-generator($font-size, $font-size-640, $font-size-print, $line-height, $line-height-640, $tabular-numbers, $font-weight);
 }
 
-@mixin core-10pt($line-height: (14 / 10), $line-height-640: (12 / 9), $tabular-numbers: false, $font-weight: 400) {
+@mixin core-10pt($line-height: calc(14 / 10), $line-height-640: calc(12 / 9), $tabular-numbers: false, $font-weight: 400) {
   $font-size: 10pt;
   $font-size-640: 9pt;
   $font-size-print: 8pt;
@@ -65,35 +65,35 @@
 }
 
 
-@mixin bold-24pt($line-height: (30 / 24), $line-height-640: (24 / 20), $tabular-numbers: false) {
+@mixin bold-24pt($line-height: calc(30 / 24), $line-height-640: calc(24 / 20), $tabular-numbers: false) {
   @include core-24pt($line-height, $line-height-640, $tabular-numbers: $tabular-numbers, $font-weight: 700);
 }
 
-@mixin bold-20pt($line-height: (26 / 20), $line-height-640: (20 / 16), $tabular-numbers: false) {
+@mixin bold-20pt($line-height: calc(26 / 20), $line-height-640: calc(20 / 16), $tabular-numbers: false) {
   @include core-20pt($line-height, $line-height-640, $tabular-numbers: $tabular-numbers, $font-weight: 700);
 }
 
-@mixin bold-18pt($line-height: (23 / 18), $line-height-640: (18 / 16), $tabular-numbers: false) {
+@mixin bold-18pt($line-height: calc(23 / 18), $line-height-640: calc(18 / 16), $tabular-numbers: false) {
   @include core-18pt($line-height, $line-height-640, $tabular-numbers: $tabular-numbers, $font-weight: 700);
 }
 
-@mixin bold-17pt($line-height: (22 / 17), $line-height-640: (16 / 14), $tabular-numbers: false) {
+@mixin bold-17pt($line-height: calc(22 / 17), $line-height-640: calc(16 / 14), $tabular-numbers: false) {
   @include core-17pt($line-height, $line-height-640, $tabular-numbers: $tabular-numbers, $font-weight: 700);
 }
 
-@mixin bold-16pt($line-height: (20 / 16), $line-height-640: (16 / 14), $tabular-numbers: false) {
+@mixin bold-16pt($line-height: calc(20 / 16), $line-height-640: calc(16 / 14), $tabular-numbers: false) {
   @include core-16pt($line-height, $line-height-640, $tabular-numbers: $tabular-numbers, $font-weight: 700);
 }
 
-@mixin bold-14pt($line-height: (20 / 14), $line-height-640: (15 / 12), $tabular-numbers: false) {
+@mixin bold-14pt($line-height: calc(20 / 14), $line-height-640: calc(15 / 12), $tabular-numbers: false) {
   @include core-14pt($line-height, $line-height-640, $tabular-numbers: $tabular-numbers, $font-weight: 700);
 }
 
-@mixin bold-12pt($line-height: (16 / 12), $line-height-640: (14 / 11), $tabular-numbers: false) {
+@mixin bold-12pt($line-height: calc(16 / 12), $line-height-640: calc(14 / 11), $tabular-numbers: false) {
   @include core-12pt($line-height, $line-height-640, $tabular-numbers: $tabular-numbers, $font-weight: 700);
 }
 
-@mixin bold-10pt($line-height: (14 / 10), $line-height-640: (12 / 9), $tabular-numbers: false) {
+@mixin bold-10pt($line-height: calc(14 / 10), $line-height-640: calc(12 / 9), $tabular-numbers: false) {
   @include core-10pt($line-height, $line-height-640, $tabular-numbers: $tabular-numbers, $font-weight: 700);
 }
 

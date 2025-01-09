@@ -1,7 +1,7 @@
 <div *ngIf="isViewEditMode" class="govuk-warning-text">
   <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
   <strong class="govuk-warning-text__text">
-    <span class="govuk-warning-text__assistive">Warning</span>
-    {{ warningMsg }}
+    <span class="govuk-warning-text__assistive">{{ 'Warning' | rpxTranslate }}</span>
+    {{ warningMsg | rpxTranslate }}
   </strong>
 </div>

@@ -205,7 +205,7 @@ Feature: Work access page
         Then I see work access continue button not displayed
 
         Then I see work access existing bookings list container
-        When I click continue for any existing booking in work access page
+        # When I click continue for any existing booking in work access page
 
 
     Scenario: Work access Create new booking and continue

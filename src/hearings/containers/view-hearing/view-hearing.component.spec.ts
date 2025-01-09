@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MockRpxTranslatePipe } from '../../../app/shared/test/mock-rpx-translate.pipe';
 import { ViewHearingComponent } from './view-hearing.component';
 
 describe('ViewHearingComponent', () => {
@@ -10,7 +11,7 @@ describe('ViewHearingComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewHearingComponent],
+      declarations: [ViewHearingComponent, MockRpxTranslatePipe],
       providers: [
         {
           provide: Location,

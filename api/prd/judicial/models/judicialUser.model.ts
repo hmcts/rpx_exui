@@ -3,27 +3,32 @@ export interface RawJudicialUserModel {
   object_id: string;
   known_as: string;
   surname: string;
-  title: string;
-  personal_code: string;
   full_name: string;
   post_nominals: string;
   email_id: string;
+  personal_code: string;
+  title: string;
+  initials: string;
+  retirement_date: string;
+  active_flag: string;
   is_judge: string;
   is_panel_number: string;
   is_magistrate: string;
 }
 
 export interface JudicialUserModel {
-  emailId: string;
+  title: string;
+  knownAs: string;
+  surname: string;
   fullName: string;
+  emailId: string;
   idamId: string;
+  initials: string;
+  postNominals: string;
+  personalCode: string;
   isJudge: string;
   isMagistrate: string;
   isPanelMember: string;
-  knownAs: string;
-  personalCode: string;
-  surname: string;
-  title: string;
 }
 
 /**
@@ -35,15 +40,17 @@ export interface JudicialUserModel {
  */
 export function transformToJudicialUserModel(rawJudicialUserModel: RawJudicialUserModel): JudicialUserModel {
   return {
-    emailId: rawJudicialUserModel.email_id,
+    title: rawJudicialUserModel.title,
+    knownAs: rawJudicialUserModel.known_as,
+    surname: rawJudicialUserModel.surname,
     fullName: rawJudicialUserModel.full_name,
+    emailId: rawJudicialUserModel.email_id,
     idamId: rawJudicialUserModel.sidam_id,
+    initials: rawJudicialUserModel.initials,
+    postNominals: rawJudicialUserModel.post_nominals,
+    personalCode: rawJudicialUserModel.personal_code,
     isJudge: rawJudicialUserModel.is_judge,
     isMagistrate: rawJudicialUserModel.is_magistrate,
-    isPanelMember: rawJudicialUserModel.is_panel_number,
-    knownAs: rawJudicialUserModel.known_as,
-    personalCode: rawJudicialUserModel.personal_code,
-    surname: rawJudicialUserModel.surname,
-    title: rawJudicialUserModel.title
+    isPanelMember: rawJudicialUserModel.is_panel_number
   };
 }

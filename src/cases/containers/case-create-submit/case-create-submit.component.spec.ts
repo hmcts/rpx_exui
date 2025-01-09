@@ -31,6 +31,8 @@ import { AppConfig } from '../../../app/services/ccd-config/ccd-case.config';
 import { AppConfigService } from '../../../app/services/config/configuration.services';
 import * as fromCases from '../../store/reducers';
 import { CaseCreateSubmitComponent } from './case-create-submit.component';
+import { InitialisationSyncService } from '../../../app/services/ccd-config/initialisation-sync-service';
+import { LoggerService } from 'src/app/services/logger/logger.service';
 
 class MockSortService {
   public features = {};
@@ -88,6 +90,7 @@ describe('CaseCreateSubmitComponent', () => {
   let draftService: DraftService;
   const mockAlertService = jasmine.createSpyObj('alertService', ['error']);
   const mockFeatureToggleService = jasmine.createSpyObj('mockFeatureToggleService', ['isEnabled', 'getValue']);
+  const mockLoggerService = jasmine.createSpyObj('LoggerService', ['log']);
 
   beforeAll(() => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
@@ -138,6 +141,8 @@ describe('CaseCreateSubmitComponent', () => {
         LoadingService,
         SessionStorageService,
         HttpErrorService,
+        { provide: Window, useValue: window },
+        InitialisationSyncService,
         AppConfigService,
         AppConfig,
         {
@@ -158,7 +163,8 @@ describe('CaseCreateSubmitComponent', () => {
           provide: AlertService,
           useValue: mockAlertService
         },
-        { provide: FeatureToggleService, useValue: mockFeatureToggleService }
+        { provide: FeatureToggleService, useValue: mockFeatureToggleService },
+        { provide: LoggerService, useValue: mockLoggerService }
       ]
     })
       .compileComponents();

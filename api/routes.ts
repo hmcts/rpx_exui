@@ -3,7 +3,7 @@ import accessManagementRouter from './accessManagement/routes';
 import { router as caseShareRoutes } from './caseshare/routes';
 import { router as challengedAccessRouter } from './challengedAccess/routes';
 import { getConfigValue, showFeature } from './configuration';
-import { APP_INSIGHTS_KEY } from './configuration/references';
+import { APP_INSIGHTS_CONNECTION_STRING, APP_INSIGHTS_KEY } from './configuration/references';
 import { router as globalSearchRoutes } from './globalSearch/routes';
 import healthCheck from './healthCheck';
 import { router as hearingsRouter } from './hearings/routes';
@@ -16,6 +16,7 @@ import roleAccessRouter from './roleAccess/routes';
 import { router as refDataRouter } from './ref-data/routes';
 import { router as specificAccessRouter } from './specificAccessOrchastrator/routes';
 import staffRefDataRouter from './staff-ref-data/routes';
+import { router as staffSupportedJurisdictionsRouter } from './staffSupportedJurisdictions';
 import userRouter from './user/routes';
 import { router as waSupportedJurisdictionRouter } from './waSupportedJurisdictions';
 
@@ -24,7 +25,10 @@ const router = express.Router({ mergeParams: true });
 router.use('/healthCheck', healthCheck);
 
 router.get('/monitoring-tools', (req, res) => {
-  res.send({ key: getConfigValue(APP_INSIGHTS_KEY) });
+  res.send({
+    key: getConfigValue(APP_INSIGHTS_KEY),
+    connectionString: getConfigValue(APP_INSIGHTS_CONNECTION_STRING)
+  });
 });
 
 router.get('/configuration', (req, res) => {
@@ -48,6 +52,7 @@ router.use('/locations', locationsRouter);
 router.use('/caseshare', caseShareRoutes);
 router.use('/noc', nocRouter);
 router.use('/organisation', organisationRouter);
+router.use('/staff-supported-jurisdiction', staffSupportedJurisdictionsRouter);
 router.use('/wa-supported-jurisdiction', waSupportedJurisdictionRouter);
 router.use('/globalSearch', globalSearchRoutes);
 router.use('/locations', locationsRouter);

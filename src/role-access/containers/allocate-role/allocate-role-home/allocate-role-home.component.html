@@ -26,7 +26,8 @@
             <exui-allocate-role-search-person
               #searchPerson
               *ngIf="isComponentVisible(navigationCurrentState, searchPersonVisibilityStates)"
-              [navEvent]="navEvent">
+              [navEvent]="navEvent"
+              [existingUsers]="existingUsers">
             </exui-allocate-role-search-person>
             <exui-choose-duration
               #chooseDuration

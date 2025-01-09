@@ -26,7 +26,7 @@ describe('AllocateRoleCheckAnswersComponent', () => {
     assignmentId: 'a123456',
     state: AllocateRoleState.CHOOSE_ALLOCATE_TO,
     typeOfRole: { id: 'lead-judge', name: 'Lead judge' },
-    allocateTo: AllocateTo.RESERVE_TO_ME,
+    allocateTo: AllocateTo.ALLOCATE_TO_ME,
     personToBeRemoved: {
       id: 'p111111',
       name: 'test1',
@@ -109,7 +109,7 @@ describe('AllocateRoleCheckAnswersComponent', () => {
     expect(component.answers[0].label).toBe('Type of role');
     expect(component.answers[0].value).toBe('Lead judge');
     expect(component.answers[1].label).toBe('Who the role will be allocated to');
-    expect(component.answers[1].value).toBe('Reserve to me');
+    expect(component.answers[1].value).toBe('Allocate to me');
     expect(component.answers[2].label).toBe('Duration of role');
     expect(component.answers[2].value).toBe('7 days');
   });

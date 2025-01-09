@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { CaseTab, CaseView } from '@hmcts/ccd-case-ui-toolkit';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store, select } from '@ngrx/store';
-import { combineLatest, of } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
+import { combineLatest, of, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AppUtils } from '../../../app/app-utils';
 import { AppConstants } from '../../../app/app.constants';
+import { UserRole } from '../../../app/models/user-details.model';
 import * as fromRoot from '../../../app/store';
 import { AllocateRoleService } from '../../../role-access/services';
 import { WAFeatureConfig } from '../../../work-allocation/models/common/service-config.model';
@@ -25,6 +25,72 @@ export class CaseViewerContainerComponent implements OnInit {
   public prependedTabs$: Observable<CaseTab[]>;
   public appendedTabs$: Observable<CaseTab[]>;
   public userRoles$: Observable<string[]>;
+  private waDefaultServiceConfig: any = {
+    'configurations': [
+      {
+        'caseTypes': [
+          ''
+        ],
+        'releaseVersion': '4',
+        'serviceName': ''
+      },
+      {
+        'caseTypes': [
+          'Asylum'
+        ],
+        'releaseVersion': '4',
+        'serviceName': 'IA'
+      },
+      {
+        'caseTypes': [
+          'CIVIL',
+          'GENERALAPPLICATION'
+        ],
+        'releaseVersion': '4',
+        'serviceName': 'CIVIL'
+      },
+      {
+        'caseTypes': [
+          'PRIVATELAW',
+          'PRLAPPS'
+        ],
+        'releaseVersion': '4',
+        'serviceName': 'PRIVATELAW'
+      },
+      {
+        'caseTypes': [
+          'CriminalInjuriesCompensation'
+        ],
+        'releaseVersion': '4',
+        'serviceName': 'ST_CIC'
+      },
+      {
+        'caseTypes': [
+          'ET_EnglandWales',
+          'ET_Scotland',
+          'ET_EnglandWales_Multiple',
+          'ET_Scotland_Multiple'
+        ],
+        'releaseVersion': '4',
+        'serviceName': 'EMPLOYMENT'
+      },
+      {
+        'caseTypes': [
+          'Benefit',
+          'SSCS_ExceptionRecord'
+        ],
+        'releaseVersion': '4',
+        'serviceName': 'SSCS'
+      },
+      {
+        'caseTypes': [
+          'CARE_SUPERVISION_EPO'
+        ],
+        'releaseVersion': '4',
+        'serviceName': 'PUBLICLAW'
+      }
+    ]
+  };
 
   private readonly prependedTabs: CaseTab[] = [
     {
@@ -51,12 +117,12 @@ export class CaseViewerContainerComponent implements OnInit {
   ];
 
   constructor(private readonly route: ActivatedRoute,
-              private readonly store: Store<fromRoot.State>,
-              private readonly featureToggleService: FeatureToggleService,
-              private readonly allocateRoleService: AllocateRoleService,
-              private readonly waService: WASupportedJurisdictionsService) {
+    private readonly store: Store<fromRoot.State>,
+    private readonly featureToggleService: FeatureToggleService,
+    private readonly allocateRoleService: AllocateRoleService,
+    private readonly waService: WASupportedJurisdictionsService) {
     this.userRoles$ = this.store.pipe(select(fromRoot.getUserDetails)).pipe(
-      map((userDetails) => userDetails.userInfo.roles)
+      map((userDetails) => userDetails?.userInfo?.roles)
     );
   }
 
@@ -66,6 +132,7 @@ export class CaseViewerContainerComponent implements OnInit {
     let requiredFeature = false;
     features.configurations.forEach((serviceConfig) => {
       if (serviceConfig.serviceName === caseJurisdiction && serviceConfig.caseTypes.includes(caseType)) {
+        // EUI-724 - Needed as separator between WA and non-WA services/case types
         requiredFeature = parseFloat(serviceConfig.releaseVersion) >= 2;
       }
     });
@@ -73,17 +140,15 @@ export class CaseViewerContainerComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    console.info('ngOnInit started - CaseViewerContainerComponent');
     this.caseDetails = this.route.snapshot.data.case as CaseView;
     this.allocateRoleService.manageLabellingRoleAssignment(this.caseDetails.case_id).subscribe();
     this.prependedTabs$ = this.prependedCaseViewTabs();
     this.appendedTabs$ = this.appendedCaseViewTabs();
-    console.info('ngOnInit finished - CaseViewerContainerComponent');
   }
 
   private prependedCaseViewTabs(): Observable<CaseTab[]> {
     return combineLatest([
-      this.featureToggleService.getValue(AppConstants.FEATURE_NAMES.waServiceConfig, null),
+      this.featureToggleService.getValue(AppConstants.FEATURE_NAMES.waServiceConfig, this.waDefaultServiceConfig),
       this.userRoles$,
       this.waService.getWASupportedJurisdictions(),
       this.featureToggleService.getValue(AppConstants.FEATURE_NAMES.excludedRolesForCaseTabs, [])
@@ -100,13 +165,16 @@ export class CaseViewerContainerComponent implements OnInit {
       this.featureToggleService.getValueOnce<FeatureVariation[]>(AppConstants.FEATURE_NAMES.mcHearingsFeature, []),
       this.userRoles$
     ]).pipe(
-      // @ts-ignore
-      map(([featureVariations, userRoles]: [FeatureVariation[], string[]]) => {
+      map(([featureVariations, userRoles]) => {
         const jurisdictionId = this.caseDetails.case_type.jurisdiction.id;
         const caseTypeId = this.caseDetails.case_type.id;
         const hasMatchedPermissions = featureVariations.some((featureVariation) =>
-          Utils.hasMatchedPermissions(featureVariation, jurisdictionId, caseTypeId, userRoles));
-        return hasMatchedPermissions ? this.appendedTabs : [];
+          Utils.hasMatchedJurisdictionAndCaseType(featureVariation, jurisdictionId, caseTypeId)
+        );
+        const hasHearingRole = userRoles.includes(UserRole.HearingViewer) ||
+          userRoles.includes(UserRole.ListedHearingViewer) ||
+          userRoles.includes(UserRole.HearingManager);
+        return (hasMatchedPermissions && hasHearingRole) ? this.appendedTabs : [];
       })
     );
   }

@@ -54,3 +54,7 @@ export interface SharedWithDto {
 export interface AssignAccessWithinOrganisationDto {
   status_message: string;
 }
+
+export interface S2SResponse {
+  token?: string;
+}

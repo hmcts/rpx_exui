@@ -1,188 +1,108 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import * as moment from 'moment';
 
+const REGEX_DOS_FIX_LIMIT = 100;
+
 export class NocValidators {
+  private static isEmpty(value: any): boolean {
+    return value === null || value === undefined || value === '';
+  }
+
   public static numberValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value === null || control.value === '') {
-        return;
+      if (this.isEmpty(control.value)) {
+        return null;
       }
-      if (!control.value.toString().match(/^[0-9]+(\.?[0-9]+)?$/)) {
-        return { number: true };
-      }
-      return;
+      const value = control.value.toString();
+      const isValid = value.length < REGEX_DOS_FIX_LIMIT && /^\d\{1,100}(\.\d\{1,100})?$/.test(value);
+      return isValid ? null : { number: true };
     };
   }
 
   public static postcodeValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value === null || control.value === '') {
-        return;
+      if (this.isEmpty(control.value)) {
+        return null;
       }
-      if (!control.value.toString().match(/^(([A-Za-z]{1,2}[0-9][A-Za-z0-9]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?[0-9][A-Za-z]{2}|BFPO ?[0-9]{1,4}|(KY[0-9]|MSR|VG|AI)[ -]?[0-9]{4}|[A-Za-z]{2} ?[0-9]{2}|GE ?CX|GIR ?0A{2}|SAN ?TA1)$/)) {
-        return { postcode: true };
-      }
-      return;
+      const value = control.value.toString();
+      const regEx1 = new RegExp(
+        /^(([A-Za-z]{1,2}\d[A-Za-z0-9]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA)) ?/.source //eg SE17 & special postcodes
+        + /\d[A-Za-z]{2}|BFPO ?/.source
+        + /\d{1,4}|(KY\d|MSR|VG|AI)[ -]?/.source //british forces postal overseas
+        + /\d[A-Za-z]{2}|BFPO ?\d{1,4}|(KY\d|MSR|VG|AI)[ -]?/.source // postcode
+        + /\d{4}|[A-Za-z]{2} ?\d{2}|GE ?CX|GIR ?/.source // postcodes
+        +/ 0A{2}|SAN ?TA1/.source // more postcode
+        + /$/.source
+      );
+      const isValid = value.length < REGEX_DOS_FIX_LIMIT && regEx1.test(value);
+      return isValid ? null : { postcode: true };
     };
   }
 
   public static phoneUKValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value === null || control.value === '') {
-        return;
+      if (this.isEmpty(control.value)) {
+        return null;
       }
-      // eslint-disable-next-line no-useless-escape
-      if (!control.value.toString().match(/^(?:(?:\(?(?:0(?:0|11)\)?[\s-]?\(?|\+)44\)?[\s-]?(?:\(?0\)?[\s-]?)?)|(?:\(?0))(?:(?:\d{5}\)?[\s-]?\d{4,5})|(?:\d{4}\)?[\s-]?(?:\d{5}|\d{3}[\s-]?\d{3}))|(?:\d{3}\)?[\s-]?\d{3}[\s-]?\d{3,4})|(?:\d{2}\)?[\s-]?\d{4}[\s-]?\d{4}))(?:[\s-]?(?:x|ext\.?|\#)\d{3,4})?$/)) {
-        return { phoneUK: true };
-      }
-      return;
+      const value = control.value.toString();
+      const regEx = new RegExp(
+        /(?:(?:\(?(?:0(?:0|11)\)?[\s-]?\(?|\+)44\)?))/.source
+      + /(([\s-]?(?:\(?0\)?[\s-]?)?)|(?:\(?0))/.source // telephone
+      + /(?:(?:\d{5}\)?[\s-]?\d{4,5})|(?:\d{4}\)))/.source
+      + /[\s-]?(?:\d{5}|\d{3}[\s-]?\d{3})/.source // optionals
+      + /(?:[\s-]?(?:x|ext\.?)\d{3,4})?$/.source
+      );
+      const isValid = value.length < REGEX_DOS_FIX_LIMIT && regEx.test(value);
+      return isValid ? null : { phoneUK: true };
     };
   }
 
   public static dateValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value === null || control.value === '') {
-        return;
+      if (this.isEmpty(control.value)) {
+        return null;
       }
-      const dateValues = control.value.toString().split('-');
-      if (dateValues) {
-        if (dateValues[0]) {
-          const number = Number(dateValues[0]);
-          if (number === 0 || dateValues[0].length < 4) {
-            return { date: true, year: true, valid: false };
-          }
-        } else {
-          return { date: true, year: true };
-        }
-        if (dateValues[1]) {
-          const number = Number(dateValues[1]);
-          if (number === 0 || number > 12) {
-            return { date: true, month: true, valid: false };
-          }
-        } else {
-          return { date: true, month: true };
-        }
-        if (dateValues[2]) {
-          const number = Number(dateValues[2]);
-          if (number === 0 || number > 31) {
-            return { date: true, day: true, valid: false };
-          }
-        } else {
-          return { date: true, day: true };
-        }
+      const value = control.value.toString();
+      const [year, month, day] = value.split('-').map(Number);
+      const isValidDate = moment(value, 'YYYY-MM-DD', true).isValid();
+      if (!isValidDate || year === 0 || month === 0 || month > 12 || day === 0 || day > 31) {
+        return { date: true, month: true, year: true, valid: false };
       }
-      if (!moment(control.value.toString(), 'YYYY-MM-DD', true).isValid()) {
-        return { date: true };
-      }
-      return;
+      return null;
     };
   }
 
   public static dateTimeValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value === null || control.value === '') {
-        return;
+      if (this.isEmpty(control.value)) {
+        return null;
       }
+      const value = control.value.toString().replace('T', ' ').replace('.000', '');
+      const isValidDateTime = moment(value, 'YYYY-MM-DD HH:mm:ss', true).isValid();
       const [datePart, timePart] = control.value.toString().split('T');
-      const dateValues = datePart.split('-');
-      if (dateValues) {
-        if (dateValues[0]) {
-          const number = Number(dateValues[0]);
-          if (number === 0 || dateValues[0].length < 4) {
-            return { datetime: true, year: true, valid: false };
-          }
-        } else {
-          return { datetime: true, year: true };
-        }
-        if (dateValues[1]) {
-          const number = Number(dateValues[1]);
-          if (number === 0 || number > 12) {
-            return { datetime: true, month: true, valid: false };
-          }
-        } else {
-          return { datetime: true, month: true };
-        }
-        if (dateValues[2]) {
-          const number = Number(dateValues[2]);
-          if (number === 0 || number > 31) {
-            return { datetime: true, day: true, valid: false };
-          }
-        } else {
-          return { datetime: true, day: true };
-        }
-        if (timePart) {
-          const timeValues = timePart.split(':');
-          if (timeValues[0]) {
-            const number = Number(timeValues[0]);
-            if (number > 23) {
-              return { datetime: true, hour: true, valid: false };
-            }
-          } else {
-            return { datetime: true, hour: true };
-          }
-          if (timeValues[1]) {
-            const number = Number(timeValues[1]);
-            if (number > 59) {
-              return { datetime: true, minute: true, valid: false };
-            }
-          } else {
-            return { datetime: true, minute: true };
-          }
-          if (timeValues[2]) {
-            const number = Number(timeValues[2]);
-            if (number > 59) {
-              return { datetime: true, second: true, valid: false };
-            }
-          } else {
-            return { datetime: true, second: true };
-          }
-        }
+      const [year, month, day] = datePart.split('-').map(Number);
+      const [hour, minute, second] = (timePart || '').split(':').map(Number);
+
+      if (!isValidDateTime || year === 0 || month === 0 || month > 12 || day === 0 || day > 31 ||
+          hour > 23 || minute > 59 || (second !== undefined && second > 59)) {
+        return { datetime: true, month: true, year: true, valid: false };
       }
-      const momentValue = control.value.toString().replace('T', ' ').replace('.000', '');
-      if (!moment(momentValue, 'YYYY-MM-DD HH:mm:ss', true).isValid()) {
-        return { datetime: true };
-      }
-      return;
+      return null;
     };
   }
 
   public static timeValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value === null || control.value === '') {
-        return;
+      if (this.isEmpty(control.value)) {
+        return null;
       }
-      const timeValues = control.value.toString().split(':');
-      if (timeValues) {
-        if (timeValues[0]) {
-          const number = Number(timeValues[0]);
-          if (number > 23) {
-            return { time: true, hour: true, valid: false, message: '' };
-          }
-        } else {
-          return { time: true, hour: true };
-        }
-        if (timeValues[1]) {
-          const number = Number(timeValues[1]);
-          if (number > 59) {
-            return { time: true, minute: true, valid: false };
-          }
-        } else {
-          return { time: true, minute: true };
-        }
-        if (timeValues[2]) {
-          const number = Number(timeValues[2]);
-          if (number > 59) {
-            return { time: true, second: true, valid: false };
-          }
-        } else {
-          return { time: true, second: true };
-        }
+      const value = control.value.toString();
+      const [hour, minute, second] = value.split(':').map(Number);
+      const isValidTime = moment(value, 'HH:mm:ss', true).isValid();
+      if (!isValidTime || hour > 23 || minute > 59 || (second !== undefined && second > 59)) {
+        return { hour: true, time: true, valid: false, message: '' };
       }
-      if (!moment(control.value.toString(), 'HH:mm:ss', true).isValid()) {
-        return { time: true };
-      }
-      return;
+      return null;
     };
   }
 }
-

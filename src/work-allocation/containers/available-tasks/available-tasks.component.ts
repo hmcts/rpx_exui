@@ -3,7 +3,6 @@ import { InfoMessage } from '../../../app/shared/enums/info-message';
 import { AppUtils } from '../../../app/app-utils';
 import { UserInfo, UserRole } from '../../../app/models';
 import { ConfigConstants, ListConstants, PageConstants, SortConstants } from '../../components/constants';
-import { CONFIG_CONSTANTS_NOT_RELEASE4 } from '../../components/constants/config.constants';
 import { TaskActionIds, TaskContext } from '../../enums';
 import { FieldConfig } from '../../models/common';
 import { SearchTaskParameter, SearchTaskRequest } from '../../models/dtos';
@@ -18,13 +17,7 @@ import { InfoMessageType } from '../../../role-access/models/enums';
 })
 export class AvailableTasksComponent extends TaskListWrapperComponent {
   public get fields(): FieldConfig[] {
-    let fields = [];
-    this.checkReleaseVersionService.isRelease4().subscribe((isRelease4) => {
-      fields = this.isCurrentUserJudicial() ?
-        (isRelease4 ? ConfigConstants.AvailableTasksForJudicial : CONFIG_CONSTANTS_NOT_RELEASE4.AvailableTasksForJudicial) :
-        (isRelease4 ? ConfigConstants.AvailableTasksForLegalOps : CONFIG_CONSTANTS_NOT_RELEASE4.AvailableTasksForLegalOps);
-    });
-    return fields;
+    return this.isCurrentUserJudicial() ? ConfigConstants.AvailableTasksForJudicial : ConfigConstants.AvailableTasksForLegalOps;
   }
 
   public get sortSessionKey(): string {

@@ -27,11 +27,12 @@ export class PageFlow implements AbstractPageFlow {
   }
 
   public getNextPage(screensNavigations$: Observable<ScreenNavigationModel[]>): string {
+    const currentPage = this.getCurrentPage();
     let nextPage = '';
     combineLatest([this.hearingConditions$, screensNavigations$]).pipe(take(1))
       .subscribe(([hearingConditions, screenNavigationModels]: [HearingConditions, ScreenNavigationModel[]]) => {
         const screenModel = screenNavigationModels.find((screenNavigationModel) =>
-          screenNavigationModel.screenName === this.getCurrentPage());
+          screenNavigationModel.screenName === currentPage);
         if (screenModel) {
           if (!screenModel.conditionKey) {
             nextPage = screenModel.navigation[0].resultValue;
@@ -53,7 +54,7 @@ export class PageFlow implements AbstractPageFlow {
             }
           }
         } else {
-          throw new Error('Current screen not found');
+          throw new Error(`Current screen not found: ${currentPage}`);
         }
       });
     return nextPage;

@@ -97,12 +97,11 @@ class WAListTable {
     }
 
     async getHeaderPositionWithName(headerName) {
-        const headers = element.all(by.xpath(`//${ this.baseCssLocator }//table//thead//th`));
-        const colCount = await headers.count();
-        for (let i = 0; i < colCount; i++) {
-            const name = await headers.get(i).getText();
-            if (name.includes(headerName)) {
+        const headerNames = await element(by.xpath(`//${this.baseCssLocator}//table//thead//th`)).getTextFromAll();
+        for (let i = 0; i < headerNames.length; i++) {
+            if (headerNames[i].includes(headerName)) {
                 return i + 1;
+
             }
         }
         return -1;
@@ -110,20 +109,10 @@ class WAListTable {
 
     async getColumnHeaderNames() {
         await this.waitForTable();
-        const headers = element.all(by.xpath(`//${this.baseCssLocator}//table//thead//th`));
-        const headerElementsCount = await headers.count();
-        const names = [];
+        const headers = await element(by.xpath(`//${this.baseCssLocator}//table//thead//th`)).getTextFromAll();
+      
 
-
-        for (let i = 0; i < headerElementsCount; i++) {
-            const headerElement = await headers.get(i);
-            const headerLabel = await headerElement.getText();
-            if (headerLabel.trim() !== "") {
-                names.push(headerLabel.trim());
-            }
-        }
-
-        return names;
+        return headers;
 
     }
 

@@ -15,8 +15,7 @@ import { AllocateRoleService } from '../../../role-access/services';
 import { WorkAllocationComponentsModule } from '../../components/work-allocation.components.module';
 import { FieldType } from '../../enums';
 import { Task } from '../../models/tasks';
-import { CaseworkerDataService, WASupportedJurisdictionsService, WorkAllocationFeatureService, WorkAllocationTaskService } from '../../services';
-import { CheckReleaseVersionService } from '../../services/check-release-version.service';
+import { CaseworkerDataService, WASupportedJurisdictionsService, WorkAllocationTaskService } from '../../services';
 import { getMockTasks } from '../../tests/utils.spec';
 import { MyTasksComponent } from './my-tasks.component';
 
@@ -51,20 +50,14 @@ xdescribe('MyTasksComponent', () => {
   const mockTaskService = jasmine.createSpyObj('mockTaskService', ['searchTask']);
   const mockAlertService = jasmine.createSpyObj('mockAlertService', ['destroy']);
   const mockSessionStorageService = jasmine.createSpyObj('mockSessionStorageService', ['getItem', 'setItem']);
-  const mockCaseworkerService = jasmine.createSpyObj('mockCaseworkerService', ['getCaseworkersForServices']);
+  const mockCaseworkerService = jasmine.createSpyObj('mockCaseworkerService', ['getUsersFromServices']);
   const mockFeatureService = jasmine.createSpyObj('mockFeatureService', ['getActiveWAFeature']);
   const mockLoadingService = jasmine.createSpyObj('mockLoadingService', ['register', 'unregister']);
   const mockFeatureToggleService = jasmine.createSpyObj('mockLoadingService', ['isEnabled', 'getValue']);
   const mockFilterService = jasmine.createSpyObj('mockFilterService', ['getStream']);
   const mockWASupportedJurisdictionsService = jasmine.createSpyObj('mockWASupportedJurisdictionsService', ['getWASupportedJurisdictions']);
   const mockRoleService = jasmine.createSpyObj('mockRolesService', ['getCaseRolesUserDetails']);
-  const mockCheckReleaseVersionService = {
-    isRelease4: () => {
-      return {
-        subscribe: () => true
-      };
-    }
-  };
+
   let storeMock: jasmine.SpyObj<Store<fromActions.State>>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let store: Store<fromActions.State>;
@@ -86,12 +79,10 @@ xdescribe('MyTasksComponent', () => {
         { provide: FilterService, useValue: mockFilterService },
         { provide: SessionStorageService, useValue: mockSessionStorageService },
         { provide: CaseworkerDataService, useValue: mockCaseworkerService },
-        { provide: WorkAllocationFeatureService, useValue: mockFeatureService },
         { provide: LoadingService, useValue: mockLoadingService },
         { provide: FeatureToggleService, useValue: mockFeatureToggleService },
         { provide: WASupportedJurisdictionsService, useValue: mockWASupportedJurisdictionsService },
         { provide: AllocateRoleService, useValue: mockRoleService },
-        { provide: CheckReleaseVersionService, useValue: mockCheckReleaseVersionService },
         { provide: Store, useValue: storeMock }
       ]
     }).compileComponents();
@@ -103,7 +94,7 @@ xdescribe('MyTasksComponent', () => {
     store = TestBed.inject(Store);
     const tasks: Task[] = getMockTasks();
     mockTaskService.searchTask.and.returnValue(of({ tasks }));
-    mockCaseworkerService.getCaseworkersForServices.and.returnValue(of([]));
+    mockCaseworkerService.getUsersFromServices.and.returnValue(of([]));
     const filterFields: FilterSetting = {
       id: 'locations',
       fields: [

@@ -9,6 +9,7 @@ export class ShowAllocateLinkDirective implements OnInit {
   @Input() public showAllocateRoleLink: boolean = false;
   @Input() public roles: CaseRole[];
   @Input() public roleCategory: RoleCategory;
+  @Input() public existingUsers: string[] = [];
 
   constructor(private readonly element: ElementRef<HTMLElement>) {}
 

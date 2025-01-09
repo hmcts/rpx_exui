@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
 import * as _ from 'lodash';
@@ -12,10 +11,6 @@ import { HearingLengthAnswerConverter } from './hearing-length.answer.converter'
 
 describe('HearingLengthAnswerConverter', () => {
   let converter: AnswerConverter;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let store: Store<any>;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let router: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -33,8 +28,6 @@ describe('HearingLengthAnswerConverter', () => {
         }
       ]
     });
-    store = TestBed.inject(Store);
-    router = TestBed.inject(ActivatedRoute);
     converter = new HearingLengthAnswerConverter();
   });
 

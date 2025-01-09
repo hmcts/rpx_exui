@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const minimist = require('minimist');
 const fs = require('fs');
+const path = require('path')
 const axios = require('axios');
 const http = axios.create({})
 axios.defaults.headers.common['Content-Type'] = 'application/json'
@@ -36,6 +37,9 @@ const globalSearchRoutes = require('./services/globalSearch/routes')
 
 const idamOpenId = require('./services/idam/routes')
 const sessionRoutes = require('./services/session/routes')
+const caseCategoriesndDOcumentsRoutes = require('./services/caseFileView/routes')
+const evidenceManagementRoutes = require('./services/evidenceManagement/routes')
+const workFlowRouter = require('./services/workFlow/routes')
 
 const users = require('./services/users');
 const userApiData = require('./services/userApiData');
@@ -97,7 +101,7 @@ class MockApp {
         app.use('/task', taskApi)
         app.use('/work-types', workTypeRoutes)
         app.use('/refdata/location', locationRoutes)
-        app.use('/refdata/case-worker', caseworkerRoutes )
+        app.use('/refdata/internal/staff', caseworkerRoutes )
         app.use('/refdata/judicial', judicialRoutes )
 
 
@@ -118,9 +122,29 @@ class MockApp {
 
 
         app.use('/', ccdRoutes )
-
         app.use('/refdata/commondata', prdCommondataroutes)
+        app.use('/categoriesAndDocuments', caseCategoriesndDOcumentsRoutes)
+        app.use('/cases/documents', evidenceManagementRoutes)
+        app.use('/documentsv2', evidenceManagementRoutes)
+        app.use('/workflow', workFlowRouter)
 
+
+        app.get('/activity/cases/:caseId/activity', (req,res) => {
+            res.send({})
+        })
+
+
+        app.post('/translation/cy', (req, res) => {
+            const reqBody = req.body
+            const savePhrasesPath = path.resolve(__dirname,'../../functional-output/translations.txt')
+            const resposne = { translations:{}}
+            for(const phrase of reqBody.phrases){
+                fs.appendFileSync(savePhrasesPath, `\n${phrase}`)
+                resposne.translations[phrase] = { translation: `WELSH[${phrase}]`}
+            }
+
+            res.send(resposne)
+        })
 
         // await this.stopServer();
         this.server = await app.listen(8080);

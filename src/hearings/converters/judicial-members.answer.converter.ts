@@ -13,7 +13,9 @@ export class JudicialMembersAnswerConverter implements AnswerConverter {
     const judicialUsersList: JudicialUserModel[] = this.route.snapshot.data.judicialResponseUsers || [];
     return hearingState$.pipe(
       map((state) => {
-        const hearingResponse = state.hearingRequest.hearingRequestMainModel.hearingResponse;
+        const hearingResponse = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.hearingResponse
+          : state.hearingRequest.hearingRequestMainModel.hearingResponse;
         let hearingDaySchedule = hearingResponse && hearingResponse.hearingDaySchedule;
         if (!hearingDaySchedule) {
           return '';

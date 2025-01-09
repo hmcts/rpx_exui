@@ -70,7 +70,7 @@ Feature: WA Release 2: My work to  Available tasks to pagination sorting
         Examples:
             | UserIdentifier     | UserType   | Roles                                              |
             | IAC_CaseOfficer_R2 | Caseworker | caseworker-ia-caseofficer,caseworker-ia-admofficer |
-            | IAC_Judge_WA_R2    | Judge      | caseworker-ia-iacjudge,caseworker-ia,caseworker    |
+            | IAC_Judge_WA_R2    | Judge      | caseworker-ia-iacjudge,caseworker-ia,caseworker,judge    |
 
 
     Scenario Outline: Available Tasks pagnation control display with only 1 page of items
@@ -96,7 +96,7 @@ Feature: WA Release 2: My work to  Available tasks to pagination sorting
         Examples:
             | UserIdentifier  | UserType | Roles                                           |
             # | IAC_CaseOfficer_R2 | Caseworker | caseworker-ia-caseofficer,caseworker-ia-admofficer |
-            | IAC_Judge_WA_R2 | Judge    | caseworker-ia-iacjudge,caseworker-ia,caseworker |
+            | IAC_Judge_WA_R2 | Judge    | caseworker-ia-iacjudge,caseworker-ia,caseworker,judge |
 
 # For EUI-4366
 @ignore
@@ -125,7 +125,7 @@ Feature: WA Release 2: My work to  Available tasks to pagination sorting
         Examples:
             | UserIdentifier  | UserType | Roles                                           |
             # | IAC_CaseOfficer_R2 | Caseworker | caseworker-ia-caseofficer,caseworker-ia-admofficer |
-            | IAC_Judge_WA_R2 | Judge    | caseworker-ia-iacjudge,caseworker-ia,caseworker |
+            | IAC_Judge_WA_R2 | Judge    | caseworker-ia-iacjudge,caseworker-ia,caseworker,judge |
 
 
 

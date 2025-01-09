@@ -2,6 +2,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
+    <div class="error-summary" *ngIf="errMsg">
+      <h2 class="heading-medium error-summary-heading">{{'Error: ' | rpxTranslate}}  {{errMsg?.error?.errorDescription | rpxTranslate}}</h2>
+    </div>
     <exui-page-wrapper
       [title]="'Check your answers before ' + (!isUpdateMode ? 'adding a new user' : 'updating the user')"
       [backLink]="'../'">

@@ -1,8 +1,7 @@
 const data = {
-    users: {
-        wa_release_1: "",
-        wa_release_2: ""
-    },
+    users: [
+        { email:'', key:''}
+    ],
     appFeatures:{
         primaryTabs:{
             judge:{

@@ -7,7 +7,6 @@ import { NeedJudgeAmendedConverter } from './need-judge.amended.converter';
 
 describe('NeedJudgeAmendedConverter', () => {
   let needJudgeAmendedConverter: NeedJudgeAmendedConverter;
-
   beforeEach(() => {
     needJudgeAmendedConverter = new NeedJudgeAmendedConverter();
   });

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ExuiCommonLibModule, FeatureToggleService, FilterService } from '@hmcts/rpx-xui-common-lib';
 import { provideMockStore } from '@ngrx/store/testing';
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { ErrorMessage } from '../../../app/models';
 import { SessionStorageService } from '../../../app/services';
 import { initialMockState } from '../../../role-access/testing/app-initial-state.mock';

@@ -19,7 +19,10 @@ export class ParticipantAttendenceAnswerConverter implements AnswerConverter {
 
   private static getPartyName(partiesFromServiceValue: PartyDetailsModel[], partyInfo: PartyDetailsModel): string {
     const partyDetails = partiesFromServiceValue.find((pty) => pty.partyID === partyInfo.partyID);
-    return (partyDetails && partyDetails.partyName) || `Error: ${partyInfo.partyID}`;
+    if (partyDetails) {
+      return `${partyDetails.individualDetails.firstName} ${partyDetails.individualDetails.lastName}`;
+    }
+    return `Error: ${partyInfo.partyID}`;
   }
 
   public transformAnswer(hearingState$: Observable<State>, index: number): Observable<string> {
@@ -27,7 +30,9 @@ export class ParticipantAttendenceAnswerConverter implements AnswerConverter {
 
     return hearingState$.pipe(
       map((state) => {
-        const hearingResponse = state.hearingRequest.hearingRequestMainModel.hearingResponse;
+        const hearingResponse = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.hearingResponse
+          : state.hearingRequest.hearingRequestMainModel.hearingResponse;
         let hearingDaySchedule = hearingResponse && hearingResponse.hearingDaySchedule;
         if (!hearingDaySchedule) {
           return '';

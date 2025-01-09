@@ -14,8 +14,10 @@ export class JudgeNameAnswerConverter implements AnswerConverter {
 
     return hearingState$.pipe(
       map((state) => {
-        const panelRequirements = state.hearingRequest.hearingRequestMainModel.hearingDetails.panelRequirements;
-        const includedJudgeMemberId: string[] = panelRequirements && panelRequirements.panelPreferences.filter((preferences) => preferences.memberType === MemberType.JUDGE && preferences.requirementType === RequirementType.MUSTINC).map((preferences) => preferences.memberID);
+        const panelRequirements = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.hearingDetails.panelRequirements
+          : state.hearingRequest.hearingRequestMainModel.hearingDetails.panelRequirements;
+        const includedJudgeMemberId: string[] = panelRequirements?.panelPreferences.filter((preferences) => preferences.memberType === MemberType.JUDGE && preferences.requirementType === RequirementType.MUSTINC).map((preferences) => preferences.memberID);
         const includedJudge: JudicialUserModel = judicialUsersList.find((judgeInfo) => includedJudgeMemberId.includes(judgeInfo.personalCode));
         return includedJudge.fullName;
       })

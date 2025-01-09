@@ -19,7 +19,9 @@ export class StageAnswerConverter implements AnswerConverter {
 
     return hearingState$.pipe(
       map((state) => {
-        const selection = state.hearingRequest.hearingRequestMainModel.hearingDetails.hearingType;
+        const selection = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.hearingDetails.hearingType
+          : state.hearingRequest.hearingRequestMainModel.hearingDetails.hearingType;
 
         return StageAnswerConverter.getHearingTypeDisplayValue(hearingStageOptions, selection);
       })

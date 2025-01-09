@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from '@hmcts/rpx-xui-common-lib/lib/models/person.model';
 import { Store, select } from '@ngrx/store';
@@ -42,6 +42,7 @@ import { ChooseRoleComponent } from '../choose-role/choose-role.component';
   styleUrls: ['./allocate-role-home.component.scss']
 })
 export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
+  @Input() public existingUsers: string[] = [];
   @ViewChild('chooseRole', { static: false, read: ChooseRoleComponent })
   public chooseRoleComponent: ChooseRoleComponent;
 
@@ -71,7 +72,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
 
   public navigationCurrentState: AllocateRoleState;
   public allocateTo: AllocateTo;
-  public assignmentId: string;
+  public assignmentId: string | string[];
   public caseId: string;
   public jurisdiction: string;
   public userRole: UserRole;
@@ -91,7 +92,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
               private readonly router: Router) {
     this.appStoreSub = this.appStore.pipe(select(fromAppStore.getUserDetails)).subscribe(
       (userDetails) => {
-        this.userRole = AppUtils.getUserRole(userDetails.userInfo.roles);
+        this.userRole = AppUtils.getUserRole(userDetails?.userInfo?.roles);
       }
     );
     if (this.route.snapshot.queryParams) {
@@ -107,6 +108,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
       const roleId = this.route.snapshot.queryParams.typeOfRole ? this.route.snapshot.queryParams.typeOfRole : null;
       this.setReallocatedRole(roleId);
       this.action = this.route.snapshot.routeConfig.path ? this.route.snapshot.routeConfig.path : null;
+      this.existingUsers = this.route.snapshot.queryParams.existingUsers ? this.route.snapshot.queryParams.existingUsers.split(',') : [];
     }
     if (this.action === Actions.Reallocate) {
       this.instantiateReallocateRoleData();
@@ -234,7 +236,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
                     switch (this.roleCategory) {
                       case RoleCategory.JUDICIAL:
                         switch (this.allocateTo) {
-                          case AllocateTo.RESERVE_TO_ME:
+                          case AllocateTo.ALLOCATE_TO_ME:
                             this.store.dispatch(new fromFeature.AllocateRoleChangeNavigation(AllocateRoleState.CHOOSE_ALLOCATE_TO));
                             break;
                           case AllocateTo.ALLOCATE_TO_ANOTHER_PERSON:
@@ -260,7 +262,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
                         break;
                       case RoleCategory.LEGAL_OPERATIONS:
                         switch (this.allocateTo) {
-                          case AllocateTo.RESERVE_TO_ME:
+                          case AllocateTo.ALLOCATE_TO_ME:
                             this.store.dispatch(new fromFeature.AllocateRoleChangeNavigation(AllocateRoleState.CHOOSE_ALLOCATE_TO));
                             break;
                           case AllocateTo.ALLOCATE_TO_ANOTHER_PERSON:
@@ -278,7 +280,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
                     switch (this.roleCategory) {
                       case RoleCategory.CTSC:
                         switch (this.allocateTo) {
-                          case AllocateTo.RESERVE_TO_ME:
+                          case AllocateTo.ALLOCATE_TO_ME:
                             this.store.dispatch(new fromFeature.AllocateRoleChangeNavigation(AllocateRoleState.CHOOSE_ALLOCATE_TO));
                             break;
                           case AllocateTo.ALLOCATE_TO_ANOTHER_PERSON:
@@ -311,7 +313,7 @@ export class AllocateRoleHomeComponent implements OnInit, OnDestroy {
       case AllocateRoleNavigationEvent.CONTINUE: {
         switch (this.navigationCurrentState) {
           case AllocateRoleState.CHOOSE_ROLE:
-            this.chooseRoleComponent.navigationHandler(navEvent, this.roleCategory, this.userRole);
+            this.chooseRoleComponent.navigationHandler(navEvent);
             break;
           case AllocateRoleState.CHOOSE_ALLOCATE_TO:
             this.chooseAllocateToComponent.navigationHandler(navEvent);

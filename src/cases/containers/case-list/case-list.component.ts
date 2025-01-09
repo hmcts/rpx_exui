@@ -106,7 +106,7 @@ export class CaseListComponent implements OnInit, OnDestroy {
     private readonly windowService: WindowService,
     private readonly featureToggleService: FeatureToggleService,
     private readonly cd: ChangeDetectorRef
-  ) {}
+  ) { }
 
   public async ngOnInit() {
     this.isVisible = false;
@@ -131,10 +131,10 @@ export class CaseListComponent implements OnInit, OnDestroy {
 
     this.paginationSize = this.appConfig.getPaginationPageSize();
 
-    this.jurisdiction$ = this.store.pipe(select(fromCasesFeature.caselistFilterJurisdiction));
-    this.caseType$ = this.store.pipe(select(fromCasesFeature.caselistFilterCaseType));
-    this.caseState$ = this.store.pipe(select(fromCasesFeature.caselistFilterCaseState));
-    this.metadataFields$ = this.store.pipe(select(fromCasesFeature.caselistFilterMetadataFields));
+    this.jurisdiction$ = this.store.pipe(select(fromCasesFeature.caselistFilterJurisdiction)) as unknown as Observable<any>;
+    this.caseType$ = this.store.pipe(select(fromCasesFeature.caselistFilterCaseType)) as unknown as Observable<any>;
+    this.caseState$ = this.store.pipe(select(fromCasesFeature.caselistFilterCaseState)) as unknown as Observable<any>;
+    this.metadataFields$ = this.store.pipe(select(fromCasesFeature.caselistFilterMetadataFields)) as unknown as Observable<any>;
     this.filterSubscription = combineLatest([
       this.jurisdiction$,
       this.caseType$,
@@ -142,19 +142,19 @@ export class CaseListComponent implements OnInit, OnDestroy {
       this.metadataFields$
     ]).subscribe((result) => this.onFilterSubscriptionHandler(result));
 
-    this.caseFilterToggle$ = this.store.pipe(select(fromCasesFeature.getCaselistFilterToggle));
+    this.caseFilterToggle$ = this.store.pipe(select(fromCasesFeature.getCaselistFilterToggle)) as unknown as Observable<any>;
     this.caseFilterToggleSubscription = this.caseFilterToggle$.pipe(takeUntil(this.unsubscribe$)).subscribe((result: boolean) => this.onToggleHandler(result));
 
     this.listenToPaginationMetadata();
 
-    this.resultView$ = this.store.pipe(select(fromCasesFeature.caselistFilterResultView));
+    this.resultView$ = this.store.pipe(select(fromCasesFeature.caselistFilterResultView)) as unknown as Observable<any>;
     this.resultSubscription = this.resultView$.subscribe((resultView) =>
       this.onResultsViewHandler(resultView));
 
     this.triggerQuery();
 
     this.elasticSearchFlagSubsription = this.featureToggleService.isEnabled('elastic-search').subscribe((value) => this.elasticSearchFlag = value);
-    this.userDetails = this.store.pipe(select(fromRoot.getUserDetails));
+    this.userDetails = this.store.pipe(select(fromRoot.getUserDetails)) as unknown as Observable<any>;
     this.pIsCaseShareVisible$ = combineLatest([
       this.userDetails, this.shareableJurisdictions$, this.jurisdiction$
     ]).pipe(mergeMap((project) => {
@@ -162,13 +162,13 @@ export class CaseListComponent implements OnInit, OnDestroy {
       return of(this.caseShareIsVisible(project));
     }));
 
-    this.shareCases$ = this.store.pipe(select(fromCasesFeature.getShareCaseListState));
+    this.shareCases$ = this.store.pipe(select(fromCasesFeature.getShareCaseListState)) as unknown as Observable<any>;
     this.shareCases$.pipe(takeUntil(this.unsubscribe$)).subscribe((shareCases) => this.selectedCases = converters.toSearchResultViewItemConverter(shareCases));
     this.getOrganisationDetailsFromStore();
   }
 
   public listenToPaginationMetadata = () => {
-    this.paginationMetadata$ = this.store.pipe(select(fromCasesFeature.getCaselistFilterPaginationMetadata));
+    this.paginationMetadata$ = this.store.pipe(select(fromCasesFeature.getCaselistFilterPaginationMetadata)) as unknown as Observable<any>;
     this.paginationSubscription = this.paginationMetadata$.subscribe((paginationMetadata) =>
       this.onPaginationSubscribeHandler(paginationMetadata));
   };
@@ -452,7 +452,7 @@ export class CaseListComponent implements OnInit, OnDestroy {
       this.elasticSearchFlagSubsription.unsubscribe();
     }
 
-    this.unsubscribe$.next();
+    this.unsubscribe$.next(null);
     this.unsubscribe$.complete();
   }
 

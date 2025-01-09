@@ -38,8 +38,8 @@ export class ListingInformationSummaryComponent implements OnInit, OnDestroy {
     this.showSpinner$ = this.loadingService.isLoading as any;
     const loadingToken = this.loadingService.register();
     this.serviceValueSub = this.hearingState$.subscribe((state) => {
-      this.isListedCaseStatus = state.hearingRequest.hearingRequestMainModel.hearingResponse.laCaseStatus === LaCaseStatus.LISTED;
-      state.hearingList.hearingListMainModel.caseHearings.forEach((caseHearing) => {
+      this.isListedCaseStatus = state.hearingRequest?.hearingRequestMainModel?.hearingResponse?.laCaseStatus === LaCaseStatus.LISTED;
+      state.hearingList?.hearingListMainModel?.caseHearings.forEach((caseHearing) => {
         if (caseHearing.hearingID === state.hearingRequest.hearingRequestMainModel.caseDetails.hearingID) {
           this.caseStatusName = caseHearing.exuiDisplayStatus;
         }

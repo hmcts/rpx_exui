@@ -18,7 +18,9 @@ export class HearingPriorityAnswerConverter implements AnswerConverter {
 
     return hearingState$.pipe(
       map((state) => {
-        const selection = state.hearingRequest.hearingRequestMainModel.hearingDetails.hearingPriorityType;
+        const selection = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.hearingDetails.hearingPriorityType
+          : state.hearingRequest.hearingRequestMainModel.hearingDetails.hearingPriorityType;
 
         return HearingPriorityAnswerConverter.getHearingPriorityDisplayValue(hearingPriorities, selection);
       })

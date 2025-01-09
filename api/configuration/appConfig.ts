@@ -5,12 +5,14 @@ import {
   FEATURE_ACCESS_MANAGEMENT_ENABLED,
   FEATURE_APP_INSIGHTS_ENABLED,
   FEATURE_HELMET_ENABLED,
+  FEATURE_JRD_E_LINKS_V2_ENABLED,
   FEATURE_OIDC_ENABLED,
   FEATURE_PROXY_ENABLED,
   FEATURE_REDIS_ENABLED,
   FEATURE_SECURE_COOKIE_ENABLED,
   FEATURE_TERMS_AND_CONDITIONS_ENABLED,
   FEATURE_WORKALLOCATION_ENABLED,
+  FEATURE_LAU_SPECIFIC_CHALLENGED_ENABLED,
   HEALTH, LOGGING, MAX_LOG_LINE,
   PROTOCOL,
   SERVICES_CASE_CASEWORKER_REF_PATH,
@@ -35,7 +37,8 @@ import {
   SERVICES_ROLE_ASSIGNMENT_API_PATH,
   SERVICES_ROLE_ASSIGNMENT_MAPPING_API_PATH,
   SERVICES_TERMS_AND_CONDITIONS_URL, SERVICES_WORK_ALLOCATION_TASK_API_PATH,
-  SERVICE_S2S_PATH
+  SERVICE_S2S_PATH,
+  SERVICES_LAU_SPECIFIC_CHALLENGED_ACCESS_API_PATH
 } from './references';
 
 /**
@@ -62,6 +65,8 @@ export const applicationConfiguration = () => {
     featureSecureCookieEnabled: showFeature(FEATURE_SECURE_COOKIE_ENABLED),
     featureTermsAndConditionsEnabled: showFeature(FEATURE_TERMS_AND_CONDITIONS_ENABLED),
     featureWorkAllocationEnabled: showFeature(FEATURE_WORKALLOCATION_ENABLED),
+    featureJrdELinksV2Enabled: showFeature(FEATURE_JRD_E_LINKS_V2_ENABLED),
+    featureSpecificChallengedAccessEnabled: showFeature(FEATURE_LAU_SPECIFIC_CHALLENGED_ENABLED),
     health: getConfigValue(HEALTH),
     idamApiUrl: getConfigValue(SERVICES_IDAM_API_URL),
     idamWeb: getConfigValue(SERVICES_IDAM_LOGIN_URL),
@@ -86,6 +91,7 @@ export const applicationConfiguration = () => {
     servicesPrdCommondataApiPath: getConfigValue(SERVICES_PRD_COMMONDATA_API),
     servicesS2sPath: getConfigValue(SERVICE_S2S_PATH),
     servicesTermsAndConditionsPath: getConfigValue(SERVICES_TERMS_AND_CONDITIONS_URL),
+    servicesSpecificChallengedAccessPath: getConfigValue(SERVICES_LAU_SPECIFIC_CHALLENGED_ACCESS_API_PATH),
     workAllocationTaskPath: getConfigValue(SERVICES_WORK_ALLOCATION_TASK_API_PATH),
     judicialApiPath: getConfigValue(SERVICES_CASE_JUDICIAL_REF_PATH)
   };

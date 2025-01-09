@@ -1,5 +1,5 @@
 import { HearingRequestStateData } from '../../models/hearingRequestStateData.model';
-import { HMCLocationType } from '../../models/hearings.enum';
+import { HMCLocationType, PartyType } from '../../models/hearings.enum';
 import * as fromHearingRequestActions from '../actions/hearing-request.action';
 import * as fromHearingRequestReducer from './hearing-request.reducer';
 
@@ -67,13 +67,59 @@ describe('Hearing Request Reducer', () => {
               caserestrictedFlag: false,
               caseSLAStartDate: null
             },
-            partyDetails: []
+            partyDetails: [
+              {
+                partyID: '7f597aac',
+                partyType: PartyType.IND,
+                partyRole: 'LGRP',
+                individualDetails: {
+                  firstName: 'Stephen',
+                  lastName: 'Fenn'
+                }
+              },
+              {
+                partyID: '01234567',
+                partyType: PartyType.ORG,
+                partyRole: 'RESP'
+              },
+              {
+                partyID: '33334567',
+                partyType: PartyType.ORG,
+                partyRole: 'RESP',
+                partyName: 'Jane Smith',
+                individualDetails: {
+                  firstName: 'Jane',
+                  lastName: 'Wilson'
+                }
+              }
+            ]
           },
           lastError: null
         };
+
+        const exptectedHearingRequestState: HearingRequestStateData = {
+          hearingRequestMainModel: {
+            ...initialHearingRequestState.hearingRequestMainModel,
+            partyDetails: [
+              {
+                ...initialHearingRequestState.hearingRequestMainModel.partyDetails[0],
+                partyName: 'Stephen Fenn'
+              },
+              {
+                ...initialHearingRequestState.hearingRequestMainModel.partyDetails[1]
+              },
+              {
+                ...initialHearingRequestState.hearingRequestMainModel.partyDetails[2],
+                partyName: 'Jane Smith'
+              }
+            ]
+          },
+          lastError: initialHearingRequestState.lastError
+        };
+
         const action = new fromHearingRequestActions.InitializeHearingRequest(initialHearingRequestState.hearingRequestMainModel);
         const hearingsState = fromHearingRequestReducer.hearingRequestReducer(initialHearingRequestState, action);
-        expect(hearingsState).toEqual(initialHearingRequestState);
+        expect(hearingsState).toEqual(exptectedHearingRequestState);
       });
     });
 

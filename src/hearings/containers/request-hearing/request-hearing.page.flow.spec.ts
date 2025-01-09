@@ -48,6 +48,25 @@ describe('RequestHearingPageFlow', () => {
         partyDetails: []
       }
     },
+    hearingRequestToCompare: {
+      hearingRequestMainModel: {
+        requestDetails: null,
+        hearingDetails: {
+          duration: 1,
+          hearingType: '',
+          hearingLocations: [],
+          hearingWindow: null,
+          panelRequirements: null,
+          autolistFlag: false,
+          hearingPriorityType: '',
+          hearingInWelshFlag: true,
+          amendReasonCodes: null,
+          hearingChannels: [],
+          listingAutoChangeReasonCode: null
+        },
+        partyDetails: []
+      }
+    },
     hearingConditions: null
   };
   let requestHearingPageFlow;
@@ -56,10 +75,11 @@ describe('RequestHearingPageFlow', () => {
   const mockedHttpClient = jasmine.createSpyObj('HttpClient', ['get', 'post']);
   const hearingsService = new HearingsService(mockedHttpClient);
   hearingsService.navigateAction$ = of(ACTION.CONTINUE);
+  const mockFeatureToggleService = jasmine.createSpyObj('FeatureToggleService', ['isEnabled']);
 
   beforeEach(() => {
     mockStore.pipe.and.returnValue(of(hearingState));
-    requestHearingPageFlow = new RequestHearingPageFlowSpec(mockStore, hearingsService);
+    requestHearingPageFlow = new RequestHearingPageFlowSpec(mockStore, hearingsService, mockFeatureToggleService);
   });
 
   it('should navigate continue', () => {

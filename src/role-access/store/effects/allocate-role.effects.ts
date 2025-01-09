@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Action, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as routeAction from '../../../app/store/index';
@@ -9,10 +9,11 @@ import { RoleAllocationMessageText } from '../../models/enums/allocation-text';
 import { REDIRECTS } from '../../models/enums/redirect-urls';
 import { AllocateRoleService } from '../../services/allocate-role.service';
 import { AllocateRoleActionTypes, ConfirmAllocation, LoadRolesComplete, NoRolesFound } from '../actions';
+import * as fromRoot from '../../../app/store';
 
 @Injectable()
 export class AllocateRoleEffects {
-  @Effect() public getRoles$ = this.actions$
+  public getRoles$ = createEffect(() => this.actions$
     .pipe(
       ofType<ConfirmAllocation>(AllocateRoleActionTypes.LOAD_ROLES),
       mergeMap(
@@ -24,9 +25,9 @@ export class AllocateRoleEffects {
             })
           )
       )
-    );
+    ));
 
-  @Effect() public confirmAllocation$ = this.actions$
+  public confirmAllocation$ = createEffect(() => this.actions$
     .pipe(
       ofType<ConfirmAllocation>(AllocateRoleActionTypes.CONFIRM_ALLOCATION),
       mergeMap(
@@ -37,6 +38,7 @@ export class AllocateRoleEffects {
                 type: 'success',
                 message: data.payload.action === RoleActions.Allocate ? RoleAllocationMessageText.Add : RoleAllocationMessageText.Reallocate
               };
+              this.store.dispatch(new fromRoot.LoadUserDetails(true));
               return new routeAction.CreateCaseGo({
                 path: [this.allocateRoleService.backUrl],
                 caseId: data.payload.caseId,
@@ -55,13 +57,14 @@ export class AllocateRoleEffects {
             })
           )
       )
-    );
+    ));
 
   private readonly payload: any;
 
   constructor(
     private readonly actions$: Actions,
-    private readonly allocateRoleService: AllocateRoleService
+    private readonly allocateRoleService: AllocateRoleService,
+    private readonly store: Store<fromRoot.State>
   ) {}
 
   public static handleError(error: RoleAccessHttpError): Observable<Action> {

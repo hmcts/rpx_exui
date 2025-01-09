@@ -1,4 +1,4 @@
-import { createProxyMiddleware as proxy, Options } from 'http-proxy-middleware';
+import { legacyCreateProxyMiddleware as proxy, LegacyOptions } from 'http-proxy-middleware';
 import * as modifyResponse from 'node-http-proxy-json';
 import { getConfigValue } from '../../configuration';
 import { LOGGING } from '../../configuration/references';
@@ -24,8 +24,8 @@ export const onProxyError = (err, req, res) => {
   }
 };
 
-export const applyProxy = (app, config) => {
-  const options: Options = {
+export const applyProxy = (app, config, modifyBody: boolean = true) => {
+  const options: LegacyOptions = {
     changeOrigin: true,
     logLevel: getConfigValue(LOGGING),
     logProvider: () => {
@@ -47,13 +47,17 @@ export const applyProxy = (app, config) => {
 
   if (config.onRes) {
     options.onProxyRes = (proxyRes, req, res) => {
-      modifyResponse(res, proxyRes, (body) => {
-        if (body) {
-          // modify some information
-          body = config.onRes(proxyRes, req, res, body);
-        }
-        return body; // return value can be a promise
-      });
+      if (modifyBody) {
+        modifyResponse(res, proxyRes, (body) => {
+          if (body) {
+            // modify some information
+            body = config.onRes(proxyRes, req, res, body);
+          }
+          return body; // return value can be a promise
+        });
+      } else {
+        config.onRes(proxyRes, req, res);
+      }
     };
   }
 

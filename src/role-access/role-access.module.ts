@@ -30,7 +30,6 @@ import { effects, reducers } from './store';
     ExuiCommonLibModule
   ],
   declarations: [...fromContainers.containers, ...fromComponents.components],
-  entryComponents: [],
   exports: [
     fromComponents.ChooseRadioOptionComponent
   ],

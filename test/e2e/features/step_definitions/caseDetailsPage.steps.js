@@ -2,12 +2,12 @@
 var CaseListPage = require('../pageObjects/CaseListPage');
 const CucumberReportLogger = require('../../support/reportLogger');
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const { browser } = require('protractor');
 const BrowserWaits = require('../../support/customWaits');
 const caseDetailsPage = require('../../../ngIntegration/tests/pageObjects/caseDetailsPage');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   Then('I see case details challenged access request page', async function () {
     await BrowserWaits.retryWithActionCallback(async () => {
       await BrowserWaits.waitForElement(await caseDetailsPage.challengedAccessRequestContainer);
@@ -21,4 +21,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
       expect(await caseDetailsPage.specificAccessRequestContainer.isDisplayed()).to.be.true;
     });
   });
-});

@@ -1,11 +1,11 @@
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const reportLogger = require('../../../support/reportLogger');
 const BrowserWaits = require('../../../support/customWaits');
 const SoftAssert = require('../../../../ngIntegration/util/softAssert');
 
 const taskForEventCompletionValidationPage = require('../../pageObjects/workAllocation/taskForEventValidatiosPage');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   Then('I see task event validation error page', async function (datatable) {
     const rowshash = datatable.rowsHash();
 
@@ -46,4 +46,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
   When('I click cancel in task event validation message page', async function () {
     await taskForEventCompletionValidationPage.cancelButton.click();
   });
-});

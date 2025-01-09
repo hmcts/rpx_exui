@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import * as fromHearingStore from '../store';
 @Injectable({
   providedIn: 'root'
 })
-export class PanelMemberSearchResponseResolver implements Resolve<JudicialUserModel[]> {
+export class PanelMemberSearchResponseResolver {
   constructor(
     protected readonly judicialRefDataService: JudicialRefDataService,
     protected readonly hearingStore: Store<fromHearingStore.State>

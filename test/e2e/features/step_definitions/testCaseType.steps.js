@@ -3,9 +3,9 @@ const BrowserWaits = require('../../support/customWaits');
 const CucumberReportLogger = require('../../support/reportLogger');
 var CaseEditPage = require('../pageObjects/caseEditPage');
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   let caseEditPage = new CaseEditPage();
   let caseManager = new CaseManager();
 
@@ -100,4 +100,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
   Then('Validate event pages display show condition logic', async function(){
     await caseEditPage.eventPageDisplayShowCondition();
   });
-});

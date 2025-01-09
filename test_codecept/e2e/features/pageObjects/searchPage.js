@@ -1,6 +1,6 @@
 Dropdown = require('./webdriver-components/dropdown.js')
 Button = require('./webdriver-components/button.js')
-var BrowserWaits = require("../../support/customWaits");
+const BrowserWaits = require("../../support/customWaits");
 const RuntimeTestData = require('../../support/runtimeTestData');
 const CucumberReportLogger = require("../../../codeceptCommon/reportLogger");
 const headerPage = require('./headerPage');
@@ -34,8 +34,8 @@ class SearchPage {
     this.noResultsNotification = $("ccd-search-result .notification");
     this.searchResultComponent = $('.search-block');
 
-    this.firstResultCaseLink = $("ccd-search-result>table>tbody>tr:nth-of-type(1)>td:nth-of-type(1)>a");
-    this.secondResultCaseLink = $("ccd-search-result>table>tbody>tr:nth-of-type(2)>td:nth-of-type(1)>a"); 
+    this.firstResultCaseLink = $("ccd-search-result>table>tbody>tr:nth-of-type(2)>td:nth-of-type(1)>a");
+    this.secondResultCaseLink = $("ccd-search-result>table>tbody>tr:nth-of-type(2)>td:nth-of-type(1)>a");
   }
 
 
@@ -51,9 +51,12 @@ class SearchPage {
     await this._waitForSearchComponent();
 
     await BrowserWaits.waitForElement(this.jurisdiction);
-    await this.jurisdiction.selectWithLabelContains(jurisdiction);
 
-    // const options = jurisdiction.split('|'); 
+    const options = await this.jurisdiction.getSelectOptions();
+    const option = options.find(opt => opt.includes(jurisdiction))
+    await this.jurisdiction.select(option);
+
+    // const options = jurisdiction.split('|');
     // // let locatorString = "//option[";
     // let i = 0;
     // for (const option of options) {
@@ -70,31 +73,27 @@ class SearchPage {
 
     // var optionElement = this.jurisdiction.element(elementLocator);
     // await BrowserWaits.waitForElement(optionElement);
- 
+
     // await optionElement.click();
 
-    CucumberReportLogger.LogTestDataInput(`Search  page Jurisdiction : `);
+    CucumberReportLogger.LogTestDataInput('Search  page Jurisdiction : ');
 
     RuntimeTestData.searchCasesInputs.jurisdiction = jurisdiction;
-    const caseTypeElements = this.caseType.$$("option");
-    const caseTypesSize = await caseTypeElements.count();
-    RuntimeTestData.searchCasesInputs.casetypes = [];
-    for (let i = 0; i < caseTypesSize; i++) {
-      const option = await caseTypeElements.get(i);
-      const optionText = await option.getText();
-      RuntimeTestData.searchCasesInputs.casetypes.push(optionText);
-
-    }  
+    // const caseTypeElements = this.caseType.$$('option');
+    // const caseTypesSize = await caseTypeElements.count();
+    RuntimeTestData.searchCasesInputs.casetypes = await this.caseType.getSelectOptions()
+   
   }
 
   async selectCaseType(option){
     await this._waitForSearchComponent();
     await BrowserWaits.waitForElement(this.caseType);
     // await this.caseType.selectWithLabelContains(option);
+    const options = await this.caseType.getSelectOptions();
+    const optionToSelect = options.find(opt => opt.includes(option))
 
 
-
-    this.caseType.selectWithLabelContains(option);
+    await this.caseType.select(optionToSelect);
     // await optionElement.click();
     CucumberReportLogger.LogTestDataInput(`Search  page case type : ${option}`);
 
@@ -104,8 +103,8 @@ class SearchPage {
   async clickApplyButton() {
 
     // await browser.executeScript('arguments[0].scrollIntoView()',
-      // this.applyButton); 
-    // expect(await this.applyButton.isEnabled(),"Apply buttin is not enabled").to.be.true 
+      // this.applyButton);
+    // expect(await this.applyButton.isEnabled(),"Apply buttin is not enabled").to.be.true
     await this.applyButton.click();
   }
 
@@ -118,11 +117,11 @@ class SearchPage {
         // this.resetButton);
       await this.resetButton.click();
     });
-    
+
   }
 
   async openFirstCaseInResults(){
-    
+
     await this.searchResultsTopPagination.isPresent();
     await BrowserWaits.waitForElement(this.firstResultCaseLink);
     var thisPageUrl = await browser.getCurrentUrl();
@@ -133,13 +132,13 @@ class SearchPage {
       //   this.firstResultCaseLink);
       await this.firstResultCaseLink.click();
     });
-   
+
 
     await BrowserWaits.waitForPageNavigation(thisPageUrl);
   }
 
   async openSecondCaseInResults(){
-    
+
     await this.searchResultsTopPagination.isPresent();
     await BrowserWaits.waitForElement(this.secondResultCaseLink);
     var thisPageUrl = await browser.getCurrentUrl();
@@ -148,7 +147,7 @@ class SearchPage {
       await BrowserWaits.waitForSpinnerToDissappear();
       await this.secondResultCaseLink.click();
     });
-   
+
     await BrowserWaits.waitForPageNavigation(thisPageUrl);
   }
 
@@ -172,7 +171,7 @@ class SearchPage {
   }
 
   async waitForSearchWithNoResults(){
-    await BrowserWaits.waitForElement(this.noResultsNotification); 
+    await BrowserWaits.waitForElement(this.noResultsNotification);
   }
 }
 module.exports = SearchPage;

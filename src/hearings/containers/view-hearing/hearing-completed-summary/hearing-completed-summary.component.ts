@@ -5,6 +5,8 @@ import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { HearingActualsMainModel } from '../../../models/hearingActualsMainModel';
 import * as fromHearingStore from '../../../store';
+import { ActivatedRoute } from '@angular/router';
+import { LovRefDataModel } from '../../../models/lovRefData.model';
 
 @Component({
   selector: 'exui-hearing-completed-summary',
@@ -15,9 +17,12 @@ export class HearingCompletedSummaryComponent implements OnInit, OnDestroy {
   public hearingActualsMainModel: HearingActualsMainModel;
   public sub: Subscription;
   public showSpinner$: Observable<boolean>;
+  public hearingStageOptions: LovRefDataModel[];
 
   constructor(private readonly hearingStore: Store<fromHearingStore.State>,
-    private readonly loadingService: LoadingService) {
+    private readonly loadingService: LoadingService,
+    private readonly route: ActivatedRoute) {
+    this.hearingStageOptions = this.route.snapshot.data.hearingStageOptions;
   }
 
   public ngOnInit(): void {

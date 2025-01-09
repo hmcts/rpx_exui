@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store } from '@ngrx/store';
 import { ErrorMessage } from '../../../../app/models';
 import { ACTION } from '../../../models/hearings.enum';
@@ -16,10 +17,11 @@ export class HearingWelshComponent extends RequestHearingPageFlow implements OnI
   public welshForm: FormGroup;
   public hearingInWelshFlag: boolean = false;
 
-  constructor(protected readonly hearingStore: Store<fromHearingStore.State>,
+  constructor(private readonly formBuilder: FormBuilder,
+              protected readonly hearingStore: Store<fromHearingStore.State>,
               protected readonly hearingsService: HearingsService,
-              private readonly formBuilder: FormBuilder) {
-    super(hearingStore, hearingsService);
+              protected readonly featureToggleService: FeatureToggleService) {
+    super(hearingStore, hearingsService, featureToggleService);
   }
 
   public ngOnInit(): void {

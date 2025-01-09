@@ -1,0 +1,23 @@
+<h2 class="govuk-heading-m">Stage
+  <exui-amendment-label *ngIf="showAmmended" [displayLabel]="amendmentLabelEnum.AMENDED">
+  </exui-amendment-label>
+</h2>
+
+<div class="govuk-summary-list govuk-!-margin-bottom-9">
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      What stage is this hearing at?
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ hearingStage }}
+      <exui-amendment-label *ngIf="showAmmended" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="stage"
+        class="change-link"
+        href="javascript:void(0)"
+        (click)="onChange('stage')">Change</a>
+    </div>
+  </div>
+</div>

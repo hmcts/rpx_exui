@@ -45,7 +45,7 @@ describe('AllocateRoleHomeComponent', () => {
     caseId: '111111',
     state: AllocateRoleState.CHOOSE_ROLE,
     typeOfRole: null,
-    allocateTo: AllocateTo.RESERVE_TO_ME,
+    allocateTo: AllocateTo.ALLOCATE_TO_ME,
     person: null,
     durationOfRole: DurationOfRole.SEVEN_DAYS,
     action: Actions.Allocate,
@@ -200,7 +200,7 @@ describe('AllocateRoleHomeComponent', () => {
       component.action = Actions.Allocate;
       component.userRole = UserRole.Judicial;
       component.roleCategory = RoleCategory.JUDICIAL;
-      component.allocateTo = AllocateTo.RESERVE_TO_ME;
+      component.allocateTo = AllocateTo.ALLOCATE_TO_ME;
       component.navigationHandler(navEvent);
       expect(storeDispatchMock).toHaveBeenCalledWith(new fromStore.AllocateRoleChangeNavigation(AllocateRoleState.CHOOSE_ALLOCATE_TO));
     });
@@ -210,7 +210,7 @@ describe('AllocateRoleHomeComponent', () => {
       component.action = Actions.Allocate;
       component.userRole = UserRole.CTSC;
       component.roleCategory = RoleCategory.CTSC;
-      component.allocateTo = AllocateTo.RESERVE_TO_ME;
+      component.allocateTo = AllocateTo.ALLOCATE_TO_ME;
       component.navigationHandler(navEvent);
       expect(storeDispatchMock).toHaveBeenCalledWith(new fromStore.AllocateRoleChangeNavigation(AllocateRoleState.CHOOSE_ALLOCATE_TO));
     });
@@ -291,7 +291,7 @@ describe('AllocateRoleHomeComponent', () => {
       component.action = Actions.Allocate;
       component.userRole = UserRole.LegalOps;
       component.roleCategory = RoleCategory.LEGAL_OPERATIONS;
-      component.allocateTo = AllocateTo.RESERVE_TO_ME;
+      component.allocateTo = AllocateTo.ALLOCATE_TO_ME;
       component.navigationHandler(navEvent);
       expect(storeDispatchMock).toHaveBeenCalledWith(new fromStore.AllocateRoleChangeNavigation(AllocateRoleState.CHOOSE_ALLOCATE_TO));
     });

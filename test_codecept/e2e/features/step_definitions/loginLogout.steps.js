@@ -23,11 +23,14 @@ async function waitForElement(el) {
   async function loginattemptCheckAndRelogin(username, password, world) {
     testCounter++;
     let loginAttemptRetryCounter = 1;
-
+    // if (loginAttemptRetryCounter === 1){
+    //   return;
+    // }
     while (loginAttemptRetryCounter < 5) {
       let emailFieldValue = "";
 
       try {
+        await loginPage.emailAddress.waitForElementdetach()
         // await BrowserWaits.waitForstalenessOf(loginPage.emailAddress, 5);
         await BrowserWaits.waitForCondition(async () => {
           let isEmailFieldDisplayed = await loginPage.emailAddress.isPresent() ;
@@ -101,7 +104,7 @@ async function waitForElement(el) {
 
   When('I navigate to Expert UI Url', async function () {
     await BrowserWaits.retryWithActionCallback(async function(){
-    
+
       CucumberReportLogger.AddMessage("App base url : " + config.config.baseUrl, LOG_LEVELS.Info);
       await browser.get(config.config.baseUrl);
       await BrowserWaits.waitForElement(loginPage.signinTitle);
@@ -197,7 +200,7 @@ async function waitForElement(el) {
         // await BrowserUtil.waitForLD();
         await BrowserWaits.waitForElement($("exui-header .hmcts-primary-navigation__item"));
         await expect(loginPage.dashboard_header.isDisplayed()).to.eventually.be.true;
-        
+
         const cookies = await browser.driver.manage().getCookies();
         reportLogger.AddMessage(JSON.stringify(cookies, null, 2))
       }catch(err){
@@ -208,7 +211,7 @@ async function waitForElement(el) {
     });
 
     console.log("step completed ....")
-    
+
   });
 
   Given('I am logged into Expert UI with valid user details', async function () {
@@ -225,6 +228,24 @@ async function waitForElement(el) {
     });
 
   });
+
+   Given('I am logged into Expert UI with case flags', async function () {
+     const user = 'henry_fr_harper@yahoo.com'
+     const key = 'Nagoya0102'
+
+     await BrowserWaits.retryWithActionCallback(async () => {
+       await loginPage.givenIAmLoggedIn(user, key);
+     });
+
+    loginAttempts++;
+    // await loginattemptCheckAndRelogin(matchingUsers[0].email, matchingUsers[0].key, this);
+
+    await BrowserWaits.retryForPageLoad($("exui-app-header"), function (message) {
+      console.log("Login success page load load attempt : " + message)
+    });
+
+  });
+
 
   Given('I am logged into Expert UI with valid Probate back office user credentials', async function () {
     CucumberReportLogger.AddMessage(`Login user  is ${config.config.params.usernameProbate}`)
@@ -362,18 +383,18 @@ async function waitForElement(el) {
     // await BrowserWaits.retryForPageLoad($("exui-app-header"), function (message) {
     //   world.attach("Login success page load load attempt : " + message)
     // });
-    
+
     // await BrowserWaits.retryWithActionCallback(async () => {
     //   await BrowserWaits.waitForSpinnerToDissappear();
     //   await headerPage.clickAppLogoLink();
     // });
-   
+
   });
 
   Given('I am logged into Expert UI with hrs testes user details', async function () {
     await loginPage.givenIAmLoggedIn(config.config.params.hrsTesterUser, config.config.params.hrsTesterPassword);
     CucumberReportLogger.AddMessage(`Login user  is ${config.config.params.hrsTesterUser}`)
-    
+
     loginAttempts++;
     await loginattemptCheckAndRelogin(config.config.params.hrsTesterUser, config.config.params.hrsTesterPassword, this);
 

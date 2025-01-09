@@ -2,10 +2,10 @@
 var ShareCaseCheckAndConfirmPage = require('../pageObjects/shareCaseCheckAndConfirmPage');
 const BrowserWaits = require('../../support/customWaits');
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const { browser } = require('protractor');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   var shareCaseCheckAndConfirmPage = new ShareCaseCheckAndConfirmPage();
 
   //Share Case Confirm Selection Steps
@@ -34,4 +34,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
   Then('I see success message for Share case changes', async function () {
     expect(await shareCaseCheckAndConfirmPage.isSubmissionSuccessful(), 'Share Case changes submission is not successful').to.be.true;
   });
-});

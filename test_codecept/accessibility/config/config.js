@@ -1,5 +1,3 @@
-const PallyActions = require('../helpers/pallyActions');
-
 const baseUrl = 'http://localhost:3000/'; 
 
 const conf = {
@@ -9,7 +7,7 @@ const conf = {
     appName:"EXUI Manage Cases a11y Test Report",
     baseUrl: baseUrl,
     params:{
-        username:'lukesuperuserxui@mailnesia.com',
+        username:'lukesuperuserxui_new@mailnesia.com',
         password:'Monday01'
     },
     unauthenticatedUrls: [

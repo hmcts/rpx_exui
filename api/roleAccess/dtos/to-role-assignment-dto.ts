@@ -11,7 +11,7 @@ export function toRoleAssignmentBody(currentUserId: string, allocateRoleData: Al
     requestedRoles: [{
       roleType: 'CASE',
       grantType: 'SPECIFIC',
-      classification: 'PUBLIC',
+      classification: 'RESTRICTED',
       attributes: {
         caseId: allocateRoleData.caseId,
         jurisdiction: allocateRoleData.jurisdiction
@@ -211,7 +211,7 @@ export function toSARequestRoleAssignmentBody(allocateRoleData: AllocateRoleData
 }
 
 export function getActorId(currentUserId: string, allocateRoleData: AllocateRoleData): string {
-  if (allocateRoleData.allocateTo === AllocateTo.RESERVE_TO_ME) {
+  if (allocateRoleData.allocateTo === AllocateTo.ALLOCATE_TO_ME) {
     return currentUserId;
   }
 

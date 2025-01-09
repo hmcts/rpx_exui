@@ -19,6 +19,8 @@ const workAlloctionMockData = require('../../mockData/workAllocation/mockData');
 const { getTestJurisdiction, getMockJurisdictionWorkbaseketConfig, getMockJurisdictionSearchInputConfig } = require('../../mockData/ccdCaseMock');
 const getEventConfig = require('../../mockData/ccdMockEventConfigs');
 
+const idamLogin = require('../../util/idamLogin')
+
 const { DataTableArgument } = require('codeceptjs');
 const {postTaskAction, getTask} = require("../../../../api/workAllocation");
 
@@ -72,24 +74,24 @@ const {postTaskAction, getTask} = require("../../../../api/workAllocation");
     });
 
     Given('I set MOCK case details with reference {string}', async function(caseDetailsReference){
-      const caseDetails = ccdMockData.caseDetailsResponse;
+
+        const caseDetails = JSON.parse(JSON.stringify(ccdMockData.caseDetailsResponse));
          global.scenarioData[caseDetailsReference] = caseDetails;
 
         await serviceMock.updateCaseData(global.scenarioData[caseDetailsReference], 200)
-       
+
     });
 
     Given('I set MOCK case {string} details with reference {string}', async function (caseType, caseDetailsReference) {
-        const caseDetails = caseDetailsMock[caseType];
+        const caseDetails = JSON.parse(JSON.stringify(caseDetailsMock[caseType]));
         global.scenarioData[caseDetailsReference] = caseDetails;
-
         await serviceMock.updateCaseData(global.scenarioData[caseDetailsReference], 200)
 
     });
 
     Given('I set MOCK case details {string} values', async function (caseDetailsReference, caseDetailsDatatable) {
         const caseDetails = global.scenarioData[caseDetailsReference];
-
+        await serviceMock.updateCaseData(caseDetails, 200)
     });
 
     Given('I set MOCK case details {string} property {string} as {string}', async function(caseDetailsRef, property, value){
@@ -100,7 +102,7 @@ const {postTaskAction, getTask} = require("../../../../api/workAllocation");
             })
             const field = getCaseDetailsMetadataField(caseDetails,'[JURISDICTION]');
             field.value = value;
-        } else if (property.toLowerCase().includes('casetype')) {
+        } else if (property.toLowerCase().includes('caseType')) {
             const field = getCaseDetailsMetadataField(caseDetails, '[CASE_TYPE]');
             field.value = value;
         }
@@ -112,8 +114,11 @@ const {postTaskAction, getTask} = require("../../../../api/workAllocation");
             const field = getCaseDetailsMetadataField(caseDetails, '[JURISDICTION]');
             field.value = value;
         }
+        else if (property.toLowerCase().includes('case_id')) {
+            caseDetails.case_id = value;
+        }
         else {
-            throw Error(` metada field ${property} is not recognised or not implemented in test`);
+            throw Error(` metadata field ${property} is not recognised or not implemented in test`);
         }
 
         await serviceMock.updateCaseData(caseDetails, 200)
@@ -212,22 +217,23 @@ const {postTaskAction, getTask} = require("../../../../api/workAllocation");
             "publish_as": null,
             "acls": null
         });
+        await serviceMock.updateCaseData(caseDetails, 200)
+
+        await serviceMock.updateCaseData(caseDetails, 200)
 
     });
 
     Given('I set MOCK case details {string} trigger id {string} trigger name {string}', async function (caseDetailsRef, eventId, eventName) {
         const caseDetails = global.scenarioData[caseDetailsRef];
-        const testTrigger = { ...caseDetails.triggers[0]}
+        const testTrigger = { ...caseDetails.triggers[0] };
         testTrigger.id = eventId;
         testTrigger.name = eventName;
-        caseDetails.triggers.push(testTrigger);
-            
-        await serviceMock.updateCaseData(caseDetails, 200)
-
+        caseDetails.triggers.unshift(testTrigger);
+        await serviceMock.updateCaseData(caseDetails, 200);
     });
 
     Given('I set MOCK case roles', async function(caseRolesDatatable){
-        const dateTableHashes = caseRolesdatatable.parse().hashes();
+        const dateTableHashes = caseRolesDatatable.parse().hashes();
         for (const hash of dateTableHashes){
             for(const key of Object.keys(hash)){
                 if ((key === 'start' || key === 'end') && hash[key] !== ''){
@@ -260,7 +266,7 @@ const {postTaskAction, getTask} = require("../../../../api/workAllocation");
     });
 
     Given('I set MOCK case tasks with userDetails from reference {string}', async function (userDetailsRef, caseTasksDatatable) {
-        const userDetails = global.scenarioData[userDetailsRef];
+        const userDetails = await idamLogin.getUserDetails();
         const authCookie = await browser.driver.manage().getCookie('__auth__');
 
         const dateTableHashes = caseTasksDatatable.parse().hashes();

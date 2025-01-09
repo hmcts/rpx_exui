@@ -1,11 +1,10 @@
 import { AccessViewFieldComponent } from './access-view-field/access-view-field.component';
-import { AvailableTasksFilterComponent } from './available-tasks-filter/available-tasks-filter.component';
 import { CaseManagerFilterComponent } from './case-manager-filter/case-manager-filter.component';
 import { CaseNameFieldComponent } from './case-name-field/case-name-field.component';
 import { CaseReferenceFieldComponent } from './case-reference-field/case-reference-field.component';
 import { DerivedIconFieldComponent } from './derived-icon-field/derived-icon-field.component';
 import { ImageFieldComponent } from './image-field/image-field.component';
-import { MyCasesFilterComponent } from './my-cases-filter/my-cases-filter.component';
+import { PriorityFieldComponent } from './priority-field/priority-field.component';
 import { TaskFieldComponent } from './task-field/task-field.component';
 import { TaskListFilterComponent } from './task-list-filter/task-list-filter.component';
 import { TaskManagerFilterComponent } from './task-manager-filter/task-manager-filter.component';
@@ -15,13 +14,12 @@ import { WorkFieldComponent } from './work-field/work-field.component';
 
 export const components: any[] = [
   AccessViewFieldComponent,
-  AvailableTasksFilterComponent,
   CaseNameFieldComponent,
   CaseManagerFilterComponent,
   CaseReferenceFieldComponent,
   DerivedIconFieldComponent,
   ImageFieldComponent,
-  MyCasesFilterComponent,
+  PriorityFieldComponent,
   TaskFieldComponent,
   TaskListFilterComponent,
   TaskManagerFilterComponent,
@@ -30,13 +28,12 @@ export const components: any[] = [
   WorkFieldComponent
 ];
 
-export * from './available-tasks-filter/available-tasks-filter.component';
 export * from './case-manager-filter/case-manager-filter.component';
 export * from './case-name-field/case-name-field.component';
 export * from './case-reference-field/case-reference-field.component';
 export * from './derived-icon-field/derived-icon-field.component';
 export * from './image-field/image-field.component';
-export * from './my-cases-filter/my-cases-filter.component';
+export * from './priority-field/priority-field.component';
 export * from './task-field/task-field.component';
 export * from './task-list-filter/task-list-filter.component';
 export * from './task-manager-filter/task-manager-filter.component';

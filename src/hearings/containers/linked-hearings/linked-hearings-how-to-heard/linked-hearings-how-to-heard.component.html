@@ -1,28 +1,28 @@
-<a class="govuk-back-link" href="javascript:void(0)" (click)="onBack()">Back</a>
+<a class="govuk-back-link" href="javascript:void(0)" (click)="onBack()">{{ 'Back' | rpxTranslate }}</a>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem'">
+    <xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem' | rpxTranslate">
     </xuilib-hmcts-error-summary>
     <exui-linked-hearings-case-title [caseId]="caseId" [caseName]="caseName" mode="mode">
     </exui-linked-hearings-case-title>
   </div>
 </div>
 <h1 class="govuk-heading-l">
-  How should these linked hearings be heard?
+  {{ 'How should these linked hearings be heard?' | rpxTranslate }}
 </h1>
 <form class="form" [formGroup]="form" (submit)="onSubmit()" #ngForm="ngForm">
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
       <div class="govuk-radios" [ngClass]="{'govuk-form-group--error' : hasEmptyGroupSelection()}">
         <span *ngIf="hasEmptyGroupSelection()" class="govuk-error-message govuk-!-margin-top-2">
-          {{ validationErrors[0].message }}
+          {{ validationErrors[0].message | rpxTranslate}}
         </span>
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="heardTogether" formControlName="hearingGroup" name="hearingGroup"
                  type="radio" [value]="groupLinkType.SAME_SLOT" (change)="onOptionSelection(groupLinkType.SAME_SLOT)"
                  [checked]="hasGroupSelected(groupLinkType.SAME_SLOT)">
           <label class="govuk-label govuk-radios__label" for="heardTogether">
-            Hearings should be heard together
+            {{ 'Hearings should be heard together' | rpxTranslate }}
           </label>
         </div>
         <div class="govuk-radios__item">
@@ -30,31 +30,31 @@
                  type="radio" [value]="groupLinkType.ORDERED" (change)="onOptionSelection(groupLinkType.ORDERED)"
                  [checked]="hasGroupSelected(groupLinkType.ORDERED)">
           <label class="govuk-label govuk-radios__label" for="particularOrder">
-            Hearings should be heard in a particular order, but not together
+            {{ 'Hearings should be heard in a particular order, but not together' | rpxTranslate }}
           </label>
           <br/>
           <div [ngClass]="{'govuk-form-group--error' : hasInvalidOrderSelection()}" style="margin:15px"
                class="govuk-error-message govuk-!-margin-top-2">
             <table class="govuk-table" *ngIf="selectedOption === groupLinkType.ORDERED">
               <caption class="govuk-table__caption govuk-table__caption--m">
-                In what order should these hearings be heard?
+                {{ 'In what order should these hearings be heard?' | rpxTranslate }}
               </caption>
               <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                               <span *ngIf="validationErrors.length > 0"
                                     class="govuk-error-message govuk-!-margin-top-2">
-                    {{ validationErrors[0].message }}
+                    {{ validationErrors[0].message | rpxTranslate}}
                   </span>
               </tr>
               <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header">Case name and number</th>
-                <th scope="col" class="govuk-table__header">Stage of hearing</th>
-                <th scope="col" class="govuk-table__header">Position</th>
+                <th scope="col" class="govuk-table__header">{{ 'Case name and number' | rpxTranslate }}</th>
+                <th scope="col" class="govuk-table__header">{{ 'Stage of hearing' | rpxTranslate }}</th>
+                <th scope="col" class="govuk-table__header">{{ 'Position' | rpxTranslate }}</th>
               </tr>
               </thead>
               <tbody class="govuk-table__body">
               <tr class="govuk-table__row" *ngIf="selectedLinkedCases && selectedLinkedCases.length === 0">
-                <td class="govuk-table__cell" colspan="3">None</td>
+                <td class="govuk-table__cell" colspan="3">{{ 'None' | rpxTranslate }}</td>
               </tr>
               <ng-container *ngIf="selectedLinkedCases && selectedLinkedCases.length > 0"
                             formArrayName="hearingOrder">
@@ -88,7 +88,7 @@
     </fieldset>
   </div>
   <div>
-    <button class="govuk-button" data-module="govuk-button" (click)="onSubmit()">Continue</button>
-    <a href="javascript:void(0)" class="link-cancel" (click)="onCancel()">Cancel</a>
+    <button class="govuk-button" data-module="govuk-button" (click)="onSubmit()">{{ 'Continue' | rpxTranslate }}</button>
+    <a href="javascript:void(0)" class="link-cancel" (click)="onCancel()">{{ 'Cancel' | rpxTranslate }}</a>
   </div>
 </form>

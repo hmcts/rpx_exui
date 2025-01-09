@@ -1,4 +1,4 @@
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const reportLogger = require('../../../support/reportLogger');
 const BrowserWaits = require('../../../support/customWaits');
 const SoftAssert = require('../../../../ngIntegration/util/softAssert');
@@ -14,7 +14,7 @@ const checkYourAnswersPage = require('../../pageObjects/workAllocation/common/ch
 
 const workAllocationDateUtil = require('../../pageObjects/workAllocation/common/workAllocationDateUtil');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   Then('I see Check your answers page has total {int} questions', async function (expectedQuestionsCount) {
     await BrowserWaits.retryWithActionCallback(async () => {
       expect(await checkYourAnswersPage.getTotalQuestionsCount()).to.equal(expectedQuestionsCount);
@@ -79,5 +79,4 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
       expect(await checkYourAnswersPage.isChangeLinkPresentForQuestion(question), `change link for ${question} visiblity does not match `).to.equal(isChangeLinkPresent);
     }
   }
-});
 

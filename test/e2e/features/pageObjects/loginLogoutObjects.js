@@ -17,7 +17,7 @@ function loginLogoutObjects() {
   this.incorrectCredentialsErrorHeader = element(by.xpath('//h2[@id = "validation-error-summary-heading"][contains(text(),"Incorrect email or password")]'));
 
   this.givenIAmLoggedIn = async function (email, password) {
-    await BrowserWaits.waitForElement(this.signinTitle); ;
+    await BrowserWaits.waitForElement(this.signinTitle);
     await this.loginWithCredentials(email, password);
   };
 

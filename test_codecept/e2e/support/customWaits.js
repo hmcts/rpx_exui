@@ -3,9 +3,11 @@
 
 const CucumberReporter = require('../../codeceptCommon/reportLogger');
 const BrowserLogs = require('./browserLogs');
+const reportLogger = require('../../codeceptCommon/reportLogger');
+
 class BrowserWaits{
     constructor(){
-        this.waitTime = 30000; 
+        this.waitTime = 15000;
         this.pageErrors = $$(".error-summary");
         this.retriesCount = 3;
 
@@ -42,6 +44,11 @@ class BrowserWaits{
         const startTime = Date.now();
         CucumberReporter.AddMessage("ELEMENT_WAIT: at " + this.__getCallingFunctionName()+ " " + JSON.stringify(element.selector)+" at ");
         await element.wait(this.waitTime / 1000)
+
+        // await this.waitForConditionAsync(async () => {
+        //     const isPresent = await element.isPresent();
+        //     return isPresent;
+        // }, 20*1000);
         // CucumberReporter.AddMessage("ELEMENT_FOUND: in sec " + (Date.now() - startTime) / 1000 + " "+ JSON.stringify(element.selector) );
 
     }
@@ -80,6 +87,7 @@ class BrowserWaits{
                 let isConditionMet = false;
                 try {
                     isConditionMet = await condition();
+                    console.log(`Wait for condition stateus : ${isConditionMet}`)
                 } catch (err) {
                     CucumberReporter.AddMessage("Error waiting for condition " + err);
                 }
@@ -112,6 +120,9 @@ class BrowserWaits{
         for (let i = 0; i < 20; i++) {
             await this.waitForSeconds(1);
             nextPage = await browser.getCurrentUrl();
+            reportLogger.AddMessage(`waiting for page nav`)
+            reportLogger.AddMessage(`From   : ${currentPageUrl}`)
+            reportLogger.AddMessage(`Current: ${nextPage}`)
             if (currentPageUrl !== nextPage) {
                 break;
             }
@@ -167,7 +178,7 @@ class BrowserWaits{
 
 
     async retryWithActionCallback(callback, actionMessage, retryTryAttempts) {
-        
+
         const functionName = this.__getCallingFunctionName()
 
         let retryCounter = 0;
@@ -193,7 +204,7 @@ class BrowserWaits{
 
                 error = err
                 console.log(err)
-                
+
                 const currentRoute = await browser.getCurrentUrl()
                 if (currentRoute.includes('service-down')) {
                     throw new Error('Generic system error displayed: "Sorry, there is a problem with the service"');
@@ -213,7 +224,7 @@ class BrowserWaits{
         let status = true
         let counter = 0;
         do{
-            status = await $("div.spinner-container").isPresent();
+            status = await $("div.spinner-container").isDisplayed();
             CucumberReporter.AddMessage(`waiting for spinner to disappear`);
 
             await this.waitForSeconds(2)
@@ -221,7 +232,7 @@ class BrowserWaits{
         }
         while (status && counter < 10)
         CucumberReporter.AddMessage(status ? `spinner closed` : 'spinner still displayed');
-        
+
         // const isSpinnerPresent = await $("div.spinner-container").isPresent();
 
         // await this.waitForCondition(async () => {
@@ -245,4 +256,4 @@ class BrowserWaits{
     }
 }
 
-module.exports = new BrowserWaits(); 
+module.exports = new BrowserWaits();

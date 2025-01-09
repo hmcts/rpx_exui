@@ -1,7 +1,7 @@
 
 const BrowserWaits = require('../../support/customWaits');
 const ArrayUtil = require('../../utils/ArrayUtil');
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const { browser } = require('protractor');
 
 const minimist = require('minimist');
@@ -9,7 +9,7 @@ const argv = minimist(process.argv.slice(2));
 const browserutil = require('../../../ngIntegration/util/browserUtil');
 const headerPage = require('../../../e2e/features/pageObjects/headerPage');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   Given('I save current window handle reference {string}', async function (windowReference) {
     global.scenarioData['window.' + windowReference] = await browser.driver.getWindowHandle();
   });
@@ -75,4 +75,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
       expect(exuiRoot).to.equal(null);
     }
   });
-});

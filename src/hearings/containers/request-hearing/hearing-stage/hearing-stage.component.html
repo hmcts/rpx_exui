@@ -1,14 +1,14 @@
-<xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem'"></xuilib-hmcts-error-summary>
+<xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem' | rpxTranslate"></xuilib-hmcts-error-summary>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <form class="form" [formGroup]="stageForm">
       <exui-hearing-parties-title></exui-hearing-parties-title>
-      <h1 class="govuk-heading-l">What stage is this hearing at?</h1>
+      <h1 class="govuk-heading-l">{{ 'What stage is this hearing at?' | rpxTranslate }}</h1>
       <div class="govuk-form-group" [ngClass]="{'govuk-form-group--error': hearingStageSelectionError}">
         <fieldset class="govuk-fieldset" id="hearing-stage">
           <span class="govuk-error-message" *ngIf="hearingStageSelectionError">
-            <span class="govuk-visually-hidden">Error:</span> {{hearingStageSelectionError}}
+            <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span> {{ hearingStageSelectionError | rpxTranslate }}
           </span>
           <div class="govuk-radios">
             <div class="govuk-radios">

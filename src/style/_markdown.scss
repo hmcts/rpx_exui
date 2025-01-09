@@ -43,4 +43,12 @@
     table {
         margin-bottom: 30px;
     }
+
+    p > a {
+        color: #1d70b8;
+
+        &:visited {
+            color: #4c2c92
+        }
+      }
 }

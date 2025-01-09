@@ -7,7 +7,6 @@ import { JudgeTypesAmendedConverter } from './judge-types.amended.converter';
 
 describe('JudgeTypesAmendedConverter', () => {
   let judgeTypesAmendedConverter: JudgeTypesAmendedConverter;
-
   beforeEach(() => {
     judgeTypesAmendedConverter = new JudgeTypesAmendedConverter();
   });

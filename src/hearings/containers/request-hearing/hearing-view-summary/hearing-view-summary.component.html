@@ -1,0 +1,5 @@
+<div *ngIf="(this.isHearingAmendmentsEnabled$ | async) && (this.isHearingManager$ | async)" id="edit-hearing" class="align-right">
+  <button type="button" class="govuk-button" data-module="govuk-button" (click)="onEdit()">Edit hearing</button>
+</div>
+<exui-hearing-summary [template]="template" [mode]="mode">
+</exui-hearing-summary>

@@ -1,10 +1,11 @@
 <div class="govuk-form-group"
      [ngClass]="{ 'govuk-form-group--error': personFormGroup.controls.selectedFormControl.errors && personFormGroup.controls.selectedFormControl.errors.error}">
   <div id="sub-title-hint" class="govuk-hint">
-    {{subTitle}}
+    {{subTitle | rpxTranslate}}
   </div>
   <span id="validation-error" class="govuk-error-message" *ngIf="personFormGroup.controls.selectedFormControl.errors">
-    <span class="govuk-visually-hidden">Error:</span>{{personFormGroup.controls.selectedFormControl.errors.error }}
+    <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span>
+    {{ personFormGroup.controls.selectedFormControl.errors.error | rpxTranslate }}
   </span>
   <div class="exclude-person" [class.column-view]="isColumnView">
     <div class="person-input">
@@ -18,7 +19,7 @@
     </div>
     <div class="person-button">
       <div class="govuk-button govuk-button--secondary" data-module="govuk-button" (click)="excludeJudge();">
-        {{submitButtonName}}</div>
+        {{submitButtonName | rpxTranslate}}</div>
     </div>
   </div>
   <ul class="hmcts-filter-tags selection-container">

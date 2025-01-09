@@ -1,72 +1,28 @@
-import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { FeatureToggleService, FeatureUser } from '@hmcts/rpx-xui-common-lib';
-import * as LDClient from 'launchdarkly-js-client-sdk';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { RootInjectorGuard } from './rootInjectorGuard';
+import { inject,
+  Inject,
+  Injectable,
+  InjectOptions,
+  InjectionToken,
+  Type } from '@angular/core';
+import { LaunchDarklyService } from '@hmcts/rpx-xui-common-lib';
 
 export const MCLAUNCHDARKLYKEY = new InjectionToken<string>('LAUNCHDARKLYKEY');
-
 @Injectable({
   providedIn: 'root'
 })
-export class McLaunchDarklyService extends RootInjectorGuard implements FeatureToggleService {
-  private readonly client: LDClient.LDClient;
-  private readonly ready = new BehaviorSubject<boolean>(false);
-  private readonly features: Record<string, BehaviorSubject<any>> = {};
-
+export class McLaunchDarklyService extends LaunchDarklyService {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(@Inject(MCLAUNCHDARKLYKEY) key: string) {
-    super(FeatureToggleService);
-    this.client = LDClient.initialize(key, { anonymous: true }, {});
-    this.client.on('ready', () => {
-      this.ready.next(true);
-    });
+    super();
+    this.rootGuard(LaunchDarklyService);
   }
 
-  public initialize(user: FeatureUser = { anonymous: true }): void {
-    this.ready.next(false);
-    this.client.identify(user).then(() => this.ready.next(true));
-  }
+  private rootGuard(type: Type<any>) {
+    const io: InjectOptions = { optional: true, skipSelf: true };
+    const parent = inject(type, io);
 
-  public isEnabled(feature: string): Observable<boolean> {
-    return this.getValue<boolean>(feature, false);
-  }
-
-  public getArray<R = any>(feature: string): Observable<R[]> {
-    return this.getValue<R[]>(feature, []);
-  }
-
-  public getValue<R>(feature: string, defaultValue: R): Observable<R> {
-    if (!this.features.hasOwnProperty(feature)) {
-      this.features[feature] = new BehaviorSubject<R>(defaultValue);
-      this.ready.pipe(
-        filter((ready) => ready),
-        map(() => this.client.variation(feature, defaultValue))
-      ).subscribe((value) => {
-        this.features[feature].next(value);
-        this.client.on(`change:${feature}`, (val: R) => {
-          this.features[feature].next(val);
-        });
-      });
+    if (parent) {
+      throw Error(`[${type}]: Creating multiple instances, but should be singleton.`);
     }
-    return this.features[feature].pipe(
-      distinctUntilChanged()
-    );
-  }
-
-  /**
-     * This method returns an observable that will only get the state of the feature toggle
-     * once. It calls the LD SDK directly, and should only be used in circumstances where
-     * only one value should be emitted, that value coming directly from LD. This will likely
-     * only apply for Guards, and should be used only when absolutely necessary.
-     * @see getValue for regular usage.
-     * @param feature string
-     * @param defaultValue R
-     */
-  public getValueOnce<R>(feature: string, defaultValue: R): Observable<R> {
-    return this.ready.pipe(
-      filter((ready) => ready),
-      map(() => this.client.variation(feature, defaultValue))
-    );
   }
 }

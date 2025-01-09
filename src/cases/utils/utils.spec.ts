@@ -79,36 +79,71 @@ describe('Utils', () => {
   it('should check for matched permissions return true', () => {
     const featureVariation = {
       jurisdiction: 'SSCS',
-      caseType: 'Benefit',
-      roles: [
-        'caseworker-sscs',
-        'caseworker-sscs-judge'
+      includeCaseTypes: [
+        'Benefit'
       ]
     };
     const jurisdictionId = 'SSCS';
     const caseTypeId = 'Benefit';
-    const userRoles = [
-      'caseworker-sscs',
-      'caseworker-sscs-judge'
-    ];
-    expect(Utils.hasMatchedPermissions(featureVariation, jurisdictionId, caseTypeId, userRoles)).toEqual(true);
+    expect(Utils.hasMatchedJurisdictionAndCaseType(featureVariation, jurisdictionId, caseTypeId)).toEqual(true);
+  });
+
+  it('should check for regEx expression and matched permissions return true', () => {
+    const featureVariation = {
+      jurisdiction: 'SSCS',
+      includeCaseTypes: [
+        '(Benefit-|BENEFIT-)\\d+'
+      ]
+    };
+    const jurisdictionId = 'SSCS';
+    const caseTypeId = 'Benefit-1243';
+    expect(Utils.hasMatchedJurisdictionAndCaseType(featureVariation, jurisdictionId, caseTypeId)).toEqual(true);
+  });
+
+  it('should check for regEx expression and matched permissions return false', () => {
+    const featureVariation = {
+      jurisdiction: 'SSCS',
+      includeCaseTypes: [
+        '(Benefit-|BENEFIT-)\\d+'
+      ]
+    };
+    const jurisdictionId = 'SSCS';
+    const caseTypeId = 'Benefit1243';
+    expect(Utils.hasMatchedJurisdictionAndCaseType(featureVariation, jurisdictionId, caseTypeId)).toEqual(false);
   });
 
   it('should check for matched permissions return false', () => {
     const featureVariation = {
       jurisdiction: 'SSCS',
-      caseType: 'Benefit',
-      roles: [
-        'caseworker-sscs',
-        'caseworker-sscs-judge'
+      includeCaseTypes: [
+        'Benefit'
       ]
     };
     const jurisdictionId = 'PRL';
     const caseTypeId = 'PRLAPPS';
-    const userRoles = [
-      'caseworker-sscs',
-      'caseworker-sscs-judge'
+    expect(Utils.hasMatchedJurisdictionAndCaseType(featureVariation, jurisdictionId, caseTypeId)).toEqual(false);
+  });
+
+  it('should support both old and new case type parameters', () => {
+    const featureVariations = [
+      {
+        jurisdiction: 'SSCS',
+        includeCaseTypes: [
+          'Benefit'
+        ]
+      },
+      {
+        jurisdiction: 'PRIVATELAW',
+        caseType: 'CARESUPERVISION_EPO',
+        roles: ['ignore1', 'ignore2']
+      }
     ];
-    expect(Utils.hasMatchedPermissions(featureVariation, jurisdictionId, caseTypeId, userRoles)).toEqual(false);
+
+    let jurisdictionId = 'SSCS';
+    let caseTypeId = 'Benefit';
+    expect(Utils.hasMatchedJurisdictionAndCaseType(featureVariations[0], jurisdictionId, caseTypeId)).toEqual(true);
+    jurisdictionId = 'PRIVATELAW';
+    caseTypeId = 'CARESUPERVISION_EPO';
+    expect(Utils.hasMatchedJurisdictionAndCaseType(featureVariations[1], jurisdictionId, caseTypeId)).toEqual(true);
   });
 });

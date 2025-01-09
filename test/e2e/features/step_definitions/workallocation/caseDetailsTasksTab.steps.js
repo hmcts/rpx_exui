@@ -1,4 +1,4 @@
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const reportLogger = require('../../../support/reportLogger');
 const BrowserWaits = require('../../../support/customWaits');
 const SoftAssert = require('../../../../ngIntegration/util/softAssert');
@@ -7,7 +7,7 @@ const WorkAllocationDateUtil = require('../../pageObjects/workAllocation/common/
 const caseDetailsPage = require('../../pageObjects/caseDetailsPage');
 const caseRolesAndAccessPage = require('../../pageObjects/workAllocation/caseRolesAccessPage');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   When('I click manage link {string} for task at position {int} in case details tasks tab', async function(manageLinkText, taskPos){
     await BrowserWaits.retryWithActionCallback(async () => {
       await BrowserWaits.waitForSeconds(5);
@@ -184,5 +184,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
       await caseDetailsTaskTabPage.clickTaskNextStepLink(taskName, linkText);
     });
   });
-});
-

@@ -1,7 +1,14 @@
-<ng-container *ngIf="(isRelease4$ | async) === true; else legacyField">
-  <exui-priority-field-current [date]="priorityDate" [majorPriority]="majorPriority"></exui-priority-field-current>
+<ng-container [ngSwitch]="priority">
+  <strong *ngSwitchCase="'URGENT'" class="hmcts-badge hmcts-badge--red">
+    urgent
+  </strong>
+  <strong *ngSwitchCase="'HIGH'" class="govuk-tag govuk-tag--red">
+    high
+  </strong>
+  <strong *ngSwitchCase="'MEDIUM'" class="govuk-tag govuk-tag--yellow">
+    medium
+  </strong>
+  <strong *ngSwitchCase="'LOW'" class="govuk-tag govuk-tag--grey">
+    low
+  </strong>
 </ng-container>
-
-<ng-template #legacyField>
-  <exui-priority-field-legacy [dueDate]="dueDate"></exui-priority-field-legacy>
-</ng-template>

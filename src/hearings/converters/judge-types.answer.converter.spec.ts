@@ -16,7 +16,6 @@ describe('JudgeTypesAnswerConverter', () => {
   let store: Store<any>;
   let router: any;
   const ROLE_TYPE = ['initial'];
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [

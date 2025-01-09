@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { UserDetails } from '../../../../app/models';
 import { ChooseRadioOptionComponent } from '../../../components';
 import { EXCLUSION_OPTION } from '../../../constants';

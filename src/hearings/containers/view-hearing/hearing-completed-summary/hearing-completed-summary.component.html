@@ -3,12 +3,13 @@
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l">
       <span class="govuk-caption-l">{{hearingActualsMainModel?.caseDetails.publicCaseName}}</span>
-      Hearing details
+      {{ 'Hearing details' | rpxTranslate }}
     </h1>
     <exui-listing-information-summary></exui-listing-information-summary>
     <ng-container *ngIf="hearingActualsMainModel">
       <exui-hearing-actual-summary
         [hearingState$]="hearingState$"
+        [hearingStageOptions]="hearingStageOptions"
         [hearingActualsMainModel]="hearingActualsMainModel"></exui-hearing-actual-summary>
     </ng-container>
   </div>

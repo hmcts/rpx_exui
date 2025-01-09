@@ -1,8 +1,8 @@
-<xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem'"></xuilib-hmcts-error-summary>
+<xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem' | rpxTranslate"></xuilib-hmcts-error-summary>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <exui-hearing-parties-title></exui-hearing-parties-title>
-    <h1 class="govuk-heading-l">Do you require a panel for this hearing?</h1>
+    <h1 class="govuk-heading-l">{{ 'Do you require a panel for this hearing?' | rpxTranslate }}</h1>
     <form class="form" [formGroup]="panelJudgeForm">
       <div class="govuk-form-group govuk-!-margin-top-5">
         <fieldset class="govuk-fieldset" id="specific-panel-selection">
@@ -26,11 +26,11 @@
                                                [isColumnView]="false"></exui-hearing-judge-names-list>
                  <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                     <h1 class="govuk-fieldset__heading">
-                        Or select any other panel roles required
+                        {{ 'Or select any other panel roles required' | rpxTranslate }}
                     </h1>
                 </legend>
                 <span class="govuk-error-message" *ngIf="childNodesValidationError">
-                  <span class="govuk-visually-hidden">Error:</span> {{childNodesValidationError}}
+                  <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span> {{ childNodesValidationError | rpxTranslate }}
                 </span>
                 <exui-multi-level-selector *ngIf="configLevels" id="panel-role-selector"
                   [multiLevelSelect]="panelJudgeForm.controls.multiLevelSelect"
@@ -51,7 +51,7 @@
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="noSpecificPanel" name="specificPanel" (change)="showSpecificPanel('No');"
                 formControlName="specificPanel" type="radio" value="No" data-aria-controls="conditional-judge-type">
-              <label class="govuk-label govuk-radios__label" for="noSpecificPanel">No</label>
+              <label class="govuk-label govuk-radios__label" for="noSpecificPanel">{{ 'No' | rpxTranslate }}</label>
             </div>
             <div class="govuk-radios__conditional" [ngClass]="{'govuk-radios__conditional--hidden': panelSelection !=='No'}">
             </div>

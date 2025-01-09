@@ -3,7 +3,7 @@ const CucumberReportLogger = require('../../../support/reportLogger');
 
 const moment = require('moment-timezone');
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const BrowserWaits = require('../../../support/customWaits');
 const headerPage = require('../../pageObjects/headerPage');
 const browserUtil = require('../../../../ngIntegration/util/browserUtil');

@@ -1,5 +1,5 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -8,7 +8,6 @@ import { ExuiCommonLibModule, FeatureToggleService, FilterService, RoleCategory 
 import { Store } from '@ngrx/store';
 import { RpxTranslationService } from 'rpx-xui-translation';
 import { of } from 'rxjs';
-import { CheckReleaseVersionService } from '../../services/check-release-version.service';
 import { TaskListComponent } from '..';
 import { SessionStorageService } from '../../../app/services';
 import { InfoMessageCommService } from '../../../app/shared/services/info-message-comms.service';
@@ -16,9 +15,16 @@ import * as fromActions from '../../../app/store';
 import { WorkAllocationComponentsModule } from '../../components/work-allocation.components.module';
 import { TaskActionIds } from '../../enums';
 import { Task } from '../../models/tasks';
-import { CaseworkerDataService, WASupportedJurisdictionsService, WorkAllocationFeatureService, WorkAllocationTaskService } from '../../services';
+import { CaseworkerDataService, WASupportedJurisdictionsService, WorkAllocationTaskService } from '../../services';
 import { getMockTasks, MockRouter } from '../../tests/utils.spec';
 import { TaskListWrapperComponent } from './task-list-wrapper.component';
+
+@Pipe({ name: 'rpxTranslate' })
+class RpxTranslationMockPipe implements PipeTransform {
+  public transform(value: string): string {
+    return value;
+  }
+}
 
 describe('TaskListWrapperComponent', () => {
   let component: TaskListWrapperComponent;
@@ -35,13 +41,7 @@ describe('TaskListWrapperComponent', () => {
   const mockFeatureToggleService = jasmine.createSpyObj('FeatureToggleService', ['isEnabled', 'getValue']);
   const mockCaseworkerDataService = jasmine.createSpyObj('mockCaseworkerDataService', ['getAll']);
   const mockWASupportedJurisdictionsService = jasmine.createSpyObj('mockWASupportedJurisdictionsService', ['getWASupportedJurisdictions']);
-  const mockCheckReleaseVersionService = {
-    isRelease4: () => {
-      return {
-        subscribe: () => true
-      };
-    }
-  };
+
   let storeMock: jasmine.SpyObj<Store<fromActions.State>>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let store: Store<fromActions.State>;
@@ -67,7 +67,7 @@ describe('TaskListWrapperComponent', () => {
         RouterTestingModule,
         CdkTableModule
       ],
-      declarations: [TaskListComponent, TaskListWrapperComponent],
+      declarations: [TaskListComponent, TaskListWrapperComponent, RpxTranslationMockPipe],
       providers: [
         { provide: ChangeDetectorRef, useValue: mockRef },
         { provide: WorkAllocationTaskService, useValue: mockWorkAllocationService },
@@ -75,15 +75,13 @@ describe('TaskListWrapperComponent', () => {
         { provide: InfoMessageCommService, useValue: mockInfoMessageCommService },
         { provide: SessionStorageService, useValue: mockSessionStorageService },
         { provide: AlertService, useValue: mockAlertService },
-        { provide: WorkAllocationFeatureService, useValue: mockFeatureService },
         { provide: LoadingService, useValue: mockLoadingService },
         { provide: FeatureToggleService, useValue: mockFeatureToggleService },
         { provide: FilterService, useValue: mockFilterService },
         { provide: CaseworkerDataService, useValue: mockCaseworkerDataService },
         { provide: WASupportedJurisdictionsService, useValue: mockWASupportedJurisdictionsService },
         { provide: Store, useValue: storeMock },
-        { provide: RpxTranslationService, useFactory: rpxTranslationServiceStub },
-        { provide: CheckReleaseVersionService, useValue: mockCheckReleaseVersionService }
+        { provide: RpxTranslationService, useFactory: rpxTranslationServiceStub }
       ]
     }).compileComponents();
     fixture = TestBed.createComponent(TaskListWrapperComponent);

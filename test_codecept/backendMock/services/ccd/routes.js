@@ -7,13 +7,15 @@ const ccdMockData = require('./index')
 
 const userApiData = require('../userApiData')
 
+const caseEventMockData = require('./caseEvent_data')
+
 
 
 router.get('/data/internal/cases/:caseId', (req, res) => {
     const caseId = req.params['caseId'];
-   
-    userApiData.sendResponse(req, res, "OnCaseDetails", () => ccdMockData.caseDetailsResponse.hearingCase)
 
+    userApiData.sendResponse(req, res, "OnCaseDetails", () => ccdMockData.caseDetailsResponse.defaultCase)
+    // res.status(403).send({})
 });
 
 // router.get('/data/internal/cases/:caseid', (req,res) => {
@@ -26,7 +28,7 @@ router.get('/aggregated/caseworkers/:uid/jurisdictions', (req, res) => {
     // responseData[0].description = 'Div '+Date.now()
     // res.set('Content-Type', 'application/json');
     // res.setEncoding('gzip');
-    console.log('jurisdictions response size: '+JSON.stringify(responseData).length)
+    // console.log('jurisdictions response size: '+JSON.stringify(responseData).length)
     // res.set('Cache-control', 'public, max-age=0')
     if(req.query.access === 'read'){
         responseData.data[0].description = 'read request';
@@ -53,11 +55,11 @@ router.get('/data/internal/case-types/:jurisdiction/event-triggers/:caseType', (
     ccdMockData.caseEventData.setEventProps({
         show_summary:false
     })
-    res.send(ccdMockData.caseEventData.eventData)
+    res.send(caseEventMockData.getCaseFlagsEventResponse())
 })
 
 router.get('/data/internal/cases/:caseid/event-triggers/:eventId', (req, res) => {
-    res.send(ccdMockData.caseEventData.eventData);
+    res.send(caseEventMockData.getCaseFlagsEventResponse());
 })
 
 router.get('/activity/cases/:cases/activity', (req, res) => {

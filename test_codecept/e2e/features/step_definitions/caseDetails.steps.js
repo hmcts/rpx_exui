@@ -60,6 +60,10 @@ const { I } = inject();
     When('I click tab with label {string} in case details page, to see element with css selector {string}', async function (tabLabel, cssSelector) {
         await BrowserWaits.retryWithActionCallback(async () => {
             await caseDetailsPage.clickTabWithLabel(tabLabel) 
+            await BrowserWaits.waitForSeconds(2)
+            await caseDetailsPage.clickTabWithLabel(tabLabel) 
+
+            await BrowserWaits.waitForElement($(cssSelector))
             expect(await $(cssSelector).isDisplayed()).to.be.true
         });
 
@@ -81,26 +85,6 @@ const { I } = inject();
         });
         
     });
-
-    Then('I see case details basic view and request access page', async () =>{
-        await BrowserWaits.waitForElement(caseDetailsBasicViewPage.container)
-    })
-
-    Then('I see case details basic view displays banner with message {string}', async (message) => {
-        await BrowserWaits.waitForElement(caseDetailsBasicViewPage.bannerMessageContainer)
-        const bannerMessage = await caseDetailsBasicViewPage.bannerMessageContainer.getText()
-        expect(bannerMessage).to.contains(message);
-    })
-
-    Then('I see case details basic view displays case property {string} with values {string}', async (attribute, value) => {
-        await BrowserWaits.waitForElement(caseDetailsBasicViewPage.bannerMessageContainer)
-        expect(await caseDetailsBasicViewPage.isRowDisplayedWithAttribute(attribute), 'Attribute not displayed').to.be.true
-        expect(await caseDetailsBasicViewPage.getAttributeValues(attribute)).to.contains(value)
-    })
-
-    When('I click request access button in case basic view page', async () => {
-        await caseDetailsBasicViewPage.requestAccessButton.click() 
-    })
 
     When('I open linked document', async () => {
         await caseDetailsPage.openLinkedDocument()

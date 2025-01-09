@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ErrorMessage } from '@hmcts/ccd-case-ui-toolkit';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
+import { MockRpxTranslatePipe } from '../../../../app/shared/test/mock-rpx-translate.pipe';
 import { initialState } from '../../../hearing.test.data';
 import { HearingRequestMainModel } from '../../../models/hearingRequestMain.model';
 import { ACTION, HearingStageEnum } from '../../../models/hearings.enum';
@@ -88,7 +89,7 @@ describe('HearingStageComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, RouterTestingModule],
-      declarations: [HearingStageComponent, MockHearingPartiesComponent],
+      declarations: [HearingStageComponent, MockHearingPartiesComponent, MockRpxTranslatePipe],
       providers: [
         provideMockStore({ initialState }),
         { provide: HearingsService, useValue: hearingsService },

@@ -1,4 +1,4 @@
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const reportLogger = require('../../../support/reportLogger');
 const BrowserWaits = require('../../../support/customWaits');
 const SoftAssert = require('../../../../ngIntegration/util/softAssert');
@@ -10,7 +10,7 @@ const ArrayUtil = require('../../../utils/ArrayUtil');
 
 const workFlowPage = require('../../pageObjects/caseAccessManagement/SARWorkflow');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   const reviewSARPage = workFlowPage.reviewRequestPage;
   const durationSelectionPage = workFlowPage.durationSelectionPage;
 
@@ -155,5 +155,4 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
   When('I am in SAR request more information page, enter in text area {string}', async function (moreInfotext) {
     await workFlowPage.requestMoreInfoPage.enterInTextArea(moreInfotext);
   });
-});
 

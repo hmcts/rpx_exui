@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
+import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { HearingLinksStateData } from '../../../models/hearingLinksStateData.model';
@@ -26,12 +27,13 @@ export class HearingLinkComponent extends RequestHearingPageFlow implements OnIn
   public showSpinner: boolean = true;
   public hearingLinksSub: Subscription;
 
-  constructor(protected readonly hearingStore: Store<fromHearingStore.State>,
+  constructor(private readonly router: Router,
+              private readonly formBuilder: FormBuilder,
+              protected readonly hearingStore: Store<fromHearingStore.State>,
               protected readonly hearingsService: HearingsService,
-              protected readonly route: ActivatedRoute,
-              private readonly router: Router,
-              private readonly formBuilder: FormBuilder) {
-    super(hearingStore, hearingsService, route);
+              protected readonly featureToggleService: FeatureToggleService,
+              protected readonly route: ActivatedRoute) {
+    super(hearingStore, hearingsService, featureToggleService, route);
     this.caseId = this.hearingListMainModel.caseRef || '';
     this.caseName = this.serviceHearingValuesModel.hmctsInternalCaseName || '';
   }

@@ -77,7 +77,7 @@ class RdCaseworkerApi {
     }
 
     processResponse(response) {
-        if (isRequestMatch('POST', '/refdata/case-worker/users/fetchUsersById', response)) {
+        if (isRequestMatch('GET', '/refdata/internal/staff/usersByServiceName', response)) {
             response.data.push(...this.iacCTSCUsers)
         }
      

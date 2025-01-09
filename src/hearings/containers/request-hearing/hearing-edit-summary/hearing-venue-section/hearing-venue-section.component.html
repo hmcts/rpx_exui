@@ -1,0 +1,27 @@
+<h2 class="govuk-heading-m">
+  Hearing venue
+  <exui-amendment-label *ngIf="showAmmendedForHeading" [displayLabel]="amendmentLabelEnum.AMENDED">
+  </exui-amendment-label>
+</h2>
+<div class="govuk-summary-list govuk-!-margin-bottom-9">
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      What are the hearing venue details
+    </div>
+    <div class="govuk-summary-list__value">
+      <ul>
+        <li *ngFor="let location of locations$ | async">
+          {{ location.court_name }}
+          <exui-amendment-label *ngIf="showAmmended(location.epimms_id)" [displayLabel]="amendmentLabelEnum.AMENDED">
+          </exui-amendment-label>
+        </li>
+      </ul>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="venue"
+        class="govuk-link"
+        href="javascript:void(0)"
+        (click)="onChange('venue')">Change</a>
+    </div>
+  </div>
+</div>

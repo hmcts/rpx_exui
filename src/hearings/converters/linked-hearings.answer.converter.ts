@@ -7,7 +7,9 @@ export class LinkedHearingsAnswerConverter implements AnswerConverter {
   public transformAnswer(hearingState$?: Observable<State>): Observable<string> {
     return hearingState$.pipe(
       map((state) => {
-        const hearingIsLinkedFlag = state.hearingRequest.hearingRequestMainModel.hearingDetails.hearingIsLinkedFlag;
+        const hearingIsLinkedFlag = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.hearingDetails.hearingIsLinkedFlag
+          : state.hearingRequest.hearingRequestMainModel.hearingDetails.hearingIsLinkedFlag;
         return hearingIsLinkedFlag ? 'Yes' : 'No';
       })
     );

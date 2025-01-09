@@ -1,5 +1,5 @@
 // timeout.js
-var { setDefaultTimeout } = require('cucumber');
+var { setDefaultTimeout } = require('@cucumber/cucumber');
 
 setDefaultTimeout(600 * 1000);
 // this timeout value is global setting impact all step definition function,

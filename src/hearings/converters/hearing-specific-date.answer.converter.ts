@@ -13,10 +13,12 @@ export class HearingSpecificDateAnswerConverter implements AnswerConverter {
   }
 
   private createAnswer(state: State): string {
-    let specificDateSelection: string = '';
+    let specificDateSelection: string = RadioOptions.NO;
     let earliestHearingDate: string = '';
     let latestHearingDate: string = '';
-    const hearingWindow = state.hearingRequest.hearingRequestMainModel.hearingDetails.hearingWindow;
+    const hearingWindow = state.hearingConditions?.isHearingAmendmentsEnabled
+      ? state.hearingRequestToCompare.hearingRequestMainModel.hearingDetails.hearingWindow
+      : state.hearingRequest.hearingRequestMainModel.hearingDetails.hearingWindow;
 
     if (hearingWindow && (hearingWindow.dateRangeStart || hearingWindow.dateRangeEnd)) {
       specificDateSelection = RadioOptions.CHOOSE_DATE_RANGE;

@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { RouterModule } from '@angular/router';
 import {
   AbstractAppConfig,
   AlertModule,
   AlertService,
   AuthService as CCDAuthService,
-  CaseEditorModule,
   CaseEditWizardGuard,
+  CaseEditorModule,
   CaseFileViewService,
   CaseHeaderModule,
   CaseListFiltersModule,
@@ -18,8 +18,8 @@ import {
   CaseNotifier,
   CaseReferencePipe,
   CaseResolver,
-  CasesService,
   CaseViewerModule,
+  CasesService,
   CcdCYAPageLabelFilterPipe,
   CreateCaseFiltersModule,
   DocumentManagementService,
@@ -39,23 +39,23 @@ import {
   PipesModule,
   PlaceholderService,
   RequestOptionsBuilder,
+  RetryUtil,
   RouterHelperService,
   SearchFiltersModule,
   SearchResultModule,
-  WorkbasketFiltersModule,
-  RetryUtil
+  WorkbasketFiltersModule
 } from '@hmcts/ccd-case-ui-toolkit';
 import { ExuiCommonLibModule } from '@hmcts/rpx-xui-common-lib';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { AppConfig } from '../app/services/ccd-config/ccd-case.config';
 import { SharedModule } from '../app/shared/shared.module';
 import { HearingsModule } from '../hearings/hearings.module';
 import { HearingsPipesModule } from '../hearings/pipes/hearings.pipes.module';
 import { HearingsService } from '../hearings/services/hearings.service';
 import { OrganisationModule } from '../organisation/organisation.module';
-import { PriorityFieldModule } from '../work-allocation/components/priority-field/priority-field.module';
 import { WASupportedJurisdictionsService } from '../work-allocation/services';
 import { casesRouting } from './case-feature.routes';
 // from components
@@ -64,11 +64,14 @@ import * as fromComponents from './components';
 import * as fromContainers from './containers';
 // from directives
 import * as fromDirectives from './directives';
+import { queryManagementRouting } from './query-management.routes';
 import { ActivityResolver } from './resolvers/activity.resolver';
 import { CreateCaseEventTriggerResolver } from './resolvers/create-case-event-trigger.resolver';
+import { RestrictedCaseAccessGuard } from './guards/restricted-case-access-guard';
 // from services
 import * as fromServices from './services';
 import { effects, reducers } from './store';
+import { WorkAllocationComponentsModule } from '../work-allocation/components/work-allocation.components.module';
 
 @NgModule({
   imports: [
@@ -89,7 +92,6 @@ import { effects, reducers } from './store';
     ExuiCommonLibModule,
     LoadingModule,
     ReactiveFormsModule,
-    PriorityFieldModule,
     HearingsModule,
     HearingsPipesModule,
     CaseHeaderModule,
@@ -97,7 +99,10 @@ import { effects, reducers } from './store';
     CaseListModule,
     PaletteModule,
     CaseViewerModule,
-    PipesModule
+    PipesModule,
+    queryManagementRouting,
+    RpxTranslationModule.forChild(),
+    WorkAllocationComponentsModule
   ],
   declarations: [...fromComponents.components, ...fromContainers.containers, ...fromDirectives.directives],
   providers: [
@@ -134,7 +139,8 @@ import { effects, reducers } from './store';
     IsCompoundPipe,
     CcdCYAPageLabelFilterPipe,
     CaseFileViewService,
-    JurisdictionService
+    JurisdictionService,
+    RestrictedCaseAccessGuard
   ]
 })
 /**

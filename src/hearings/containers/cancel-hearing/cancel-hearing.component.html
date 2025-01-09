@@ -4,22 +4,21 @@
   <div class="page">
     <main id="content" role="main">
        <a href="javascript:void(0)"
-           [routerLink]="['/', 'cases', 'case-details', caseId, 'hearings']" class="govuk-back-link">Back</a>
+           [routerLink]="['/', 'cases', 'case-details', caseId, 'hearings']" class="govuk-back-link">{{ 'Back' | rpxTranslate }}</a>
 
       <div class="govuk-grid-row">
-        <xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem'"></xuilib-hmcts-error-summary>
+        <xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem'| rpxTranslate"></xuilib-hmcts-error-summary>
         <div class="govuk-grid-column-two-thirds">
           <form class="form" [formGroup]="hearingCancelForm"  (ngSubmit)="executeContinue()">
             <h1 class="govuk-heading-l">
-                Are you sure you want to cancel this hearing?
+                {{ 'Are you sure you want to cancel this hearing?' | rpxTranslate }}
             </h1>
-            <p class="govuk-body">Jane Smith vs DWP</p>
             <div class="govuk-form-group"
             [ngClass]="{'govuk-form-group--error' : !selectionValid}">
               <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                     <h1 class="govuk-fieldset__heading">
-                      Why is this hearing being cancelled?
+                      {{ 'Why is this hearing being cancelled?' | rpxTranslate }}
                     </h1>
                 </legend>
                 <span *ngIf=" !selectionValid"
@@ -28,7 +27,7 @@
                  <span>{{ cancelHearingMessageEnum.SELECT_AT_LEAST_ONE_REASON }}</span>
               </span>
                 <div class="govuk-hint">
-                    Select all that apply.
+                    {{ 'Select all that apply.' | rpxTranslate }}
                 </div>
                 <div id="hearing-option-container" class="govuk-checkboxes" formArrayName="reasons" data-module="govuk-checkboxes">
                   <div class="govuk-checkboxes__item" *ngFor="let reason of hearingCancelOptions;index as pos" [formGroupName]="pos">
@@ -38,11 +37,11 @@
                 </div>
               </fieldset>
             </div>
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">{{ 'Continue' | rpxTranslate }}</button>
           </form>
           <p class="govuk-body">
              <a href="javascript:void(0)"
-           [routerLink]="['/', 'cases', 'case-details', caseId, 'hearings']">Do not cancel hearing</a>
+           [routerLink]="['/', 'cases', 'case-details', caseId, 'hearings']">{{ 'Do not cancel hearing' | rpxTranslate }}</a>
           </p>
         </div>
       </div>

@@ -7,7 +7,9 @@ import { HiddenConverter } from './hidden.converter';
 export class NotListedHiddenConverter implements HiddenConverter {
   public transformHidden(hearingState$: Observable<State>): Observable<boolean> {
     return hearingState$.pipe(map((state) => {
-      const hearingResponse = state.hearingRequest.hearingRequestMainModel.hearingResponse;
+      const hearingResponse = state.hearingConditions?.isHearingAmendmentsEnabled
+        ? state.hearingRequestToCompare.hearingRequestMainModel.hearingResponse
+        : state.hearingRequest.hearingRequestMainModel.hearingResponse;
       return hearingResponse.laCaseStatus !== LaCaseStatus.LISTED;
     }
     ));

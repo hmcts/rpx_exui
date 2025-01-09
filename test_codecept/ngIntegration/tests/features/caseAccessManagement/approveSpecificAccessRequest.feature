@@ -1,9 +1,27 @@
 
-@ng
+@ng 
 Feature: Case access management: Approve specific access request
 
     Background:setup
         Given I init MockApp
+
+        Given I set MOCK with user details
+            | roles        | caseworker-ia,caseworker-ia-caseofficer,caseworker-ia-admofficer,task-supervisor |
+            | roleCategory | LEGAL_OPERATIONS                                                                 |
+
+        Given I set MOCK user with reference "userDetails" roleAssignmentInfo
+            | id                                   | actorId                              | jurisdiction | caseType | caseId           | baseLocation | roleType | roleName                  | specificAccessReason |
+            | 55968c04-dc8c-42b5-8e35-6687830a0d06 | 3db21928-cbbc-4364-bd91-137c7031fe17 | IA           | Asylum   | 1669646436529598 | 12345        | CASE     | specific-access-requested | Test access          |
+
+
+        # Given I set role assignment query response
+        #     | id                                   | actorId                              | jurisdiction | baseLocation | roleType | specificAccessReason |
+        #     | 55968c04-dc8c-42b5-8e35-6687830a0d06 | 3db21928-cbbc-4364-bd91-137c7031fe17 | IA           | 12345        | CASE     | Test access          |
+
+
+        Given I start MockApp
+
+
         Given I set MOCK case details with reference "caseDetails"
         Given I set MOCK case details "caseDetails" property "Jurisdiction" as "IA"
         Given I set MOCK case details "caseDetails" trigger id "text" trigger name "Test event"
@@ -16,31 +34,23 @@ Feature: Case access management: Approve specific access request
             | case_name    | SAR test case                        |
 
         Given I set MOCK case roles
-            | created       | notes       |
+            | created    | notes       |
             | 2022-10-10 | Test access |
-            | 2022-10-10 |Test access |
+            | 2022-10-10 | Test access |
 
         Given I set MOCK case list values
             | case_id          | case_fields.[CASE_REFERENCE] | case_fields_formatted.[CASE_REFERENCE] |
             | 1234567812345678 | 1234567812345678             | 1234567812345678                       |
             | 1234567812345679 | 1234567812345679             | 1234567812345679                       |
-       
 
-    Scenario Outline: Approve specific access request - Review page validations
-        
-        Given I set MOCK with user details
-            | roles | <roles>,task-supervisor,case-allocator |
-            | roleCategory | LEGAL_OPERATIONS                        |
-
-        
         Given I set MOCK case tasks with userDetails from reference "userDetails"
             | id                                   | task_title | assignee    | assigneeName | created_date | due_date | permissions                          | warnings | description                                                                                                                                                                                                                          |
             | 08a3d216-task-4e92-a7e3-ca3661e6be87 | Task 1     | thissession | Test user    | -10          | -1       | Own,Read,Refer,Manage,Execute,Cancel | true     | Click link to proceed to next step [test link next step](/case/case-details/${[case_id]})                                                                                                                                            |
             | 18a3d216-task-4e92-a7e3-ca3661e6be87 | Task 2     | thissession | Test 2 user  | -10          | 0        | Own,Manage,Execute                   | true     | Click link to proceed [next step 1](/case/case-details/${[case_id]}) or \n Click link to proceed to [next step 2](/role-access/ce225260-e7e7-11ec-b0a1-a221429cd2eb/assignment/55968c04-dc8c-42b5-8e35-6687830a0d06/specific-access) |
 
         Given I set Mock user with ref "userDetails", ORGANISATION roles for services "IA"
-            | bookable        | false |
-            | substantive     | Y     |
+            | bookable     | false |
+            | substantive  | Y     |
             | baseLocation | 20001 |
 
         Given I start MockApp
@@ -55,264 +65,163 @@ Feature: Case access management: Approve specific access request
         Then I validate case details task tab page is displayed
         Then I validate task tab active tasks container displayed
 
+
         When I click next step "next step 2" for task with name "Task 2"
 
 
-        Then I see Review specific access page with header "Review specific access request" is displayed
-        Then I validate Review specific access page access request details
-            | Case name              | SAR test case       |
-            | Case reference         | 1234-5678-1234-5678 |
-            | Date submitted         | 10 October 2022         |
-            | Reason for case access | Test access        |
-
-        Then I validate Review specific access page radio options for actions
-            | option                   |
-            | Approve request          |
-            | Reject request           |
-            | Request more information |
+    Scenario Outline: Approve specific access request - Approve request
+        Then I am on SAR workflow page "Review specific access request"
+        Then In SAR workflow page "Review specific access request", I validate fields displayed
+            | field                                     |
+            | Review specific access request            |
+            | What do you want to do with this request? |
+            | Approve request                           |
+            | Reject request                            |
+            | Request more information                  |
 
 
-        When I click continue in specific access request work flow
-        Then I see error message of type "message" displayed with message "Select an option"
-        Then I validate SAR page, error message displayed for option to select
+        Then In SAR workflow Review specific access page, I validate access request details
+            | Case name              | José González       |
+            | Case reference         | 1669-6464-3652-9598 |
+            # | Date submitted         | 10 October 2022     |
+            | Reason for case access | Test access         |
+
+        When In SAR workflow flag workflow, I click continue
+
+
+        Then In SAR workflow, I see error message banner with message "Select an option"
+
+
+        Then In SAR workflow page "Review specific access request", I input values
+            | field                                     | value           |
+            | What do you want to do with this request? | Approve request |
+        When In SAR workflow flag workflow, I click continue
+        Then I am on SAR workflow page "How long do you want to give access to this case for?"
+
+        Then In SAR workflow page "How long do you want to give access to this case for?", I input values
+            | field                                                 | value  |
+            | How long do you want to give access to this case for? | 7 days |
+
+        When In SAR workflow flag workflow, I click submit
+        Then In SAR workflow, I see access approved page
+
         Examples:
+
             | roles                                                                            | PriorityIsDisplayed | DuedateIsDisplayed | TaskcreatedIsDisplayed |
             | caseworker-ia,caseworker-ia-caseofficer,caseworker-ia-admofficer,task-supervisor | true                | true               | false                  |
-    # | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker ,task-supervisor   | false               | false              | true                   |
+# | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker ,task-supervisor   | false               | false              | true                   |
+    
+   
+    Scenario Outline:  specific access request - Approve workflow Validations
+        Then I am on SAR workflow page "Review specific access request"
+        Then In SAR workflow page "Review specific access request", I validate fields displayed
+            | field                                     |
+            | Review specific access request            |
+            | What do you want to do with this request? |
+            | Approve request                           |
+            | Reject request                            |
+            | Request more information                  |
 
 
-    Scenario Outline: Approve specific access request - duration page validations
-        Given I set MOCK with user "IAC_CaseOfficer_R2" and roles "<roles>,task-supervisor,case-allocator" with reference "userDetails"
-        Given I set MOCK case tasks with userDetails from reference "userDetails"
-            | id                                   | task_title | assignee    | assigneeName | created_date | due_date | permissions                          | warnings | description                                                                                                                                     |
-            | 08a3d216-task-4e92-a7e3-ca3661e6be87 | Task 1     | thissession | Test user    | -10          | -1       | Own,Read,Refer,Manage,Execute,Cancel | true     | Click link to proceed to next step [test link next step](/case/case-details/${[case_id]})                                                       |
-            | 18a3d216-task-4e92-a7e3-ca3661e6be87 | Task 2 | thissession | Test 2 user | -10 | 0 | Own,Manage,Execute | true | Click link to proceed [next step 1](/case/case-details/${[case_id]}) or \n Click link to proceed to [next step 2](/role-access/ce225260-e7e7-11ec-b0a1-a221429cd2eb/assignment/55968c04-dc8c-42b5-8e35-6687830a0d06/specific-access) |
+        Then In SAR workflow Review specific access page, I validate access request details
+            | Case name              | José González       |
+            | Case reference         | 1669-6464-3652-9598 |
+            # | Date submitted         | 10 October 2022     |
+            | Reason for case access | Test access         |
 
-        Given I set Mock user with ref "userDetails", ORGANISATION roles for services "IA"
-            | bookable        | false |
-            | substantive     | Y     |
-            | baseLocation | 20001 |
-
-        Given I start MockApp
-        Given I navigate to home page
-        When I click on primary navigation header tab "Case list", I see selected tab page displayed
-
-        When I open first case in case list page
-        Then I see case details page
-        Then I see case details tab label "Tasks" is displayed is "true"
-        When I click tab with label "Tasks" in case details page
-
-        Then I validate case details task tab page is displayed
-        Then I validate task tab active tasks container displayed
-
-        When I click next step "next step 2" for task with name "Task 2"
-
-        Then I see Review specific access page with header "Review specific access request" is displayed
-        When I select SAR action radio option "Approve request"
-        When I click continue in specific access request work flow
-
-        Then I see Approve specific access work flow page "How long do you want to give access to this case for?" with caption "Approve specific access request" is displayed
+        When In SAR workflow flag workflow, I click continue
 
 
-        When I select duration option "7 days" in approve speific access request work flow
-        Then I validate date input field "Access Starts" is displayed "No" in work flow page
-        Then I validate date input field "Access Ends" is displayed "No" in work flow page
+        Then In SAR workflow, I see error message banner with message "Select an option"
 
-        When I select duration option "Indefinite" in approve speific access request work flow
-        Then I validate date input field "Access Starts" is displayed "No" in SAR work flow page
-        Then I validate date input field "Access Ends" is displayed "No" in SAR work flow page
 
-        When I select duration option "Another period" in approve speific access request work flow
-        Then I validate date input field "Access Starts" is displayed "Yes" in SAR work flow page
-        Then I validate date input field "Access Ends" is displayed "yes" in SAR work flow page
+        Then In SAR workflow page "Review specific access request", I input values
+            | field                                     | value           |
+            | What do you want to do with this request? | Approve request |
+        When In SAR workflow flag workflow, I click continue
+        Then I am on SAR workflow page "How long do you want to give access to this case for?"
 
+        Then In SAR workflow page "How long do you want to give access to this case for?", I input values
+            | field                                                 | value  |
+            | How long do you want to give access to this case for? | 7 days |
+
+        Then In SAR workflow page "How long do you want to give access to this case for?", I validate fields displayed
+        |field|
+            | How long do you want to give access to this case for? |
+
+            # Then I wait for seconds for 1800
+        Then In SAR workflow page "How long do you want to give access to this case for?", I validate fields not displayed
+            | field                                                 |
+            | Access Starts |
+            | Access Ends |
+
+        Then In SAR workflow page "How long do you want to give access to this case for?", I input values
+            | field                                                 | value  |
+            | How long do you want to give access to this case for? | Indefinite |
+
+        Then In SAR workflow page "How long do you want to give access to this case for?", I validate fields displayed
+            | field                                                 |
+            | How long do you want to give access to this case for? |
+
+        # Then I wait for seconds for 1800
+        Then In SAR workflow page "How long do you want to give access to this case for?", I validate fields not displayed
+            | field         |
+            | Access Starts |
+            | Access Ends   |
+
+
+        Then In SAR workflow page "How long do you want to give access to this case for?", I input values
+            | field                                                 | value      |
+            | How long do you want to give access to this case for? | Another period |
+
+        Then In SAR workflow page "How long do you want to give access to this case for?", I validate fields displayed
+            | field                                                 |
+            | How long do you want to give access to this case for? |
+            | Access Starts |
+            | Access Ends   |
+
+        # Then I wait for seconds for 1800
+      
         Examples:
-            | roles                                                                            | PriorityIsDisplayed | DuedateIsDisplayed | TaskcreatedIsDisplayed |
-            | caseworker-ia,caseworker-ia-caseofficer,caseworker-ia-admofficer,task-supervisor | true                | true               | false                  |
-    # | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker ,task-supervisor   | false               | false              | true                   |
 
-
-    Scenario Outline:  Approve specifc access requestion date validations - Happy path
-        Given I set MOCK with user "IAC_CaseOfficer_R2" and roles "<roles>,task-supervisor,case-allocator" with reference "userDetails"
-        Given I set MOCK case tasks with userDetails from reference "userDetails"
-            | id                                   | task_title | assignee    | assigneeName | created_date | due_date | permissions                          | warnings | description                                                                                                                                     |
-            | 08a3d216-task-4e92-a7e3-ca3661e6be87 | Task 1     | thissession | Test user    | -10          | -1       | Own,Read,Refer,Manage,Execute,Cancel | true     | Click link to proceed to next step [test link next step](/case/case-details/${[case_id]})                                                       |
-            | 18a3d216-task-4e92-a7e3-ca3661e6be87 | Task 2 | thissession | Test 2 user | -10 | 0 | Own,Manage,Execute | true | Click link to proceed [next step 1](/case/case-details/${[case_id]}) or \n Click link to proceed to [next step 2](/role-access/ce225260-e7e7-11ec-b0a1-a221429cd2eb/assignment/55968c04-dc8c-42b5-8e35-6687830a0d06/specific-access) |
-
-        Given I set Mock user with ref "userDetails", ORGANISATION roles for services "IA"
-            | bookable        | false |
-            | substantive     | Y     |
-            | baseLocation | 20001 |
-        Given I start MockApp
-        Given I navigate to home page
-        When I click on primary navigation header tab "Case list", I see selected tab page displayed
-
-        When I open first case in case list page
-        Then I see case details page
-        Then I see case details tab label "Tasks" is displayed is "true"
-        When I click tab with label "Tasks" in case details page
-
-        Then I validate case details task tab page is displayed
-        Then I validate task tab active tasks container displayed
-
-        When I click next step "next step 2" for task with name "Task 2"
-
-        Then I see Review specific access page with header "Review specific access request" is displayed
-        When I select SAR action radio option "Approve request"
-        When I click continue in specific access request work flow
-
-        Then I see Approve specific access work flow page "How long do you want to give access to this case for?" with caption "Approve specific access request" is displayed
-
-        When I select duration option "Another period" in approve speific access request work flow
-        Then I validate date input field "Access Starts" is displayed "Yes" in SAR work flow page
-        Then I validate date input field "Access Ends" is displayed "yes" in SAR work flow page
-
-        When I enter duration date for field "Access Starts" with current date plus 1 days in SAR work flow
-        When I enter duration date for field "Access Ends" with current date plus 2 days in SAR work flow
-
-        When I click continue in specific access request work flow
-
-        Then I see SAR action "approved" confirmation page
-
-        Examples:
-            | roles                                                                            | PriorityIsDisplayed | DuedateIsDisplayed | TaskcreatedIsDisplayed |
-            | caseworker-ia,caseworker-ia-caseofficer,caseworker-ia-admofficer,task-supervisor | true                | true               | false                  |
-    # | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker ,task-supervisor   | false               | false              | true                   |
-
-
-    Scenario Outline:  Approve specifc access requestion invalid date validations - Unhappy path
-        Given I set MOCK with user "IAC_CaseOfficer_R2" and roles "<roles>,task-supervisor,case-allocator" with reference "userDetails"
-        Given I set MOCK case tasks with userDetails from reference "userDetails"
-            | id                                   | task_title | assignee    | assigneeName | created_date | due_date | permissions                          | warnings | description                                                                                                                                     |
-            | 08a3d216-task-4e92-a7e3-ca3661e6be87 | Task 1     | thissession | Test user    | -10          | -1       | Own,Read,Refer,Manage,Execute,Cancel | true     | Click link to proceed to next step [test link next step](/case/case-details/${[case_id]})                                                       |
-            | 18a3d216-task-4e92-a7e3-ca3661e6be87 | Task 2 | thissession | Test 2 user | -10 | 0 | Own,Manage,Execute | true | Click link to proceed [next step 1](/case/case-details/${[case_id]}) or \n Click link to proceed to [next step 2](/role-access/ce225260-e7e7-11ec-b0a1-a221429cd2eb/assignment/55968c04-dc8c-42b5-8e35-6687830a0d06/specific-access) |
-
-        Given I set Mock user with ref "userDetails", ORGANISATION roles for services "IA"
-            | bookable        | false |
-            | substantive     | Y     |
-            | baseLocation | 20001 |
-
-        Given I start MockApp
-        Given I navigate to home page
-        When I click on primary navigation header tab "Case list", I see selected tab page displayed
-
-        When I open first case in case list page
-        Then I see case details page
-        Then I see case details tab label "Tasks" is displayed is "true"
-        When I click tab with label "Tasks" in case details page
-
-        Then I validate case details task tab page is displayed
-        Then I validate task tab active tasks container displayed
-
-        When I click next step "next step 2" for task with name "Task 2"
-        Then I see Review specific access page with header "Review specific access request" is displayed
-        When I select SAR action radio option "Approve request"
-        When I click continue in specific access request work flow
-
-        Then I see Approve specific access work flow page "How long do you want to give access to this case for?" with caption "Approve specific access request" is displayed
-        When I select duration option "Another period" in approve speific access request work flow
-
-        Then I validate date input field "Access Starts" is displayed "Yes" in SAR work flow page
-        Then I validate date input field "Access Ends" is displayed "Yes" in SAR work flow page
-
-        When I enter duration date for field "Access Starts" with current date plus -1 days in SAR work flow
-        When I enter duration date for field "Access Ends" with current date plus 2 days in SAR work flow
-
-        When I click continue in specific access request work flow
-
-        Then I validate another period field "Access Starts" validation error displayed is "true" in SAR work flow
-        Then I validate another period field "Access Ends" validation error displayed is "false" in SAR work flow
-        Then I validate another period field "Access Starts" validation error message is "The access start date must not be in the past" in SAR work flow
-
-        When I enter duration date for field "Access Starts" with current date plus 1 days in SAR work flow
-        When I enter duration date for field "Access Ends" with current date plus 0 days in SAR work flow
-
-        When I click continue in specific access request work flow
-
-        Then I validate another period field "Access Starts" validation error displayed is "false" in SAR work flow
-        Then I validate another period field "Access Ends" validation error displayed is "true" in SAR work flow
-        Then I validate another period field "Access Ends" validation error message is "The access end date must be after the access start date" in SAR work flow
-
-        Examples:
-            | roles                                                                            | PriorityIsDisplayed | DuedateIsDisplayed | TaskcreatedIsDisplayed |
-            | caseworker-ia,caseworker-ia-caseofficer,caseworker-ia-admofficer,task-supervisor | true                | true               | false                  |
-    # | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker ,task-supervisor   | false               | false              | true                   |
-
-
-    Scenario Outline:  Reject specifc access request - Happy path
-        Given I set MOCK with user "IAC_CaseOfficer_R2" and roles "<roles>,task-supervisor,case-allocator" with reference "userDetails"
-        Given I set MOCK case tasks with userDetails from reference "userDetails"
-            | id                                   | task_title | assignee    | assigneeName | created_date | due_date | permissions                          | warnings | description                                                                                                                                     |
-            | 08a3d216-task-4e92-a7e3-ca3661e6be87 | Task 1     | thissession | Test user    | -10          | -1       | Own,Read,Refer,Manage,Execute,Cancel | true     | Click link to proceed to next step [test link next step](/case/case-details/${[case_id]})                                                       |
-            | 18a3d216-task-4e92-a7e3-ca3661e6be87 | Task 2 | thissession | Test 2 user | -10 | 0 | Own,Manage,Execute | true | Click link to proceed [next step 1](/case/case-details/${[case_id]}) or \n Click link to proceed to [next step 2](/role-access/ce225260-e7e7-11ec-b0a1-a221429cd2eb/assignment/55968c04-dc8c-42b5-8e35-6687830a0d06/specific-access) |
-
-        Given I set Mock user with ref "userDetails", ORGANISATION roles for services "IA"
-            | bookable        | false |
-            | substantive     | Y     |
-            | baseLocation | 20001 |
-
-        Given I start MockApp
-        Given I navigate to home page
-        When I click on primary navigation header tab "Case list", I see selected tab page displayed
-
-        When I open first case in case list page
-        Then I see case details page
-        Then I see case details tab label "Tasks" is displayed is "true"
-        When I click tab with label "Tasks" in case details page
-
-        Then I validate case details task tab page is displayed
-        Then I validate task tab active tasks container displayed
-
-        When I click next step "next step 2" for task with name "Task 2"
-
-        Then I see Review specific access page with header "Review specific access request" is displayed
-        When I select SAR action radio option "Reject request"
-        When I click continue in specific access request work flow
-
-        Then I see SAR action "Reject" confirmation page
-
-        Examples:
             | roles                                                                            | PriorityIsDisplayed | DuedateIsDisplayed | TaskcreatedIsDisplayed |
             | caseworker-ia,caseworker-ia-caseofficer,caseworker-ia-admofficer,task-supervisor | true                | true               | false                  |
 # | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker ,task-supervisor   | false               | false              | true                   |
 
 
+    Scenario Outline: Approve specific access request - Request more info
+        Then I am on SAR workflow page "Review specific access request"
+        Then In SAR workflow page "Review specific access request", I validate fields displayed
+            | field                                     |
+            | Review specific access request            |
+            | What do you want to do with this request? |
+            | Approve request                           |
+            | Reject request                            |
+            | Request more information                  |
 
-    Scenario Outline:  Request for more info specifc access request - Happy path
-        Given I set MOCK with user "IAC_CaseOfficer_R2" and roles "<roles>,task-supervisor,case-allocator" with reference "userDetails"
-        Given I set MOCK case tasks with userDetails from reference "userDetails"
-            | id                                   | task_title | assignee    | assigneeName | created_date | due_date | permissions                          | warnings | description                                                                                                                                                                                                                          |
-            | 08a3d216-task-4e92-a7e3-ca3661e6be87 | Task 1     | thissession | Test user    | -10          | -1       | Own,Read,Refer,Manage,Execute,Cancel | true     | Click link to proceed to next step [test link next step](/case/case-details/${[case_id]})                                                                                                                                            |
-            | 18a3d216-task-4e92-a7e3-ca3661e6be87 | Task 2     | thissession | Test 2 user  | -10          | 0        | Own,Manage,Execute                   | true     | Click link to proceed [next step 1](/case/case-details/${[case_id]}) or \n Click link to proceed to [next step 2](/role-access/ce225260-e7e7-11ec-b0a1-a221429cd2eb/assignment/55968c04-dc8c-42b5-8e35-6687830a0d06/specific-access) |
 
-        Given I set Mock user with ref "userDetails", ORGANISATION roles for services "IA"
-            | bookable        | false |
-            | substantive     | Y     |
-            | baseLocation | 20001 |
+        Then In SAR workflow Review specific access page, I validate access request details
+            | Case name              | José González       |
+            | Case reference         | 1669-6464-3652-9598 |
+            # | Date submitted         | 10 October 2022     |
+            | Reason for case access | Test access         |
 
-        Given I start MockApp
-        Given I navigate to home page
-        When I click on primary navigation header tab "Case list", I see selected tab page displayed
+        When In SAR workflow flag workflow, I click continue
 
-        When I open first case in case list page
-        Then I see case details page
-        Then I see case details tab label "Tasks" is displayed is "true"
-        When I click tab with label "Tasks" in case details page
 
-        Then I validate case details task tab page is displayed
-        Then I validate task tab active tasks container displayed
+        Then In SAR workflow, I see error message banner with message "Select an option"
 
-        When I click next step "next step 2" for task with name "Task 2"
 
-        Then I see Review specific access page with header "Review specific access request" is displayed
-        When I select SAR action radio option "Request more information"
-        When I click continue in specific access request work flow
-        Then I validate SAR, request more information page displayed
-        When I am in SAR request more information page, enter in text area "More info required"
-        When I click continue in specific access request work flow
-        Then I see SAR action "Reject" confirmation page
+        Then In SAR workflow page "Review specific access request", I input values
+            | field                                     | value           |
+            | What do you want to do with this request? | Request more information |
+        When In SAR workflow flag workflow, I click continue
+        Then I am on SAR workflow page "Request more information"
+
+       
 
         Examples:
+
             | roles                                                                            | PriorityIsDisplayed | DuedateIsDisplayed | TaskcreatedIsDisplayed |
             | caseworker-ia,caseworker-ia-caseofficer,caseworker-ia-admofficer,task-supervisor | true                | true               | false                  |
 # | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker ,task-supervisor   | false               | false              | true                   |

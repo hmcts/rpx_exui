@@ -20,7 +20,6 @@ import { Caseworker } from '../../interfaces/common';
 import { Case, CaseFieldConfig, CaseServiceConfig, InvokedCaseAction } from '../../models/cases';
 import { SortField } from '../../models/common';
 import { Location, PaginationParameter, SearchCaseRequest, SortParameter } from '../../models/dtos';
-import { CheckReleaseVersionService } from '../../services/check-release-version.service';
 import {
   CaseworkerDataService,
   LocationDataService,
@@ -87,9 +86,8 @@ export class WorkCaseListWrapperComponent implements OnInit, OnDestroy {
     protected readonly jurisdictionsService: JurisdictionsService,
     protected readonly rolesService: AllocateRoleService,
     protected readonly httpClient: HttpClient,
-    protected store: Store<fromActions.State>,
-    protected checkReleaseVersionService: CheckReleaseVersionService
-  ) {}
+    protected store: Store<fromActions.State>
+  ) { }
 
   public get cases(): Case[] {
     return this.pCases;
@@ -169,13 +167,16 @@ export class WorkCaseListWrapperComponent implements OnInit, OnDestroy {
     const userRoles$ = this.store.pipe(select(fromActions.getUserDetails)).pipe(map((userDetails) =>
       userDetails.roleAssignmentInfo.filter((role) => role.roleName && role.roleName === 'task-supervisor').map((role) => role.jurisdiction || null)
     ));
+
     const waJurisdictions$ = this.waSupportedJurisdictionsService.getWASupportedJurisdictions();
     this.waSupportedJurisdictions$ = combineLatest(
       [userRoles$,
         waJurisdictions$]
     ).pipe(
       map((jurisdictions) => {
-        return jurisdictions[0].includes(null) ? jurisdictions[1] : jurisdictions[0];
+        const areasOfJurisdiction = jurisdictions[0].includes(null) ? jurisdictions[1] : jurisdictions[0];
+        const uniqueJurisdictionsValue = [...new Set(areasOfJurisdiction)];
+        return uniqueJurisdictionsValue;
       }));
   }
 
@@ -200,7 +201,7 @@ export class WorkCaseListWrapperComponent implements OnInit, OnDestroy {
 
   public setupCaseWorkers(): void {
     const caseworkersByService$ = this.waSupportedJurisdictions$.pipe(switchMap((jurisdictions) =>
-      this.caseworkerService.getCaseworkersForServices(jurisdictions)
+      this.caseworkerService.getUsersFromServices(jurisdictions)
     ));
     this.waSupportedJurisdictions$.pipe(switchMap((jurisdictions) =>
       this.rolesService.getValidRoles(jurisdictions)
@@ -405,7 +406,9 @@ export class WorkCaseListWrapperComponent implements OnInit, OnDestroy {
   }
 
   protected setUpLocationsAndJurisdictions(): void {
-    this.locations$ = this.locationService.getLocations();
     this.loadSupportedJurisdictions();
+    this.locations$ = this.waSupportedJurisdictions$.pipe(switchMap((jurisdictions) =>
+      this.locationService.getLocations(jurisdictions)
+    ));
   }
 }

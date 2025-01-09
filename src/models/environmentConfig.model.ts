@@ -14,4 +14,5 @@ export interface EnvironmentConfig {
   accessManagementEnabled?: boolean;
   paymentReturnUrl: string;
   waSupportedServices?: WAFeatureConfig;
+  headerConfig: object;
 }

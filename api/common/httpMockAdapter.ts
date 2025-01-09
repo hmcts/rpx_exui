@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+import * as MockAdapter from 'axios-mock-adapter';
 import { HttpMock } from './httpMock';
 
 export class HttpMockAdapter {

@@ -1,7 +1,7 @@
 
 
 Before(async () => {
-    global.scenarioData = {}
+    // global.scenarioData = {}
 })
 
 After(async () => {

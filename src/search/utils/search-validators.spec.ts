@@ -127,13 +127,13 @@ describe('SearchValidators', () => {
       [SearchFormControl.DATE_OF_DEATH_YEAR]: ''
     });
 
-    formGroup.get(SearchFormControl.DATE_OF_BIRTH_DAY).setValue(1);
-    formGroup.get(SearchFormControl.DATE_OF_BIRTH_MONTH).setValue(11);
-    formGroup.get(SearchFormControl.DATE_OF_BIRTH_YEAR).setValue(2010);
+    formGroup.get(SearchFormControl.DATE_OF_BIRTH_DAY).setValue('1');
+    formGroup.get(SearchFormControl.DATE_OF_BIRTH_MONTH).setValue('11');
+    formGroup.get(SearchFormControl.DATE_OF_BIRTH_YEAR).setValue('2010');
 
-    formGroup.get(SearchFormControl.DATE_OF_DEATH_DAY).setValue(31);
-    formGroup.get(SearchFormControl.DATE_OF_DEATH_MONTH).setValue(10);
-    formGroup.get(SearchFormControl.DATE_OF_DEATH_YEAR).setValue(2010);
+    formGroup.get(SearchFormControl.DATE_OF_DEATH_DAY).setValue('31');
+    formGroup.get(SearchFormControl.DATE_OF_DEATH_MONTH).setValue('10');
+    formGroup.get(SearchFormControl.DATE_OF_DEATH_YEAR).setValue('2010');
 
     const dateComparisonValidator = SearchValidators.dateComparisonValidator();
     expect(dateComparisonValidator(formGroup)).toEqual({ datePair: true, errorType: SearchFormErrorType.DATE_COMPARISON });
@@ -149,13 +149,13 @@ describe('SearchValidators', () => {
       [SearchFormControl.DATE_OF_DEATH_YEAR]: ''
     });
 
-    formGroup.get(SearchFormControl.DATE_OF_BIRTH_DAY).setValue(10);
-    formGroup.get(SearchFormControl.DATE_OF_BIRTH_MONTH).setValue(12);
-    formGroup.get(SearchFormControl.DATE_OF_BIRTH_YEAR).setValue(2010);
+    formGroup.get(SearchFormControl.DATE_OF_BIRTH_DAY).setValue('10');
+    formGroup.get(SearchFormControl.DATE_OF_BIRTH_MONTH).setValue('12');
+    formGroup.get(SearchFormControl.DATE_OF_BIRTH_YEAR).setValue('2010');
 
-    formGroup.get(SearchFormControl.DATE_OF_DEATH_DAY).setValue(10);
-    formGroup.get(SearchFormControl.DATE_OF_DEATH_MONTH).setValue(12);
-    formGroup.get(SearchFormControl.DATE_OF_DEATH_YEAR).setValue(2020);
+    formGroup.get(SearchFormControl.DATE_OF_DEATH_DAY).setValue('10');
+    formGroup.get(SearchFormControl.DATE_OF_DEATH_MONTH).setValue('12');
+    formGroup.get(SearchFormControl.DATE_OF_DEATH_YEAR).setValue('2020');
 
     const dateComparisonValidator = SearchValidators.dateComparisonValidator();
     expect(dateComparisonValidator(formGroup)).toBeNull();
@@ -171,13 +171,13 @@ describe('SearchValidators', () => {
       [SearchFormControl.DATE_OF_DEATH_YEAR]: ''
     });
 
-    formGroup.get(SearchFormControl.DATE_OF_BIRTH_DAY).setValue(10);
-    formGroup.get(SearchFormControl.DATE_OF_BIRTH_MONTH).setValue(12);
-    formGroup.get(SearchFormControl.DATE_OF_BIRTH_YEAR).setValue(2010);
+    formGroup.get(SearchFormControl.DATE_OF_BIRTH_DAY).setValue('10');
+    formGroup.get(SearchFormControl.DATE_OF_BIRTH_MONTH).setValue('12');
+    formGroup.get(SearchFormControl.DATE_OF_BIRTH_YEAR).setValue('2010');
 
-    formGroup.get(SearchFormControl.DATE_OF_DEATH_DAY).setValue(10);
-    formGroup.get(SearchFormControl.DATE_OF_DEATH_MONTH).setValue(12);
-    formGroup.get(SearchFormControl.DATE_OF_DEATH_YEAR).setValue(2010);
+    formGroup.get(SearchFormControl.DATE_OF_DEATH_DAY).setValue('10');
+    formGroup.get(SearchFormControl.DATE_OF_DEATH_MONTH).setValue('12');
+    formGroup.get(SearchFormControl.DATE_OF_DEATH_YEAR).setValue('2010');
 
     const dateComparisonValidator = SearchValidators.dateComparisonValidator();
     expect(dateComparisonValidator(formGroup)).toBeNull();

@@ -1,0 +1,23 @@
+<h2 class="govuk-heading-m">
+  Additional instructions
+  <exui-amendment-label *ngIf="showAmmended" [displayLabel]="amendmentLabelEnum.AMENDED">
+  </exui-amendment-label>
+</h2>
+<div class="govuk-summary-list govuk-!-margin-bottom-9">
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Enter any additional instructions for the hearing
+    </div>
+    <div class="govuk-summary-list__value">
+      <span [innerHtml]="additionalInstructions"></span>
+      <exui-amendment-label *ngIf="showAmmended" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="additionalInstruction"
+        class="govuk-link"
+        href="javascript:void(0)"
+        (click)="onChange('additionalInstruction')">Change</a>
+    </div>
+  </div>
+</div>

@@ -2,12 +2,17 @@
   {{ info }}
 </div>
 <div class="govuk-form-group">
-  <table *ngFor="let caseFlags of caseFlagsGroup" class="govuk-table">
+  <table *ngFor="let caseFlags of caseFlagsGroup, let i = index" class="govuk-table">
     <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header govuk-table__header_name">{{ caseFlags.name }}</th>
-      <th scope="col" class="govuk-table__header govuk-table__header_comments">Comments</th>
-      <th scope="col" class="govuk-table__header govuk-table__header_flag-status">Flag status</th>
+      <th scope="col" class="govuk-table__header govuk-table__header_name">
+        {{ caseFlags.name }}
+        <exui-amendment-label id="party-label-{{i}}" *ngIf="caseFlags.partyAmendmentLabelStatus && caseFlags.partyAmendmentLabelStatus !== amendmentLabelStatus.NONE"
+          [displayLabel]="caseFlags.partyAmendmentLabelStatus">
+        </exui-amendment-label>
+      </th>
+      <th scope="col" class="govuk-table__header govuk-table__header_comments">{{ 'Comments' | rpxTranslate }}</th>
+      <th scope="col" class="govuk-table__header govuk-table__header_flag-status">{{ 'Flag status' | rpxTranslate }}</th>
     </tr>
     </thead>
     <tbody class="govuk-table__body">
@@ -15,11 +20,18 @@
       <td class="govuk-table__cell">
         <label>
           {{ partyFlag.displayName }}
+          <!-- If the flag is for interpreter then display the language -->
+          <ng-container *ngIf="showDescription(partyFlag)">
+            <br/>{{ partyFlag.flagDescription }}
+          </ng-container>
+          <exui-amendment-label *ngIf="partyFlag.flagAmendmentLabelStatus && partyFlag.flagAmendmentLabelStatus !== amendmentLabelStatus.NONE"
+            [displayLabel]="partyFlag.flagAmendmentLabelStatus">
+          </exui-amendment-label>
         </label>
       </td>
       <td class="govuk-table__cell">
         <label>
-          {{ partyFlag.flagDescription }}
+          {{ partyFlag.flagComment ? partyFlag.flagComment : partyFlag.flagDescription }}
         </label>
       </td>
       <td class="govuk-table__cell">

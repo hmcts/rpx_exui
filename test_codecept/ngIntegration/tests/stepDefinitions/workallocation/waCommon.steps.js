@@ -1,13 +1,17 @@
 var { defineSupportCode } = require('cucumber');
-
+const fs = require('fs')
+const path = require('path')
+const moment = require('moment');
 const mockClient = require('../../../../backendMock/client/index');
+const mockService = require('../../../../backendMock/client/serviceMock');
+
 const roleAssignmentMock = require('../../../../backendMock/services/roleAssignments/index');
 
 const MockApp = require('../../../../nodeMock/app');
 const nodeAppMock = require('../../../mockData/nodeApp/mockData');
 
 const waMockData = require('../../../mockData/workAllocation/mockData');
-;
+
 const headerPage = require('../../../../e2e/features/pageObjects/headerPage');
 const SoftAssert = require('../../../util/softAssert');
 const CucumberReporter = require('../../../../codeceptCommon/reportLogger');
@@ -97,21 +101,31 @@ async function loginattemptCheckAndRelogin(username, password, world) {
 }
 
 
-    async function mockLoginWithRoles(roles){
-        idamLogin.withCredentials('lukesuperuserxui@mailnesia.com','Monday01')
-
+    async function mockLoginWithRoles(roles, userIdentifier){
+        const testUser = testData.users['aat'].filter(testUser => testUser.userIdentifier === userIdentifier)[0];
+        let loginUser = '';
+        if (userIdentifier){
+            idamLogin.withCredentials(testUser.email, testUser.key)
+            loginUser = testUser.email
+        }else{
+            idamLogin.withCredentials('lukesuperuserxui_new@mailnesia.com', 'Monday01')
+            loginUser = 'lukesuperuserxui_new@mailnesia.com'
+        }
+        
 
         await browser.get('http://localhost:3000/get-help');
-        let userDetails = null;
+  
 
+        let userDetails = null;
+      
         await BrowserWaits.retryWithActionCallback(async () => {
             await idamLogin.do();
             userDetails = idamLogin.userDetailsResponse.details.data;
             const sessionUserName = userDetails.userInfo ? userDetails.userInfo.email : '';
-            if (sessionUserName !== 'lukesuperuserxui@mailnesia.com' ){
+            if (sessionUserName !== loginUser ){
                 throw new Error('session not updated with user, retrying');
             }
-
+            
         })
 
         await BrowserWaits.retryWithActionCallback(async () => {
@@ -240,6 +254,24 @@ async function loginattemptCheckAndRelogin(username, password, world) {
     });
 
 
+     Given('I set MOCK with user details with user identifier {string}', async function (userIdentifier, datatable) {
+        CucumberReporter.reportDatatable(datatable)
+        const rowsHash = datatable.parse().rowsHash()
+         const userDetails = await mockLoginWithRoles(rowsHash.roles.split(','), userIdentifier)
+        const properties = rowsHash;
+        for (const key of Object.keys(properties)) {
+            if(key === 'roles'){
+                userDetails.userInfo[key] = properties[key].split(',').map(v => v.trim())
+            }else{
+                userDetails.userInfo[key] = properties[key]
+            }
+            
+        }
+        const auth = await browser.driver.manage().getCookie('__auth__')
+        await mockClient.updateAuthSessionWithUserInfo(auth.value, userDetails.userInfo);
+    });
+
+
 
     Given('I add roleAssignmentInfo to MOCK user with reference {string}', async function(userDetailsRef, roleAssignments){
         const boolAttributes = ['isCaseAllocator','bookable'];
@@ -319,7 +351,7 @@ async function loginattemptCheckAndRelogin(username, password, world) {
             const roleAssignmentTemplate = roleAssignmentMock.getRoleAssignmentTemplate();
             const roleKeys = Object.keys(roleAssignment);
 
-            const attributeProperties = ['jurisdiction', 'substantive', 'caseType', 'caseId', 'baseLocation', 'primaryLocation','bookable']
+            const attributeProperties = ['jurisdiction', 'substantive', 'caseType', 'caseId', 'baseLocation', 'primaryLocation', 'bookable','specificAccessReason']
 
             for(const attr of roleKeys){
                 const value =  boolAttributes.includes(attr) ? roleAssignment[attr].includes('true') : roleAssignment[attr];
@@ -339,7 +371,7 @@ async function loginattemptCheckAndRelogin(username, password, world) {
 
 
         await BrowserWaits.retryWithActionCallback(async () => {
-            await mockClient.updateAuthSessionWithRoleAssignments(authCookie.value, roleAssignmentArr)
+            await mockClient.updateAuthSessionWithRoleAssignments(authCookie.value, roleAssignmentArr );
 
             const userDetails = await idamLogin.getUserDetails();
             if (!userDetails.roleAssignmentInfo.length >= roleAssignmentArr.length) {
@@ -351,6 +383,38 @@ async function loginattemptCheckAndRelogin(username, password, world) {
         const userDetails = await idamLogin.getUserDetails();
         CucumberReporter.AddJson(userDetails.roleAssignmentInfo);
         await browser.get(await browser.getCurrentUrl());
+
+    });
+
+
+
+    Given('I set MOCK roleAssignments', async function (roleAssignments) {
+        reportLogger.reportDatatable(roleAssignments)
+        const boolAttributes = ['isCaseAllocator','contractType', 'bookable'];
+        const roleAssignmentArr = [];
+        for (const roleAssignment of roleAssignments.parse().hashes()) {
+            const roleAssignmentTemplate = roleAssignmentMock.getRoleAssignmentTemplate();
+            const roleKeys = Object.keys(roleAssignment);
+
+            const attributeProperties = ['jurisdiction', 'substantive', 'caseType', 'caseId', 'baseLocation', 'primaryLocation', 'bookable','notes']
+
+            for(const attr of roleKeys){
+                const value =  boolAttributes.includes(attr) ? roleAssignment[attr].includes('true') : roleAssignment[attr];
+                if (attributeProperties.includes(attr) && value !== ''){
+                    roleAssignmentTemplate.attributes[attr] = value;
+                } else if (attr.includes('beginTime') || attr.includes('endTime') || attr.includes('created')) {
+                    const valInt = parseInt(value)
+                    roleAssignmentTemplate[attr] = valInt >= 0 ? moment().add(valInt, 'days').valueOf() : moment().subtract(valInt*-1, 'days').valueOf()
+                } else{
+                    roleAssignmentTemplate[attr] = value;
+
+                }
+            }
+
+            roleAssignmentArr.push(roleAssignmentTemplate);
+        }
+
+        await mockService.addRoleAssignments(roleAssignmentArr);
 
     });
 
@@ -521,4 +585,33 @@ async function loginattemptCheckAndRelogin(username, password, world) {
         CucumberReporter.AddMessage(`For roles "${roles}" Person of type "${roleCategory} is added"`);
         CucumberReporter.AddJson(person);
     });
+
+
+Given('I set role assignment query response', async function (roleAssignments){
+        reportLogger.reportDatatable(roleAssignments)
+        const boolAttributes = ['isCaseAllocator', 'contractType', 'bookable'];
+        const roleAssignmentArr = [];
+        for (const roleAssignment of roleAssignments.parse().hashes()) {
+
+            const roleAssignmentTemplate = roleAssignmentMock.getRoleAssignmentTemplate();
+            const roleKeys = Object.keys(roleAssignment);
+
+            const attributeProperties = ['jurisdiction', 'substantive', 'caseType', 'caseId', 'baseLocation', 'primaryLocation', 'bookable','specificAccessReason']
+
+            for (const attr of roleKeys) {
+                const value = boolAttributes.includes(attr) ? roleAssignment[attr].includes('true') : roleAssignment[attr];
+                if (attributeProperties.includes(attr) && value !== '') {
+                    roleAssignmentTemplate.attributes[attr] = value;
+                } else {
+                    roleAssignmentTemplate[attr] = value;
+
+                }
+            }
+
+            roleAssignmentArr.push(roleAssignmentTemplate);
+        }
+
+    await mockService.setRoleAssignmentsQuery({ roleAssignmentResponse: roleAssignmentArr },200)
+
+    })
 

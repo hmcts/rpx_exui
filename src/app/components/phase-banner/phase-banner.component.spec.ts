@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RpxTranslationService } from 'rpx-xui-translation';
-import { SessionStorageService } from 'src/app/services';
+import { SessionStorageService } from './../../../app/services';
 import { PhaseBannerComponent } from './phase-banner.component';
 
 const mockSessionStorageService = {
@@ -63,5 +63,11 @@ describe('PhaseBannerComponent', () => {
   it('should change the language', () => {
     component.toggleLanguage('en');
     expect(component.currentLang).toBe('en');
+  });
+
+  it('should close banner', () => {
+    component.closeBanner();
+    expect(component.noBanner).toEqual(false);
+    expect(mockSessionStorageService.setItem).toHaveBeenCalled();
   });
 });

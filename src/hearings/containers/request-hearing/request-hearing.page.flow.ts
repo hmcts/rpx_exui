@@ -1,4 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
+import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { HearingConditions } from '../../models/hearingConditions';
@@ -15,10 +16,12 @@ export abstract class RequestHearingPageFlow {
   public hearingListMainModel: HearingListMainModel;
   public serviceHearingValuesModel: ServiceHearingValuesModel;
   public hearingRequestMainModel: HearingRequestMainModel;
+  public hearingRequestToCompareMainModel: HearingRequestMainModel;
   public hearingCondition: HearingConditions;
 
   public constructor(protected readonly hearingStore: Store<fromHearingStore.State>,
                      protected readonly hearingsService: HearingsService,
+                     protected readonly featureToggleService: FeatureToggleService,
                      protected readonly route?: ActivatedRoute) {
     this.navigationSub = this.hearingsService.navigateAction$.subscribe(
       (action: ACTION) => this.executeAction(action)
@@ -26,8 +29,9 @@ export abstract class RequestHearingPageFlow {
     this.hearingStateSub = this.hearingStore.pipe(select(fromHearingStore.getHearingsFeatureState)).subscribe(
       (hearingState) => {
         this.hearingListMainModel = hearingState.hearingList.hearingListMainModel;
-        this.serviceHearingValuesModel = hearingState.hearingValues.serviceHearingValuesModel;
-        this.hearingRequestMainModel = hearingState.hearingRequest.hearingRequestMainModel;
+        this.serviceHearingValuesModel = { ...hearingState.hearingValues.serviceHearingValuesModel };
+        this.hearingRequestMainModel = { ...hearingState.hearingRequest.hearingRequestMainModel };
+        this.hearingRequestToCompareMainModel = { ...hearingState.hearingRequestToCompare.hearingRequestMainModel };
         this.hearingCondition = hearingState.hearingConditions;
       });
   }
@@ -65,12 +69,8 @@ export abstract class RequestHearingPageFlow {
   }
 
   public unsubscribe(): void {
-    if (this.navigationSub) {
-      this.navigationSub.unsubscribe();
-    }
-    if (this.hearingStateSub) {
-      this.hearingStateSub.unsubscribe();
-    }
+    this.navigationSub?.unsubscribe();
+    this.hearingStateSub?.unsubscribe();
   }
 
   protected abstract executeAction(action: ACTION): void;

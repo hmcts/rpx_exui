@@ -5,7 +5,7 @@ Button = require('../features/pageObjects/webdriver-components/button.js');
 
 class CcdApi {
   constructor() {
-    this.userName = 'lukesuperuserxui@mailnesia.com';
+    this.userName = 'lukesuperuserxui_new@mailnesia.com';
     this.password = 'Monday01';
   }
 

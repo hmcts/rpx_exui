@@ -3,18 +3,17 @@
     <ng-container *xuilibFeatureToggle="'welsh-language'">
       <a href="javascript:void(0)" (click)="toggleLanguage(currentLang == 'cy' ? 'en' : currentLang == 'en' ? 'cy' : 'en')" class="language">{{currentLang == 'cy' ? 'English' : currentLang == 'en' ? 'Cymraeg' : 'English' }}</a>
     </ng-container>
-
-    <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag ">
-              {{type}}
-          </strong>
-          <span class="govuk-phase-banner__text">
-              {{'This is a new service – your' | rpxTranslate }}
-              <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/CCDSurvey/" target="_blank" rel="noopener noreferrer">
-                {{'feedback' | rpxTranslate }}<span class="visuallyhidden">{{'(Opens in a new window)' | rpxTranslate }}</span>
-              </a>
-              {{'will help us to improve it.' | rpxTranslate }}
-          </span>
-      </p>
+    <p class="govuk-phase-banner__content">
+      <strong class="govuk-tag govuk-phase-banner__content__tag ">
+        {{type}}
+      </strong>
+      <span class="govuk-phase-banner__text">
+        {{'This is a new service' | rpxTranslate}} - {{'your' | rpxTranslate}}
+        <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/CCDSurvey/" target="_blank" rel="noopener noreferrer">{{'feedback' | rpxTranslate}}<span class="visuallyhidden">{{'(Opens in a new window)' | rpxTranslate}}</span>
+        </a>
+        {{'will help us to improve it.' | rpxTranslate}}
+      </span>
+    </p>
   </div>
 
   <div *ngIf="noBanner" class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -25,7 +24,7 @@
       </h2>
     </div>
     <div class="govuk-notification-banner__content">
-      Nid yw rhai sgriniau yn y gwasanaeth hwn wedi’u cyfieithu i’r Gymraeg eto ac maent ar hyn o bryd yn cynnwys testun Saesneg.
+      Nid yw rhai sgriniau yn y gwasanaeth hwn wedi'u cyfieithu i'r Gymraeg eto ac maent ar hyn o bryd yn cynnwys testun Saesneg.
     </div>
   </div>
 

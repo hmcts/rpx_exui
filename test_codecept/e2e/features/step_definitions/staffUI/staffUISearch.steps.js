@@ -68,7 +68,9 @@ Then('I validate advanced search in Staff UI', async function (tabLabel, boolStr
         "Skill":'',
         "Roles":['Case Allocator']
     }
-    await staffSearchPage.performAdvancedSearch(inputs);
+    await BrowserWaits.retryWithActionCallback(async () => {
+        await staffSearchPage.performAdvancedSearch(inputs);
+    })
 });
 
 
@@ -87,7 +89,7 @@ Then('I validate staff user details display', async function(){
     })
    
     const userDetails = await staffUserDetailsPage.getUserDetails();
-    expect(userDetails['Name']).to.equal(username);
+    expect(userDetails['Name'].trim()).to.equal(username.trim());
 
     const rows = Object.keys(userDetails);
     [

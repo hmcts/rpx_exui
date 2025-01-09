@@ -58,7 +58,10 @@ const caseManager = new CaseManager()
     When('I click on primary navigation header tab {string}, I see selected tab page displayed', async function (headerTabLabel) {
         await browserWaits.retryWithActionCallback(async () => {
             try{
+                // await headerPage.clickPrimaryNavigationWithLabel(headerTabLabel);
+                // await browserWaits.waitForSeconds(2)
                 await headerPage.clickPrimaryNavigationWithLabel(headerTabLabel);
+
                 await browserWaits.retryWithActionCallback(async () => {
                     expect(await headerPage.isPrimaryTabPageDisplayed(headerTabLabel)).to.be.true
                 })

@@ -1,0 +1,79 @@
+<h2 class="govuk-heading-m">
+  Length, date and priority level of hearing
+  <exui-amendment-label id="hearing-window-action-needed-label" *ngIf="showActionNeededLabelForPageTitle"
+    [displayLabel]="amendmentLabelEnum.ACTION_NEEDED">
+  </exui-amendment-label>
+  <exui-amendment-label id="hearing-window-amended-label" *ngIf="showAmendedLabelForPageTitle"
+    [displayLabel]="amendmentLabelEnum.AMENDED">
+  </exui-amendment-label>
+</h2>
+<div class="govuk-summary-list govuk-!-margin-bottom-9">
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Length of hearing
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ hearingLength }}
+      <exui-amendment-label *ngIf="hearingLengthChanged" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="hearingLength"
+        class="govuk-link"
+        href="javascript:void(0)"
+        (click)="onChange('hearingLength')">Change</a>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Does the hearing need to take place on a specific date?
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ specificDateSelection }}
+      <exui-amendment-label *ngIf="hearingDateChanged || (hearingDateChanged && specificDateSelection === radioOptions.NO)"
+        [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+      <div *ngIf="specificDateSelection === radioOptions.CHOOSE_DATE_RANGE">
+        <div *ngIf="earliestHearingDate.length > 0">
+          Earliest start date: {{ earliestHearingDate }}
+        <exui-amendment-label *ngIf="dateRangeStartChanged" [displayLabel]="amendmentLabelEnum.AMENDED">
+        </exui-amendment-label>
+        </div>
+        <div *ngIf="latestHearingDate.length > 0">
+          Latest end date: {{ latestHearingDate }}
+
+        <exui-amendment-label *ngIf="dateRangeEndChanged" [displayLabel]="amendmentLabelEnum.AMENDED">
+        </exui-amendment-label>
+        </div>
+      </div>
+      <div *ngIf="specificDateSelection === radioOptions.YES">
+        <dt class="heading-h3 bottom-0">The first date of the hearing must be</dt>
+        {{ firstHearingDate }}
+        <exui-amendment-label *ngIf="firstDateTimeMustBeChanged" [displayLabel]="amendmentLabelEnum.AMENDED">
+        </exui-amendment-label>
+      </div>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="hearingSpecificDate"
+        class="govuk-link"
+        href="javascript:void(0)"
+        (click)="onChange('hearingSpecificDate')">Change</a>
+    </div>
+  </div>
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      What is the priority of this hearing?
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ hearingPriority }}
+      <exui-amendment-label *ngIf="hearingPriorityChanged" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="hearingPriority"
+        class="govuk-link"
+        href="javascript:void(0)"
+        (click)="onChange('hearingPriority')">Change</a>
+    </div>
+  </div>
+</div>

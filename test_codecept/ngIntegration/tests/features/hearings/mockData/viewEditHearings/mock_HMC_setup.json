@@ -1,0 +1,196 @@
+{
+    "requestDetails": {
+        "status": "LISTED",
+        "timestamp": "2023-11-06T14:01:32.836316",
+        "versionNumber": 1,
+        "hearingRequestID": "2000007311"
+    },
+    "hearingDetails": {
+        "hearingType": "ABA5-ABC",
+        "hearingWindow": {
+            "firstDateTimeMustBe": "2024-12-17T00:00:00"
+        },
+        "duration": 120,
+        "hearingPriorityType": "Standard",
+        "numberOfPhysicalAttendees": 0,
+        "hearingInWelshFlag": false,
+        "hearingLocations": [
+            {
+                "locationType": "court",
+                "locationId": "20030"
+            }
+        ],
+        "privateHearingRequiredFlag": false,
+        "panelRequirements": {
+            "roleType": [
+                "19",
+                "30"
+            ],
+            "authorisationTypes": [],
+            "authorisationSubType": [],
+            "panelPreferences": [],
+            "panelSpecialisms": []
+        },
+        "hearingIsLinkedFlag": false,
+        "hearingChannels": [
+            "INTER",
+            "VID"
+        ],
+        "autolistFlag": false
+    },
+    "caseDetails": {
+        "hmctsServiceCode": "ABA5",
+        "caseRef": "1698398901677065",
+        "caseDeepLink": "https://manage-case-hearings-int.demo.platform.hmcts.net/cases/case-details/1698398901677065#Case File View",
+        "hmctsInternalCaseName": "1234567812345678",
+        "publicCaseName": "Mock case public name",
+        "caseAdditionalSecurityFlag": false,
+        "caseInterpreterRequiredFlag": false,
+        "caseCategories": [
+            {
+                "categoryType": "caseType",
+                "categoryValue": "ABA5-PRL"
+            },
+            {
+                "categoryType": "caseSubType",
+                "categoryValue": "ABA5-PRL",
+                "categoryParent": "ABA5-PRL"
+            }
+        ],
+        "caseManagementLocationCode": "827534",
+        "caserestrictedFlag": false,
+        "caseSLAStartDate": "2023-10-27"
+    },
+    "partyDetails": [
+        {
+            "partyID": "1234-uytr-7654-asdf-0001",
+            "partyType": "IND",
+            "partyName": "Party1 name",
+            "partyRole": "APPL",
+            "unavailabilityRanges": {
+                "unavailableFromDate": "2024-08-01T10:00:00",
+                "unavailableToDate": "2024-08-10T10:00:00",
+                "unavailabilityType": "All Day"
+            },
+            "individualDetails": {
+                "firstName": "Party1 name FN",
+                "lastName": "Party1 name LN",
+                "interpreterLanguage": "",
+                "reasonableAdjustments": [
+                    "RA001"
+                ],
+                "vulnerableFlag": false,
+                "vulnerabilityDetails": "",
+                "hearingChannelEmail": [
+                    "applicant@test.com"
+                ],
+                "hearingChannelPhone": [
+                    "1234567890"
+                ],
+                "preferredHearingChannel": "INTER",
+                "relatedParties": [
+                    {
+                        "relationshipType": "mock relationship",
+                        "relatedPartyID": "1234-uytr-7654-asdf-0001",
+                        "relatedPartyType": "IND",
+                        "relatedPartyName": "Related Party1 name",
+                        "relatedPartyRole": "APPL",
+                        "individualDetails": {
+                            "firstName": "Realted party First Applicant FN updated",
+                            "lastName": "Related party First Applicant LN updated",
+                            "interpreterLanguage": ""
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "partyID": "1234-uytr-7654-asdf-0002",
+            "partyType": "IND",
+            "partyName": "Party2 name",
+            "partyRole": "APPL",
+            "unavailabilityRanges": {
+                "unavailableFromDate": "2024-08-02T10:00:00",
+                "unavailableToDate": "2024-08-12T10:00:00",
+                "unavailabilityType": "All Day"
+            },
+            "individualDetails": {
+                "firstName": "Party2 name FN",
+                "lastName": "Party2 name LN",
+                "interpreterLanguage": "",
+                "reasonableAdjustments": [
+                    "RA001"
+                ],
+                "vulnerableFlag": false,
+                "vulnerabilityDetails": "",
+                "hearingChannelEmail": [
+                    "applicant@test.com"
+                ],
+                "hearingChannelPhone": [
+                    "1234567890"
+                ],
+                "preferredHearingChannel": "INTER",
+                "relatedParties": [
+                    {
+                        "relationshipType": "mock relationship",
+                        "relatedPartyID": "1234-uytr-7654-asdf-0002",
+                        "relatedPartyType": "IND",
+                        "relatedPartyName": "Related Party2 name",
+                        "relatedPartyRole": "APPL",
+                        "individualDetails": {
+                            "firstName": "Realted party First Applicant FN updated",
+                            "lastName": "Related party First Applicant LN updated",
+                            "interpreterLanguage": ""
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "partyID": "1234-uytr-7654-asdf-0003",
+            "partyType": "ORG",
+            "partyName": "party3 org name",
+            "partyRole": "APPL",
+            "organisationDetails": {
+                "name": "party3 org name",
+                "organisationType": "ORG",
+                "cftOrganisationID": "ECKZ4BE"
+            }
+        }
+    ],
+    "hearingResponse": {
+        "hearingDaySchedule": [
+            {
+                "hearingStartDateTime": "2024-02-13T10:00:00",
+                "hearingEndDateTime": "2024-02-13T12:00:00",
+                "hearingVenueId": "827534",
+                "hearingRoomId": "Aberystwyth Courtroom 01",
+                "hearingJudgeId": "",
+                "panelMemberIds": [],
+                "attendees": [
+                    {
+                        "hearingSubChannel": "INTER",
+                        "partyID": "c13fd753-043c-4c62-a85c-0e45796714cb"
+                    },
+                    {
+                        "hearingSubChannel": "INTER",
+                        "partyID": "afd259b3-066c-43f4-8c7a-823bef896803"
+                    },
+                    {
+                        "hearingSubChannel": "INTER",
+                        "partyID": "a59233cf-8535-4551-bab7-3a5aeb3416c7"
+                    },
+                    {
+                        "hearingSubChannel": null,
+                        "partyID": "74cd4c05-ca05-41f6-a215-98150714e31f"
+                    }
+                ],
+                "listAssistSessionID": null
+            }
+        ],
+        "laCaseStatus": "LISTED",
+        "listingStatus": "FIXED",
+        "receivedDateTime": "2023-11-06T15:10:01",
+        "requestVersion": 1
+    }
+}

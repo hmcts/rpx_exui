@@ -22,7 +22,7 @@ describe('ChooseDurationComponent', () => {
     assignmentId: 'a123456',
     state: AllocateRoleState.CHOOSE_ALLOCATE_TO,
     typeOfRole: { id: 'lead-judge', name: 'Lead judge' },
-    allocateTo: AllocateTo.RESERVE_TO_ME,
+    allocateTo: AllocateTo.ALLOCATE_TO_ME,
     personToBeRemoved: {
       id: 'p111111',
       name: 'test1',

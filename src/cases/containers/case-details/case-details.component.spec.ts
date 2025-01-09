@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs/internal/observable/of';
+import { of } from 'rxjs';
 import { CaseDetailsComponent } from './case-details.component';
 
 describe('CaseDetailsComponent', () => {

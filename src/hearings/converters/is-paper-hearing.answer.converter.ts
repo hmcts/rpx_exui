@@ -7,7 +7,16 @@ import { AnswerConverter } from './answer.converter';
 export class IsPaperHearingAnswerConverter implements AnswerConverter {
   public transformAnswer(hearingState$: Observable<State>): Observable<string> {
     return hearingState$.pipe(
-      map((state) => state.hearingRequest.hearingRequestMainModel.hearingDetails.hearingChannels.includes(HearingChannelEnum.ONPPR) ? 'Yes' : 'No')
+      map((state) => {
+        const hearingChannels = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.hearingDetails.hearingChannels
+          : state.hearingRequest.hearingRequestMainModel.hearingDetails.hearingChannels;
+
+        return (hearingChannels.includes(HearingChannelEnum.ONPPR)
+          || !!state.hearingRequest.hearingRequestMainModel.hearingDetails.isPaperHearing)
+          ? 'Yes' : 'No';
+      })
     );
   }
 }
+

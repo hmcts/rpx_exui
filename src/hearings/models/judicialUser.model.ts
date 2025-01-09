@@ -1,12 +1,14 @@
 export interface JudicialUserModel {
-  emailId: string;
-  fullName: string;
-  idamId: string;
-  isJudge: string;
-  isMagistrate: string;
-  isPanelMember: string;
-  knownAs: string;
-  personalCode: string;
-  surname: string;
   title: string;
+  knownAs: string;
+  surname: string;
+  fullName: string;
+  emailId: string;
+  idamId: string;
+  initials: string;
+  postNominals: string;
+  personalCode: string;
+  isJudge?: string;
+  isMagistrate?: string;
+  isPanelMember?: string;
 }

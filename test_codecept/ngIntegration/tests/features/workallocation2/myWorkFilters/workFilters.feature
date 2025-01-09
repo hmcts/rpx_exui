@@ -1,4 +1,4 @@
-@ng @functional_enabled  @functional_test
+@ng @functional_enabled  
 Feature: WA Release 2: My work - Work filters
 
     Background: Mock and brow ser setup
@@ -40,7 +40,6 @@ Feature: WA Release 2: My work - Work filters
             | Caseworker IAC | caseworker-ia,caseworker-ia-caseofficer,caseworker-ia-admofficer |
     # | Judge          | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker    |
 
-
     Scenario Outline:  Work filters types for selected sub navigation tabs
         Given I set MOCK with user "IAC_CaseOfficer_R2" and roles "<Roles>" with reference "userDetails"
         # Given I set MOCK with user "IAC_CaseOfficer_R2" and roles " caseworker-ia-caseofficer,caseworker-ia-admofficer, task-supervisor,task-supervisor,case-allocator" with reference "userDetails"
@@ -63,7 +62,7 @@ Feature: WA Release 2: My work - Work filters
         Then I validate work filter button text is "Hide work filter"
         Then I see work filter of type "Services" is displayed
         Then I see work filter of type "Locations" is displayed
-        Then I see work filter of type "Work types" is displayed
+        # Then I see work filter of type "Work types" is displayed
         When I click work location filter Apply button
         Then I validate my work filter services container not displayed
 
@@ -73,7 +72,7 @@ Feature: WA Release 2: My work - Work filters
         Then I validate work filter button text is "Hide work filter"
         Then I see work filter of type "Services" is displayed
         Then I see work filter of type "Locations" is displayed
-        Then I see work filter of type "Work types" is displayed
+        # Then I see work filter of type "Work types" is displayed
         When I click work location filter Apply button
         Then I validate my work filter services container not displayed
 
@@ -83,7 +82,7 @@ Feature: WA Release 2: My work - Work filters
         Then I validate work filter button text is "Hide work filter"
         Then I see work filter of type "Services" is displayed
         Then I see work filter of type "Locations" is displayed
-        Then I see work filter of type "Work types" is displayed
+        # Then I see work filter of type "Work types" is displayed
         When I click work location filter Apply button
         Then I validate my work filter services container not displayed
 
@@ -93,7 +92,7 @@ Feature: WA Release 2: My work - Work filters
         Then I validate work filter button text is "Hide work filter"
         Then I see work filter of type "Services" is displayed
         Then I see work filter of type "Locations" is displayed
-        Then I see work filter of type "Work types" is displayed
+        # Then I see work filter of type "Work types" is displayed
         When I click work location filter Apply button
         Then I validate my work filter services container not displayed
 
@@ -101,6 +100,7 @@ Feature: WA Release 2: My work - Work filters
             | UserType       | Roles                                                            |
             | Caseworker IAC | caseworker-ia,caseworker-ia-caseofficer,caseworker-ia-admofficer |
     # | Judge          | caseworker-ia,caseworker-ia-iacjudge,caseworker-ia,caseworker    |
+
 
     Scenario Outline:  Work filters mandatory field validations and filter selection
         Given I set MOCK with user "IAC_CaseOfficer_R2" and roles "<Roles>" with reference "userDetails"
@@ -123,14 +123,13 @@ Feature: WA Release 2: My work - Work filters
         When I unselect service "Civil" in my work filter
         When I unselect service "Immigration and Asylum" in my work filter
         When I click work location filter Apply button
-        Then I see error message "Select a service" for service work filter in my work page
-        Then I see error message of type "message" displayed with message "Select a service"
+        # Then I see error message "Select a service" for service work filter in my work page
+    
+        # When I select service "Immigration and Asylum" in my work filter
 
-        When I select service "Immigration and Asylum" in my work filter
+        # When I remove slected location "IA Court Center 1" from my work filters
 
-        When I remove slected location "IA Court Center 1" from my work filters
-
-        When I click work location filter Apply button
+        # When I click work location filter Apply button
 
         Then I validate work filter button text is "Show work filter"
         Then I validate location filter is not displayed

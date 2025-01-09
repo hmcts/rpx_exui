@@ -10,6 +10,7 @@ import { StaffFilterOption } from '../../../models/staff-filter-option.model';
 import { StaffUser } from '../../../models/staff-user.model';
 import { StaffAddEditFormService } from '../../../services/staff-add-edit-form/staff-add-edit-form.service';
 import { StaffDataAccessService } from '../../../services/staff-data-access/staff-data-access.service';
+import { ResponseErrorMessage } from '../../../../app/models/error-message.model';
 
 @Component({
   selector: 'exui-staff-user-check-answers',
@@ -28,6 +29,7 @@ export class StaffUserCheckAnswersComponent implements OnInit {
 
   public isLoading = false;
   public isUpdateMode = false;
+  public errMsg: ResponseErrorMessage;
 
   constructor(
     private router: Router,
@@ -65,8 +67,17 @@ export class StaffUserCheckAnswersComponent implements OnInit {
         type: InfoMessageType.SUCCESS
       } as InformationMessage);
       this.router.navigateByUrl('/staff', { state: { retainMessages: true } });
-    }, () => {
-      this.router.navigateByUrl('/service-down');
+    }, (err) => {
+      if (!err?.error?.errorDescription) {
+        this.errMsg = { error: { errorDescription: 'Your user creation request could not be processed' } };
+      }
+
+      if (err && err?.status === 400) {
+        this.errMsg = err;
+        window.scrollTo(0, 0);
+      } else {
+        this.router.navigateByUrl('/service-down');
+      }
     });
   }
 

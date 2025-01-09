@@ -99,7 +99,9 @@ var { defineSupportCode } = require('cucumber');
 
     Then('Validate check your answer summery page', async function () {
         let data = await caseManager._appendFormPageValues("", "", "caseEditPage");
-        await caseEditPage.validateCheckYouranswerPage(data);
+        await BrowserWaits.retryWithActionCallback(async () => {
+            await caseEditPage.validateCheckYouranswerPage(data);
+        })
     });
 
     Then('Validate mandatory fields functionality', async function(){

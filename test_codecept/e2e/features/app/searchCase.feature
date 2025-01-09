@@ -18,7 +18,7 @@ Feature: search criteria workflow
 
     Examples:
       | Jurisdiction   | CaseType           |
-      | Family Divorce | XUI Test Case type |
+      | Family Divorce | XUI Test Case type dev |
 
 
 
@@ -33,4 +33,4 @@ Feature: search criteria workflow
 
     Examples:
       | Jurisdiction   | CaseType           |
-      | Family Divorce | XUI Test Case type |
+      | Family Divorce | XUI Test Case type dev |

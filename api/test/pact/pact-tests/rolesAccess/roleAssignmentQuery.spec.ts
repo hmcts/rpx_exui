@@ -34,8 +34,8 @@ describe('access management service, query role assignments', () => {
   const RESPONSE_BODY = {
     'roleAssignmentResponse': []
   };
-  for (const role of []) {
-    const roleAssognmentRole = {
+  for (const role of roles) {
+    const roleAssignmentRole = {
       'id': somethingLike('23a234567-eb80-4681-b62c-6ae2ed069a5g'),
       'actorId': somethingLike('14a21569-eb80-4681-b62c-6ae2ed069e5f'),
       'roleCategory': somethingLike('LEGAL_OPERATIONS'),
@@ -43,10 +43,10 @@ describe('access management service, query role assignments', () => {
       'beginTime': term(DateTimeMatcher('2022-01-11T00:00:00Z')),
       'endTime': term(DateTimeMatcher('2022-01-11T00:00:00Z'))
     };
-    roleAssognmentRole.roleName = somethingLike(role.roleName);
-    roleAssognmentRole.roleCategory = somethingLike(role.roleCategory);
-
-    RESPONSE_BODY.roleAssignmentResponse.push(roleAssognmentRole);
+    roleAssignmentRole.roleName = somethingLike(role.roleName);
+    roleAssignmentRole.roleCategory = somethingLike(role.roleCategory);
+    // @ts-ignore
+    RESPONSE_BODY.roleAssignmentResponse.push(roleAssignmentRole);
   }
 
   describe('post /am/role-assignments/query', () => {
@@ -87,6 +87,7 @@ describe('access management service, query role assignments', () => {
         dummyRole.name = role.roleName;
         dummyRole.category = role.roleCategory;
         dummyRole.label = role.displayName;
+        // @ts-ignore
         rolesResponseBody.push(dummyRole);
       }
 
@@ -151,12 +152,10 @@ describe('access management service, query role assignments', () => {
 
       try {
         await getRolesByCaseId(req, response, next);
-
         assertResponses(returnedResponse);
         pactSetUp.provider.verify();
         pactSetUp.provider.finalize();
       } catch (err) {
-        console.log(err.stack);
         pactSetUp.provider.verify();
         pactSetUp.provider.finalize();
         throw new Error(err);
@@ -166,8 +165,7 @@ describe('access management service, query role assignments', () => {
 });
 
 function assertResponses(dto: any) {
-  console.log(JSON.stringify(dto));
-  expect(dto.length).to.be.equal(0);
+  expect(dto.length).to.be.equal(3);
 }
 
 function getDummyCaseRole() {

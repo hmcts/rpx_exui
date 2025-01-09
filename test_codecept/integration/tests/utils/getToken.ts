@@ -15,7 +15,7 @@ export async function getAuthCode() {
 
   // let encode = base64.encode((process.env.TEST_EMAIL + ':' + process.env.TEST_PASSWORD))
   // const encode = base64.encode(('autotest_superuser@mailinator.com:Monday01'));
-  const encode = Buffer.from('lukesuperuserxui@mailnesia.com:Monday01').toString('base64');
+  const encode = Buffer.from('lukesuperuserxui_new@mailnesia.com:Monday01').toString('base64');
   const otherParam = {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',

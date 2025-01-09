@@ -1,24 +1,21 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlertService, LoadingService, PaginationModule } from '@hmcts/ccd-case-ui-toolkit';
-import { ExuiCommonLibModule, FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
+import { ExuiCommonLibModule } from '@hmcts/rpx-xui-common-lib';
 import { Store, StoreModule } from '@ngrx/store';
 import { of, throwError } from 'rxjs';
 import { TaskListComponent } from '..';
-import { AppConstants } from '../../../app/app.constants';
 import { SessionStorageService } from '../../../app/services';
 import * as fromActions from '../../../app/store';
 import { CaseRoleDetails } from '../../../role-access/models';
 import { AllocateRoleService } from '../../../role-access/services';
 import { TaskContext } from '../../../work-allocation/enums';
 import { WorkAllocationComponentsModule } from '../../components/work-allocation.components.module';
-import { FieldConfig } from '../../models/common';
 import { Task } from '../../models/tasks';
-import { CaseworkerDataService, LocationDataService, WASupportedJurisdictionsService, WorkAllocationFeatureService, WorkAllocationTaskService } from '../../services';
-import { CheckReleaseVersionService } from '../../services/check-release-version.service';
+import { CaseworkerDataService, LocationDataService, WASupportedJurisdictionsService, WorkAllocationTaskService } from '../../services';
 import { getMockCaseRoles, getMockTasks } from '../../tests/utils.spec';
 import { AllWorkTaskComponent } from './all-work-task.component';
 
@@ -33,14 +30,6 @@ class WrapperComponent {
   template: '<div>Nothing</div>'
 })
 class NothingComponent { }
-@Component({
-  selector: 'exui-task-field',
-  template: '<div class="xui-task-field">{{task.taskName}}</div>'
-})
-class TaskFieldComponent {
-  @Input() public config: FieldConfig;
-  @Input() public task: Task;
-}
 const USER_DETAILS = {
   canShareCases: true,
   userInfo: {
@@ -63,26 +52,16 @@ xdescribe('AllWorkTaskComponent', () => {
   let component: AllWorkTaskComponent;
   let wrapper: WrapperComponent;
   let fixture: ComponentFixture<WrapperComponent>;
-  let router: Router;
   const mockTaskService = jasmine.createSpyObj('mockTaskService', ['searchTask']);
   const mockAlertService = jasmine.createSpyObj('mockAlertService', ['destroy']);
   const mockSessionStorageService = jasmine.createSpyObj('mockSessionStorageService', ['getItem', 'setItem']);
   const mockCaseworkerService = jasmine.createSpyObj('mockCaseworkerService', ['getAll']);
-  const mockFeatureService = jasmine.createSpyObj('mockFeatureService', ['getActiveWAFeature']);
   const mockLoadingService = jasmine.createSpyObj('mockLoadingService', ['register', 'unregister']);
-  const mockFeatureToggleService = jasmine.createSpyObj('mockLoadingService', ['isEnabled', 'getValue']);
   const mockLocationService = jasmine.createSpyObj('mockLocationService', ['getLocations']);
   const mockWASupportedJurisdictionService = jasmine.createSpyObj('mockWASupportedJurisdictionService', ['getWASupportedJurisdictions']);
   const mockRoleService = jasmine.createSpyObj('mockRolesService', ['getCaseRolesUserDetails']);
-  const mockCheckReleaseVersionService = {
-    isRelease4: () => {
-      return {
-        subscribe: () => true
-      };
-    }
-  };
+
   let storeMock: jasmine.SpyObj<Store<fromActions.State>>;
-  let store: Store<fromActions.State>;
   beforeEach(waitForAsync(() => {
     storeMock = jasmine.createSpyObj('store', ['dispatch', 'pipe']);
     storeMock.pipe.and.returnValue(of(USER_DETAILS));
@@ -101,64 +80,24 @@ xdescribe('AllWorkTaskComponent', () => {
         { provide: AlertService, useValue: mockAlertService },
         { provide: SessionStorageService, useValue: mockSessionStorageService },
         { provide: CaseworkerDataService, useValue: mockCaseworkerService },
-        { provide: WorkAllocationFeatureService, useValue: mockFeatureService },
         { provide: LoadingService, useValue: mockLoadingService },
-        { provide: FeatureToggleService, useValue: mockFeatureToggleService },
         { provide: LocationDataService, useValue: mockLocationService },
         { provide: WASupportedJurisdictionsService, useValue: mockWASupportedJurisdictionService },
         { provide: AllocateRoleService, useValue: mockRoleService },
-        { provide: Store, useValue: storeMock },
-        { provide: CheckReleaseVersionService, useValue: mockCheckReleaseVersionService }
+        { provide: Store, useValue: storeMock }
       ]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WrapperComponent);
-    store = TestBed.inject(Store);
     wrapper = fixture.componentInstance;
     component = wrapper.appComponentRef;
-    router = TestBed.inject(Router);
     const tasks: Task[] = getMockTasks();
     const caseRoles: CaseRoleDetails[] = getMockCaseRoles();
     mockTaskService.searchTask.and.returnValue(of({ tasks }));
     mockRoleService.getCaseRolesUserDetails.and.returnValue(of(caseRoles));
     mockCaseworkerService.getAll.and.returnValue(of([]));
-    mockFeatureService.getActiveWAFeature.and.returnValue(of('WorkAllocationRelease2'));
-    mockFeatureToggleService.isEnabled.and.callFake(() => of(false));
-    mockFeatureToggleService.getValue.and.callFake((params) => {
-      if (params === AppConstants.FEATURE_NAMES.waServiceConfig) {
-        return of({
-          configurations: [
-            {
-              caseTypes: [
-                'Asylum'
-              ],
-              releaseVersion: '3.5',
-              serviceName: 'IA'
-            },
-            {
-              caseTypes: [
-                'PRIVATELAW',
-                'PRLAPPS'
-              ],
-              releaseVersion: '2.1',
-              serviceName: 'PRIVATELAW'
-            },
-            {
-              caseTypes: [
-                'CIVIL',
-                'GENERALAPPLICATION'
-              ],
-              releaseVersion: '2.1',
-              serviceName: 'CIVIL'
-            }
-          ]
-        });
-      }
-
-      return of(true);
-    });
     component.locations = [{ id: 'loc123', locationName: 'Test', services: [] }];
     mockLocationService.getLocations.and.returnValue(of([{ id: 'loc123', locationName: 'Test', services: [] }]));
     mockWASupportedJurisdictionService.getWASupportedJurisdictions.and.returnValue(of(['IA']));
@@ -242,14 +181,11 @@ xdescribe('AllWorkTaskComponent', () => {
     const mockAlertService = jasmine.createSpyObj('mockAlertService', ['destroy']);
     const mockSessionStorageService = jasmine.createSpyObj('mockSessionStorageService', ['getItem', 'setItem']);
     const mockCaseworkerService = jasmine.createSpyObj('mockCaseworkerService', ['getAll']);
-    const mockFeatureService = jasmine.createSpyObj('mockFeatureService', ['getActiveWAFeature']);
     const mockLoadingService = jasmine.createSpyObj('mockLoadingService', ['register', 'unregister']);
-    const mockFeatureToggleService = jasmine.createSpyObj('mockFeatureToggleService', ['isEnabled', 'getValue']);
 
     const mockLocationService = jasmine.createSpyObj('mockLocationService', ['getLocations']);
     const mockWASupportedJurisdictionService = jasmine.createSpyObj('mockWASupportedJurisdictionService', ['getWASupportedJurisdictions']);
     let storeMock: jasmine.SpyObj<Store<fromActions.State>>;
-    let store: Store<fromActions.State>;
     beforeEach(waitForAsync(() => {
       storeMock = jasmine.createSpyObj('store', ['dispatch', 'pipe']);
       storeMock.pipe.and.returnValue(of(USER_DETAILS));
@@ -257,41 +193,6 @@ xdescribe('AllWorkTaskComponent', () => {
       mockTaskService.searchTask.and.returnValue(throwError({ status: scr.statusCode }));
       // mockTaskService.searchTaskWithPagination.and.returnValue(of(throwError({ status: 500 })));
       mockCaseworkerService.getAll.and.returnValue(of([]));
-      mockFeatureService.getActiveWAFeature.and.returnValue(of('WorkAllocationRelease2'));
-      mockFeatureToggleService.isEnabled.and.callFake(() => of(false));
-      mockFeatureToggleService.getValue.and.callFake((params) => {
-        if (params === AppConstants.FEATURE_NAMES.waServiceConfig) {
-          return of({
-            configurations: [
-              {
-                caseTypes: [
-                  'Asylum'
-                ],
-                releaseVersion: '3.5',
-                serviceName: 'IA'
-              },
-              {
-                caseTypes: [
-                  'PRIVATELAW',
-                  'PRLAPPS'
-                ],
-                releaseVersion: '2.1',
-                serviceName: 'PRIVATELAW'
-              },
-              {
-                caseTypes: [
-                  'CIVIL',
-                  'GENERALAPPLICATION'
-                ],
-                releaseVersion: '2.1',
-                serviceName: 'CIVIL'
-              }
-            ]
-          });
-        }
-
-        return of(true);
-      });
       mockWASupportedJurisdictionService.getWASupportedJurisdictions.and.returnValue(of(['IA']));
       TestBed.configureTestingModule({
         imports: [
@@ -314,16 +215,13 @@ xdescribe('AllWorkTaskComponent', () => {
           { provide: AlertService, useValue: mockAlertService },
           { provide: SessionStorageService, useValue: mockSessionStorageService },
           { provide: CaseworkerDataService, useValue: mockCaseworkerService },
-          { provide: WorkAllocationFeatureService, useValue: mockFeatureService },
           { provide: LoadingService, useValue: mockLoadingService },
           // FeatureToggleService,
-          { provide: FeatureToggleService, useValue: mockFeatureToggleService },
           { provide: LocationDataService, useValue: mockLocationService },
           { provide: WASupportedJurisdictionsService, useValue: mockWASupportedJurisdictionService },
           { provide: Store, useValue: storeMock }
         ]
       }).compileComponents();
-      store = TestBed.inject(Store);
       fixture = TestBed.createComponent(WrapperComponent);
       wrapper = fixture.componentInstance;
       component = wrapper.appComponentRef;
@@ -335,8 +233,6 @@ xdescribe('AllWorkTaskComponent', () => {
     it(`onPaginationEvent with error response code ${scr.statusCode}`, () => {
       const navigateSpy = spyOn(router, 'navigate');
       component.getSearchTaskRequestPagination();
-      const searchRequest = component.onPaginationEvent(1);
-      const payload = { searchRequest, view: component.view, refined: false, currentUser: undefined };
 
       expect(navigateSpy).toHaveBeenCalledWith([scr.routeUrl]);
     });

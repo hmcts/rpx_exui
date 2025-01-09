@@ -7,11 +7,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { LoadingService } from '@hmcts/ccd-case-ui-toolkit';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of, throwError } from 'rxjs';
+import { LoggerService } from '../../../app/services/logger/logger.service';
+import { MockRpxTranslatePipe } from '../../../app/shared/test/mock-rpx-translate.pipe';
 import { initialState } from '../../hearing.test.data';
 import { LovRefDataModel } from '../../models/lovRefData.model';
 import { HearingsService } from '../../services/hearings.service';
 import { CancelHearingComponent } from './cancel-hearing.component';
-import { LoggerService } from '../../../app/services/logger/logger.service';
 
 describe('CancelHearingComponent', () => {
   let component: CancelHearingComponent;
@@ -71,7 +72,7 @@ describe('CancelHearingComponent', () => {
       imports: [ReactiveFormsModule, RouterTestingModule.withRoutes([
         { path: 'cases/case-details/1111222233334444/hearings', redirectTo: '' }
       ]), HttpClientTestingModule],
-      declarations: [CancelHearingComponent],
+      declarations: [CancelHearingComponent, MockRpxTranslatePipe],
       providers: [
         LoadingService,
         { provide: HearingsService, useValue: hearingsService },
@@ -88,7 +89,6 @@ describe('CancelHearingComponent', () => {
           }
         },
         provideMockStore({ initialState }),
-        { provide: HearingsService, useValue: hearingsService },
         FormBuilder
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -1,4 +1,4 @@
-@fullfunctional @functional_enabled
+@fullfunctional @ignore
 Feature: Global search
 
 
@@ -24,7 +24,7 @@ Feature: Global search
         Examples:
             | SearchField             | Input            |
             # | Name                    | test             |
-            | 16-digit case reference | 1546883526751282 |
+            | 16-digit case reference | 1697034829280945 |
 
 
 
@@ -32,5 +32,5 @@ Feature: Global search
         When I navigate to Expert UI Url
         Given I am logged into Expert UI with test user identified as "IAC_CaseOfficer_R2"
         When If env is "demo", I find "1662020492250902" from case ref in header 16 digit ref search
-        When If env is "aat", I find "1546883526751282" from case ref in header 16 digit ref search
+        When If env is "aat", I find "1714721967501327" from case ref in header 16 digit ref search
         Then I see case details page

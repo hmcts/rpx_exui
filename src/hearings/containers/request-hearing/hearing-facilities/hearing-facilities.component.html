@@ -1,13 +1,13 @@
-<xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem'"></xuilib-hmcts-error-summary>
+<xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem' | rpxTranslate"></xuilib-hmcts-error-summary>
 <div class="govuk-grid-row">
   <form class="form" [formGroup]="hearingFactilitiesForm">
     <div class="govuk-grid-column-three-quarters">
       <exui-hearing-parties-title></exui-hearing-parties-title>
       <h1 class="govuk-heading-l">
-        Do you require any additional facilities?
+        {{ 'Do you require any additional facilities?' | rpxTranslate }}
       </h1>
       <exui-case-flags
-        [info]="'Any active flags on this case may require additional facilities at the hearing.'"
+        [info]="'Any active flags on this case may require additional facilities at the hearing.' | rpxTranslate"
         [caseFlagsGroup]="nonReasonableAdjustmentFlags">
       </exui-case-flags>
     </div>
@@ -16,23 +16,23 @@
           <fieldset class="govuk-fieldset"  id="addition-security-confirmation">
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                   <h3 class="govuk-fieldset__heading">
-                      Will additional security be required?
+                      {{ 'Will additional security be required?' | rpxTranslate }}
                   </h3>
               </legend>
               <span class="govuk-error-message" *ngIf="!additionSecurityRequiredValid">
-                <span class="govuk-visually-hidden">Error:</span>{{ hearingFacilitiesEnum.additionSecurityError }}
+                <span class="govuk-visually-hidden">{{ 'Error:' | rpxTranslate }}</span>{{ hearingFacilitiesEnum.additionSecurityError | rpxTranslate }}
               </span>
               <div class="govuk-radios govuk-radios--inline">
                   <div class="govuk-radios__item">
                       <input formControlName="addition-security-required" class="govuk-radios__input" id="additionalSecurityYes" type="radio" value="Yes">
                       <label class="govuk-label govuk-radios__label" for="additionalSecurityYes">
-                          Yes
+                          {{ 'Will additional security be required?' | rpxTranslate : null : 'Yes' }}
                       </label>
                   </div>
                   <div class="govuk-radios__item">
                       <input formControlName="addition-security-required" class="govuk-radios__input" id="additionalSecurityNo" type="radio" value="No">
                       <label class="govuk-label govuk-radios__label" for="additionalSecurityNo">
-                          No
+                          {{ 'Will additional security be required?' | rpxTranslate : null : 'No' }}
                       </label>
                   </div>
               </div>
@@ -42,10 +42,13 @@
           <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               <h1 class="govuk-fieldset__heading">
-                  Select any additional facilities required
+                {{ 'Select any additional facilities required' | rpxTranslate }}
+                <exui-amendment-label *ngIf="this.hearingFacilitiesChangesRequired && !this.hearingFacilitiesChangesConfirmed"
+                  [displayLabel]="amendmentLabelEnum.ACTION_NEEDED">
+                </exui-amendment-label>
               </h1>
               <div id="facils-name-hint" class="govuk-hint">
-                  If the facilities you need are not listed here, add them on the final page before you submit the request.
+                  {{ 'If the facilities you need are not listed here, add them on the final page before you submit the request.' | rpxTranslate }}
               </div>
             </legend>
             <div class="govuk-form-group govuk-!-margin-bottom-3" id="facilitiesList">
@@ -54,7 +57,12 @@
                   <div id="checkbox-addition-facility" class="govuk-checkboxes" formArrayName="addition-securities" data-module="govuk-checkboxes">
                     <div class="govuk-checkboxes__item" *ngFor="let additionalFacility of additionalFacilities;index as pos" [formGroupName]="pos">
                       <input class="govuk-checkboxes__input" id="{{additionalFacility.key}}" name="pos" type="checkbox" formControlName="selected" [value]="additionalFacility.value_en">
-                      <label class="govuk-label govuk-checkboxes__label" for="{{additionalFacility.key}}" >{{additionalFacility.value_en}}</label>
+                      <label class="govuk-label govuk-checkboxes__label" for="{{additionalFacility.key}}" >
+                        {{additionalFacility.value_en}}
+                        <exui-amendment-label *ngIf="additionalFacility.showAmendedLabel"
+                          [displayLabel]="amendmentLabelEnum.AMENDED">
+                        </exui-amendment-label>
+                      </label>
                     </div>
                   </div>
                 </div>

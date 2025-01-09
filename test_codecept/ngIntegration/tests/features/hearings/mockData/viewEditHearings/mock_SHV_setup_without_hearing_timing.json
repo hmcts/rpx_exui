@@ -1,0 +1,255 @@
+{
+    "hmctsServiceID": "ABA5",
+    "hmctsInternalCaseName": "1234567812345678",
+    "publicCaseName": "Mock case public name",
+    "caseAdditionalSecurityFlag": false,
+    "caseCategories": [
+        {
+            "categoryType": "caseType",
+            "categoryValue": "ABA5-PRL",
+            "categoryParent": null
+        },
+        {
+            "categoryType": "caseSubType",
+            "categoryValue": "ABA5-PRL",
+            "categoryParent": "ABA5-PRL"
+        }
+    ],
+    "caseDeepLink": "https://manage-case-hearings-int.demo.platform.hmcts.net/cases/case-details/1690807693531270#Case File View",
+    "externalCaseReference": "",
+    "caseManagementLocationCode": "827534",
+    "autoListFlag": false,
+    "hearingType": "",
+    "hearingWindow": {
+        "dateRangeStart": "",
+        "dateRangeEnd": "",
+        "firstDateTimeMustBe": "2024-12-17T00:00:00"
+    },
+    "duration": 0,
+    "hearingPriorityType": "Standard",
+    "numberOfPhysicalAttendees": 0,
+    "hearingInWelshFlag": false,
+    "hearingLocations": [
+        {
+            "locationType": "court",
+            "locationId": "283922"
+        }
+    ],
+    "facilitiesRequired": [],
+    "listingComments": "",
+    "hearingRequester": "",
+    "privateHearingRequiredFlag": false,
+    "caseInterpreterRequiredFlag": false,
+    "panelRequirements": null,
+    "leadJudgeContractType": "",
+    "judiciary": {},
+    "hearingIsLinkedFlag": false,
+    "parties": [
+        {
+            "partyID": "1234-uytr-7654-asdf-0001",
+            "partyType": "IND",
+            "partyName": "Party1 name",
+            "partyRole": "APPL",
+            "individualDetails": {
+                "firstName": "Party1 name FN",
+                "lastName": "Party1 name LN",
+                "interpreterLanguage": "",
+                "reasonableAdjustments": [
+                    "RA001"
+                ],
+                "vulnerableFlag": false,
+                "vulnerabilityDetails": "",
+                "hearingChannelEmail": [
+                    "applicant@test.com"
+                ],
+                "hearingChannelPhone": [
+                    "1234567890"
+                ],
+                "relatedParties": [
+                    {
+                        "relationshipType": "mock relationship",
+                        "relatedPartyID": "1234-uytr-7654-asdf-0001",
+                        "relatedPartyType": "IND",
+                        "relatedPartyName": "Related Party1 name",
+                        "relatedPartyRole": "APPL",
+                        "individualDetails": {
+                            "firstName": "Realted party First Applicant FN updated",
+                            "lastName": "Related party First Applicant LN updated",
+                            "interpreterLanguage": ""
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "partyID": "1234-uytr-7654-asdf-0002",
+            "partyType": "IND",
+            "partyName": "Party2 name",
+            "partyRole": "APPL",
+            "individualDetails": {
+                "firstName": "Party2 name FN",
+                "lastName": "Party2 name LN",
+                "interpreterLanguage": "",
+                "reasonableAdjustments": [
+                    "RA001"
+                ],
+                "vulnerableFlag": false,
+                "vulnerabilityDetails": "",
+                "hearingChannelEmail": [
+                    "applicant@test.com"
+                ],
+                "hearingChannelPhone": [
+                    "1234567890"
+                ],
+                "relatedParties": [
+                    {
+                        "relationshipType": "mock relationship",
+                        "relatedPartyID": "1234-uytr-7654-asdf-0002",
+                        "relatedPartyType": "IND",
+                        "relatedPartyName": "Related Party2 name",
+                        "relatedPartyRole": "APPL",
+                        "individualDetails": {
+                            "firstName": "Realted party First Applicant FN updated",
+                            "lastName": "Related party First Applicant LN updated",
+                            "interpreterLanguage": ""
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "partyID": "1234-uytr-7654-asdf-0003",
+            "partyType": "ORG",
+            "partyName": "party3 org name",
+            "partyRole": "APPL",
+            "organisationDetails": {
+                "name": "party3 org name",
+                "organisationType": "ORG",
+                "cftOrganisationID": "ECKZ4BE"
+            }
+        }
+    ],
+    "caseFlags": {
+        "flags": [
+            {
+                "partyId": "1234-uytr-7654-asdf-0001",
+                "partyName": "Party1 name",
+                "flagParentId": "PARENT_0",
+                "flagId": "RA001",
+                "flagDescription": "Party1 comment",
+                "flagStatus": "ACTIVE"
+            },
+            {
+                "partyId": "1234-uytr-7654-asdf-0002",
+                "partyName": "Party2 name",
+                "flagParentId": "PARENT_0",
+                "flagId": "RA001",
+                "flagDescription": "Party2 comment",
+                "flagStatus": "ACTIVE"
+            },
+            {
+                "partyId": "1234-uytr-7654-asdf-0001",
+                "partyName": "Party1 name",
+                "flagParentId": "PARENT_0",
+                "flagId": "OT001",
+                "flagDescription": "Party1 comment",
+                "flagStatus": "ACTIVE"
+            },
+            {
+                "partyId": "1234-uytr-7654-asdf-0002",
+                "partyName": "Party2 name",
+                "flagParentId": "PARENT_0",
+                "flagId": "OT001",
+                "flagDescription": "Party2 comment",
+                "flagStatus": "ACTIVE"
+            }
+        ],
+        "flagAmendURL": "/"
+    },
+    "screenFlow": [
+        {
+            "navigation": [
+                {
+                    "resultValue": "hearing-facilities"
+                }
+            ],
+            "screenName": "hearing-requirements"
+        },
+        {
+            "navigation": [
+                {
+                    "resultValue": "hearing-stage"
+                }
+            ],
+            "screenName": "hearing-facilities"
+        },
+        {
+            "navigation": [
+                {
+                    "resultValue": "hearing-attendance"
+                }
+            ],
+            "screenName": "hearing-stage"
+        },
+        {
+            "navigation": [
+                {
+                    "resultValue": "hearing-venue"
+                }
+            ],
+            "screenName": "hearing-attendance"
+        },
+        {
+            "navigation": [
+                {
+                    "resultValue": "hearing-welsh",
+                    "conditionOperator": "INCLUDE",
+                    "conditionValue": "7"
+                },
+                {
+                    "resultValue": "hearing-judge",
+                    "conditionOperator": "NOT INCLUDE",
+                    "conditionValue": "7"
+                }
+            ],
+            "conditionKey": "regionId",
+            "screenName": "hearing-venue"
+        },
+        {
+            "navigation": [
+                {
+                    "resultValue": "hearing-judge"
+                }
+            ],
+            "screenName": "hearing-welsh"
+        },
+        {
+            "navigation": [
+                {
+                    "resultValue": "hearing-timing"
+                }
+            ],
+            "screenName": "hearing-judge"
+        },
+
+        {
+            "navigation": [
+                {
+                    "resultValue": "hearing-additional-instructions"
+                }
+            ],
+            "screenName": "hearing-link"
+        },
+        {
+            "navigation": [
+                {
+                    "resultValue": "hearing-create-edit-summary"
+                }
+            ],
+            "screenName": "hearing-additional-instructions"
+        }
+    ],
+    "hearingChannels": [],
+    "caserestrictedFlag": false,
+    "caseSLAStartDate": null
+}

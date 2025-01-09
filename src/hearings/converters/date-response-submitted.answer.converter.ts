@@ -10,7 +10,9 @@ export class DateResponseSubmittedAnswerConverter implements AnswerConverter {
   public transformAnswer(hearingState$: Observable<State>, index: number): Observable<string> {
     return hearingState$.pipe(
       map((state) => {
-        const hearingResponse = state.hearingRequest.hearingRequestMainModel.hearingResponse;
+        const hearingResponse = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.hearingResponse
+          : state.hearingRequest.hearingRequestMainModel.hearingResponse;
         let hearingDaySchedule = hearingResponse && hearingResponse.hearingDaySchedule;
         if (!hearingDaySchedule) {
           return '';

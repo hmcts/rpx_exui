@@ -1,6 +1,5 @@
 import { StaffUserIDAMStatus } from './staff-user-idam-status.enum';
 import { StaffUserLocation } from './staff-user-location.model';
-import { StaffUserStatus } from './staff-user-status.enum';
 
 export class StaffUser {
   public case_worker_id: string;

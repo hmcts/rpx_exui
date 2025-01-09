@@ -1,13 +1,13 @@
 <div id="hearingDetails">
   <dl class="govuk-summary-list">
     <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">Hearing date(s)</dt>
+      <dt class="govuk-summary-list__key">{{ 'Hearing date(s)' | rpxTranslate }}</dt>
       <dd class="govuk-summary-list__value">
         <ng-container *ngIf="isMultiDayHearing; else singleDayHearingDate">
-          {{ hearingDays[0]?.actualHearingDay?.hearingStartTime | date:"dd MMMM yyyy" }} - {{ hearingDays[hearingDays.length - 1]?.actualHearingDay?.hearingStartTime | date:"dd MMMM yyyy" }}
+            {{ actualMultiDaysHearingDates() }}
         </ng-container>
         <ng-template #singleDayHearingDate>
-          {{hearingActualsMainModel?.hearingActuals?.hearingOutcome?.hearingResultDate | date:"dd MMMM yyyy"}}
+          {{ actualHearingDate() | date:"dd MMMM yyyy" }}
         </ng-template>
       </dd>
       <dd class="govuk-summary-list__actions"></dd>
@@ -15,47 +15,41 @@
   </dl>
   <br />
 
-  <h1 class="govuk-heading-m" style="display: inline-block;">Hearing stage and result</h1>
+  <h1 class="govuk-heading-m" style="display: inline-block;">{{ 'Hearing stage and result' | rpxTranslate }}</h1>
 
   <dl class="govuk-summary-list">
     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-      <dt class="govuk-summary-list__key">Hearing stage</dt>
-      <dd class="govuk-summary-list__value">{{hearingActualsMainModel?.hmcStatus}}</dd>
+      <dt class="govuk-summary-list__key">{{ 'Hearing stage' | rpxTranslate }}</dt>
+      <dd class="govuk-summary-list__value">{{hearingTypeDescription}}</dd>
     </div>
 
     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-      <dt class="govuk-summary-list__key">Hearing result</dt>
+      <dt class="govuk-summary-list__key">{{ 'Hearing result' | rpxTranslate }}</dt>
       <dd class="govuk-summary-list__value">
         {{hearingActualsMainModel?.hearingActuals?.hearingOutcome?.hearingResult}}</dd>
     </div>
 
-    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions" *ngIf="isCompleted">
-      <dt class="govuk-summary-list__key">Decision type</dt>
-      <dd class="govuk-summary-list__value">
-        {{hearingActualsMainModel?.hearingActuals?.hearingOutcome?.hearingResultReasonType}}</dd>
-    </div>
-
     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions" *ngIf="isAdjourned">
-      <dt class="govuk-summary-list__key">Adjournment reason</dt>
+      <dt class="govuk-summary-list__key">{{ 'Adjournment reason' | rpxTranslate }}</dt>
       <dd class="govuk-summary-list__value">
         {{adjournReasonTypeValue}}</dd>
     </div>
 
     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions" *ngIf="isAdjourned">
-      <dt class="govuk-summary-list__key">Adjournment date</dt>
+      <dt class="govuk-summary-list__key">{{ 'Adjournment date' | rpxTranslate }}</dt>
       <dd class="govuk-summary-list__value">
         {{hearingActualsMainModel?.hearingActuals?.hearingOutcome?.hearingResultDate | date:"dd MMMM yyyy"}}</dd>
     </div>
 
     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-      <dt class="govuk-summary-list__key">Was this a paper hearing</dt>
+      <dt class="govuk-summary-list__key">{{ 'Was this a paper hearing' | rpxTranslate }}</dt>
       <dd class="govuk-summary-list__value"
           [innerHtml]="answerSource.IS_PAPER_HEARING | transformAnswer:hearingState$ | async">
       </dd>
     </div>
 
     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions" *ngIf="(isPaperHearing$ | async) === false">
-      <dt class="govuk-summary-list__key">Hearing methods</dt>
+      <dt class="govuk-summary-list__key">{{ 'Hearing methods' | rpxTranslate }}</dt>
       <dd class="govuk-summary-list__value" [innerHtml]="answerSource.HOW_PARTICIPANTS_ATTEND | transformAnswer:hearingState$ | async">
       </dd>
     </div>
@@ -70,7 +64,7 @@
       <details class="govuk-details govuk-!-margin-bottom-0" data-module="govuk-details govuk-grid-row" [open]="!isMultiDayHearing">
         <summary class="govuk-grid-column-one-quarter govuk-!-margin-bottom-4">
         <span class="govuk-details__summary-text govuk-!-padding-left-2">
-          {{ actualHearingDay.hearingDate | date: 'd MMMM' }}
+          {{actualHearingDay?.hearingStartTime | ccdDate: 'local' | date: "dd MMMM yyyy"}}
         </span>
         </summary>
         <div class="govuk-grid-column-three-quarters summary-single-day">

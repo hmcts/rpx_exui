@@ -418,10 +418,8 @@ describe('WorkAllocation', () => {
   });
 
   describe('TaskActionContainerComponent performActionOnTask', () => {
-    let component: TaskActionContainerComponent;
     let wrapper: WrapperComponent;
     let fixture: ComponentFixture<WrapperComponent>;
-    let router: Router;
 
     const mockWorkAllocationService = {
       performActionOnTask: jasmine.createSpy('performActionOnTask').and.returnValue(of({})),
@@ -477,8 +475,6 @@ describe('WorkAllocation', () => {
       }).compileComponents();
       fixture = TestBed.createComponent(WrapperComponent);
       wrapper = fixture.componentInstance;
-      component = wrapper.appComponentRef;
-      router = TestBed.inject(Router);
 
       wrapper.tasks = null;
       window.history.pushState({ returnUrl: 'mywork/list' }, '', 'mywork/list');
@@ -497,10 +493,8 @@ describe('WorkAllocation', () => {
   });
 
   describe('TaskActionContainerComponent performActionOnTask', () => {
-    let component: TaskActionContainerComponent;
     let wrapper: WrapperComponent;
     let fixture: ComponentFixture<WrapperComponent>;
-    let router: Router;
 
     const mockWorkAllocationService = {
       performActionOnTask: jasmine.createSpy('performActionOnTask').and.returnValue(of({})),
@@ -559,8 +553,6 @@ describe('WorkAllocation', () => {
       }).compileComponents();
       fixture = TestBed.createComponent(WrapperComponent);
       wrapper = fixture.componentInstance;
-      component = wrapper.appComponentRef;
-      router = TestBed.inject(Router);
 
       wrapper.tasks = null;
       window.history.pushState({ returnUrl: 'mywork/list' }, '', 'mywork/list');

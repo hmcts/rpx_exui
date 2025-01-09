@@ -1,4 +1,4 @@
-FROM hmctspublic.azurecr.io/base/node:14-alpine as base
+FROM hmctspublic.azurecr.io/base/node:18-alpine as base
 LABEL maintainer = "HMCTS Expert UI <https://github.com/hmcts>"
 
 USER root

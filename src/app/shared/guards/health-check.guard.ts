@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
@@ -7,7 +7,7 @@ import * as fromRoot from '../../store';
 import { HealthCheckService } from '../services/health-check.service';
 
 @Injectable()
-export class HealthCheckGuard implements CanActivate {
+export class HealthCheckGuard {
   constructor(
         private readonly healthCheck: HealthCheckService,
         private readonly store: Store<fromRoot.State>,

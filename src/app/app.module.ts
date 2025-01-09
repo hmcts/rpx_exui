@@ -34,9 +34,8 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import {
   LoggerModule,
   NGXLogger,
-  NGXLoggerHttpService,
   NgxLoggerLevel,
-  NGXMapperService
+  NGXLoggerMapperService
 } from 'ngx-logger';
 import { RpxTranslationModule } from 'rpx-xui-translation';
 import { BookingServiceDownComponent, BookingSystemErrorComponent, RefreshBookingServiceDownComponent } from '../booking/containers';
@@ -55,7 +54,6 @@ import { AcceptTermsService } from './services/acceptTerms/acceptTerms.service';
 import { CaseShareService } from './services/case/share-case.service';
 import { DefaultErrorHandler } from './services/errorHandler/defaultErrorHandler';
 import { JurisdictionService } from './services/jurisdiction/jurisdiction.service';
-import { AbstractAppInsights, AppInsightsWrapper } from './services/logger/appInsightsWrapper';
 import { CryptoWrapper } from './services/logger/cryptoWrapper';
 import { LoggerService } from './services/logger/logger.service';
 import { MonitoringService } from './services/logger/monitoring.service';
@@ -64,6 +62,7 @@ import { effects } from './store/effects';
 // ngrx modules - END
 // APP store
 import { CustomSerializer, reducers } from './store/reducers';
+import { InitialisationSyncService } from './services/ccd-config/initialisation-sync-service';
 // enforces immutability
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -93,10 +92,10 @@ export function launchDarklyClientIdFactory(
     RouterModule.forRoot(ROUTES, routingConfiguration),
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot(effects),
-    StoreRouterConnectingModule,
+    StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
-      logOnly: environment.production
-    }),
+      logOnly: environment.production,
+      connectInZone: true }),
     SharedModule,
     ExuiCommonLibModule,
     NgIdleKeepaliveModule.forRoot(),
@@ -112,8 +111,7 @@ export function launchDarklyClientIdFactory(
   ],
   providers: [
     NGXLogger,
-    NGXLoggerHttpService,
-    NGXMapperService,
+    NGXLoggerMapperService,
     {
       provide: RouterStateSerializer,
       useClass: CustomSerializer
@@ -128,10 +126,6 @@ export function launchDarklyClientIdFactory(
     MonitoringService,
     LoggerService,
     {
-      provide: AbstractAppInsights,
-      useClass: AppInsightsWrapper
-    },
-    {
       provide: ErrorHandler,
       useClass: DefaultErrorHandler
     },
@@ -145,7 +139,9 @@ export function launchDarklyClientIdFactory(
     FilterService,
     GoogleTagManagerService,
     LoadingService,
-    RoleService
+    RoleService,
+    InitialisationSyncService,
+    { provide: Window, useValue: window }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

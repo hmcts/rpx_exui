@@ -28,6 +28,7 @@ import { StageAmendedConverter } from '../converters/stage.amended.converter';
 import { VenueAmendedConverter } from '../converters/venue.amended.converter';
 import { AnswerSource } from '../models/hearings.enum';
 import { State } from '../store';
+import { ReasonableAdjustmentsAmendedConverter } from '../converters/reasonable-adjustments.amended.converter';
 
 @Pipe({
   name: 'isAmended'
@@ -106,6 +107,9 @@ export class IsAmendedPipe implements PipeTransform {
         break;
       case AnswerSource.LINKED_HEARINGS:
         converter = new LinkedHearingsAmendedConverter();
+        break;
+      case AnswerSource.REASONABLE_ADJUSTMENTS:
+        converter = new ReasonableAdjustmentsAmendedConverter();
         break;
       default:
         break;

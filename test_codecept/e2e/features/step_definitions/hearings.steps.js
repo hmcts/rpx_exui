@@ -9,7 +9,7 @@ const { DataTableArgument } = require('codeceptjs');
 
 
 const hearingTabPage = require('../pageObjects/hearings/hearingsTabPage')
-const createHearingWorkflow = require('../pageObjects/hearings/createhearingWorkflow')
+const createHearingWorkflow = require('../pageObjects/hearings/createHearingWorkflow/createhearingWorkflow')
 
 Then('I see hearings tab displayed', async function () {
     await BrowserWaits.retryWithActionCallback(async () => {
@@ -17,8 +17,16 @@ Then('I see hearings tab displayed', async function () {
     })
 });
 
+Then('I see Request a hearing button in hearings tab page', async function () {
+    expect(await hearingTabPage.requesthearingBtn.isDisplayed()).to.be.true
+});
+
+Then('I do not see Request a hearing button in hearings tab page', async function () {
+    expect(await hearingTabPage.requesthearingBtn.isDisplayed()).to.be.false
+});
+
 When('I click Request a hearing button', async function(){
-    await hearingTabPage.clickRequestHearingButton()
+    await hearingTabPage.requesthearingBtn.click()
 });
 
 Then('I see create hearing workflow container', async function () {
@@ -26,3 +34,8 @@ Then('I see create hearing workflow container', async function () {
         expect(await createHearingWorkflow.isCreateHearingWorkflowDIsplayed()).to.be.true
     })
 });
+
+Then('I see hearing details success confirmation message {string}', async function(message){
+    const ele = $('.govuk-panel--confirmation')
+    expect(await ele.getText()).to.includes(message)
+})

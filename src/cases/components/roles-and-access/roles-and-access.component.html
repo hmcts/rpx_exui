@@ -12,9 +12,20 @@
     showAllocate="true">
   </exui-role-access-section>
 
-  <exui-role-access-section
+  <exui-role-access-section *ngIf="!namedLegalRoles"
     title="Legal Ops"
-    [roles]="namedLegalRoles ? namedLegalRoles : legalOpsRoles"
+    [roles]="legalOpsRoles"
+    [caseDetails]="caseDetails"
+    [roleRouterLink]="['/', 'role-access', 'allocate-role', 'allocate']"
+    [roleQueryParams]="{'caseId': caseId, 'jurisdiction': jurisdiction, 'roleCategory': 'LEGAL_OPERATIONS'}"
+    roleCategory="LEGAL_OPERATIONS"
+    [showAllocateRoleLink]="showAllocateRoleLink"
+    linkText="Allocate a legal ops role"
+    [showAllocate]="showLegalOpsAllocate">
+  </exui-role-access-section>
+  <exui-role-access-section *ngIf = "namedLegalRoles"
+    title="Legal Ops"
+    [roles]="namedLegalRoles"
     [caseDetails]="caseDetails"
     [roleRouterLink]="['/', 'role-access', 'allocate-role', 'allocate']"
     [roleQueryParams]="{'caseId': caseId, 'jurisdiction': jurisdiction, 'roleCategory': 'LEGAL_OPERATIONS'}"
@@ -24,9 +35,9 @@
     [showAllocate]="showLegalOpsAllocate">
   </exui-role-access-section>
 
-  <exui-role-access-section
+  <exui-role-access-section *ngIf="!namedAdminRoles"
     title="Admin"
-    [roles]="namedAdminRoles ? namedAdminRoles : adminRoles"
+    [roles]="adminRoles"
     [caseDetails]="caseDetails"
     [roleRouterLink]="['/', 'role-access', 'allocate-role', 'allocate']"
     [roleQueryParams]="{'caseId': caseId, 'jurisdiction': jurisdiction, 'roleCategory': 'ADMIN'}"
@@ -35,10 +46,33 @@
     linkText="Allocate an admin role"
     [showAllocate]="true">
   </exui-role-access-section>
+  <exui-role-access-section *ngIf="namedAdminRoles"
+    title="Admin"
+    [roles]="namedAdminRoles"
+    [caseDetails]="caseDetails"
+    [roleRouterLink]="['/', 'role-access', 'allocate-role', 'allocate']"
+    [roleQueryParams]="{'caseId': caseId, 'jurisdiction': jurisdiction, 'roleCategory': 'ADMIN'}"
+    roleCategory="ADMIN"
+    [showAllocateRoleLink]="showAllocateRoleLink"
+    linkText="Allocate an admin role"
+    [showAllocate]="true"
+    [existingUsers]="existingAdminUsers">
+  </exui-role-access-section>
 
-  <exui-role-access-section
+  <exui-role-access-section *ngIf="!namedCTSCRoles"
     title="CTSC"
-    [roles]="namedCTSCRoles ? namedCTSCRoles : ctscRoles"
+    [roles]="ctscRoles"
+    [caseDetails]="caseDetails"
+    [roleRouterLink]="['/', 'role-access', 'allocate-role', 'allocate']"
+    [roleQueryParams]="{'caseId': caseId, 'jurisdiction': jurisdiction, 'roleCategory': 'CTSC'}"
+    roleCategory="CTSC"
+    [showAllocateRoleLink]="showAllocateRoleLink"
+    linkText="Allocate a CTSC role"
+    [showAllocate]="true">
+  </exui-role-access-section>
+  <exui-role-access-section *ngIf="namedCTSCRoles"
+    title="CTSC"
+    [roles]="namedCTSCRoles"
     [caseDetails]="caseDetails"
     [roleRouterLink]="['/', 'role-access', 'allocate-role', 'allocate']"
     [roleQueryParams]="{'caseId': caseId, 'jurisdiction': jurisdiction, 'roleCategory': 'CTSC'}"
@@ -46,12 +80,13 @@
     [showAllocateRoleLink]="showAllocateRoleLink"
     linkText="Allocate a CTSC role"
     [showAllocate]="true"
-    *ngIf="isCTSCRoleEnabled">
+    [existingUsers]="existingCTSCUsers">
   </exui-role-access-section>
 
   <h2 class="govuk-heading-m">Exclusions</h2>
 
-  <exui-exclusions-table [exclusions]="namedExclusions ? namedExclusions : exclusions" [caseDetails]="caseDetails" [isCaseAllocator]="showAllocateRoleLink"></exui-exclusions-table>
+  <exui-exclusions-table *ngIf="!namedExclusions" [exclusions]="exclusions" [caseDetails]="caseDetails" [isCaseAllocator]="showAllocateRoleLink"></exui-exclusions-table>
+  <exui-exclusions-table *ngIf="namedExclusions" [exclusions]="namedExclusions" [caseDetails]="caseDetails" [isCaseAllocator]="showAllocateRoleLink"></exui-exclusions-table>
 
   <p>
     <a href="javascript:void(0)"

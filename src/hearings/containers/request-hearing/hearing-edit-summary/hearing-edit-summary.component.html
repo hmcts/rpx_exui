@@ -1,0 +1,131 @@
+<xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem'">
+</xuilib-hmcts-error-summary>
+<exui-warning-and-error-section
+  [pageVisitChangeExists]="pageVisitChangeExists"
+  [isPagelessAttributeChanged]="isPagelessAttributeChanged"
+></exui-warning-and-error-section>
+<h1 class="govuk-heading-l">Edit hearing</h1>
+<div class="govuk-summary-list govuk-!-margin-bottom-9">
+  <div class="govuk-summary-list__row" *ngIf="!isHearingListed">
+    <div class="govuk-summary-list__key">
+      Case number
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ caseReference }}
+    </div>
+  </div>
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Status
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ status }}
+    </div>
+  </div>
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Date request submitted
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ requestSubmittedDate }}
+    </div>
+  </div>
+  <div class="govuk-summary-list__row" *ngIf="isHearingListed">
+    <div class="govuk-summary-list__key">
+      Date response received
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ responseReceivedDate }}
+    </div>
+  </div>
+</div>
+<exui-case-details-section
+  [hearingRequestMainModel]="hearingRequestMainModel"
+  [caseTypeRefData]="caseTypeRefData"
+></exui-case-details-section>
+<!-- Listing information summary -->
+<div *ngIf="isHearingListed">
+  <h2 class="govuk-heading-m">{{ hearingTemplate.LISTING_INFORMATION}}</h2>
+  <exui-listing-information-summary></exui-listing-information-summary>
+</div>
+<!-- Hearing requirements -->
+<exui-hearing-requirements-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_REQUIREMENTS)"
+  [serviceHearingValuesModel]="serviceHearingValuesModel"
+  [hearingRequestMainModel]="hearingRequestMainModel"
+  [hearingRequestToCompareMainModel]="hearingRequestToCompareMainModel"
+  [caseFlagsRefData]="caseFlagsRefData"
+  (changeEditHearing)="onChange($event)"
+></exui-hearing-requirements-section>
+<!-- Additional facilities -->
+<exui-additional-facilities-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_FACILITIES)"
+  [hearingRequestMainModel]="hearingRequestMainModel"
+  [hearingRequestToCompareMainModel]="hearingRequestToCompareMainModel"
+  [additionalFacilitiesRefData]="additionalFacilitiesRefData"
+  (changeEditHearing)="onChange($event)"
+></exui-additional-facilities-section>
+<!-- Hearing stage -->
+<exui-hearing-stage-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_STAGE)"
+  [hearingRequestMainModel]="hearingRequestMainModel"
+  [hearingRequestToCompareMainModel]="hearingRequestToCompareMainModel"
+  [hearingStageOptionsRefData]="hearingStageOptionsRefData"
+  (changeEditHearing)="onChange($event)"
+></exui-hearing-stage-section>
+<!-- Participant attendance -->
+<exui-participant-attendance-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_ATTENDANCE)"
+  [hearingRequestMainModel]="hearingRequestMainModel"
+  [hearingRequestToCompareMainModel]="hearingRequestToCompareMainModel"
+  [serviceHearingValuesModel]="serviceHearingValuesModel"
+  [partyChannelsRefData]="partyChannelsRefData"
+  [partySubChannelsRefData]="partySubChannelsRefData"
+  (changeEditHearing)="onChange($event)"
+></exui-participant-attendance-section>
+<!-- Hearing venue -->
+<exui-hearing-venue-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_VENUE)"
+  [hearingRequestMainModel]="hearingRequestMainModel"
+  [hearingRequestToCompareMainModel]="hearingRequestToCompareMainModel"
+  (changeEditHearing)="onChange($event)"
+></exui-hearing-venue-section>
+<!-- Language requirements -->
+<exui-language-requirements-section *ngIf="showLanguageRequirementsSection$ | async"
+  [hearingInWelshFlag]="hearingRequestMainModel.hearingDetails.hearingInWelshFlag"
+  [hearingInWelshFlagToCompare]="hearingRequestToCompareMainModel.hearingDetails.hearingInWelshFlag"
+  (changeEditHearing)="onChange($event)"
+></exui-language-requirements-section>
+<!-- Judge details -->
+<exui-judge-details-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_JUDGE)"
+  [panelRequirements]="hearingRequestMainModel.hearingDetails.panelRequirements"
+  [panelRequirementsToCompare]="hearingRequestToCompareMainModel.hearingDetails.panelRequirements"
+  [judgeTypesRefData]="judgeTypesRefData"
+  [judicialUsers]="judicialUsers"
+  (changeEditHearing)="onChange($event)"
+></exui-judge-details-section>
+<!-- Panel member details -->
+<exui-panel-details-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_PANEL)"
+  [panelRequirements]="hearingRequestMainModel.hearingDetails.panelRequirements"
+  [panelRolesRefData]="panelRolesRefData"
+  (changeEditHearing)="onChange($event)"
+></exui-panel-details-section>
+<!-- Hearing length, date and priority -->
+<exui-hearing-timing-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_TIMING)"
+  [hearingRequestMainModel]="hearingRequestMainModel"
+  [hearingRequestToCompareMainModel]="hearingRequestToCompareMainModel"
+  [serviceHearingValuesModel]="serviceHearingValuesModel"
+  [hearingPrioritiesRefData]="hearingPrioritiesRefData"
+  (changeEditHearing)="onChange($event)"
+></exui-hearing-timing-section>
+<!-- Linked hearing -->
+<exui-linked-hearing-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_LINK)"
+  [hearingIsLinkedFlag]="hearingRequestMainModel.hearingDetails.hearingIsLinkedFlag"
+  [hearingIsLinkedFlagToCompare]="hearingRequestToCompareMainModel.hearingDetails.hearingIsLinkedFlag"
+  (changeEditHearing)="onChange($event)"
+></exui-linked-hearing-section>
+<!-- Additional instructions -->
+<exui-additional-instructions-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_ADDITIONAL_INSTRUCTIONS)"
+  [hearingRequestMainModel]="hearingRequestMainModel"
+  [hearingRequestToCompareMainModel]="hearingRequestToCompareMainModel"
+  (changeEditHearing)="onChange($event)"
+></exui-additional-instructions-section>
+<exui-warning-and-error-section
+  [pageVisitChangeExists]="pageVisitChangeExists"
+  [isPagelessAttributeChanged]="isPagelessAttributeChanged"
+></exui-warning-and-error-section>

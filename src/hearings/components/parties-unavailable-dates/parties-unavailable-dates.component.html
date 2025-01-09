@@ -1,12 +1,15 @@
 <details class="govuk-details" data-module="govuk-details">
   <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">See dates the parties will not be available</span>
+    <span class="govuk-details__summary-text">{{ 'See dates the parties will not be available' | rpxTranslate }}</span>
+    <exui-amendment-label *ngIf="showAmendedLabel"
+      [displayLabel]="amendmentLabelEnum.AMENDED">
+    </exui-amendment-label>
   </summary>
   <div class="govuk-details__text">
     <div *ngIf="unAvailableDates?.length === 0">
-      <span>Party unavailability dates are not specified<br></span>
+      <span>{{ 'Party unavailability dates are not specified' | rpxTranslate }}<br></span>
     </div>
-    <div [ngClass]="{'scroll-veiw': unAvailableDates?.length > maxScrollBarDatesLength}">
+    <div [ngClass]="{'scroll-view': unAvailableDates?.length > maxScrollBarDatesLength}">
       <span *ngFor="let unAvailableDate of unAvailableDates">{{unAvailableDate}}<br></span>
     </div>
   </div>

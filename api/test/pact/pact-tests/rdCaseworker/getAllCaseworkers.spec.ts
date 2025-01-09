@@ -10,7 +10,7 @@ const { Matchers } = require('@pact-foundation/pact');
 const { somethingLike } = Matchers;
 const pactSetUp = new PactTestSetup({ provider: 'referenceData_caseworkerRefUsers', port: 8000 });
 
-const MockApp = require('../../../../../test/nodeMock/app');
+const MockApp = require('../../../../../test_codecept/nodeMock/app');
 
 xdescribe('Caseworker ref data api, get all caseworkers', () => {
   const REQUEST_BODY = {
@@ -72,7 +72,7 @@ xdescribe('Caseworker ref data api, get all caseworkers', () => {
     });
 
     it('returns the correct response', async () => {
-      MockApp.setServerPort(8080);
+      MockApp.setServerPort(9000);
       MockApp.init();
 
       MockApp.onPost('/am/role-assignments/query', (req, res) => {
@@ -85,10 +85,10 @@ xdescribe('Caseworker ref data api, get all caseworkers', () => {
       });
       await MockApp.startServer();
       const configValues = getCaseworkerRefDataAPIOverrides(pactSetUp.provider.mockService.baseUrl);
-      configValues['services.role_assignment.roleApi'] = 'http://localhost:8080';
+      configValues['services.role_assignment.roleApi'] = 'http://localhost:9000';
 
       // @ts-ignore
-      configValues.waSupportedJurisdictions = ['IA'];
+      configValues.waSupportedJurisdictions = 'IA';
       sandbox.stub(config, 'get').callsFake((prop) => {
         return configValues[prop];
       });

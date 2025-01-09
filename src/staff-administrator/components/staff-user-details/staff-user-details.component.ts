@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupOptions } from '@hmcts/rpx-xui-common-lib';
-import { finalize, map, switchMap, tap } from 'rxjs/operators';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 import { InfoMessage } from '../../../app/shared/enums/info-message';
 import { InformationMessage } from '../../../app/shared/models';
 import { InfoMessageCommService } from '../../../app/shared/services/info-message-comms.service';

@@ -23,7 +23,7 @@ export class GetHelpComponent implements OnInit {
     this.userDetails$ = this.store.pipe(select(fromRoot.getUserDetails));
     this.userDetails$.subscribe((userDetail: UserDetails) => {
       if (userDetail && userDetail.userInfo) {
-        this.caseManager = userDetail.userInfo.roles && userDetail.userInfo.roles.includes('pui-case-manager');
+        this.caseManager = userDetail?.userInfo?.roles.includes('pui-case-manager');
       }
     });
   }

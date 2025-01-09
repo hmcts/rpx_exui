@@ -8,7 +8,7 @@ import * as fromHearingStore from '../store';
 import { AnswerConverter } from './answer.converter';
 
 export class PartyChannelsAnswerConverter implements AnswerConverter {
-  constructor(protected readonly route: ActivatedRoute) {}
+  constructor(protected readonly route: ActivatedRoute) { }
 
   private static getPartyChannelValue(refData: LovRefDataModel[], party: PartyDetailsModel): string {
     let preferredHearingChannelRefData = null;
@@ -22,7 +22,9 @@ export class PartyChannelsAnswerConverter implements AnswerConverter {
     return hearingState$.pipe(
       map((state) => {
         const partyChannels = [...this.route.snapshot.data.partyChannels, ...this.route.snapshot.data.partySubChannels];
-        const partiesFromRequest = state.hearingRequest.hearingRequestMainModel.partyDetails;
+        const partiesFromRequest = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare.hearingRequestMainModel.partyDetails
+          : state.hearingRequest.hearingRequestMainModel.partyDetails;
         const partiesFromServiceValue = state.hearingValues.serviceHearingValuesModel.parties;
         let strReturn = '<ul>';
         partiesFromRequest.filter((party) => party.partyType === PartyType.IND)
@@ -39,16 +41,25 @@ export class PartyChannelsAnswerConverter implements AnswerConverter {
   }
 
   public getPartyName(party: PartyDetailsModel, foundPartyFromService: PartyDetailsModel): string {
-    if (party.partyName) {
-      return party.partyName;
+    if (party) {
+      return this.getFullName(party);
     }
-    if (foundPartyFromService) {
-      if (foundPartyFromService.partyName && foundPartyFromService.partyName !== null) {
-        return foundPartyFromService.partyName;
-      }
 
-      return foundPartyFromService.partyID;
+    if (foundPartyFromService) {
+      return this.getFullName(foundPartyFromService);
     }
-    return '';
+  }
+
+  getFullName(pdm: PartyDetailsModel) {
+    if (pdm.partyName) {
+      return pdm.partyName;
+    } else if (pdm.individualDetails) {
+      return this.getVal(pdm.individualDetails.firstName) + ' ' + this.getVal(pdm.individualDetails.lastName);
+    }
+    return pdm.partyID;
+  }
+
+  getVal(item: string) {
+    return item ? item : '';
   }
 }

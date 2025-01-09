@@ -37,7 +37,7 @@ const { DataTableArgument } = require('codeceptjs');
         await BrowserWaits.retryWithActionCallback(async () => {
             await myWorkPage.amOnPage();
             await myWorkPage.amOnMyTasksTab();
-        }); 
+        });
     });
 
     Then('I see My work Available tasks page', async function () {
@@ -48,7 +48,7 @@ const { DataTableArgument } = require('codeceptjs');
     });
 
     Then('I see My work My cases page', async function () {
-        throw new Error('Step def not implemented'); 
+        throw new Error('Step def not implemented');
     });
 
     Then('I see All work Tasks page', async function () {
@@ -79,15 +79,15 @@ const { DataTableArgument } = require('codeceptjs');
 
     When('I click task list pagination link {string}', async function (paginationLinktext) {
         await BrowserWaits.waitForSeconds(1);
-        
+
         await BrowserWaits.waitForConditionAsync(async () => {
             const colCount = await taskListTable.getColumnCount();
             const rowCount = await taskListTable.getTaskListCountInTable();
             return colCount > 0 && rowCount > 0;
         });
-        if (paginationLinktext.toLowerCase() === "next") { 
+        if (paginationLinktext.toLowerCase() === "next") {
             await taskListTable.pageNextLink.click();
-        } else if (paginationLinktext.toLowerCase() === "previous") { 
+        } else if (paginationLinktext.toLowerCase() === "previous") {
             await taskListTable.pagePreviousLink.click();
         } else {
             await taskListTable.clickPaginationPageNum(paginationLinktext);
@@ -127,14 +127,14 @@ const { DataTableArgument } = require('codeceptjs');
            await BrowserWaits.waitForConditionAsync(async () => {
                return columnSortVal.includes(sortOrder.toLowerCase())
            }, 3000, "Sort column state to be " + sortOrder.toLowerCase());
-       }); 
-       
+       });
+
     });
 
     Then('I validate task list table columns displayed', async function (datatable) {
         reportLogger.reportDatatable(datatable)
         const columnHeadersHash = datatable.parse().hashes();
-        const expectdColHeaders = await ArrayUtil.map(columnHeadersHash, (headerhash) => headerhash.ColumnHeader );  
+        const expectdColHeaders = await ArrayUtil.map(columnHeadersHash, (headerhash) => headerhash.ColumnHeader );
         const actualHeadeColumns = await taskListTable.getColumnHeaderNames();
         expect(actualHeadeColumns.length, `Actual Cols ||${actualHeadeColumns}|| !== Expected Cols ||${expectdColHeaders}|| `).to.equal(expectdColHeaders.length);
         expect(actualHeadeColumns, `Actual Cols ||${actualHeadeColumns}|| !== Expected Cols ||${expectdColHeaders}|| `).to.include.members(expectdColHeaders);
@@ -145,7 +145,7 @@ const { DataTableArgument } = require('codeceptjs');
         reportLogger.reportDatatable(datatable)
 
         const columnHeadersHash = datatable.parse().hashes();
-        
+
         let actualHeadeColumns = await taskListTable.getColumnHeaderNames();
         actualHeadeColumns = actualHeadeColumns.map(col => col.toLowerCase());
         for (const headerHash of columnHeadersHash ){
@@ -186,10 +186,11 @@ const { DataTableArgument } = require('codeceptjs');
 
         const actualHeadeColumns = await taskListTable.getColumnHeaderNames();
 
-        const actuallinkColumns = await ArrayUtil.filter(actualHeadeColumns,  (headerCol) => {
-            return  taskListTable.isColValForTaskALink(headerCol,1);
+        let actuallinkColumns = await ArrayUtil.filter(actualHeadeColumns,  (headerCol) => {
+            return taskListTable.isColValForTaskALink(headerCol, 1);
         });
 
+        actuallinkColumns = actuallinkColumns.filter(col => col !== '')
         expect(actuallinkColumns.length, `Actual Cols ||${actuallinkColumns}|| !== Expected Cols ||${expectdLinkCols}|| `).to.equal(expectdLinkCols.length);
         expect(actuallinkColumns).to.include.members(expectdLinkCols);
 
@@ -202,7 +203,7 @@ const { DataTableArgument } = require('codeceptjs');
     });
 
     When('I click task column link {string} at row {int}, I see case details page', async function (colName, rowPos) {
-        
+
         await BrowserWaits.waitForPageNavigationOnAction(async () => {
             await BrowserWaits.retryWithActionCallback(async () => {
                 await taskListTable.clickTaskColLink(colName, rowPos);
@@ -210,12 +211,12 @@ const { DataTableArgument } = require('codeceptjs');
         });
 
         await BrowserWaits.retryWithActionCallback(async () => {
-            expect(await caseDetailsPage.amOnPage(),'Case details page not displayed').to.be.true 
+            expect(await caseDetailsPage.amOnPage(),'Case details page not displayed').to.be.true
         });
     });
 
     Then('I see manage link displayed for task at position {int}', async function(row){
-        expect(await taskListTable.isManageLinkPresent(row)).to.be.true;    
+        expect(await taskListTable.isManageLinkPresent(row)).to.be.true;
     });
 
 
@@ -230,13 +231,13 @@ const { DataTableArgument } = require('codeceptjs');
         const taskHashes = tasksDatatable.parse().hashes();
 
         for (let i = 0; i < taskHashes.length; i++) {
-          
+
             const taskActions = taskHashes[i]["actions"].split(",");
             let taskIndex = parseInt(taskHashes[i].index);
             if (taskHashes[i]["actions"] === ""){
                 softAssert.setScenario(`Manage link no actionDescription for task  ${JSON.stringify(taskHashes[i])} `);
                 await softAssert.assert(async () => expect(await taskListTable.isManageLinkPresent(taskIndex)).to.be.true);
-               
+
             }
 
             const isManagelinkOpen = await taskListTable.isManageLinkOpenForTaskAtPos(taskIndex);
@@ -256,7 +257,7 @@ const { DataTableArgument } = require('codeceptjs');
                 softAssert.setScenario(`Action ${action} present for task  ${JSON.stringify(taskHashes[i])} isPresent`);
                 await softAssert.assert(async () => expect(await taskListTable.isTaskActionPresent(action)).to.be.true);
             }
-            
+
         }
         softAssert.finally();
 
@@ -371,7 +372,7 @@ const { DataTableArgument } = require('codeceptjs');
                 if (messages[i].message !== "") {
                     expect(matchingMsgs.length > 0, `expected "${messages[i].message}" to be included in ${JSON.stringify(actualmessages)}`).to.be.true
                 }
-            }  
+            }
         });
     });
 
@@ -405,7 +406,7 @@ const { DataTableArgument } = require('codeceptjs');
         reportLogger.reportDatatable(taskDetailsDatatable)
 
         const taskDetails = taskDetailsDatatable.parse().hashes()[0];
-        
+
        await  validateTaskDetailsDisplayed(taskDetails, taskCheckYourChangesPage);
 
     });
@@ -450,7 +451,7 @@ const { DataTableArgument } = require('codeceptjs');
             expect(await taskActionPage.getSubmitBtnActionLabel()).to.contain(actionSubmitBtnLabel);
             await taskActionPage.clickSubmit();
         });
-        
+
     });
 
     When('I click Cancel link in task action page', async function(){
@@ -475,11 +476,7 @@ const { DataTableArgument } = require('codeceptjs');
 
         await BrowserWaits.retryWithActionCallback(async () => {
             expect(parseInt(await taskListPage.getTaskListCountInTable()), 'Task count does not match expected ').to.equal(tasksCount);
-            // if (tasksCount === 0) {
-            //     expect(await taskListPage.isTableFooterDisplayed(), "task list table footer is not displayed").to.be.true;
-            // } else {
-            //     expect(await taskListPage.isTableFooterDisplayed(), "task list table footer is displayed").to.be.false;
-            // }
+
         });
 
     });
@@ -495,7 +492,7 @@ const { DataTableArgument } = require('codeceptjs');
            await BrowserWaits.waitForElement(waCaseListTable.tableFooter);
            expect(await waCaseListTable.isTableFooterDisplayed()).to.equal(expectedDisplayState);
        });
-        
+
     });
 
     Then('I validate WA tasks table footer message is {string}', async function (message) {
@@ -509,7 +506,7 @@ const { DataTableArgument } = require('codeceptjs');
     Given('I have a caseworker details other than logged in user with reference {string} for service {string}', async function(caseWorkerRef, service){
         const caseworkersInSessionStorage = await browserUtil.getFromSessionStorage(`${service}-caseworkers`);
         const caseworkers = JSON.parse(caseworkersInSessionStorage);
-        
+
         const loggedinuserDetailsInSessionStorage = await browserUtil.getFromSessionStorage('userDetails');
         const loggedInUser = JSON.parse(loggedinuserDetailsInSessionStorage);
         const loggedinUserIdamId = loggedInUser.uid ? loggedInUser.uid : loggedInUser.id;
@@ -517,32 +514,32 @@ const { DataTableArgument } = require('codeceptjs');
         for (const cw of caseworkers){
             if (cw.roleCategory === "LEGAL_OPERATIONS" && cw.idamId !== loggedinUserIdamId){
                 caseWorkerForRef = cw;
-                break; 
+                break;
             }
         }
 
         reportLogger.AddJson(caseWorkerForRef)
-        global.scenarioData[caseWorkerRef] = caseWorkerForRef; 
+        global.scenarioData[caseWorkerRef] = caseWorkerForRef;
 
     });
 
     Then('I see see page task assignment person not authorised page', async function(){
         try{
-            await BrowserWaits.waitForElement(taskAssignmentPersonNotAuthorisedPage.container); 
+            await BrowserWaits.waitForElement(taskAssignmentPersonNotAuthorisedPage.container);
         }catch(err){
             throw new Error("Task assignment person authorised page is not displayed.");
         }
-        
+
     });
 
     Then('I see see page task assignment authorisation error message {string}', async function(message){
-        await BrowserWaits.waitForElement(taskAssignmentPersonNotAuthorisedPage.container); 
-        expect(await taskAssignmentPersonNotAuthorisedPage.message.getText()).to.includes(message); 
+        await BrowserWaits.waitForElement(taskAssignmentPersonNotAuthorisedPage.container);
+        expect(await taskAssignmentPersonNotAuthorisedPage.message.getText()).to.includes(message);
     });
 
     When('I click back button in task assignment authorisation error page', async function(){
-        await BrowserWaits.waitForElement(taskAssignmentPersonNotAuthorisedPage.container); 
-        await taskAssignmentPersonNotAuthorisedPage.backButton.click(); 
+        await BrowserWaits.waitForElement(taskAssignmentPersonNotAuthorisedPage.container);
+        await taskAssignmentPersonNotAuthorisedPage.backButton.click();
      });
 
     Then('I validate work allocation task table column {string} width less than or equal to {int}', async function(columnName, size){
@@ -550,8 +547,8 @@ const { DataTableArgument } = require('codeceptjs');
             const columnWidthActual = await taskListTable.getHeaderColumnWidth(columnName);
             reportLogger.AddMessage(`Actual column "${columnName}" width is ${columnWidthActual}`)
             expect(columnWidthActual <= size, `Size max width does not match. actual width ${columnWidthActual}` ).to.be.true;
-        }); 
-        
+        });
+
     });
 
     Then('I validate work allocation case table column {string} width less than or equal to {int}', async function (columnName, size) {
@@ -560,7 +557,7 @@ const { DataTableArgument } = require('codeceptjs');
             reportLogger.AddMessage(`Actual column "${columnName}" width is ${columnWidthActual}`)
             expect(columnWidthActual <= size, `Size max width does not match. actual width ${columnWidthActual}`).to.be.true;
         });
-       
+
     });
 
     Given('I unassign the task at row 1', async function(){
@@ -573,6 +570,5 @@ const { DataTableArgument } = require('codeceptjs');
             await taskActionPage.amOnPage();
             await taskActionPage.clickSubmit();
             expect(await taskActionPage.isBannerMessageDisplayed()).to.be.true;
-        } 
+        }
     });
-    

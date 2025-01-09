@@ -20,13 +20,13 @@ const data = {
     aat: [
       {
         idamId: '12b6a360-7f19-4985-b065-94320a891eaa',
-        email: 'lukesuperuserxui@mailnesia.com',
+        email: 'lukesuperuserxui_new@mailnesia.com',
         release: 'general', userIdentifier: 'PROD_LIKE',
         key: 'Monday01'
       },
       {
-        idamId: '12b6a360-7f19-4985-b065-94320a891eaa',
-        email: 'lukesuperuserxui@mailnesia.com',
+        idamId: '4801cdad-f612-4288-9e03-70a659cc7b36',
+        email: 'townley.winchester@mailnesia.com',
         release: 'general', userIdentifier: 'SOLICITOR',
         key: 'Monday01'
       },
@@ -87,26 +87,23 @@ const data = {
         key: 'Welcome01'
       },
       {
-        idamId: 'ba02568f-6a46-478d-9f1a-1ce4dea496aa',
-        email: 'test@mailnesia.com',
+        idamId: 'ae28c49a-ad0f-467a-a480-15fcaa66165d',
+        email: 'exuigsuser@mailinator.com',
         release: 'general', userIdentifier: 'CASEWORKER_GLOBALSEARCH',
         key: 'Welcome01'
       },
-
       {
-        idamId: '4beb7bbe-5cc9-4f92-9c4d-620bd705dc8a',
-        email: 'test@mailnesia.com',
+        idamId: 'ae28c49a-ad0f-467a-a480-15fcaa66165d',
+        email: 'exuigsuser@mailinator.com',
         release: 'general', userIdentifier: 'WA2',
         key: 'Welcome01'
       },
-
       {
-        idamId: '810b5601-4a8a-4c82-9294-34f087f2e67f',
-        email: 'test@mailnesia.com',
+        idamId: 'ae28c49a-ad0f-467a-a480-15fcaa66165d',
+        email: 'exuigsuser@mailinator.com',
         release: 'general', userIdentifier: 'WA2_GLOBAL-SEARCH',
         key: 'Welcome01'
       },
-
       {
         idamId: '7381c1ae-9cc9-4251-b283-727feef94a3d',
         email: 'xui_bookingui_on@hmcts.net',
@@ -124,7 +121,7 @@ const data = {
       },
       {
         idamId: '12b6a360-7f19-4985-b065-94320a891eaa',
-        email: 'lukesuperuserxui@mailnesia.com',
+        email: 'lukesuperuserxui_new@mailnesia.com',
         release: 'general', userIdentifier: 'SOLICITOR'
       },
       {

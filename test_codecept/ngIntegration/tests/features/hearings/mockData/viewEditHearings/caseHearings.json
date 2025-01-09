@@ -1,0 +1,61 @@
+{
+    "caseRef": "1690807693531270",
+    "caseHearings": [
+        {
+            "hearingRequestDateTime": "2024-01-15T21:48:48.484848",
+            "hearingType": "TEST_TYPE",
+            "hmcStatus": "LISTED",
+            "lastResponseReceivedDateTime": "2024-01-18T21:48:48.484848",
+            "requestVersion": 1,
+            "hearingListingStatus": "FIXED",
+            "listAssistCaseStatus": "LISTED",
+            "hearingDaySchedule": [
+                {
+                    "hearingStartDateTime": "2024-01-15T21:48:48.484848",
+                    "hearingEndDateTime": "2024-01-20T21:48:48.484848",
+                    "hearingVenueId": "497679",
+                    "hearingRoomId": "Coventry Combined Chambers 02",
+                    "hearingJudgeId": "",
+                    "panelMemberIds": [],
+                    "attendees": [
+                        {
+                            "hearingSubChannel": "INTER",
+                            "partyID": "f6abd409-fe74-4140-a18b-a7d003c223cd"
+                        },
+                        {
+                            "hearingSubChannel": "VIDOTHER",
+                            "partyID": "107f3aa0-991a-48be-a3a2-4c5145576e6b"
+                        },
+                        {
+                            "hearingSubChannel": "VIDOTHER",
+                            "partyID": "b8f8c362-77bc-479a-b8ee-ae3f6e4c9475"
+                        },
+                        {
+                            "hearingSubChannel": "VIDOTHER",
+                            "partyID": "98ffefe7-ad04-4139-87e1-fffdb2bf4c99"
+                        },
+                        {
+                            "hearingSubChannel": "INTER",
+                            "partyID": "af72284a-30c7-463f-85ae-be75c2d93359"
+                        },
+                        {
+                            "hearingSubChannel": null,
+                            "partyID": "d1ea0557-0d91-4caf-8dda-cc6d9a0e0dfb"
+                        }
+                    ],
+                    "listAssistSessionID": null
+                }
+            ],
+            "hearingGroupRequestId": null,
+            "hearingIsLinkedFlag": true,
+            "hearingChannels": [
+                "INTER"
+            ],
+            "hearingID": 1705614528106,
+            "hearingResponse": {
+                "laCaseStatus": "LISTED"
+            }
+        }
+    ],
+    "hmctsServiceCode": null
+}

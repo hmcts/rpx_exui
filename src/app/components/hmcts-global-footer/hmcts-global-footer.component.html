@@ -3,33 +3,35 @@
     <div class="govuk-footer__meta">
       <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
         <ng-container *ngIf="help">
-            <h2 class="hmcts-footer__heading">{{help.heading | rpxTranslate}}</h2>
-            <ul class="hmcts-footer__list">
-                <li class="hmcts-footer__list-item">{{help.probate.text | rpxTranslate}}</li>
-            </ul>
-            <br/>
-            <ul class="hmcts-footer__list">
-                <li class="hmcts-footer__list-item">
-                    Email: <a class="hmcts-footer__link" href="mailto:{{help.email.address}}">{{help.email.text}}</a>
-                </li>
-                <li class="hmcts-footer__list-item">Phone: {{help.phone.text}}</li>
-                <li class="hmcts-footer__list-item">Opening times: {{help.opening.text}}</li>
-            </ul>
-            <br/>
-            <ul class="hmcts-footer__list">
-              <li class="hmcts-footer__list-item">
-                {{help.otherContact.text | rpxTranslate}}
-              </li>
-            </ul>
+          <h2 class="hmcts-footer__heading">{{help.heading | rpxTranslate}}</h2>
+          <ul class="hmcts-footer__list">
+            <li class="hmcts-footer__list-item">{{help.probate.text | rpxTranslate}}</li>
+          </ul>
+          <br/>
+          <ul class="hmcts-footer__list">
+            <li class="hmcts-footer__list-item">
+              {{'Email' | rpxTranslate}}: <a class="hmcts-footer__link" href="mailto:{{help.email.address}}">{{help.email.text}}</a>
+            </li>
+            <li class="hmcts-footer__list-item">{{'Phone' | rpxTranslate}}: {{help.phone.text}}</li>
+            <li class="hmcts-footer__list-item">{{'Opening times' | rpxTranslate}}: {{help.opening.text}}</li>
+          </ul>
+          <br/>
+          <ul class="hmcts-footer__list">
+            <li class="hmcts-footer__list-item">
+              {{help.otherContact.text | rpxTranslate}}
+            </li>
+          </ul>
         </ng-container>
 
-          <hr class="govuk-section-break govuk-section-break--l">
-          <ul
-              class="hmcts-footer__list hmcts-footer__list--inline">
-              <li class="hmcts-footer__list-item" *ngFor="let item of navigation.items">
-                <a class="govuk-footer__link" [routerLink]="item.href" [target]="item.target">{{item.text | rpxTranslate }}</a>
-              </li>
-          </ul>
+        <hr class="govuk-section-break govuk-section-break--l">
+        <ul class="hmcts-footer__list hmcts-footer__list--inline">
+          <li class="hmcts-footer__list-item" *ngFor="let item of navigation.items">
+            <a class="govuk-footer__link" [routerLink]="item.href" [target]="item.target">{{item.text | rpxTranslate}}</a>
+          </li>
+          <li> <ng-container *xuilibFeatureToggle="'welsh-language'">
+            <a href="javascript:void(0)" (click)="toggleLanguage(currentLang == 'cy' ? 'en' : currentLang == 'en' ? 'cy' : 'en')" class="language govuk-footer__link">{{currentLang == 'cy' ? 'English' : currentLang == 'en' ? 'Cymraeg' : 'English' }}</a>
+          </ng-container></li>
+        </ul>
       </div>
       <div class="govuk-footer__meta-item">
         <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">

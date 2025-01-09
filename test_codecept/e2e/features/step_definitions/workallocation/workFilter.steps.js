@@ -17,6 +17,8 @@ const { DataTableArgument } = require('codeceptjs');
 
     Then('I see work filter of type {string} is displayed',async function(filterType){
         await BrowserWaits.retryWithActionCallback(async () => {
+            const filterContainer = myWorkPage.getFilterContainer(filterType)
+            await BrowserWaits.waitForElement(filterContainer);
             expect(await myWorkPage.isWorkFilterOfTypeDisplayed(filterType)).to.be.true;
         });
     });

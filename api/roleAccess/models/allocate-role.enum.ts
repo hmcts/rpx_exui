@@ -9,10 +9,11 @@ export enum RoleCategory {
   LEGAL_OPERATIONS = 'LEGAL_OPERATIONS',
   ADMIN = 'ADMIN',
   CTSC = 'CTSC',
+  PROFESSIONAL = 'PROFESSIONAL',
 }
 
 export enum AllocateTo {
-  RESERVE_TO_ME = 'Reserve to me',
+  ALLOCATE_TO_ME = 'Allocate to me',
   ALLOCATE_TO_ANOTHER_PERSON = 'Allocate to another person',
 }
 

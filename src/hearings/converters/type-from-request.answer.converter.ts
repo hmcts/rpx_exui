@@ -18,14 +18,14 @@ export class TypeFromRequestAnswerConverter implements AnswerConverter {
     return hearingState$.pipe(
       map((state) => {
         let result = '';
-        if (state.hearingRequest && state.hearingRequest.hearingRequestMainModel
-          && state.hearingRequest.hearingRequestMainModel.caseDetails
-          && state.hearingRequest.hearingRequestMainModel.caseDetails.caseCategories) {
-          const caseTypes: CaseCategoryDisplayModel[] = CaseTypesUtils.getCaseCategoryDisplayModels(this.caseTypeRefData,
-            state.hearingRequest.hearingRequestMainModel.caseDetails.caseCategories);
+        const caseCategories = state.hearingConditions?.isHearingAmendmentsEnabled
+          ? state.hearingRequestToCompare?.hearingRequestMainModel?.caseDetails?.caseCategories
+          : state.hearingRequest?.hearingRequestMainModel?.caseDetails?.caseCategories;
+        if (caseCategories) {
+          const caseTypes: CaseCategoryDisplayModel[] = CaseTypesUtils.getCaseCategoryDisplayModels(this.caseTypeRefData, caseCategories);
           caseTypes.forEach((caseCategory) => {
             result += `${caseCategory.categoryDisplayValue} \n<ul>`;
-            if (caseCategory.childNodes && caseCategory.childNodes.length) {
+            if (caseCategory.childNodes?.length) {
               caseCategory.childNodes.forEach((child) => {
                 result += `<li>- ${child.categoryDisplayValue}</li>`;
               });

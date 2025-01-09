@@ -45,7 +45,7 @@ const workFlowPage = require("../../pageObjects/workAllocation/workFlow");
                 await BrowserWaits.waitForSeconds(1);
             }
             counter++;
-            const actualSearcResults = await workFlowPage.findPersonPage.getPersonsReturned();
+            let actualSearcResults = await workFlowPage.findPersonPage.getPersonsReturned();
             const expectedResultsHashes = resulEmails.parse().hashes();
            
             const expectedResultsArr = [];
@@ -54,6 +54,8 @@ const workFlowPage = require("../../pageObjects/workAllocation/workFlow");
                     expectedResultsArr.push(expectedHash.Person);
                 }
             }
+
+            actualSearcResults = actualSearcResults.map((name) => name.trim());
             for (const expected of expectedResultsArr) {
                 expect(actualSearcResults, `Actual : ${actualSearcResults}`).to.include(expected)
             }

@@ -4,7 +4,8 @@ import { Observable, Subject } from 'rxjs';
 import { HearingActualsMainModel, HearingActualsModel } from '../models/hearingActualsMainModel';
 import { HearingListMainModel } from '../models/hearingListMain.model';
 import { HearingRequestMainModel } from '../models/hearingRequestMain.model';
-import { ACTION } from '../models/hearings.enum';
+import { ACTION, HearingChannelEnum } from '../models/hearings.enum';
+import { PropertiesUpdatedAutomatically, PropertiesUpdatedOnPageVisit } from '../models/hearingsUpdateMode.enum';
 import {
   LinkedHearingGroupMainModel,
   LinkedHearingGroupResponseModel,
@@ -21,7 +22,13 @@ export class HearingsService {
 
   public navigateAction$: Observable<ACTION> = this.actionSubject.asObservable();
 
-  constructor(private readonly http: HttpClient) {}
+  public propertiesUpdatedOnPageVisit: PropertiesUpdatedOnPageVisit;
+  public propertiesUpdatedAutomatically: PropertiesUpdatedAutomatically = { pageless: {}, withinPage: {} };
+  public displayValidationError: boolean = false;
+  public submitUpdatedRequestClicked: boolean = false;
+  public hearingRequestForSubmitValid: boolean = false;
+
+  constructor(private readonly http: HttpClient) { }
 
   public navigateAction(action: ACTION): void {
     this.actionSubject.next(action);
@@ -73,7 +80,7 @@ export class HearingsService {
   }
 
   public submitHearingRequest(hearingRequestMainModel: HearingRequestMainModel): Observable<ResponseDetailsModel> {
-    return this.http.post<ResponseDetailsModel>('api/hearings/submitHearingRequest', hearingRequestMainModel);
+    return this.http.post<ResponseDetailsModel>('api/hearings/submitHearingRequest', this.prepareHearingRequestModel(hearingRequestMainModel));
   }
 
   public updateHearingRequest(hearingRequestMainModel: HearingRequestMainModel): Observable<ResponseDetailsModel> {
@@ -81,7 +88,7 @@ export class HearingsService {
       params: new HttpParams()
         .set('hearingId', hearingRequestMainModel.requestDetails.hearingRequestID)
     };
-    return this.http.put<ResponseDetailsModel>('api/hearings/updateHearingRequest', hearingRequestMainModel, options);
+    return this.http.put<ResponseDetailsModel>('api/hearings/updateHearingRequest', this.prepareHearingRequestModel(hearingRequestMainModel), options);
   }
 
   public getHearingActuals(hearingId: string): Observable<HearingActualsMainModel> {
@@ -114,5 +121,25 @@ export class HearingsService {
         .set('hearingGroupId', hearingGroupId)
     };
     return this.http.delete<LinkedHearingGroupResponseModel>('api/hearings/deleteLinkedHearingGroup', options);
+  }
+
+  public prepareHearingRequestModel(hearingRequestMainModel: HearingRequestMainModel): HearingRequestMainModel {
+    let model = hearingRequestMainModel;
+    const newModel: HearingRequestMainModel = {
+      ...hearingRequestMainModel,
+      hearingDetails: {
+        ...hearingRequestMainModel.hearingDetails,
+        hearingWindow: null
+      }
+    };
+    if (hearingRequestMainModel.hearingDetails.hearingWindow && Object.keys(hearingRequestMainModel.hearingDetails.hearingWindow).length === 0) {
+      model = newModel;
+    }
+    return model;
+  }
+
+  public getHearingChannels(hearingRequestMainModel: HearingRequestMainModel) : string[]{
+    return !!hearingRequestMainModel.hearingDetails?.isPaperHearing ?
+      [HearingChannelEnum.ONPPR] : hearingRequestMainModel.hearingDetails.hearingChannels;
   }
 }

@@ -1,4 +1,4 @@
-import MockAdapter from 'axios-mock-adapter';
+import * as MockAdapter from 'axios-mock-adapter';
 import { HttpMockAdapter } from '../common/httpMockAdapter';
 import { filterAllWorkCases } from './caseService';
 import { CASEWORKER_ALL_CASES, CASEWORKER_MY_CASES, JUDICIAL_ALL_CASES, JUDICIAL_MY_CASES } from './constants/mock.data';

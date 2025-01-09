@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { CaseState, CaseType, Jurisdiction, PaginationMetadata, SearchResultView } from '@hmcts/ccd-case-ui-toolkit';
 import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
 import { Store, select } from '@ngrx/store';
+import { decompressFromUTF16 } from 'lz-string';
 import { Observable, Subscription, combineLatest } from 'rxjs';
 import { AppConfig } from '../../../app/services/ccd-config/ccd-case.config';
 import { ActionBindingModel } from '../../../cases/models/create-case-actions.model';
@@ -111,9 +112,10 @@ export class CaseSearchComponent implements OnInit, OnDestroy {
 
     this.resultSubscription = this.resultView$.subscribe((resultView) => this.onResultsViewHandler(resultView));
 
-    this.elasticSearchFlagSubsription = this.featureToggleService.isEnabled('elastic-search').subscribe((value) => this.elasticSearchFlag = value);
-
-    this.triggerQuery();
+    this.elasticSearchFlagSubsription = this.featureToggleService.isEnabled('elastic-search').subscribe((value) => {
+      this.elasticSearchFlag = value;
+      this.triggerQuery();
+    });
   }
 
   public listenToPaginationMetadata = () => {
@@ -167,10 +169,26 @@ export class CaseSearchComponent implements OnInit, OnDestroy {
     };
   };
 
+  private getCompressedLSItem(key: string): string {
+    const item = localStorage.getItem(key);
+    if (item && item.length > 0) {
+      if (item.startsWith('{')) { // probably not compressed
+        return item;
+      }
+      try {
+        const decomp = decompressFromUTF16(item);
+        return JSON.parse(decomp);
+      } catch (e) {
+        console.log('error decompressing data of length' + item.length, e);
+      }
+    }
+    return null;
+  }
+
   public getEvent() {
     let event = null;
     const formGroupFromLS = JSON.parse(localStorage.getItem('search-form-group-value'));
-    const jurisdictionFromLS = JSON.parse(localStorage.getItem('search-jurisdiction'));
+    const jurisdictionFromLS = this.getCompressedLSItem('search-jurisdiction');
     const caseTypeGroupFromLS = JSON.parse(localStorage.getItem('search-caseType'));
     const metadataFieldsGroupFromLS = JSON.parse(localStorage.getItem('search-metadata-fields'));
 

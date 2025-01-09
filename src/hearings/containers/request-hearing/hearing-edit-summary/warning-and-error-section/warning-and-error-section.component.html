@@ -1,0 +1,17 @@
+<div class="govuk-form-group" [ngClass]="{'govuk-form-group--error' : displayValidationError()}">
+  <div class="govuk-warning-text" *ngIf="!displayValidationError() && (pageVisitChangeExists || isPagelessAttributeChanged || isWithinPageAttributeChanged)">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+      {{ !isPagelessAttributeChanged ? 'The details for the hearing have changed. Please review and submit the added updates.' :
+       'Some details required for the hearing have been changed - they may not be displayed. ' +
+       'Please submit an amended hearing request to include these changes'}}
+    </strong>
+  </div>
+  <div class="govuk-body govuk-error-message" *ngIf="displayValidationError()">
+    {{ 'You have not added all the updates. Click the \'Change\' link under any sections labelled ' +
+    '\'Action needed\' and then click the continue button at the end of the page to add the changes to ' +
+    'the hearing summary. You will not be able to submit the request until this is done.'}}
+  </div>
+</div>
+

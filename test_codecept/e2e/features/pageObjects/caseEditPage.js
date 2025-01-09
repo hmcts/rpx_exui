@@ -7,7 +7,7 @@ const CaseListPage = require("../pageObjects/CaseListPage");
 const { LOG_LEVELS } = require('../../support/constants');
 class caseEditPage {
     constructor() {
-        this.userName = 'lukesuperuserxui@mailnesia.com';
+        this.userName = 'lukesuperuserxui_new@mailnesia.com';
         this.password = 'Monday01';
         this.searchResultsTopPagination = $("ccd-search-result .pagination-top");
         this.ccdCaseEdit = $('ccd-case-edit')
@@ -186,15 +186,9 @@ class caseEditPage {
     }
 
     async nextStepTriggerActions() {
-        let ccd_event_trigger = $$("ccd-event-trigger >form .form-group option");
-        let eventCount = await ccd_event_trigger.count();
-        let optionValues = [];
-        let id = "next-step";
-        for (let ecount = 1; ecount <= eventCount; ecount++) {
-            let optionText = await element(by.xpath(`//*[@id='${id}']//option[${ecount}]`)).getText()
-            optionValues.push(`${optionText}`);
-        }
-        return optionValues;
+        let ccd_event_trigger = $("select#next-step");
+        
+        return await ccd_event_trigger.getSelectOptions();
     }
 
     async clickNextStepTriggerActions() {
@@ -302,6 +296,10 @@ class caseEditPage {
         let dd = checkURanswerPage.get(count).$$("td ccd-field-read dl dd");
         let dt = checkURanswerPage.get(count).$$("td ccd-field-read dl dt");
         for (let dtCount = 0; dtCount < await dt.count(); dtCount++) {
+            const isDisplayed = await await dd.get(dtCount).isDisplayed();
+            if (!isDisplayed){
+                continue;
+            }
             let ddValue = await dd.get(dtCount).getText();
             let dtLabel = await dt.get(dtCount).getText();
             this.checkURanswerPageData.push({ [dtLabel]: ddValue });
@@ -321,7 +319,7 @@ class caseEditPage {
         await this.continueButton.click();
         let e = $("#TextField");
         let errormsg = await $("ccd-write-text-field .error-message").getText();
-        expect(errormsg).to.eql("Text Field is required");
+        expect(errormsg.trim()).to.eql("Text Field is required");
         
     }
 

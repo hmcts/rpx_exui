@@ -10,13 +10,13 @@ var BrowserWaits = require('../../support/customWaits');
 
 var CaseManager = require('../pageObjects/common/CaseManager');
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const CCDCaseDetails = require('../../../nodeMock/ccd/ccdCaseConfig/caseDetailsConfigGenerator');
 const caseDetailsPage = require('../pageObjects/caseDetailsPage');
 
 const creatCaseStepTimeout = 600*1000;
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   var caseListPage = new CaseListPage();
   let frCase = new FRCase();
   let probateCase = new ProbateCase();
@@ -85,4 +85,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
   Then('I am on case form page', async function () {
     await caseManager.AmOnCCDCaseEditPage();
   });
-});

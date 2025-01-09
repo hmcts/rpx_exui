@@ -6,13 +6,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import * as _ from 'lodash';
 import { of } from 'rxjs';
+import { MockRpxTranslatePipe } from '../../../../app/shared/test/mock-rpx-translate.pipe';
 import { initialState } from '../../../hearing.test.data';
 import {
   EXUIDisplayStatusEnum,
   EXUISectionStatusEnum,
   GroupLinkType,
-  HearingListingStatusEnum,
   HMCStatus,
+  HearingListingStatusEnum,
   Mode
 } from '../../../models/hearings.enum';
 import { ServiceLinkedCasesWithHearingsModel } from '../../../models/linkHearings.model';
@@ -270,7 +271,7 @@ function ConfigureTestBedModule(hearingMockService: HearingsService, mockRouterS
   STATE.hearings.hearingLinks.linkedHearingGroup = mockLinkedHearingGroup.linkedHearingGroup;
 
   TestBed.configureTestingModule({
-    declarations: [HowLinkedHearingsBeHeardComponent],
+    declarations: [HowLinkedHearingsBeHeardComponent, MockRpxTranslatePipe],
     imports: [ReactiveFormsModule, RouterTestingModule, HearingsPipesModule],
     providers: [
       provideMockStore({ initialState: STATE }),

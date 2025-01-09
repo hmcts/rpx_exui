@@ -1,17 +1,17 @@
-<xuilib-hmcts-error-summary [errorMessages]="errors" [header]="'There is a problem'"></xuilib-hmcts-error-summary>
+<xuilib-hmcts-error-summary [errorMessages]="errors" [header]="'There is a problem' | rpxTranslate"></xuilib-hmcts-error-summary>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <form class="form" [formGroup]="hearingChangeReasonForm">
       <h1 class="govuk-heading-l">
-        Provide a reason for changing this hearing
+        {{ 'Provide a reason for changing this hearing' | rpxTranslate }}
       </h1>
       <div class="govuk-form-group" [ngClass]="{'govuk-form-group--error' : !selectionValid}">
         <fieldset class="govuk-fieldset">
           <span *ngIf="!selectionValid" id="change-reason-selection-error" class="govuk-error-message">
-            <span>{{ hearingChangeReasonMessages.SELECT_AT_LEAST_ONE_REASON }}</span>
+            <span>{{ hearingChangeReasonMessages.SELECT_AT_LEAST_ONE_REASON | rpxTranslate }}</span>
           </span>
           <div class="govuk-hint">
-            Select all that apply.
+            {{ 'Select all that apply.' | rpxTranslate }}
           </div>
           <div id="hearing-option-container" class="govuk-checkboxes" formArrayName="reasons"
             data-module="govuk-checkboxes">
@@ -26,8 +26,7 @@
       </div>
     </form>
     <p class="govuk-body">
-      <a href="javascript:void(0)" [routerLink]="['/', 'hearings', 'request', 'hearing-view-edit-summary']">Go back to
-        hearing summary</a>
+      <a href="javascript:void(0)" (click)="onBackToSummaryPage()">{{ 'Go back to hearing summary' | rpxTranslate }}</a>
     </p>
   </div>
 </div>

@@ -5,6 +5,7 @@ import { ActualHearingDayModel, HearingActualsMainModel, PlannedHearingDayModel 
 import { AnswerSource, HearingChannelEnum, HearingDateEnum, HearingResult } from '../../models/hearings.enum';
 import { LovRefDataModel } from '../../models/lovRefData.model';
 import * as fromHearingStore from '../../store';
+import * as moment from 'moment';
 
 @Component({
   selector: 'exui-hearing-actual-summary',
@@ -13,6 +14,7 @@ import * as fromHearingStore from '../../store';
 })
 export class HearingActualSummaryComponent implements OnInit {
   @Input() public hearingState$: Observable<fromHearingStore.State>;
+  @Input() public hearingStageOptions: LovRefDataModel[];
   @Input() public hearingActualsMainModel: HearingActualsMainModel;
   @Input() public adjournReasons: LovRefDataModel[];
 
@@ -23,6 +25,7 @@ export class HearingActualSummaryComponent implements OnInit {
   public hearingDays: { actualHearingDay: ActualHearingDayModel; plannedHearingDay: PlannedHearingDayModel }[] = [];
   public dateFormat = HearingDateEnum;
   public answerSource = AnswerSource;
+  public hearingTypeDescription: string;
 
   public ngOnInit(): void {
     const hearingOutcome = this.hearingActualsMainModel &&
@@ -39,9 +42,30 @@ export class HearingActualSummaryComponent implements OnInit {
     this.isPaperHearing$ = this.hearingState$ && this.hearingState$.pipe(
       map((state) => state.hearingRequest.hearingRequestMainModel.hearingDetails.hearingChannels.includes(HearingChannelEnum.ONPPR))
     );
+    this.hearingTypeDescription = hearingOutcome?.hearingType && this.getHearingTypeDescription(hearingOutcome.hearingType);
+  }
+
+  private getHearingTypeDescription(hearingType: string): string {
+    const hearingTypeFromLookup = this.hearingStageOptions?.find((x) => x.key.toLowerCase() === hearingType.toLowerCase());
+
+    return hearingTypeFromLookup ? hearingTypeFromLookup.value_en : '';
   }
 
   public get isMultiDayHearing(): boolean {
     return this.hearingActualsMainModel.hearingActuals.actualHearingDays.length > 1;
+  }
+
+  public actualHearingDate(): string {
+    return this.hearingActualsMainModel?.hearingActuals?.actualHearingDays[0]?.hearingStartTime ?
+      this.hearingActualsMainModel?.hearingActuals?.actualHearingDays[0]?.hearingStartTime :
+      this.hearingActualsMainModel?.hearingActuals?.actualHearingDays[0]?.hearingDate;
+  }
+
+  private convertUTCDateToLocalDate(date): Date {
+    return new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+  }
+
+  public actualMultiDaysHearingDates(): string {
+    return `${moment.tz(this.convertUTCDateToLocalDate(new Date(this.hearingActualsMainModel?.hearingActuals?.actualHearingDays[0].hearingStartTime)), moment.tz.guess()).format('DD MMM YYYY')} - ${moment.tz(this.convertUTCDateToLocalDate(new Date(this.hearingActualsMainModel?.hearingActuals?.actualHearingDays[this.hearingActualsMainModel?.hearingActuals?.actualHearingDays.length - 1].hearingStartTime)), moment.tz.guess()).format('DD MMM YYYY')}`;
   }
 }

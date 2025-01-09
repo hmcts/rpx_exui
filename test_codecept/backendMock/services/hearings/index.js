@@ -2,9 +2,10 @@
 const { v4 } = require('uuid');
 const userApiData = require('../userApiData')
 
+const completedHearing = require('./mockData/completedHearing.data')
 
 class HearingsApi{
-    
+
 
     constructor(){
 
@@ -15,30 +16,78 @@ class HearingsApi{
         this.serviceLinkedcases = []
 
         // this.addHearing()
-        // this.addHearing({ hmcStatus: "COMPLETED" })
+        this.addHearing({ hmcStatus: "LISTED", hearingID:'12345678123456781' })
+        this.addHearing({ hmcStatus: "COMPLETED",hearingID: '12345678123456782' })
+        this.addHearing({ hmcStatus: "AWAITING_ACTUALS", hearingID: '12345678123456783' })
 
+
+        this.addHearing({ hmcStatus: "AWAITING_LISTING", hearingID: '12345678123456784' })
+        this.addHearing({ hmcStatus: "UPDATE_REQUESTED", hearingID: '12345678123456785' })
+        this.addHearing({ hmcStatus: "UPDATE_SUBMITTED", hearingID: '12345678123456786' })
+        this.addHearing({ hmcStatus: "EXCEPTION", hearingID: '12345678123456787' })
+        this.addHearing({ hmcStatus: "CANCELLATION_REQUESTED", hearingID: '12345678123456788' })
+        this.addHearing({ hmcStatus: "CANCELLATION_SUBMITTED", hearingID: '12345678123456790' })
+        this.addHearing({ hmcStatus: "VACATED", hearingID: '12345678123456791' })
+        this.addHearing({ hmcStatus: "CANCELLED", hearingID: '12345678123456792' })
+        this.addHearing({ hmcStatus: "ADJOURNED", hearingID: '12345678123456793' })
+        this.addHearing({ hmcStatus: "VACATED", hearingID: '12345678123456793' })
+
+        this.hearingResponse = completedHearing
+    }
+
+    getLinkedCasesWithCaseRef(caseRef){
+        const serviceLinkedcases = []
+        for (let i = 0; i < 2; i++) {
+            serviceLinkedcases.push(
+                {
+                    caseReference: '123456788765432' + i,
+                    caseName: 'Mock case linked ' + i,
+                    reasonsForLink: ['mock case link']
+                }
+            )
+        }
+        // this.serviceLinkedcases.push(
+        //     {
+        //         caseReference: caseRef,
+        //         caseName: 'Mock case linked test1',
+        //         reasonsForLink: ['mock case link']
+        //     }
+        // )
+        // this.serviceLinkedcases.push(
+        //     {
+        //         caseReference: caseRef,
+        //         caseName: 'Mock case linked test2',
+        //         reasonsForLink: ['mock case link']
+        //     }
+        // )
+        return serviceLinkedcases;
     }
 
     addHearing(props){
         this.hearings.push(this.gethearingTemplate(props))
     }
-    
 
-    getCaseHearings(){
+    getHearingWithProps(props){
+        return this.gethearingTemplate(props);
+    }
+
+
+    getCaseHearings(caseId){
             return {
-                "caseRef": "1690807693531270",
+                "caseRef": caseId,
                 "caseHearings": this.hearings,
                 "hmctsServiceCode": null
         }
     }
 
 
+
     gethearingTemplate(props){
         props = props ? props : {}
         return {
             hearingRequestDateTime: props.hearingRequestDateTime ? props.hearingRequestDateTime : "2023-07-13T10:58:40.419815",
-            hearingType: props.hearingType ? props.hearingType : "ABA5-FOF",
-            hmcStatus: props.hmcStatus ? props.hmcStatus : "AWAITING_ACTUALS",
+            hearingType: props.hearingType ? props.hearingType : `MOCK_${props.hmcStatus}`,
+            hmcStatus: props.hmcStatus ? props.hmcStatus : "LISTED",
             lastResponseReceivedDateTime: props.lastResponseReceivedDateTime ? props.lastResponseReceivedDateTime : "2023-07-13T16:12:15",
             requestVersion: 1,
             hearingListingStatus: props.hearingListingStatus ? props.hearingListingStatus : "FIXED",
@@ -82,11 +131,15 @@ class HearingsApi{
                 },
             ],
             hearingGroupRequestId: null,
-            hearingIsLinkedFlag: false,
+            hearingIsLinkedFlag: true,
             hearingChannels: props.hearingChannels ? props.hearingChannels.split(",") : [
                 "INTER",
             ],
-            hearingID: 2000006167,
+            hearingID: props.hearingID ? props.hearingID : Date.now(),
+            hearingResponse:{
+                laCaseStatus: 'LISTED'
+            }
+
         }
     }
 

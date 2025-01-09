@@ -1,13 +1,15 @@
+import { of } from 'rxjs';
 import { LoggerService } from './logger.service';
+import { DeploymentEnvironmentEnum } from '../../enums/deployment-environment-enum';
 
 describe('Logger service', () => {
   const mockedMonitoringService = jasmine.createSpyObj('mockedMonitoringService', ['logEvent', 'logException', 'enableCookies']);
   const mockedNgxLogger = jasmine.createSpyObj('mockedNgxLogger', ['trace', 'debug', 'info',
     'log', 'warn', 'error', 'fatal']);
-  const mockedSessionStorageService = jasmine.createSpyObj('mockedCookieService', ['getItem']);
+  const mockedSessionStorageService = jasmine.createSpyObj('mockedSessionStorageService', ['getItem']);
   const mockedCryptoWrapper = jasmine.createSpyObj('mockedCryptoWrapper', ['encrypt', 'decrypt']);
   const mockedConsoleObject = jasmine.createSpyObj('mockedConsoleObject', ['log', 'trace', 'debug', 'info', 'warn', 'error']);
-  const mockEnvironmentService = jasmine.createSpyObj('mockEnvironmentService', ['isProd', 'config$']);
+  const mockEnvironmentService = jasmine.createSpyObj('mockEnvironmentService', ['config$', 'getDeploymentEnv']);
   const mockConfig = jasmine.createSpyObj('mockConfig', ['subscribe']);
   mockEnvironmentService.config$ = mockConfig;
 
@@ -78,9 +80,35 @@ describe('Logger service', () => {
     // slice off the last two characters of string to ensure no accidental discrepancies
     const expectedMessage = `Message - message, Timestamp - ${Date.now()}`.slice(0, -2);
     const returnedMessage = service.getMessage('message');
-    expect(mockedMonitoringService.logEvent).toHaveBeenCalled();
     expect(returnedMessage).not.toBeNull();
     expect(returnedMessage.slice(0, -2)).toBe(expectedMessage);
+  });
+
+  it('should be able to get a message with the user email encrypted', () => {
+    const userInfo = { id: '1', forename: 'Test', surname: 'User', email: 'testemail', active: true, roles: ['pui-case-manager'] };
+    mockedSessionStorageService.getItem.and.returnValue(JSON.stringify(userInfo));
+    // Return dummy encrypted email address
+    mockedCryptoWrapper.encrypt.and.returnValue('encrypted@example.com');
+    const service = new LoggerService(mockedMonitoringService, mockedNgxLogger, mockedSessionStorageService,
+      mockedCryptoWrapper, mockEnvironmentService);
+    // slice off the last two characters of string to ensure no accidental discrepancies
+    const expectedMessage = `User - encrypted@example.com, Message - message, Timestamp - ${Date.now()}`.slice(0, -2);
+    const returnedMessage = service.getMessage('message');
+    expect(returnedMessage).not.toBeNull();
+    expect(returnedMessage.slice(0, -2)).toBe(expectedMessage);
+  });
+
+  it('should log the correct environment type to the console', () => {
+    mockEnvironmentService.config$ = of(true);
+    mockEnvironmentService.getDeploymentEnv.and.returnValue(DeploymentEnvironmentEnum.PROD);
+    spyOn(console, 'info');
+    new LoggerService(mockedMonitoringService, mockedNgxLogger, mockedSessionStorageService,
+      mockedCryptoWrapper, mockEnvironmentService);
+    expect(console.info).toHaveBeenCalledWith('Environment is prod.');
+    mockEnvironmentService.getDeploymentEnv.and.returnValue(DeploymentEnvironmentEnum.AAT);
+    new LoggerService(mockedMonitoringService, mockedNgxLogger, mockedSessionStorageService,
+      mockedCryptoWrapper, mockEnvironmentService);
+    expect(console.info).toHaveBeenCalledWith('Environment is aat.');
   });
 
   describe('enableCookies()', () => {

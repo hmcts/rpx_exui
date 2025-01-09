@@ -1,5 +1,5 @@
 
-var { defineSupportCode } = require('cucumber');
+var { Then, When, Given } = require('@cucumber/cucumber');
 const reportLogger = require('../../../support/reportLogger');
 const BrowserWaits = require('../../../support/customWaits');
 const SoftAssert = require('../../../../ngIntegration/util/softAssert');
@@ -26,7 +26,7 @@ const browserUtil = require('../../../../ngIntegration/util/browserUtil');
 
 const taskAssignmentPersonNotAuthorisedPage = require('../../pageObjects/workAllocation/common/taskAssignmentPersonNotAuthorisedPage');
 
-defineSupportCode(function ({ And, But, Given, Then, When }) {
+
   const taskListTable = new TaskListTable();
   const waCaseListTable = new casesTable();
 
@@ -517,4 +517,3 @@ defineSupportCode(function ({ And, But, Given, Then, When }) {
       expect(await taskActionPage.isBannerMessageDisplayed()).to.be.true;
     }
   });
-});
