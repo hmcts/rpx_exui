@@ -322,6 +322,58 @@ describe('HearingAttendanceComponent', () => {
     expect(component.attendanceFormGroup.controls.parties.value.length).toEqual(1);
   });
 
+  it('should set the party details from the service values hearing model', () => {
+    const newParty: PartyDetailsModel =
+    {
+      'partyID': 'P5',
+      'partyType': PartyType.IND,
+      'partyRole': 'appellant',
+      'individualDetails': {
+        'title': 'Mr',
+        'firstName': 'Brian',
+        'lastName': 'May',
+        'preferredHearingChannel': 'inPerson',
+        'reasonableAdjustments': [
+          'RA0042',
+          'SM0001'
+        ]
+      },
+      'unavailabilityRanges': [
+        {
+          'unavailableFromDate': '2021-12-10T09:00:00.000Z',
+          'unavailableToDate': '2021-12-31T09:00:00.000Z',
+          'unavailabilityType': UnavailabilityType.ALL_DAY
+        }
+      ]
+    };
+    component.serviceHearingValuesModel.parties.push(newParty);
+
+    component.attendanceFormGroup.controls.parties = new FormArray([]);
+    component.hearingCondition = {
+      mode: 'view-edit'
+    };
+    hearingsService.propertiesUpdatedOnPageVisit = {
+      hearingId: 'h000001',
+      caseFlags: null,
+      parties: partyDetailsFromLatestSHV,
+      hearingWindow: null,
+      afterPageVisit: {
+        reasonableAdjustmentChangesRequired: true,
+        nonReasonableAdjustmentChangesRequired: false,
+        partyDetailsChangesRequired: true,
+        partyDetailsChangesConfirmed: true,
+        hearingWindowChangesRequired: true,
+        hearingFacilitiesChangesRequired: false,
+        hearingUnavailabilityDatesChanged: false
+      }
+    };
+    component.ngOnInit();
+    expect(component.attendanceFormGroup.controls.parties.value.length).toEqual(2);
+    expect(component.attendanceFormGroup.controls.parties.value[1].partyID).toEqual('P5');
+    expect(component.attendanceFormGroup.controls.parties.value[1].partyName).toEqual('Brian May');
+    component.serviceHearingValuesModel.parties.pop();
+  });
+
   it('should call initialiseFromHearingValuesForAmendments for manual amendments journey with party changes', () => {
     spyOn(component, 'initialiseFromHearingValuesForAmendments');
     component.hearingCondition = {
@@ -466,7 +518,6 @@ describe('HearingAttendanceComponent', () => {
       expect(component.attendanceFormGroup.controls.estimation.value).toEqual(3);
     });
   });
-
   afterEach(() => {
     fixture.destroy();
   });
