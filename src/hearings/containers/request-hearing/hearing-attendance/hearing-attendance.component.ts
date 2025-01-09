@@ -74,38 +74,40 @@ export class HearingAttendanceComponent extends RequestHearingPageFlow implement
   }
 
   public ngOnInit(): void {
-    if ((this.hearingCondition.mode === Mode.VIEW_EDIT &&
-      this.hearingsService.propertiesUpdatedOnPageVisit?.hasOwnProperty('parties') &&
-      this.hearingsService.propertiesUpdatedOnPageVisit?.afterPageVisit.partyDetailsChangesRequired)) {
-      this.initialiseFromHearingValuesForAmendments();
-    } else if (!this.hearingRequestMainModel.partyDetails.length) {
-      this.initialiseFromHearingValues();
+    if (this.hearingCondition.mode === Mode.VIEW_EDIT) {
+      // This will be triggered due to changes in the hearing service call
+      if (this.hearingsService.propertiesUpdatedOnPageVisit?.hasOwnProperty('parties') &&
+      this.hearingsService.propertiesUpdatedOnPageVisit?.afterPageVisit.partyDetailsChangesRequired) {
+        this.initialiseFromHearingValuesForAmendments();
+      } else {
+        // This will be triggered when a user is amending
+        this.initialiseFormValues(this.hearingRequestMainModel.partyDetails);
+      }
     } else {
-      this.hearingRequestMainModel.partyDetails.filter((party) => party.partyType === PartyType.IND)
-        .forEach((partyDetail) => {
-          (this.attendanceFormGroup.controls.parties as FormArray).push(this.patchValues({
-            partyID: partyDetail.partyID,
-            partyType: partyDetail.partyType,
-            partyRole: partyDetail.partyRole,
-            partyName: `${partyDetail.individualDetails.firstName} ${partyDetail.individualDetails.lastName}`,
-            individualDetails: {
-              ...partyDetail.individualDetails,
-              preferredHearingChannel: partyDetail.individualDetails?.preferredHearingChannel ? partyDetail.individualDetails?.preferredHearingChannel : ''
-            },
-            organisationDetails: partyDetail.organisationDetails,
-            unavailabilityDOW: partyDetail.unavailabilityDOW,
-            unavailabilityRanges: partyDetail.unavailabilityRanges
-          } as PartyDetailsModel) as FormGroup);
-        });
+      // This will be triggered on a create request
+      this.initialiseFormValues(this.serviceHearingValuesModel.parties);
     }
     this.attendanceFormGroup.controls.estimation.setValue(this.hearingRequestMainModel.hearingDetails.numberOfPhysicalAttendees || 0);
     this.partiesFormArray = this.attendanceFormGroup.controls.parties as FormArray;
   }
 
-  public initialiseFromHearingValues(): void {
-    this.serviceHearingValuesModel.parties.forEach((partyDetailsModel: PartyDetailsModel) => {
-      (this.attendanceFormGroup.controls.parties as FormArray).push(this.patchValues(partyDetailsModel) as FormGroup);
-    });
+  public initialiseFormValues(source: PartyDetailsModel[]): void {
+    source.filter((party) => party.partyType === PartyType.IND)
+      .forEach((partyDetail) => {
+        (this.attendanceFormGroup.controls.parties as FormArray).push(this.patchValues({
+          partyID: partyDetail.partyID,
+          partyType: partyDetail.partyType,
+          partyRole: partyDetail.partyRole,
+          partyName: `${partyDetail.individualDetails.firstName} ${partyDetail.individualDetails.lastName}`,
+          individualDetails: {
+            ...partyDetail.individualDetails,
+            preferredHearingChannel: partyDetail.individualDetails?.preferredHearingChannel ? partyDetail.individualDetails?.preferredHearingChannel : ''
+          },
+          organisationDetails: partyDetail.organisationDetails,
+          unavailabilityDOW: partyDetail.unavailabilityDOW,
+          unavailabilityRanges: partyDetail.unavailabilityRanges
+        } as PartyDetailsModel) as FormGroup);
+      });
   }
 
   public initialiseFromHearingValuesForAmendments(): void {
