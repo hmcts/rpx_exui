@@ -90,22 +90,15 @@ export async function refreshRoleAssignmentForUser(userInfo: UserInfo, req: any)
     try {
       const response: AxiosResponse = await http.get(path, { headers });
       const activeRoleAssignments = getActiveRoleAssignments(response?.data?.roleAssignmentResponse, new Date());
-      userRoleAssignments = getRoleAssignmentInfo(activeRoleAssignments);
-      const amRoles = getOrganisationRoles(activeRoleAssignments);
-      trackTrace(`user ${id} roles: ${JSON.stringify(amRoles)}`, { functionCall: 'refreshRoleAssignmentForUser' });
-      userInfo.roles = userInfo?.roles.concat(amRoles);
-
-      const roleCategories = extractRoleCategories(userRoleAssignments);
-      // We check for the roleCategories to determine the roleCategory. If not we try IDAM roles
-      userInfo.roleCategory = getRoleCategoryFromRoleAssignments(roleCategories) || getUserRoleCategory(userInfo.roles);
       req.session.roleAssignmentResponse = activeRoleAssignments;
+      userRoleAssignments = setUserRoles(userInfo, req, id);
       req.session.roleRequestEtag = response?.headers?.etag;
-      req.session.userRoleAssignments = userRoleAssignments;
     } catch (error) {
       if (error.status === 304) {
         // as user role assignments are not returned use session to send expected results
         trackTrace(`user ${id} details from session:- ${JSON.stringify(req?.session?.userRoleAssignments)}`, { functionCall: 'refreshRoleAssignmentForUser' });
-        return req?.session?.userRoleAssignments;
+        userRoleAssignments = setUserRoles(userInfo, req, id);
+        return userRoleAssignments;
       }
       let err = error;
       if (typeof error === 'object' && error !== null) {
@@ -117,6 +110,34 @@ export async function refreshRoleAssignmentForUser(userInfo: UserInfo, req: any)
     trackTrace('userInfo is null', { functionCall: 'refreshRoleAssignmentForUser' });
   }
   return userRoleAssignments;
+}
+
+export function setUserRoles(userInfo: UserInfo, req: any, userId: string): any[] {
+  userInfo.roles = userInfo.roles ? userInfo.roles : [];
+  trackTrace(`user ${userId} prior roles ${JSON.stringify(userInfo.roles.slice(0, 50))} before addition`);
+  const activeRoleAssignments = req.session.roleAssignmentResponse;
+  const userRoleAssignments = getRoleAssignmentInfo(activeRoleAssignments);
+  const amRoles = getOrganisationRoles(activeRoleAssignments);
+  trackTrace(`user ${userId} roles: ${JSON.stringify(amRoles.slice(0, 50))}`, { functionCall: 'refreshRoleAssignmentForUser' });
+  addUserRolesIfUnique(userInfo, amRoles);
+  trackTrace(`user ${userId} roles ${JSON.stringify(userInfo.roles.slice(0, 50))} added to userInfo`);
+  if (!userInfo.roleCategory) {
+    // only set the role category if not already set
+    // this means user will not have to log out and log in to be assigned it properly
+    const roleCategories = extractRoleCategories(userRoleAssignments);
+    // We assign the role category via the role assignments assigned to user. If not we try IDAM roles
+    userInfo.roleCategory = getRoleCategoryFromRoleAssignments(roleCategories) || getUserRoleCategory(userInfo.roles);
+  }
+  return userRoleAssignments;
+}
+
+// this will only add roles to userinfo.roles if not present
+export function addUserRolesIfUnique(userInfo: UserInfo, amRoles: string[]): void {
+  for (const role of amRoles) {
+    if (!userInfo.roles.includes(role)) {
+      userInfo.roles.push(role);
+    }
+  }
 }
 
 export function extractRoleCategories(userRoleAssignments: any[]): string[] {
