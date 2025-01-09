@@ -35,7 +35,7 @@ let features = ''
 if (testType === 'e2e' || testType === 'smoke'){
   features = `../e2e/features/app/**/*.feature`
 } else if (testType === 'ngIntegration'){
-  features = pipelineBranch === 'master' && !local ? `../ngIntegration/tests/features/**/notests.feature` : `../ngIntegration/tests/features/**/*.feature`
+  features = `../ngIntegration/tests/features/**/*.feature`
 } else {
   throw new Error(`Unrecognized test type ${testType}`);
 }

@@ -83,6 +83,7 @@ describe('TaskListComponent', () => {
   const mockFeatureToggleService = jasmine.createSpyObj('featureToggleService', ['isEnabled', 'getValue']);
   const mockLoadingService = jasmine.createSpyObj('mockLoadingService', ['register', 'unregister']);
   const mockSessionStorageService = jasmine.createSpyObj('mockSessionStorageService', ['setItem', 'getItem']);
+
   beforeEach((() => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     TestBed.configureTestingModule({

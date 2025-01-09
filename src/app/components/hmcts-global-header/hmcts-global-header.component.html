@@ -1,5 +1,5 @@
-<div class="hmcts-header transparent-background">
-  <div class="hmcts-header__container" [ngClass]="{ 'set-min-height': items?.length === 0}">
+<div class="hmcts-header">
+  <div class="hmcts-header__container">
     <ng-container [ngSwitch]="logo">
 
       <!-- Logo for Judicial Users -->
@@ -33,9 +33,17 @@
           {{headerTitle?.name | rpxTranslate}}
         </a>
       </ng-container>
-
       <!-- Logo for Users (Default) -->
       <ng-container *ngSwitchDefault>
+        <div *ngIf="!headerTitle?.name" class="govuk-header__logo">
+          <a href="#" class="govuk-header__link govuk-header__link--homepage">
+            <span class="govuk-header__logotype">
+              <span class="govuk-header__logotype-text">
+                MyHMCTS
+              </span>
+            </span>
+          </a>
+        </div>
         <div class="hmcts-header__logo">
           <a class="hmcts-header__link" [routerLink]="'/'"
              [attr.aria-label]="headerTitle?.name | rpxTranslate">

@@ -59,6 +59,15 @@ export const initProxy = (app: Express) => {
   }, false);
 
   applyProxy(app, {
+    middlewares: [bodyParser.json()],
+    onReq: searchCases.modifyRequest,
+    onRes: searchCases.handleElasticSearchResponse,
+    rewrite: false,
+    source: '/data/internal/searchCases',
+    target: getConfigValue(SERVICES_CCD_COMPONENT_API_PATH)
+  });
+
+  applyProxy(app, {
     filter: [
       '!/data/internal/searchCases'
     ],
@@ -67,15 +76,6 @@ export const initProxy = (app: Express) => {
       '/print',
       '/data'
     ],
-    target: getConfigValue(SERVICES_CCD_COMPONENT_API_PATH)
-  });
-
-  applyProxy(app, {
-    middlewares: [bodyParser.json()],
-    onReq: searchCases.modifyRequest,
-    onRes: searchCases.handleElasticSearchResponse,
-    rewrite: false,
-    source: '/data/internal/searchCases',
     target: getConfigValue(SERVICES_CCD_COMPONENT_API_PATH)
   });
 

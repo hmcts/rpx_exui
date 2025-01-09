@@ -1,4 +1,4 @@
-import { createProxyMiddleware as proxy, Options } from 'http-proxy-middleware';
+import { legacyCreateProxyMiddleware as proxy, LegacyOptions } from 'http-proxy-middleware';
 import * as modifyResponse from 'node-http-proxy-json';
 import { getConfigValue } from '../../configuration';
 import { LOGGING } from '../../configuration/references';
@@ -25,7 +25,7 @@ export const onProxyError = (err, req, res) => {
 };
 
 export const applyProxy = (app, config, modifyBody: boolean = true) => {
-  const options: Options = {
+  const options: LegacyOptions = {
     changeOrigin: true,
     logLevel: getConfigValue(LOGGING),
     logProvider: () => {

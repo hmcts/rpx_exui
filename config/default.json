@@ -114,8 +114,8 @@
   "microservice": "xui_webapp",
   "sessionSecret": "secretSauce",
   "caseworkerPageSize": "30000",
-  "globalSearchServices": "IA,CIVIL,PRIVATELAW,PUBLICLAW,EMPLOYMENT",
-  "waSupportedJurisdictions": "IA,CIVIL,PRIVATELAW,PUBLICLAW,EMPLOYMENT,SSCS",
+  "globalSearchServices": "IA,CIVIL,PRIVATELAW,PUBLICLAW,EMPLOYMENT,ST_CIC",
+  "waSupportedJurisdictions": "IA,CIVIL,PRIVATELAW,PUBLICLAW,EMPLOYMENT,ST_CIC",
   "staffSupportedJurisdictions": "ST_CIC,CIVIL,EMPLOYMENT,PRIVATELAW,PUBLICLAW,IA,SSCS",
   "jurisdictions": "DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,EMPLOYMENT,HRS,CIVIL,CMC,PRIVATELAW",
   "serviceRefDataMapping": [
@@ -161,7 +161,7 @@
     "appInsightsEnabled": true,
     "proxyEnabled": false,
     "secureCookieEnabled": true,
-    "helmetEnabled": false,
+    "helmetEnabled": true,
     "termsAndConditionsEnabled": false,
     "redisEnabled": false,
     "oidcEnabled": false,
@@ -175,52 +175,6 @@
     "compressionEnabled": false
   },
   "helmet": {
-    "contentSecurityPolicy": {
-      "directives": {
-        "defaultSrc": ["'self'"],
-        "fontSrc": ["'self'", "https://fonts.gstatic.com", "data:"],
-        "styleSrc": [
-          "'self'",
-          "'unsafe-inline'",
-          "https://fonts.googleapis.com",
-          "https://fonts.gstatic.com",
-          "http://tagmanager.google.com/"
-        ],
-        "scriptSrc": [
-          "'self'",
-          "'unsafe-inline'",
-          "'unsafe-eval'",
-          "https://*.google-analytics.com",
-          "https://*.googletagmanager.com",
-          "az416426.vo.msecnd.net"
-        ],
-        "connectSrc": [
-          "'self'",
-          "*.gov.uk",
-          "dc.services.visualstudio.com",
-          "*.launchdarkly.com",
-          "https://*.google-analytics.com",
-          "https://*.googletagmanager.com",
-          "https://*.analytics.google.com",
-          "wss://*.webpubsub.azure.com",
-          "https://*.in.applicationinsights.azure.com"
-        ],
-        "mediaSrc": ["'self'"],
-        "objectSrc": ["'self'"],
-        "frameAncestors": ["'none'"],
-        "imgSrc": [
-          "'self'",
-          "data:",
-          "https://*.google-analytics.com",
-          "https://*.googletagmanager.com",
-          "https://raw.githubusercontent.com/hmcts/",
-          "http://stats.g.doubleclick.net/",
-          "http://ssl.gstatic.com/",
-          "http://www.gstatic.com/",
-          "https://fonts.gstatic.com"
-        ]
-      }
-    },
     "referrerPolicy": {
       "policy": "origin"
     },

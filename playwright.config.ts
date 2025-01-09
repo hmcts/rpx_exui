@@ -14,7 +14,7 @@ module.exports = defineConfig({
 
   timeout: 3 * 60 * 1000,
   expect: {
-    timeout: 1 * 60 * 1000,
+    timeout: 1 * 60 * 1000
   },
   reportSlowTests: null,
 
@@ -22,7 +22,7 @@ module.exports = defineConfig({
   workers: process.env.FUNCTIONAL_TESTS_WORKERS ? parseInt(process.env.FUNCTIONAL_TESTS_WORKERS, 10) : 1,
 
   reporter: [[process.env.CI ? 'html' : 'list'],
-             ['html', { open: 'never', outputFolder: 'functional-output/tests/playwright-e2e' }]],
+    ['html', { open: 'never', outputFolder: 'functional-output/tests/playwright-e2e' }]],
 
   projects: [
     {

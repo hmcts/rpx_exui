@@ -59,6 +59,7 @@ import {
   searchAndReturnRefinedUsers,
   searchCasesById
 } from './util';
+import { PUI_CASE_MANAGER } from '../user/utils';
 
 caseServiceMock.init();
 roleServiceMock.init();
@@ -539,25 +540,31 @@ export async function getTaskNames(req: EnhancedRequest, res: Response): Promise
  */
 export async function getUsersByServiceName(req: EnhancedRequest, res: Response, next: NextFunction): Promise<void> {
   try {
+    const currentUser: UserInfo = req.session.passport.user.userinfo;
     const term = req.body.term;
     const services = req.body.services;
     let cachedUsers = [];
     let firstEntry = true;
-    if (timestampExists() && FullUserDetailCache.getAllUserDetails()?.length > 0) {
-      // if already ran just use the cache to avoid loading issues
-      firstEntry = false;
-      cachedUsers = FullUserDetailCache.getAllUserDetails();
-      cachedUsers = searchAndReturnRefinedUsers(services, term, cachedUsers);
-      res.send(cachedUsers).status(200);
-    }
-    // always update the cache after getting the cache if needed
-    const cachedUserData = await fetchUserData(req, next);
-    cachedUsers = await fetchRoleAssignments(cachedUserData, req, next);
-    if (firstEntry) {
-      // if not previously ran ensure the new values are given back to angular layer
-      // note: this is now only a safeguard to ensure caching (caching should have run pre login)
-      cachedUsers = searchAndReturnRefinedUsers(services, term, cachedUsers);
-      res.send(cachedUsers).status(200);
+    if (currentUser.roles.includes(PUI_CASE_MANAGER)) {
+      res.status(403).send('Forbidden');
+    } else {
+      if (timestampExists() && FullUserDetailCache.getAllUserDetails()?.length > 0) {
+        // if already ran just use the cache to avoid loading issues
+        firstEntry = false;
+        cachedUsers = FullUserDetailCache.getAllUserDetails();
+
+        cachedUsers = searchAndReturnRefinedUsers(services, term, cachedUsers);
+        res.send(cachedUsers).status(200);
+      }
+      // always update the cache after getting the cache if needed
+      const cachedUserData = await fetchUserData(req, next);
+      cachedUsers = await fetchRoleAssignments(cachedUserData, req, next);
+      if (firstEntry) {
+        // if not previously ran ensure the new values are given back to angular layer
+        // note: this is now only a safeguard to ensure caching (caching should have run pre login)
+        cachedUsers = searchAndReturnRefinedUsers(services, term, cachedUsers);
+        res.send(cachedUsers).status(200);
+      }
     }
   } catch (error) {
     next(error);
@@ -572,7 +579,7 @@ export const getNewUsersByServiceName = async (resolve, reject) => {
     const cachedUserData = await fetchNewUserData();
     await fetchRoleAssignmentsForNewUsers(cachedUserData);
   } catch (error) {
-    console.log('Error getting caseworkers');
+    console.log('Error getting caseworkers', error);
     reject(error);
   }
   resolve();

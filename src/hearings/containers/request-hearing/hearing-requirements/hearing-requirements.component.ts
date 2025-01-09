@@ -28,7 +28,7 @@ import { RequestHearingPageFlow } from '../request-hearing.page.flow';
 })
 export class HearingRequirementsComponent extends RequestHearingPageFlow implements OnInit, AfterViewInit, OnDestroy {
   public readonly caseFlagType = CaseFlagType.REASONABLE_ADJUSTMENT;
-
+  private readonly reloadMessage = 'The Party IDs for this request appear mismatched, please reload and start the request again.';
   public caseFlagsRefData: CaseFlagReferenceModel[];
   public reasonableAdjustmentFlags: CaseFlagGroup[] = [];
   public lostFocus = false;
@@ -37,6 +37,8 @@ export class HearingRequirementsComponent extends RequestHearingPageFlow impleme
   public caseTypeRefData: LovRefDataModel[];
   public caseTypes: CaseCategoryDisplayModel[];
   public showReasonableAdjustmentFlagsWarningMessage: boolean;
+  public showMismatchErrorMessage: boolean;
+  public validationErrors: { id: string, message: string };
 
   @HostListener('window:focus', ['$event'])
   public onFocus(): void {
@@ -79,6 +81,10 @@ export class HearingRequirementsComponent extends RequestHearingPageFlow impleme
       this.initializeHearingRequestFromHearingValues();
     }
     this.caseTypes = CaseTypesUtils.getCaseCategoryDisplayModels(this.caseTypeRefData, this.serviceHearingValuesModel.caseCategories);
+    if (!HearingsUtils.checkHearingPartiesConsistency(this.hearingRequestMainModel, this.serviceHearingValuesModel)) {
+      this.showMismatchErrorMessage = true;
+      this.validationErrors = { id: 'reload-error-message', message: this.reloadMessage };
+    }
   }
 
   /**

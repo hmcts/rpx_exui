@@ -7,10 +7,10 @@
         "build": "NODE_ENV=production webpack --config ./webpack-node.config.js",
         "build:dev": "webpack --config ./webpack-node.config.js",
         "coverage": "npx nyc mocha --config ./test/.mocharc.json  -r dotenv-extended/config",
-        "lint": "npx tslint --project .",
+        "lint": "npx eslint .",
         "watch": "nodemon -r dotenv-extended/config --watch '**/*.ts' --exec ts-node local.ts",
-        "test": "mocha -r dotenv-extended/config -r ts-node/register",
-        "test:watch": "mocha --watch --recursive --watch-extensions ts -r ts-node/register",
+        "test": "npx mocha --config ./test/.mocharc.json -r dotenv-extended/config",
+        "test:watch": "npx mocha --watch --recursive --watch-extensions ts -r ts-node/register",
         "start": "node -r dotenv-extended/config ../dist/rpx-exui/api/server.bundle.js"
     },
     "private": true

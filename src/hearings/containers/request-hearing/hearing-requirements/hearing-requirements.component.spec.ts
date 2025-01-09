@@ -2854,4 +2854,366 @@ describe('HearingRequirementsComponent', () => {
   afterEach(() => {
     fixture.destroy();
   });
+
+  it('should check data for mismatched Party Ids, and display errors if found', () => {
+    component.hearingCondition = {
+      mode: 'create'
+    };
+    const serviceHearingValuesModel: ServiceHearingValuesModel = {
+      hmctsServiceID: 'BBA3',
+      hmctsInternalCaseName: 'Jane vs DWP',
+      publicCaseName: 'Jane vs DWP',
+      autoListFlag: false,
+      hearingType: 'Final',
+      hearingChannels: [],
+      caseCategories: [
+        {
+          categoryType: CategoryType.CaseType,
+          categoryValue: 'BBA3-002'
+        }, {
+          categoryType: CategoryType.CaseSubType,
+          categoryValue: 'BBA3-002CC',
+          categoryParent: 'BBA3-002'
+        }, {
+          categoryType: CategoryType.CaseSubType,
+          categoryValue: 'BBA3-002GC',
+          categoryParent: 'BBA3-002'
+        }, {
+          categoryType: CategoryType.CaseSubType,
+          categoryValue: 'BBA3-002RC',
+          categoryParent: 'BBA3-002'
+        }
+      ],
+      caseDeepLink: 'https://manage-case.demo.platform.hmcts.net/',
+      caserestrictedFlag: false,
+      externalCaseReference: '',
+      caseManagementLocationCode: '196538',
+      caseSLAStartDate: '2021-05-05T09:00:00.000Z',
+      hearingWindow: {
+        dateRangeStart: '2022-11-23T09:00:00.000Z',
+        dateRangeEnd: '2022-11-30T09:00:00.000Z',
+        firstDateTimeMustBe: '2022-12-01T09:00:00.000Z'
+      },
+      duration: 45,
+      hearingPriorityType: 'standard',
+      numberOfPhysicalAttendees: 2,
+      hearingInWelshFlag: false,
+      hearingLocations: [{
+        locationId: '196538',
+        locationType: HMCLocationType.COURT
+      },
+      {
+        locationId: '234850',
+        locationType: HMCLocationType.COURT
+      }
+      ],
+      caseAdditionalSecurityFlag: false,
+      facilitiesRequired: [],
+      listingComments: '',
+      hearingRequester: '',
+      privateHearingRequiredFlag: false,
+      caseInterpreterRequiredFlag: false,
+      leadJudgeContractType: '',
+      judiciary: {
+        roleType: [
+          ''
+        ],
+        authorisationTypes: [
+          ''
+        ],
+        authorisationSubType: [
+          ''
+        ],
+        panelComposition: [
+          {
+            memberType: '',
+            count: 1
+          }
+        ],
+        judiciaryPreferences: [
+          {
+            memberID: 'p1000000',
+            memberType: MemberType.JUDGE,
+            requirementType: RequirementType.EXCLUDE
+          }
+        ],
+        judiciarySpecialisms: [
+          ''
+        ]
+      },
+      hearingIsLinkedFlag: false,
+      panelRequirements: {
+        roleType: [
+          'tj',
+          'dtj',
+          'rtj'
+        ],
+        panelPreferences: [],
+        panelSpecialisms: [
+          'BBA3-DQPM',
+          'BBA3-MQPM2-003',
+          'BBA3-MQPM2-004',
+          'BBA3-FQPM',
+          'BBA3-RMM'
+        ]
+      },
+      parties: [
+        {
+          partyID: 'diff-party-id-1',
+          partyType: PartyType.IND,
+          partyRole: 'appellant',
+          partyName: 'Jane Smith',
+          individualDetails: {
+            title: 'Mrs',
+            firstName: 'Jane',
+            lastName: 'Smith',
+            preferredHearingChannel: 'inPerson',
+            interpreterLanguage: 'POR',
+            reasonableAdjustments: [
+              'RA0042',
+              'RA0053',
+              'RA0013',
+              'RA0016',
+              'RA0042',
+              'PF0015'
+            ]
+          },
+          unavailabilityRanges: [
+            {
+              unavailableFromDate: '2021-12-10T09:00:00.000Z',
+              unavailableToDate: '2021-12-31T09:00:00.000Z',
+              unavailabilityType: UnavailabilityType.ALL_DAY
+            }
+          ]
+        },
+        {
+          partyID: 'P2',
+          partyType: PartyType.ORG,
+          partyRole: 'claimant',
+          partyName: 'DWP',
+          individualDetails: {
+            title: null,
+            firstName: 'DWP',
+            lastName: null,
+            preferredHearingChannel: 'inPerson',
+            interpreterLanguage: null,
+            reasonableAdjustments: [
+              'RA0005'
+            ]
+          },
+          organisationDetails: {
+            name: 'DWP',
+            organisationType: 'GOV',
+            cftOrganisationID: 'O100000'
+          },
+          unavailabilityRanges: [
+            {
+              unavailableFromDate: '2021-12-20T09:00:00.000Z',
+              unavailableToDate: '2021-12-31T09:00:00.000Z',
+              unavailabilityType: UnavailabilityType.ALL_DAY
+            }
+          ]
+        }],
+      caseFlags: {
+        flags: [
+          {
+            partyId: 'P1',
+            partyName: 'Jane Smith',
+            flagParentId: 'RA0008',
+            flagId: 'RA0042',
+            flagDescription: 'Sign language interpreter required',
+            flagStatus: 'ACTIVE'
+          },
+          {
+            partyId: 'P1',
+            partyName: 'Jane Smith',
+            flagParentId: 'RA0032',
+            flagId: 'RA0053',
+            flagDescription: 'Hearing loop required',
+            flagStatus: 'ACTIVE'
+          },
+          {
+            partyId: 'P1',
+            partyName: 'Jane Smith',
+            flagParentId: 'RA0002',
+            flagId: 'RA0013',
+            flagDescription: 'Larger font size',
+            flagStatus: 'ACTIVE'
+          },
+          {
+            partyId: 'P1',
+            partyName: 'Jane Smith',
+            flagParentId: 'RA0003',
+            flagId: 'RA0016',
+            flagDescription: 'Reading documents for customer',
+            flagStatus: 'ACTIVE'
+          },
+          {
+            partyId: 'P1',
+            partyName: 'Jane Smith',
+            flagParentId: 'RA0008',
+            flagId: 'RA0042',
+            flagDescription: 'Sign Language Interpreter',
+            flagStatus: 'ACTIVE'
+          },
+          {
+            partyId: 'P1',
+            partyName: 'Jane Smith',
+            flagParentId: 'PF0001',
+            flagId: 'PF0015',
+            flagDescription: 'Language Interpreter',
+            flagStatus: 'ACTIVE'
+          },
+          {
+            partyId: 'P1',
+            partyName: 'Jane Smith',
+            flagParentId: 'PF0001',
+            flagId: 'PF0002',
+            flagDescription: 'Vulnerable user',
+            flagStatus: 'ACTIVE'
+          },
+          {
+            partyId: 'P2',
+            partyName: 'DWP',
+            flagParentId: 'RA0001',
+            flagId: 'RA0005',
+            flagDescription: 'Physical access and facilities',
+            flagStatus: 'ACTIVE'
+          },
+          {
+            partyId: 'P2',
+            partyName: 'DWP',
+            flagParentId: 'PF0001',
+            flagId: 'PF0011',
+            flagDescription: 'Banning order',
+            flagStatus: 'ACTIVE'
+          },
+          {
+            partyId: 'P2',
+            partyName: 'Jane Smith vs DWP',
+            flagParentId: 'CF0001',
+            flagId: 'CF0002',
+            flagDescription: 'Complex Case',
+            flagStatus: 'ACTIVE'
+          },
+          {
+            partyId: 'P2',
+            partyName: 'Jane Smith vs DWP',
+            flagParentId: 'CF0001',
+            flagId: 'CF0006',
+            flagDescription: 'Potential fraud',
+            flagStatus: 'ACTIVE'
+          },
+          {
+            partyId: 'P2',
+            partyName: 'Jane Smith vs DWP',
+            flagParentId: 'CF0001',
+            flagId: 'CF0007',
+            flagDescription: 'Urgent flag',
+            flagStatus: 'ACTIVE'
+          }
+        ],
+        flagAmendURL: '/'
+      },
+      screenFlow: [
+        {
+          screenName: 'hearing-requirements',
+          navigation: [
+            {
+              resultValue: 'hearing-facilities'
+            }
+          ]
+        },
+        {
+          screenName: 'hearing-facilities',
+          navigation: [
+            {
+              resultValue: 'hearing-stage'
+            }
+          ]
+        },
+        {
+          screenName: 'hearing-stage',
+          navigation: [
+            {
+              resultValue: 'hearing-attendance'
+            }
+          ]
+        },
+        {
+          screenName: 'hearing-attendance',
+          navigation: [
+            {
+              resultValue: 'hearing-venue'
+            }
+          ]
+        },
+        {
+          screenName: 'hearing-venue',
+          conditionKey: 'regionId',
+          navigation: [
+            {
+              conditionOperator: 'INCLUDE',
+              conditionValue: '7',
+              resultValue: 'hearing-welsh'
+            },
+            {
+              conditionOperator: 'NOT INCLUDE',
+              conditionValue: '7',
+              resultValue: 'hearing-judge'
+            }
+          ]
+        },
+        {
+          screenName: 'hearing-welsh',
+          navigation: [
+            {
+              resultValue: 'hearing-judge'
+            }
+          ]
+        },
+        {
+          screenName: 'hearing-judge',
+          navigation: [
+            {
+              resultValue: 'hearing-panel'
+            }
+          ]
+        },
+        {
+          screenName: 'hearing-panel',
+          navigation: [
+            {
+              resultValue: 'hearing-timing'
+            }
+          ]
+        },
+        {
+          screenName: 'hearing-timing',
+          navigation: [
+            {
+              resultValue: 'hearing-additional-instructions'
+            }
+          ]
+        },
+        {
+          screenName: 'hearing-additional-instructions',
+          navigation: [
+            {
+              resultValue: 'hearing-create-edit-summary'
+            }
+          ]
+        }
+      ],
+      vocabulary: [
+        {
+          word1: ''
+        }
+      ]
+    };
+    component.serviceHearingValuesModel = serviceHearingValuesModel;
+    component.ngOnInit();
+    expect(component.showMismatchErrorMessage).toBeTruthy();
+    expect(component.validationErrors).toEqual({ id: 'reload-error-message', message: 'The Party IDs for this request appear mismatched, please reload and start the request again.' });
+  });
 });

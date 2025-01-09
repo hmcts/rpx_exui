@@ -23,7 +23,7 @@
     "hearingWindow": {
         "dateRangeStart": "",
         "dateRangeEnd": "",
-        "firstDateTimeMustBe": "2024-12-18T00:00:00"
+        "firstDateTimeMustBe": "2025-12-18T00:00:00"
     },
     "duration": 120,
     "hearingPriorityType": "Standard",

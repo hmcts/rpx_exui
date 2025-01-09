@@ -23,7 +23,7 @@ export async function checkNumberOfRow(page, tableClass: string, tableName: stri
 }
 
 export async function getCaseReferenceFromFirstRow(page) {
-  const cellXPath = '//*[@id="search-result"]/ccd-search-result/table/tbody/tr[1]/td[2]';
+  const cellXPath = '//*[@id="search-result"]/ccd-search-result/table/tbody/tr[2]/td[2]';
   const cell = page.locator(cellXPath);
   const caseID = await cell.textContent();
   return caseID;

@@ -3,6 +3,20 @@
   <div class="page">
     <main id="content" role="main">
       <a *ngIf="!isConfirmationPage" href="javascript:void(0)" (click)="onBack()" class="govuk-back-link">{{ 'Back' | rpxTranslate }}</a>
+      <div *ngIf="showMismatchErrorMessage" class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">
+          {{'There is a problem' | rpxTranslate}}
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            <li>
+              <span id="error-answers-not-correct" class="govuk-error-message">
+                {{validationErrors.message | rpxTranslate}} <a href="/">Reload the application</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
       <router-outlet></router-outlet>
       <button *ngIf="isChildPage" class="govuk-button" data-module="govuk-button" (click)="onContinue()">{{ 'Continue' | rpxTranslate }}</button>
       <button *ngIf="isCreateEditSummary" [disabled]="buttonDisabled(action.SUBMIT)" class="govuk-button" data-module="govuk-button" (click)="submitRequest(action.SUBMIT)">{{ 'Submit request' | rpxTranslate }}</button>
