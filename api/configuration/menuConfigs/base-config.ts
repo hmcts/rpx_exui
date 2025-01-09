@@ -1,5 +1,5 @@
 export const baseConfig = {
-  '(judge)|(judiciary)': [
+  '(judge)|(judiciary)|(panelmember)': [
     {
       'active': true,
       'flags': [
@@ -15,7 +15,8 @@ export const baseConfig = {
         'caseworker-ia-iacjudge',
         'caseworker-privatelaw',
         'caseworker-publiclaw',
-        'caseworker-employment-etjudge'
+        'caseworker-employment-etjudge',
+        'caseworker-st_cic'
       ],
       'text': 'My work'
     },
@@ -48,7 +49,8 @@ export const baseConfig = {
         'caseworker-civil',
         'caseworker-privatelaw',
         'caseworker-publiclaw-judiciary',
-        'caseworker-employment-etjudge'
+        'caseworker-employment-etjudge',
+        'caseworker-st_cic'
       ],
       'text': 'Case list'
     },
@@ -67,7 +69,8 @@ export const baseConfig = {
         'caseworker-divorce-financialremedy-judiciary',
         'caseworker-probate-judge',
         'caseworker-publiclaw-judiciary',
-        'caseworker-employment-etjudge'
+        'caseworker-employment-etjudge',
+        'caseworker-st_cic'
       ],
       'text': 'Find case'
     },
@@ -84,7 +87,8 @@ export const baseConfig = {
         'caseworker-publiclaw',
         'caseworker-st_cic-judge',
         'caseworker-st_cic-senior-judge',
-        'caseworker-employment-etjudge'
+        'caseworker-employment-etjudge',
+        'caseworker-st_cic'
       ],
       'text': 'Search'
     },
@@ -167,7 +171,8 @@ export const baseConfig = {
         'caseworker-ia-admofficer',
         'caseworker-privatelaw',
         'caseworker-publiclaw',
-        'caseworker-employment'
+        'caseworker-employment',
+        'caseworker-st_cic'
       ],
       'text': 'My work'
     },

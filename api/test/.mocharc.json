@@ -3,6 +3,8 @@
     "bail": true,
     "slow": 1000,
     "recursive": true,
+    "extension": ["ts"],
     "spec": ["**/*.spec.ts"],
-    "exclude": ["**/pact/**"]
+    "exclude": ["**/pact/**"],
+    "require": ["ts-node/register", "source-map-support/register"]
 }

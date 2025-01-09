@@ -22,6 +22,7 @@ export interface RoleAssignmentInfo {
   roleName?: string;
   beginTime?: string;
   endTime?: string;
+  caseId?: string;
 }
 
 export interface UserDetails {

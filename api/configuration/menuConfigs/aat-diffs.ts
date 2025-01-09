@@ -3,29 +3,14 @@ export const aatDifferences = {
     {
       'roles': [
         'caseworker-sscs-judge',
-        'caseworker-sscs-panelmember',
-        'caseworker-st_cic'
+        'caseworker-sscs-panelmember'
       ],
       'text': 'My work'
-    },
-
-    {
-      'roles': [
-        'caseworker-st_cic'
-      ],
-      'text': 'Case list'
-    },
-    {
-      'roles': [
-        'caseworker-st_cic'
-      ],
-      'text': 'Find case'
     },
     {
       'roles': [
         'caseworker-sscs-judge',
-        'caseworker-sscs-panelmember',
-        'caseworker-st_cic'
+        'caseworker-sscs-panelmember'
       ],
       'text': 'Search'
     }
@@ -44,7 +29,6 @@ export const aatDifferences = {
     {
       'roles': [
         'caseworker-sscs-clerk',
-        'caseworker-st_cic',
         'caseworker-sscs-registrar'
       ],
       'text': 'My work'

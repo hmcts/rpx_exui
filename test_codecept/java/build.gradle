@@ -4,7 +4,7 @@ plugins {
 }
 
 sourceCompatibility = 11
-targetCompatibility = 11
+targetCompatibility = 17
 
 // tag::repositories[]
 repositories {

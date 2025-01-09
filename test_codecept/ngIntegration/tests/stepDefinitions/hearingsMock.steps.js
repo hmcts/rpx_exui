@@ -41,6 +41,26 @@ function updateObjectValues(object, key, value){
   }
 }
 
+function modifyHearingDetailsYear(hearingDetails) {
+  if (hearingDetails?.dateRangeStart) {
+    hearingDetails.dateRangeStart = moment(hearingDetails.dateRangeStart).year(moment().year() + 1).toISOString();
+  }
+  if (hearingDetails?.dateRangeEnd) {
+    hearingDetails.dateRangeEnd = moment(hearingDetails.dateRangeEnd).year(moment().year() + 1).toISOString();
+  }
+  if (hearingDetails?.firstDateTimeMustBe) {
+    hearingDetails.firstDateTimeMustBe = moment(hearingDetails.firstDateTimeMustBe).year(moment().year() + 1).toISOString();
+  }
+}
+
+function resetHearingWindow(input) {
+  if (input?.hearingWindow) {
+    modifyHearingDetailsYear(input.hearingWindow);
+  }
+  if (input?.hearingDetails?.hearingWindow) {
+    modifyHearingDetailsYear(input?.hearingDetails?.hearingWindow);
+  }
+}
 
 Given('I set mock case hearings from file {string}', async function (filename) {
   const response = getHearingsMockJsonFromFile(filename)
@@ -49,12 +69,14 @@ Given('I set mock case hearings from file {string}', async function (filename) {
 });
 
 Given('I set mock hearing HMC response from file {string}', async function (fileName) {
-  const response = getHearingsMockJsonFromFile(fileName)
+  const response = getHearingsMockJsonFromFile(fileName);
+  resetHearingWindow(response);
   await mockClient.setOnGetHearing(response, 200);
 });
 
 Given('I set mock hearing SHV response from file {string}', async function (fileName) {
-  const response = getHearingsMockJsonFromFile(fileName)
+  const response = getHearingsMockJsonFromFile(fileName);
+  resetHearingWindow(response);
   await mockClient.setHearingServiceHearingValues(response, 200);
 });
 
