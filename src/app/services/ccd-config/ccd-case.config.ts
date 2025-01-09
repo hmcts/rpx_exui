@@ -267,6 +267,10 @@ export class AppConfig extends AbstractAppConfig {
     return this.config.icp_jurisdictions;
   }
 
+  public getEventsToHide(): string[] {
+    return this.config.events_to_hide;
+  }
+
   public logMessage(logMessage: string): void {
     this.loggerService.log(logMessage);
   }
