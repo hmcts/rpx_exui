@@ -247,7 +247,10 @@ describe('HearingTimingComponent', () => {
 
   it('should check date selection invalid', () => {
     component.firstDateOfHearingError = null;
-    component.firstHearingFormGroup.get('firstHearingDate_day').setValue('12');
+    // component.firstHearingFormGroup.get('firstHearingDate_day').setValue('12');
+    component.firstHearingFormGroup.get('firstHearingDate_day').setValue(null);
+    component.firstHearingFormGroup.get('firstHearingDate_month').setValue(null);
+    component.firstHearingFormGroup.get('firstHearingDate_year').setValue('2024');
     component.showChosenDateError();
     expect(component.firstDateOfHearingError.isInvalid).toBeTruthy();
   });
@@ -375,6 +378,100 @@ describe('HearingTimingComponent', () => {
     component.latestHearingFormGroup.get('latestHearingDate_year').setValue('2016');
     component.showChosenDateRangeError();
     expect(component.earliestDateOfHearingError.isInvalid).toBeTruthy();
+  });
+
+  describe('should check showChosenDateRangeError for invalid dates', () => {
+    it('should check ValidHearingDateError for both invalid dates', () => {
+      component.earliestDateOfHearingError = null;
+      component.earliestHearingFormGroup.get('earliestHearingDate_day').setValue('32');
+      component.earliestHearingFormGroup.get('earliestHearingDate_month').setValue('10');
+      component.earliestHearingFormGroup.get('earliestHearingDate_year').setValue('2024');
+      component.latestHearingFormGroup.get('latestHearingDate_day').setValue('32');
+      component.latestHearingFormGroup.get('latestHearingDate_month').setValue('10');
+      component.latestHearingFormGroup.get('latestHearingDate_year').setValue('2024');
+      component.showChosenDateRangeError();
+      expect(component?.earliestDateOfHearingError.isInvalid).toBeTruthy();
+      expect(component?.earliestDateOfHearingError.messages[0]).toBe(HearingDatePriorityEnum.InValidHearingDateError);
+      expect(component?.latestDateOfHearingError.isInvalid).toBeTruthy();
+      expect(component?.latestDateOfHearingError.messages[0]).toBe(HearingDatePriorityEnum.InValidHearingDateError);
+      expect(component.validationErrors[0].message).toBe(HearingDatePriorityEnum.EitherDateRangeError);
+    });
+    it('should check ValidHearingDateError for earliestHearingDate invalid date', () => {
+      component.earliestDateOfHearingError = null;
+      component.earliestHearingFormGroup.get('earliestHearingDate_day').setValue('32');
+      component.earliestHearingFormGroup.get('earliestHearingDate_month').setValue('10');
+      component.earliestHearingFormGroup.get('earliestHearingDate_year').setValue('2024');
+      component.latestHearingFormGroup.get('latestHearingDate_day').setValue('31');
+      component.latestHearingFormGroup.get('latestHearingDate_month').setValue('10');
+      component.latestHearingFormGroup.get('latestHearingDate_year').setValue('2024');
+      component.showChosenDateRangeError();
+      expect(component?.earliestDateOfHearingError.isInvalid).toBeTruthy();
+      expect(component?.earliestDateOfHearingError.messages[0]).toBe(HearingDatePriorityEnum.InValidHearingDateError);
+      expect(component?.latestDateOfHearingError === null).toBeTruthy();
+      expect(component.validationErrors[0].message).toBe(HearingDatePriorityEnum.InValidHearingDateError);
+    });
+    it('should check ValidHearingDateError for earliestHearingDate invalid date with null', () => {
+      component.earliestDateOfHearingError = null;
+      component.earliestHearingFormGroup.get('earliestHearingDate_day').setValue(null);
+      component.earliestHearingFormGroup.get('earliestHearingDate_month').setValue('10');
+      component.earliestHearingFormGroup.get('earliestHearingDate_year').setValue('2024');
+      component.latestHearingFormGroup.get('latestHearingDate_day').setValue('31');
+      component.latestHearingFormGroup.get('latestHearingDate_month').setValue('10');
+      component.latestHearingFormGroup.get('latestHearingDate_year').setValue('2024');
+      component.showChosenDateRangeError();
+      expect(component?.earliestDateOfHearingError.isInvalid).toBeTruthy();
+      expect(component?.earliestDateOfHearingError.messages[0]).toBe(HearingDatePriorityEnum.InValidHearingDateError);
+      expect(component?.latestDateOfHearingError === null).toBeTruthy();
+      expect(component.validationErrors[0].message).toBe(HearingDatePriorityEnum.InValidHearingDateError);
+    });
+    it('should check ValidHearingDateError for latestHearingDate invalid date', () => {
+      component.earliestDateOfHearingError = null;
+      component.earliestHearingFormGroup.get('earliestHearingDate_day').setValue('31');
+      component.earliestHearingFormGroup.get('earliestHearingDate_month').setValue('10');
+      component.earliestHearingFormGroup.get('earliestHearingDate_year').setValue('2024');
+      component.latestHearingFormGroup.get('latestHearingDate_day').setValue('32');
+      component.latestHearingFormGroup.get('latestHearingDate_month').setValue('10');
+      component.latestHearingFormGroup.get('latestHearingDate_year').setValue('2024');
+      component.showChosenDateRangeError();
+      expect(component?.latestDateOfHearingError.isInvalid).toBeTruthy();
+      expect(component?.latestDateOfHearingError.messages[0]).toBe(HearingDatePriorityEnum.InValidHearingDateError);
+      expect(component?.earliestDateOfHearingError === null).toBeTruthy();
+      expect(component.validationErrors[0].message).toBe(HearingDatePriorityEnum.InValidHearingDateError);
+    });
+  });
+
+  describe('Test isDataPopulated method', () => {
+    it('should return false when all date fields are null', () => {
+      component.earliestHearingFormGroup.get('earliestHearingDate_day').setValue(null);
+      component.earliestHearingFormGroup.get('earliestHearingDate_month').setValue(null);
+      component.earliestHearingFormGroup.get('earliestHearingDate_year').setValue(null);
+
+      expect(component.isDatePopulated(component.earliestHearingFormGroup, 'earliestHearingDate')).toBe(false);
+    });
+
+    it('should return false when all date fields are empty strings', () => {
+      component.earliestHearingFormGroup.get('earliestHearingDate_day').setValue('');
+      component.earliestHearingFormGroup.get('earliestHearingDate_month').setValue('');
+      component.earliestHearingFormGroup.get('earliestHearingDate_year').setValue('');
+
+      expect(component.isDatePopulated(component.earliestHearingFormGroup, 'earliestHearingDate')).toBe(false);
+    });
+
+    it('should return true when all date fields are populated', () => {
+      component.earliestHearingFormGroup.get('earliestHearingDate_day').setValue('01');
+      component.earliestHearingFormGroup.get('earliestHearingDate_month').setValue('01');
+      component.earliestHearingFormGroup.get('earliestHearingDate_year').setValue('2024');
+
+      expect(component.isDatePopulated(component.earliestHearingFormGroup, 'earliestHearingDate')).toBe(true);
+    });
+
+    it('should return true when some date fields are populated', () => {
+      component.earliestHearingFormGroup.get('earliestHearingDate_day').setValue('01');
+      component.earliestHearingFormGroup.get('earliestHearingDate_month').setValue('');
+      component.earliestHearingFormGroup.get('earliestHearingDate_year').setValue('2024');
+
+      expect(component.isDatePopulated(component.earliestHearingFormGroup, 'earliestHearingDate')).toBe(true);
+    });
   });
 
   it('should set prepareHearingRequestData', () => {
