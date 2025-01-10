@@ -5,6 +5,10 @@ const MAX_TIMEOUT_PERIOD = 180000; // 180 seconds
 // Handle requests being sent to the target server
 // @typescript-eslint/no-unused-vars
 export function handleRequest(proxyReq, req, res) {
+  if (req?.headers?.cookie) {
+    delete req.headers.cookie;
+  }
+
   if (req.method === 'POST') {
     const defaultTimeoutPeriod = INITIAL_TIMEOUT_PERIOD;
 

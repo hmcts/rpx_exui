@@ -72,4 +72,18 @@ describe('Documents Uploading', () => {
     const result = documents.handleRequest(req, rateLimitedReq, proxyRes);
     expect(result).to.deep.equal(false);
   });
+
+  it('should handle request and delete the cookie from the header', () => {
+    const nextTimeout = Date.now() + 5;
+    const mainReq = {
+      method: 'POST',
+      session: {
+        lastUploadTime: Date.now(),
+        nextTimeout: nextTimeout
+      },
+      headers: { cookie: 'test1' }
+    };
+    documents.handleRequest(req, mainReq, proxyRes);
+    expect(mainReq?.headers?.cookie).to.be.an('undefined');
+  });
 });
