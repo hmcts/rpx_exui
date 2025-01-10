@@ -116,7 +116,7 @@
   "caseworkerPageSize": "30000",
   "globalSearchServices": "IA,CIVIL,PRIVATELAW,PUBLICLAW,EMPLOYMENT,ST_CIC",
   "waSupportedJurisdictions": "IA,CIVIL,PRIVATELAW,PUBLICLAW,EMPLOYMENT,ST_CIC",
-  "staffSupportedJurisdictions": "ST_CIC,CIVIL,EMPLOYMENT,PRIVATELAW,PUBLICLAW,IA,SSCS",
+  "staffSupportedJurisdictions": "ST_CIC,CIVIL,EMPLOYMENT,PRIVATELAW,PUBLICLAW,IA,SSCS,DIVORCE,FR",
   "jurisdictions": "DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,EMPLOYMENT,HRS,CIVIL,CMC,PRIVATELAW",
   "serviceRefDataMapping": [
     { "service": "IA", "serviceCodes": ["BFA1"] },
@@ -125,7 +125,9 @@
     { "service": "PUBLICLAW", "serviceCodes": ["ABA3"] },
     { "service": "SSCS", "serviceCodes": ["BBA3"] },
     { "service": "ST_CIC", "serviceCodes": ["BBA2"] },
-    { "service": "EMPLOYMENT", "serviceCodes": ["BHA1"] }
+    { "service": "EMPLOYMENT", "serviceCodes": ["BHA1"] },
+    { "service": "DIVORCE", "serviceCodes": ["ABA1"] },
+    { "service": "FR", "serviceCodes": ["ABA2"] }
   ],
   "wildcardSearchFields": {
     "Benefit": [
