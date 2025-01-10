@@ -65,7 +65,7 @@ export class LinkedHearingsCheckYourAnswersComponent implements OnInit, OnDestro
   public ngOnInit(): void {
     this.sub = this.hearingStore.pipe(select(fromHearingStore.getHearingsFeatureState)).subscribe({
       next: (state: fromHearingStore.State) => {
-        this.caseName = state.hearingValues.serviceHearingValuesModel ? state.hearingValues.serviceHearingValuesModel.publicCaseName : '';
+        this.caseName = state.hearingValues.serviceHearingValuesModel ? state.hearingValues.serviceHearingValuesModel.hmctsInternalCaseName : '';
         this.hearingLinks = state.hearingLinks;
         if (this.hearingLinks.serviceLinkedCasesWithHearings && this.hearingLinks.serviceLinkedCasesWithHearings.length) {
           if (this.isManageLink) {
