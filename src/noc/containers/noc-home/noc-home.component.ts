@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { caseRefVisibilityStates, checkAnswerVisibilityStates, nocErrorVisibilityStates, nocSubmitSuccessStates, qAndAVisibilityStates } from '../../constants';
@@ -40,6 +41,7 @@ export class NocHomeComponent implements OnInit, OnDestroy {
   constructor(
     private readonly store: Store<fromFeature.State>,
     private readonly router: Router,
+    private readonly location: Location,
     private readonly loggerService: LoggerService,
   ) {}
 
@@ -65,9 +67,14 @@ export class NocHomeComponent implements OnInit, OnDestroy {
         switch (this.nocNavigationCurrentState) {
           case NocState.START:
           case NocState.CASE_REF_VALIDATION_FAILURE:
-            this.router.navigateByUrl('').catch((err) => {
-              this.loggerService.error('Error navigating to \'\' ', err);
-            });
+            try {
+              this.location.back();
+            } catch (err) {
+              this.loggerService.error('Error navigating back, trying fallback route.', err);
+              this.router.navigateByUrl('').catch((err) => {
+                this.loggerService.error('Error navigating to \'\' ', err);
+              });
+            }
             break;
           case NocState.QUESTION:
           case NocState.CASE_REF_SUBMISSION_FAILURE:
