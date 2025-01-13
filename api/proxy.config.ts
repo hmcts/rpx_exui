@@ -197,4 +197,10 @@ export const initProxy = (app: Express) => {
     source: '/refdata/commondata/caseflags/service-id=:sid',
     target: getConfigValue(SERVICES_PRD_COMMONDATA_API)
   });
+
+  applyProxy(app, {
+    rewrite: false,
+    source: '/icp/sessions',
+    target: getConfigValue(SERVICES_ICP_API_URL)
+  });
 };
