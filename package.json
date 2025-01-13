@@ -84,7 +84,7 @@
     "@angular/platform-browser-dynamic": "^17.3.6",
     "@angular/router": "^17.3.6",
     "@angular/ssr": "^17.3.6",
-    "@cucumber/cucumber": "^10.8.0",
+    "@cucumber/cucumber": "^11.0.0",
     "@edium/fsm": "^2.1.2",
     "@faker-js/faker": "^9.2.0",
     "@hmcts/ccd-case-ui-toolkit": "7.1.25",
