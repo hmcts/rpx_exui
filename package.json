@@ -91,7 +91,7 @@
     "@hmcts/ccpay-web-component": "6.2.1",
     "@hmcts/frontend": "0.0.50-alpha",
     "@hmcts/media-viewer": "4.0.9",
-    "@hmcts/nodejs-healthcheck": "1.7.0",
+    "@hmcts/nodejs-healthcheck": "1.8.5",
     "@hmcts/properties-volume": "^0.0.13",
     "@hmcts/rpx-xui-common-lib": "2.0.30",
     "@hmcts/rpx-xui-node-lib": "2.30.1",
