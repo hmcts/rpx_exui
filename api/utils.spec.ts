@@ -1,5 +1,6 @@
 import { expect } from 'chai';
-import { allContainOnlySafeCharacters, hasUnacceptableCharacters, urlHasUnacceptableCharacters } from './utils';
+
+import { allContainOnlySafeCharacters, hasUnacceptableCharacters, toTitleCase, urlHasUnacceptableCharacters } from './utils';
 
 const validRoleList = [
   '[PETSOLICITOR]',
@@ -203,6 +204,17 @@ const validRoleList = [
 ];
 
 describe('api utils', () => {
+  describe('toTitleCase', () => {
+    it('should correctly set a service name to title case', () => {
+      expect(toTitleCase('')).to.equal('');
+      expect(toTitleCase('ia')).to.equal('Ia');
+      expect(toTitleCase('IA')).to.equal('Ia');
+      expect(toTitleCase('iA')).to.equal('Ia');
+      expect(toTitleCase(' iA ')).to.equal(' Ia ');
+      expect(toTitleCase('4 cIvIL 14')).to.equal('4 Civil 14');
+    });
+  });
+
   describe('hasUnacceptableCharacters', () => {
     it('should match strings that contain dangerous characters', () => {
       expect(hasUnacceptableCharacters(null)).to.equal(false);

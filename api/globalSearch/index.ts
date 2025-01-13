@@ -6,11 +6,12 @@ import {
   SERVICES_CCD_DATA_STORE_API_PATH,
   SERVICES_LOCATION_REF_API_URL
 } from '../configuration/references';
-import { GlobalSearchService } from '../interfaces/globalSearchService';
+import { DetailedService } from '../interfaces/detailedService';
 import { EnhancedRequest } from '../lib/models';
 import { RefDataHMCTSService } from '../ref-data/models/ref-data-hmcts-service.model';
 import { http } from '../lib/http';
 import { setHeaders } from '../lib/proxy';
+import { toTitleCase } from '../utils';
 
 /**
  * Get global search services
@@ -60,13 +61,13 @@ export async function getSearchResults(req: EnhancedRequest, res: Response, next
  * @param jurisdictions
  * @returns
  */
-export function generateServices(refDataHMCTS: RefDataHMCTSService[]): GlobalSearchService[] {
+export function generateServices(refDataHMCTS: RefDataHMCTSService[]): DetailedService[] {
   // Retrieve global search services id from config
   const globalSearchServiceIds = getConfigValue(GLOBAL_SEARCH_SERVICES);
   const globalSearchServiceIdsArray = globalSearchServiceIds.split(',');
 
   // Generate global search services
-  const globalSearchServices: GlobalSearchService[] = [];
+  const globalSearchServices: DetailedService[] = [];
   globalSearchServiceIdsArray.forEach((serviceId) => {
     // search for the service name based on the globalSearchServiceId
     const jurisdiction = refDataHMCTS?.length > 0 ? refDataHMCTS.filter((x) => x.ccd_service_name?.toLowerCase() === serviceId.toLowerCase()) : null;
@@ -84,10 +85,4 @@ export function generateServices(refDataHMCTS: RefDataHMCTSService[]): GlobalSea
 
   // Return generated global search services
   return globalSearchServices;
-}
-
-function toTitleCase(serviceName: string): string {
-  return serviceName.replace(/([a-zA-Z])([a-zA-Z]*)/g, (match, firstLetter, rest) => {
-    return firstLetter.toUpperCase() + rest.toLowerCase();
-  });
 }

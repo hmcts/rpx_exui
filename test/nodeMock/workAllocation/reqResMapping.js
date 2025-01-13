@@ -43,7 +43,10 @@ module.exports = {
       res.send(workAllocationMockData.getTaskRoles());
     },
     '/api/wa-supported-jurisdiction/get': (req, res) => {
-      res.send(workAllocationMockData.waSupportedJusridictions);
+      res.send(workAllocationMockData.waSupportedJurisdictions);
+    },
+    '/api/wa-supported-jurisdiction/detail' : (req,res) => {
+      res.send(workAllocationMockData.waDetailedSupportedServices);
     },
     '/api/locations/getLocationsById': (req, res) => {
       res.send(workAllocationMockData.getLocationById(req.query.ids));

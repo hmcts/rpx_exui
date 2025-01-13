@@ -1,4 +1,4 @@
-export interface GlobalSearchService {
+export interface DetailedService {
   serviceId: string;
   serviceName: string;
 }

@@ -1,5 +1,5 @@
 <xuilib-loading-spinner *ngIf="showSpinner$ | async"></xuilib-loading-spinner>
-<div class="tasks-container" *ngIf="(waSupportedJurisdictions$ | async) as jurisdictions">
+<div class="tasks-container" *ngIf="(waSupportedDetailedServices$ | async) as jurisdictions">
     <exui-task-manager-filter [jurisdictions]="jurisdictions" [waSupportedJurisdictions]="supportedJurisdictions"
                               (selectionChanged)="onSelectionChanged($event)"></exui-task-manager-filter>
     <div class="hmcts-filter-layout__content exui-task-list">

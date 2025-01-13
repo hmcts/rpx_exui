@@ -4,7 +4,7 @@ import { select } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppUtils } from '../../../app/app-utils';
-import { UserInfo, UserRole } from '../../../app/models';
+import { DetailedService, UserInfo, UserRole } from '../../../app/models';
 import * as fromActions from '../../../app/store';
 import { ConfigConstants, FilterConstants, ListConstants, PageConstants, SortConstants } from '../../components/constants';
 import { SortOrder, TaskContext } from '../../enums';
@@ -67,18 +67,22 @@ export class AllWorkTaskComponent extends TaskListWrapperComponent {
   }
 
   public loadCaseWorkersAndLocations(): void {
-    const userRoles$ = this.store.pipe(select(fromActions.getUserDetails)).pipe(map((userDetails) =>
-      userDetails.roleAssignmentInfo.filter((role) => role.roleName && role.roleName === 'task-supervisor').map((role) => role.jurisdiction || null)
+    const userRoles$ = this.store.pipe(select(fromActions.getUserDetails)).pipe(map((userDetails) => {
+      if (!userDetails.roleAssignmentInfo) {
+        // if no role assignment info, do not allow page to disappear
+        return [];
+      }
+      return userDetails.roleAssignmentInfo.filter((role) => role.roleName && role.roleName === 'task-supervisor').map((role) => role.jurisdiction || null);
+    }
     ));
 
-    const waJurisdictions$ = this.waSupportedJurisdictionsService.getWASupportedJurisdictions();
-    this.waSupportedJurisdictions$ = combineLatest(
+    // get detailed services for the all work services list
+    const waJurisdictions$ = this.waSupportedJurisdictionsService.getDetailedWASupportedJurisdictions();
+    this.waSupportedDetailedServices$ = combineLatest(
       [userRoles$,
         waJurisdictions$]
     ).pipe(map((jurisdictions) => {
-      this.supportedJurisdictions = jurisdictions[1];
-      const result = jurisdictions[0].includes(null) ? jurisdictions[1] : jurisdictions[0];
-      return [...new Set(result)];
+      return this.setServiceList(jurisdictions[0], jurisdictions[1]);
     }));
   }
 
@@ -137,6 +141,33 @@ export class AllWorkTaskComponent extends TaskListWrapperComponent {
     this.selectedTaskType = selection.taskType;
     this.selectedTaskName = selection.taskName ? selection.taskName.task_type_id : null;
     this.loadBasedOnFilter();
+  }
+
+  private setServiceList(roleServiceIds: string[], detailedWAServices: DetailedService[]): DetailedService[] {
+    const supportedJurisdictions = [];
+    detailedWAServices.forEach((jurisdiction) => {
+      // get the serviceIds from the detailed service
+      supportedJurisdictions.push(jurisdiction.serviceId);
+    });
+    this.supportedJurisdictions = supportedJurisdictions;
+    if (!roleServiceIds.includes(null)) {
+      const roleJurisdictions = [];
+      // get set of serviceIds from jurisdictions within user roles
+      const initialRoleJurisdictions = [...new Set(roleServiceIds)];
+      initialRoleJurisdictions.forEach((serviceId) => {
+        if (supportedJurisdictions.includes(serviceId)) {
+          // if there is a service name for the serviceId, use it
+          const matchingServices = detailedWAServices.filter((x) => x.serviceId === serviceId);
+          const serviceName = matchingServices?.length > 0 ? matchingServices[0].serviceName : serviceId;
+          roleJurisdictions.push({ serviceId, serviceName });
+        } else {
+          roleJurisdictions.push({ serviceId, serviceName: serviceId });
+        }
+      });
+      return roleJurisdictions;
+    }
+    // use provided WA supported services
+    return detailedWAServices;
   }
 
   private loadBasedOnFilter(): void {

@@ -13,6 +13,7 @@
 /api/role-access/roles/getNewCasesCount
 /workallocation2/task/types-of-work
 /api/wa-supported-jurisdiction/get
+/api/wa-supported-jurisdiction/detail
 /workallocation2/task
 /workallocation2/caseworker/getUsersByServiceName
 /data/internal/cases/1234567812345678

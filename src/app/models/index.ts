@@ -1,5 +1,6 @@
 export * from './app-title.model';
 export * from './configuration.model';
+export * from './detailed-service.model';
 export * from './error-message.model';
 export * from './nav-item.model';
 export * from './TermsAndCondition';

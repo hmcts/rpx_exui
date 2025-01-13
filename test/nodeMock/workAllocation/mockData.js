@@ -18,12 +18,12 @@ class WorkAllocationMockData {
   setDefaultData(){
     this.findPersonsAllAdata = [];
 
-    this.locationsByServices = this.getLocationsByServices(this.waSupportedJusridictions);
+    this.locationsByServices = this.getLocationsByServices(this.waSupportedJurisdictions);
 
     this.caseWorkersList = this.getPersonList(20);
     this.judgeUsers = this.setUpJudicialUsersList(20);
 
-    this.usersFromServices = this.getUsersFromServices(this.waSupportedJusridictions);
+    this.usersFromServices = this.getUsersFromServices(this.waSupportedJurisdictions);
 
     this.caseEventTasks = WorkAllocationDataModels.getCaseEventTasksCompletable();
 
@@ -237,7 +237,14 @@ class WorkAllocationMockData {
   }
 
   updateWASupportedJurisdictions(jurisdictions){
-    this.waSupportedJusridictions = jurisdictions;
+    this.waSupportedJurisdictions = jurisdictions;
+    this.waDetailedSupportedServices = [];
+    jurisdictions.forEach((jurisdiction) => {
+      this.waDetailedSupportedServices.push({
+        serviceId: jurisdiction,
+        serviceName: jurisdiction
+      });
+    });
     this.setDefaultData();
   }
 

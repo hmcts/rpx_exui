@@ -52,6 +52,7 @@ export const endpoints = [
   { 'endpoint': 'api/organisation' },
   { 'endpoint': 'api/staff-supported-jurisdiction/get' },
   { 'endpoint': 'api/wa-supported-jurisdiction/get' },
+  { 'endpoint': 'api/wa-supported-jurisdiction/detail' },
   { 'endpoint': 'api/globalSearch/services' },
   { 'endpoint': 'api/globalSearch/results' },
   { 'endpoint': 'api/locations/getLocationsById' },
