@@ -33,7 +33,7 @@ resource "azurerm_key_vault_secret" "redis6_connection_string" {
 }
 
 module "redis6-cache" {
-  source                        = "git@github.com:hmcts/cnp-module-redis?ref=master"
+  source                        = "git@github.com:hmcts/cnp-module-redis?ref=4.x"
   product                       = "${var.shared_product_name}-mc-redis6"
   name                          = "${var.product}-${var.component}-${var.env}"
   location                      = var.location
@@ -50,7 +50,7 @@ module "redis6-cache" {
 }
 
 module "application_insights" {
-  source = "git@github.com:hmcts/terraform-module-application-insights?ref=main"
+  source = "git@github.com:hmcts/terraform-module-application-insights?ref=4.x"
 
   env                 = var.env
   product             = var.product
