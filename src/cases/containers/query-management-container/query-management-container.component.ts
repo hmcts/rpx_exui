@@ -303,6 +303,13 @@ export class QueryManagementContainerComponent implements OnInit {
             url: `/query-management/query/${this.caseId}/${QueryManagementContainerComponent.RAISE_A_QUERY_QUESTION_OPTION}`
           });
         }
+
+        // Interpolate ${CCD_REFERENCE} in all qualifying questions
+        qualifyingQuestions.forEach((question) => {
+          if (question.url.includes('${CCD_REFERENCE}')) {
+            question.url = question.url.replace('${CCD_REFERENCE}', this.caseId);
+          }
+        });
         return qualifyingQuestions;
       })
     );
