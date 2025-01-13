@@ -85,6 +85,7 @@
       "idamClientID": "SERVICES_IDAM_CLIENT_ID",
       "idamLoginUrl": "SERVICES_IDAM_LOGIN_URL",
       "oauthCallbackUrl": "SERVICES_IDAM_OAUTH_CALLBACK_URL",
+      "serviceOverride": "SERVICES_IDAM_SERVICE_OVERRIDE",
       "iss": "SERVICES_IDAM_ISS_URL"
     },
     "location_api": "SERVICES_LOCATION_API",

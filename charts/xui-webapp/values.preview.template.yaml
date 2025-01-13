@@ -27,6 +27,7 @@ nodejs:
      PREVIEW_DEPLOYMENT_ID: exui-preview-deployment-${CHANGE_ID}
      FEATURE_JRD_E_LINKS_V2_ENABLED: true
      FEATURE_LAU_SPECIFIC_CHALLENGED_ENABLED: true
+     SERVICES_IDAM_SERVICE_OVERRIDE: false
   keyVaults:
     rpx:
       secrets:
