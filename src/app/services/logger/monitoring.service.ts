@@ -91,7 +91,6 @@ export class MonitoringService implements IMonitoringService {
       this.http.get('/api/monitoring-tools').subscribe((monitor) => {
         // eslint-disable-next-line dot-notation
         const connStr = monitor['connectionString'];
-        console.log('Setting appInsights connection string to ' + connStr);
         this.config = {
           connectionString: connStr
         };
