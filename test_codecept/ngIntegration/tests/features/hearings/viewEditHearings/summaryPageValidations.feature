@@ -50,7 +50,6 @@ Feature: Hearings : Summary page validations EUI-9097
             | field                          | value    |
             | What stage is this hearing at? | Breach 1 |
 
-
         When I click continue in hearing workflow
         Then I validate Edit hearing page displayed
 

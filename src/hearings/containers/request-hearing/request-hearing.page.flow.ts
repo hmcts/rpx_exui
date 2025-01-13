@@ -56,12 +56,22 @@ export abstract class RequestHearingPageFlow {
         break;
       case ACTION.SUBMIT:
         this.hearingStore.dispatch(new fromHearingStore.SubmitHearingRequest(this.hearingRequestMainModel));
+        this.hearingStore.dispatch(new fromHearingStore.ResetHearingRequest());
+        this.hearingStore.dispatch(new fromHearingStore.ResetHearingValues());
+        this.hearingStore.dispatch(new fromHearingStore.ResetHearingConditions());
+        this.hearingsService.propertiesUpdatedAutomatically = { pageless: {}, withinPage: {} };
+        this.hearingsService.propertiesUpdatedOnPageVisit = null;
         break;
       case ACTION.VIEW_EDIT_REASON:
         this.hearingStore.dispatch(new fromHearingStore.ViewEditSubmitHearingReason(this.hearingRequestMainModel));
         break;
       case ACTION.VIEW_EDIT_SUBMIT:
         this.hearingStore.dispatch(new fromHearingStore.ViewEditSubmitHearingRequest(this.hearingRequestMainModel));
+        this.hearingStore.dispatch(new fromHearingStore.ResetHearingRequest());
+        this.hearingStore.dispatch(new fromHearingStore.ResetHearingValues());
+        this.hearingStore.dispatch(new fromHearingStore.ResetHearingConditions());
+        this.hearingsService.propertiesUpdatedAutomatically = { pageless: {}, withinPage: {} };
+        this.hearingsService.propertiesUpdatedOnPageVisit = null;
         break;
       default:
         throw new Error('Invalid navigate action');

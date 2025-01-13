@@ -95,6 +95,11 @@ describe('RequestHearingPageFlow', () => {
   it('should navigate submit', () => {
     requestHearingPageFlow.navigateAction(ACTION.SUBMIT);
     expect(mockStore.dispatch).toHaveBeenCalledWith(new fromHearingStore.SubmitHearingRequest(hearingState.hearingRequest.hearingRequestMainModel as HearingRequestMainModel));
+    expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining(new fromHearingStore.ResetHearingRequest()));
+    expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining(new fromHearingStore.ResetHearingValues()));
+    expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining(new fromHearingStore.ResetHearingConditions()));
+    expect(hearingsService.propertiesUpdatedAutomatically).toEqual({ pageless: {}, withinPage: {} });
+    expect(hearingsService.propertiesUpdatedOnPageVisit).toBeNull();
   });
 
   it('should navigate to view edit reason page', () => {
@@ -105,6 +110,11 @@ describe('RequestHearingPageFlow', () => {
   it('should navigate to view edit submit page', () => {
     requestHearingPageFlow.navigateAction(ACTION.VIEW_EDIT_SUBMIT);
     expect(mockStore.dispatch).toHaveBeenCalledWith(new fromHearingStore.ViewEditSubmitHearingRequest(hearingState.hearingRequest.hearingRequestMainModel as HearingRequestMainModel));
+    expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining(new fromHearingStore.ResetHearingRequest()));
+    expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining(new fromHearingStore.ResetHearingValues()));
+    expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining(new fromHearingStore.ResetHearingConditions()));
+    expect(hearingsService.propertiesUpdatedAutomatically).toEqual({ pageless: {}, withinPage: {} });
+    expect(hearingsService.propertiesUpdatedOnPageVisit).toBeNull();
   });
 
   afterEach(() => {
