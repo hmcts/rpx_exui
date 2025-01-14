@@ -100,7 +100,6 @@
     "@ngrx/router-store": "^17.2.0",
     "@ngrx/store": "^17.2.0",
     "@ngrx/store-devtools": "^17.2.0",
-    "@nicky-lenaers/ngx-scroll-to": "^14.0.0",
     "accessibility-checker": "^3.1.70",
     "applicationinsights": "1.8.10",
     "axios": "^1.7.7",
