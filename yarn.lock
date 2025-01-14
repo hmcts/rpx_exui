@@ -11548,13 +11548,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dexie@npm:^3.2.2":
-  version: 3.2.4
-  resolution: "dexie@npm:3.2.4"
-  checksum: 10/361f7e05fda5db20d9d90ce3e39f4539d1a56acad35a6e4ba26e48ab74c55d81e6daba502a7412be6c0e67ebad3e232e6dbbc1b50426f5743cc0f166cd4e8671
-  languageName: node
-  linkType: hard
-
 "di@npm:^0.0.1":
   version: 0.0.1
   resolution: "di@npm:0.0.1"
@@ -17857,13 +17850,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^2.4.0":
-  version: 2.5.2
-  resolution: "luxon@npm:2.5.2"
-  checksum: 10/9090506a702dac0edefbe87ad29836a842721b2ae255974b410ca705766502173b773ddfd1c918b2e19041679e2659b811d23085f8b23e28be54f063e6c1237a
-  languageName: node
-  linkType: hard
-
 "lz-string@npm:^1.5.0":
   version: 1.5.0
   resolution: "lz-string@npm:1.5.0"
@@ -22514,7 +22500,6 @@ __metadata:
     protractor-multiple-cucumber-html-reporter-plugin: "npm:1.8.1"
     protractor-screenshot-utils: "npm:^1.0.5"
     puppeteer: "npm:^22.4.1"
-    rpx-xui-translation: "npm:1.0.10"
     rx-polling-hmcts: "npm:1.1.1"
     rxjs: "npm:^7.8.1"
     sass: "npm:^1.66.1"
@@ -22542,20 +22527,6 @@ __metadata:
     zone.js: "npm:^0.15.0"
   languageName: unknown
   linkType: soft
-
-"rpx-xui-translation@npm:1.0.10":
-  version: 1.0.10
-  resolution: "rpx-xui-translation@npm:1.0.10"
-  dependencies:
-    dexie: "npm:^3.2.2"
-    luxon: "npm:^2.4.0"
-    tslib: "npm:^2.0.0"
-  peerDependencies:
-    "@angular/common": ^15.2.9
-    "@angular/core": ^15.2.9
-  checksum: 10/8cd6b104ff8a5968341aec2fbb1877a7fc70ab43f5ed4704ce6ff386a7c8bf16567c70f4147e9c1b695c04f2cae9e7ccf83bf66f84b39e2b3531da5593d6c020
-  languageName: node
-  linkType: hard
 
 "run-async@npm:^2.2.0":
   version: 2.4.1

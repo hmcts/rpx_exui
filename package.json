@@ -145,7 +145,6 @@
     "pegjs": "^0.10.0",
     "portfinder": "^1.0.28",
     "protractor-screenshot-utils": "^1.0.5",
-    "rpx-xui-translation": "1.0.10",
     "rx-polling-hmcts": "1.1.1",
     "rxjs": "^7.8.1",
     "shortid": "^2.2.14",
