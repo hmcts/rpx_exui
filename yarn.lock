@@ -381,19 +381,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-material-components/moment-adapter@npm:^16.0.1":
-  version: 16.0.1
-  resolution: "@angular-material-components/moment-adapter@npm:16.0.1"
-  dependencies:
-    tslib: "npm:^2.3.0"
-  peerDependencies:
-    "@angular/common": ^16.0.0
-    "@angular/core": ^16.0.0
-    moment: ^2.18.1
-  checksum: 10/5335b53ae0363deeb7c2cb78237825e6070e6526e784572cc4c0b6daf44e9b82763a07bbb318703b0bfba1025ee4a081cb6ee028968c12bbbbe7968828bc8d10
-  languageName: node
-  linkType: hard
-
 "@angular/animations@npm:^17.3.6":
   version: 17.3.12
   resolution: "@angular/animations@npm:17.3.12"
@@ -22405,7 +22392,6 @@ __metadata:
     "@angular-eslint/eslint-plugin-template": "npm:17.5.3"
     "@angular-eslint/schematics": "npm:18"
     "@angular-eslint/template-parser": "npm:17.5.3"
-    "@angular-material-components/moment-adapter": "npm:^16.0.1"
     "@angular/animations": "npm:^17.3.6"
     "@angular/cdk": "npm:^17.3.6"
     "@angular/cli": "npm:^17.3.6"
@@ -22579,7 +22565,7 @@ __metadata:
     webpack-cli: "npm:^4.10.0"
     webpack-node-externals: "npm:^3.0.0"
     webpack-source-map-support: "npm:^2.0.1"
-    zone.js: "npm:~0.15.0"
+    zone.js: "npm:^0.15.0"
   languageName: unknown
   linkType: soft
 
@@ -26659,7 +26645,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zone.js@npm:~0.15.0":
+"zone.js@npm:^0.15.0":
   version: 0.15.0
   resolution: "zone.js@npm:0.15.0"
   checksum: 10/99b9381edcf1ca3da147375a9776f8ad5e6570b9e2cbd33095284a67904d94b5083448440ffcb8ec1e418a505020de0e37837db04d6a0303e111b054a8b752a2

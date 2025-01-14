@@ -157,7 +157,7 @@
     "ts-enum-util": "4.1.0",
     "tslib": "^2.6.1",
     "web-animations-js": "^2.3.2",
-    "zone.js": "~0.15.0"
+    "zone.js": "^0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~17.3.6",
@@ -166,7 +166,6 @@
     "@angular-eslint/eslint-plugin-template": "17.5.3",
     "@angular-eslint/schematics": "18",
     "@angular-eslint/template-parser": "17.5.3",
-    "@angular-material-components/moment-adapter": "^16.0.1",
     "@angular/cli": "^17.3.6",
     "@angular/compiler-cli": "^17.3.6",
     "@angular/language-service": "~17.3.6",
