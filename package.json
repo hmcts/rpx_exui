@@ -87,7 +87,6 @@
     "@edium/fsm": "^2.1.2",
     "@faker-js/faker": "^9.2.0",
     "@hmcts/ccd-case-ui-toolkit": "7.1.25",
-    "@hmcts/ccpay-web-component": "6.2.1",
     "@hmcts/frontend": "0.0.50-alpha",
     "@hmcts/media-viewer": "4.0.9",
     "@hmcts/nodejs-healthcheck": "1.7.0",
