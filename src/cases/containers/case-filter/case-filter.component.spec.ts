@@ -1,4 +1,4 @@
-import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { HttpClientTestingModule, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
@@ -28,14 +28,14 @@ describe('Case Filter Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [CaseFilterComponent],
-    imports: [RouterTestingModule,
+      declarations: [CaseFilterComponent],
+      imports: [RouterTestingModule,
         StoreModule.forRoot({ ...fromCases.reducers, cases: combineReducers(fromCases.reducers) }),
         HttpClientTestingModule,
         SharedModule,
         SearchFiltersModule,
         CreateCaseFiltersModule],
-    providers: [
+      providers: [
         PlaceholderService,
         CasesService,
         CCDAuthService,
@@ -52,24 +52,24 @@ describe('Case Filter Component', () => {
         AppConfigService,
         AppConfig,
         {
-            provide: SearchService,
-            useValue: {
-                requestOptionsBuilder: RequestOptionsBuilder
-            }
+          provide: SearchService,
+          useValue: {
+            requestOptionsBuilder: RequestOptionsBuilder
+          }
         },
         {
-            provide: AbstractAppConfig,
-            useExisting: AppConfig
+          provide: AbstractAppConfig,
+          useExisting: AppConfig
         },
         {
-            provide: AppConfigService,
-            useClass: MockSortService
+          provide: AppConfigService,
+          useClass: MockSortService
         },
         ScrollToService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-    ]
-})
+      ]
+    })
       .compileComponents();
   }));
 
