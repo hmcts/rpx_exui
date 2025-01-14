@@ -165,7 +165,6 @@
     "@angular-eslint/builder": "17.5.3",
     "@angular-eslint/eslint-plugin": "17.5.3",
     "@angular-eslint/eslint-plugin-template": "17.5.3",
-    "@angular-eslint/schematics": "17.5.3",
     "@angular-eslint/schematics": "18",
     "@angular-eslint/template-parser": "17.5.3",
     "@angular-material-components/moment-adapter": "^16.0.1",
