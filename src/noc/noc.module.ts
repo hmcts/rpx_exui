@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -18,30 +18,22 @@ import { nocRouting } from './noc.routes';
 import { NocService } from './services';
 import { effects, reducers } from './store';
 
-@NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    StoreModule.forFeature('noc', reducers),
-    EffectsModule.forFeature(effects),
-    nocRouting,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    UtilsModule,
-    ExuiCommonLibModule
-  ],
-  declarations: [...fromContainers.containers],
-  providers: [{
-    provide: AbstractAppConfig,
-    useExisting: AppConfig
-  },
-  NocService,
-  PaletteService,
-  FormValidatorsService,
-  YesNoService
-  ]
-})
+@NgModule({ declarations: [...fromContainers.containers], imports: [CommonModule,
+        StoreModule.forFeature('noc', reducers),
+        EffectsModule.forFeature(effects),
+        nocRouting,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        UtilsModule,
+        ExuiCommonLibModule], providers: [{
+            provide: AbstractAppConfig,
+            useExisting: AppConfig
+        },
+        NocService,
+        PaletteService,
+        FormValidatorsService,
+        YesNoService, provideHttpClient(withInterceptorsFromDi())] })
 /**
  * Entry point for NOC Module that is also lazy loaded.
  */

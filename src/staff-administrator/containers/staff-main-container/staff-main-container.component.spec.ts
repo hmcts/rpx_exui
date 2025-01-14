@@ -1,5 +1,5 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { StaffUserListComponent } from '../../components/staff-users/staff-user-
 import { StaffDataAccessService } from '../../services/staff-data-access/staff-data-access.service';
 import { StaffMainContainerComponent } from './staff-main-container.component';
 import { staffFilterOptionsTestData } from '../../test-data/staff-filter-options.test.data';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('StaffMainContainerComponent', () => {
   let component: StaffMainContainerComponent;
@@ -30,7 +31,7 @@ describe('StaffMainContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         StaffMainContainerComponent,
         HeaderStubComponent,
         FooterStubComponent,
@@ -40,29 +41,28 @@ describe('StaffMainContainerComponent', () => {
         StaffUserListComponent,
         ErrorMessageComponent,
         StaffStatusComponent
-      ],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
+    ],
+    imports: [RouterTestingModule,
         ExuiCommonLibModule,
         CdkTableModule,
-        ReactiveFormsModule
-      ],
-      providers: [
+        ReactiveFormsModule],
+    providers: [
         StaffDataFilterService,
         StaffDataAccessService,
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              data: {
-                staffFilters: staffFilterOptionsTestData
-              }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    data: {
+                        staffFilters: staffFilterOptionsTestData
+                    }
+                }
             }
-          }
-        }
-      ]
-    })
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

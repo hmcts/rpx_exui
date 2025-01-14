@@ -1,6 +1,6 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { Location as AngularLocation } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -15,6 +15,7 @@ import { LocationDataService, WASupportedJurisdictionsService, WorkAllocationTas
 import { TaskTypesService } from '../../services/task-types.service';
 import { TaskListFilterComponent } from './task-list-filter.component';
 import { servicesMap } from '../../utils';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
   template: `
@@ -139,26 +140,23 @@ describe('TaskListFilterComponent', () => {
     storeMock = jasmine.createSpyObj<Store<fromAppStore.State>>('store', ['pipe']);
     storeMock.pipe.and.returnValue(of(roleAssignmentInfo));
     TestBed.configureTestingModule({
-      imports: [
-        CdkTableModule,
+    declarations: [TaskListFilterComponent, WrapperComponent],
+    imports: [CdkTableModule,
         ExuiCommonLibModule,
         RouterTestingModule,
         ExuiCommonLibModule,
-        HttpClientTestingModule,
-        StoreModule
-      ],
-      declarations: [TaskListFilterComponent, WrapperComponent],
-      providers: [
+        StoreModule],
+    providers: [
         { provide: Store, useValue: mockStore },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              data: {
-                location: LOCATION
-              }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    data: {
+                        location: LOCATION
+                    }
+                }
             }
-          }
         },
         { provide: AngularLocation, useValue: locationService },
         { provide: WorkAllocationTaskService, useValue: mockTaskService },
@@ -167,9 +165,11 @@ describe('TaskListFilterComponent', () => {
         { provide: FilterService, useValue: mockFilterService },
         { provide: WASupportedJurisdictionsService, useValue: mockWASupportedJurisdictionService },
         { provide: SessionStorageService, useValue: mockSessionStorageService },
-        { provide: FeatureToggleService, useValue: mockFeatureToggleService }
-      ]
-    }).compileComponents();
+        { provide: FeatureToggleService, useValue: mockFeatureToggleService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
     fixture = TestBed.createComponent(WrapperComponent);
     wrapper = fixture.componentInstance;
     component = wrapper.appComponentRef;

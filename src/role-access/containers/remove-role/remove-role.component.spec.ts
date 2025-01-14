@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, NO_ERRORS_SCHEMA, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -15,6 +15,7 @@ import { AnswerLabelText, RemoveRoleText } from '../../models/enums/answer-text'
 import { AllocateRoleService } from '../../services';
 import { RemoveRoleComponent } from './remove-role.component';
 import { LoggerService } from '../../../app/services/logger/logger.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
   template: `
@@ -96,67 +97,69 @@ describe('RemoveRoleComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      schemas: [
+    schemas: [
         NO_ERRORS_SCHEMA
-      ],
-      imports: [HttpClientTestingModule, RouterTestingModule],
-      declarations: [AnswersComponent, RemoveRoleComponent, WrapperComponent],
-      providers: [
+    ],
+    declarations: [AnswersComponent, RemoveRoleComponent, WrapperComponent],
+    imports: [RouterTestingModule],
+    providers: [
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              data: {
-                roles: [
-                  {
-                    name: 'test user name',
-                    roleCategory: RoleCategory.LEGAL_OPERATIONS,
-                    roleName: TypeOfRole.CaseManager,
-                    location: '1234567',
-                    start: '2021-07-13T00:29:10.656Z',
-                    end: '2021-07-15T00:29:10.656Z',
-                    id: '999999999',
-                    actorId: '1234567',
-                    actions: [],
-                    email: 'user@test.com'
-                  }
-                ]
-              },
-              queryParams: {
-                caseId: '123456789',
-                assignmentId: '999999999'
-              }
-            },
-            queryParamMap: of(convertToParamMap({
-              caseId: '123456789',
-              assignmentId: '999999999',
-              jurisdiction: 'IA',
-              caseType: 'Alsyum'
-            }))
-          }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    data: {
+                        roles: [
+                            {
+                                name: 'test user name',
+                                roleCategory: RoleCategory.LEGAL_OPERATIONS,
+                                roleName: TypeOfRole.CaseManager,
+                                location: '1234567',
+                                start: '2021-07-13T00:29:10.656Z',
+                                end: '2021-07-15T00:29:10.656Z',
+                                id: '999999999',
+                                actorId: '1234567',
+                                actions: [],
+                                email: 'user@test.com'
+                            }
+                        ]
+                    },
+                    queryParams: {
+                        caseId: '123456789',
+                        assignmentId: '999999999'
+                    }
+                },
+                queryParamMap: of(convertToParamMap({
+                    caseId: '123456789',
+                    assignmentId: '999999999',
+                    jurisdiction: 'IA',
+                    caseType: 'Alsyum'
+                }))
+            }
         },
         {
-          provide: Router,
-          useValue: routerMock
+            provide: Router,
+            useValue: routerMock
         },
         {
-          provide: Location,
-          useValue: locationMock
+            provide: Location,
+            useValue: locationMock
         },
         {
-          provide: AllocateRoleService,
-          useClass: AllocateRoleMockService
+            provide: AllocateRoleService,
+            useClass: AllocateRoleMockService
         },
         {
-          provide: CaseworkerDataService,
-          useValue: mockCaseworkerDataService
+            provide: CaseworkerDataService,
+            useValue: mockCaseworkerDataService
         },
         {
-          provide: LoggerService,
-          useValue: loggerServiceMock
-        }
-      ]
-    })
+            provide: LoggerService,
+            useValue: loggerServiceMock
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

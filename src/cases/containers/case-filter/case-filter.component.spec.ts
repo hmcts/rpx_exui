@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
@@ -13,6 +13,7 @@ import { SharedModule } from '../../../app/shared/shared.module';
 import * as fromCaseCreate from '../../store/reducers';
 import * as fromCases from '../../store/reducers/';
 import { CaseFilterComponent } from './case-filter.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 class MockSortService {
   public features = {};
@@ -27,17 +28,14 @@ describe('Case Filter Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
+    declarations: [CaseFilterComponent],
+    imports: [RouterTestingModule,
         StoreModule.forRoot({ ...fromCases.reducers, cases: combineReducers(fromCases.reducers) }),
         HttpClientTestingModule,
         SharedModule,
         SearchFiltersModule,
-        CreateCaseFiltersModule
-      ],
-      declarations: [CaseFilterComponent],
-      providers: [
+        CreateCaseFiltersModule],
+    providers: [
         PlaceholderService,
         CasesService,
         CCDAuthService,
@@ -54,22 +52,24 @@ describe('Case Filter Component', () => {
         AppConfigService,
         AppConfig,
         {
-          provide: SearchService,
-          useValue: {
-            requestOptionsBuilder: RequestOptionsBuilder
-          }
+            provide: SearchService,
+            useValue: {
+                requestOptionsBuilder: RequestOptionsBuilder
+            }
         },
         {
-          provide: AbstractAppConfig,
-          useExisting: AppConfig
+            provide: AbstractAppConfig,
+            useExisting: AppConfig
         },
         {
-          provide: AppConfigService,
-          useClass: MockSortService
+            provide: AppConfigService,
+            useClass: MockSortService
         },
-        ScrollToService
-      ]
-    })
+        ScrollToService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

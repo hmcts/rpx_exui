@@ -1,9 +1,10 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { GlobalSearchService } from '../../../api/interfaces/globalSearchService';
 import { SearchStatePersistenceKey } from '../enums';
 import { SearchParameters, SearchRequest, SearchResult } from '../models';
 import { SearchService } from './search.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('Search Service', () => {
   let service: SearchService;
@@ -21,13 +22,13 @@ describe('Search Service', () => {
       }
     };
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ],
-      providers: [
-        SearchService
-      ]
-    });
+    imports: [],
+    providers: [
+        SearchService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     service = TestBed.inject(SearchService);
     httpMock = TestBed.inject(HttpTestingController);
   });

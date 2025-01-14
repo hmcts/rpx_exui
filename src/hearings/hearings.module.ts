@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -30,41 +30,35 @@ import { AbstractPageFlow } from './utils/abstract-page-flow';
 import { PageFlow } from './utils/page-flow';
 import { WarningAndErrorSectionComponent } from './containers/request-hearing/hearing-edit-summary/warning-and-error-section/warning-and-error-section.component';
 
-@NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    StoreModule.forFeature('hearings', reducers),
-    EffectsModule.forFeature(effects),
-    hearingsRouting,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ExuiCommonLibModule,
-    HearingsPipesModule,
-    PaletteUtilsModule
-  ],
-  declarations: [...fromComponents.components, ...fromContainers.containers, WarningAndErrorSectionComponent],
-  providers: [
-    PageFlow,
-    {
-      provide: AbstractAppConfig,
-      useExisting: AppConfig
-    },
-    {
-      provide: AbstractPageFlow,
-      useExisting: PageFlow
-    },
-    HearingsService,
-    HearingsEditGuard,
-    HearingsViewGuard,
-    LoadingService,
-    DatePipe,
-    FormatTranslatorService,
-    HearingAmendmentsGuard,
-    HearingsFeatureService
-  ]
-})
+@NgModule({ declarations: [...fromComponents.components, ...fromContainers.containers, WarningAndErrorSectionComponent], imports: [CommonModule,
+        StoreModule.forFeature('hearings', reducers),
+        EffectsModule.forFeature(effects),
+        hearingsRouting,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ExuiCommonLibModule,
+        HearingsPipesModule,
+        PaletteUtilsModule], providers: [
+        PageFlow,
+        {
+            provide: AbstractAppConfig,
+            useExisting: AppConfig
+        },
+        {
+            provide: AbstractPageFlow,
+            useExisting: PageFlow
+        },
+        HearingsService,
+        HearingsEditGuard,
+        HearingsViewGuard,
+        LoadingService,
+        DatePipe,
+        FormatTranslatorService,
+        HearingAmendmentsGuard,
+        HearingsFeatureService,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 /**
  * Entry point for Hearings Module that is also lazy loaded.
  */

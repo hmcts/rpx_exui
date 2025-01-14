@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { HearingActualsMainModel } from '../../../models/hearingActualsMainModel
 import { CategoryType, HMCStatus } from '../../../models/hearings.enum';
 import { LovRefDataService } from '../../../services/lov-ref-data.service';
 import { HearingActualsViewEditPartiesComponent } from './hearing-actuals-view-edit-parties.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const hearingRole = [
   {
@@ -356,33 +357,32 @@ describe('HearingViewEditSummaryComponent add actual participants', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HearingActualsViewEditPartiesComponent, MockRpxTranslatePipe],
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        HttpClientTestingModule
-      ],
-      providers: [
+    declarations: [HearingActualsViewEditPartiesComponent, MockRpxTranslatePipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [RouterTestingModule,
+        ReactiveFormsModule],
+    providers: [
         LoadingService,
         provideMockStore({ initialState: newState }),
         {
-          provide: ActivatedRoute,
-          useValue: {
-            paramMap: of(convertToParamMap({
-              id: '1',
-              hearingDate: '2021-03-12'
-            })),
-            snapshot: {
-              data: {
-                partyChannels,
-                hearingRole
-              }
+            provide: ActivatedRoute,
+            useValue: {
+                paramMap: of(convertToParamMap({
+                    id: '1',
+                    hearingDate: '2021-03-12'
+                })),
+                snapshot: {
+                    data: {
+                        partyChannels,
+                        hearingRole
+                    }
+                }
             }
-          }
-        }
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(HearingActualsViewEditPartiesComponent);
     component = fixture.componentInstance;
@@ -477,33 +477,32 @@ describe('HearingViewEditSummaryComponent participants check', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HearingActualsViewEditPartiesComponent, MockRpxTranslatePipe],
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        HttpClientTestingModule
-      ],
-      providers: [
+    declarations: [HearingActualsViewEditPartiesComponent, MockRpxTranslatePipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [RouterTestingModule,
+        ReactiveFormsModule],
+    providers: [
         LoadingService,
         provideMockStore({ initialState: newState }),
         {
-          provide: ActivatedRoute,
-          useValue: {
-            paramMap: of(convertToParamMap({
-              id: '1',
-              hearingDate: '2021-03-12'
-            })),
-            snapshot: {
-              data: {
-                partyChannels,
-                hearingRole
-              }
+            provide: ActivatedRoute,
+            useValue: {
+                paramMap: of(convertToParamMap({
+                    id: '1',
+                    hearingDate: '2021-03-12'
+                })),
+                snapshot: {
+                    data: {
+                        partyChannels,
+                        hearingRole
+                    }
+                }
             }
-          }
-        }
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(HearingActualsViewEditPartiesComponent);
     component = fixture.componentInstance;

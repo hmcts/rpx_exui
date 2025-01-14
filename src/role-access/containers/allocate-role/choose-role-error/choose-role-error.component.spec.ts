@@ -1,8 +1,9 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { ChooseRoleErrorComponent } from './choose-role-error.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ChooseRoleErrorComponent', () => {
   let component: ChooseRoleErrorComponent;
@@ -10,25 +11,25 @@ describe('ChooseRoleErrorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [ChooseRoleErrorComponent],
-      imports: [
-        HttpClientTestingModule
-      ],
-      providers: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    declarations: [ChooseRoleErrorComponent],
+    imports: [],
+    providers: [
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              queryParams: {
-                roleCategory: 'JUDICIAL',
-                jurisdiction: 'IA'
-              }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    queryParams: {
+                        roleCategory: 'JUDICIAL',
+                        jurisdiction: 'IA'
+                    }
+                }
             }
-          }
-        }
-      ]
-    })
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

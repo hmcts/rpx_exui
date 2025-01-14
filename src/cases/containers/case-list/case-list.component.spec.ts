@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -9,6 +9,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import { AppConfig } from '../../../app/services/ccd-config/ccd-case.config';
 import { CaseListComponent } from './case-list.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Pipe({ name: 'rpxTranslate' })
 class RpxTranslateMockPipe implements PipeTransform {
@@ -36,33 +37,35 @@ describe('CaseListComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [CaseListComponent, RpxTranslateMockPipe],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
+    declarations: [CaseListComponent, RpxTranslateMockPipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [],
+    providers: [
         {
-          provide: AppConfig,
-          useValue: mockAppConfig
+            provide: AppConfig,
+            useValue: mockAppConfig
         },
         {
-          provide: DefinitionsService,
-          useValue: mockDefinitionsService
+            provide: DefinitionsService,
+            useValue: mockDefinitionsService
         },
         {
-          provide: WindowService,
-          useValue: mockWindowService
+            provide: WindowService,
+            useValue: mockWindowService
         },
         {
-          provide: FeatureToggleService,
-          useValue: mockFeatureToggleService
+            provide: FeatureToggleService,
+            useValue: mockFeatureToggleService
         },
         {
-          provide: AlertService,
-          useValue: mockAlertService
+            provide: AlertService,
+            useValue: mockAlertService
         },
-        provideMockStore({})
-      ]
-    }).compileComponents();
+        provideMockStore({}),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
 
     store = TestBed.inject(Store);
     spyOnDispatchToStore = spyOn(store, 'dispatch').and.callThrough();

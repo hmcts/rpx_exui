@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { AcceptTermsService } from '../../../../src/app/services/acceptTerms/acceptTerms.service';
 import * as acceptTandCActions from '../actions';
 import * as fromTcEffects from './acceptTC.effects';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('acceptTC Effects', () => {
   let actions$;
@@ -17,19 +18,18 @@ describe('acceptTC Effects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({}),
-        HttpClientTestingModule
-      ],
-      providers: [
+    imports: [StoreModule.forRoot({})],
+    providers: [
         {
-          provide: AcceptTermsService,
-          useValue: AcceptTermsServiceMock
+            provide: AcceptTermsService,
+            useValue: AcceptTermsServiceMock
         },
         fromTcEffects.AcceptTcEffects,
-        provideMockActions(() => actions$)
-      ]
-    });
+        provideMockActions(() => actions$),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
 
     effects = TestBed.inject(fromTcEffects.AcceptTcEffects);
   });

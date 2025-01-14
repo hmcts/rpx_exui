@@ -1,5 +1,5 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, Pipe, PipeTransform, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +22,7 @@ import { Task } from '../../models/tasks';
 import { WorkAllocationTaskService } from '../../services';
 import { getMockTasks } from '../../tests/utils.spec';
 import { TaskAssignmentContainerComponent } from './task-assignment-container.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
   template: `
@@ -73,57 +74,54 @@ describe('TaskAssignmentContainerComponent2', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         TaskAssignmentContainerComponent,
         WrapperComponent,
         TaskListComponent,
         ErrorMessageComponent,
         NothingComponent,
         RpxTranslateMockPipe
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        ReactiveFormsModule,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [ReactiveFormsModule,
         CdkTableModule,
         FormsModule,
         MatAutocompleteModule,
-        HttpClientTestingModule,
         EffectsModule.forRoot([]),
         PaginationModule,
         StoreModule.forRoot({}),
-        RouterTestingModule.withRoutes(
-          [
+        RouterTestingModule.withRoutes([
             { path: 'my-work/list', component: NothingComponent }
-          ]
-        )
-      ],
-      providers: [
+        ])],
+    providers: [
         { provide: Location, useValue: locationStub },
         { provide: WorkAllocationTaskService, useValue: mockWorkAllocationService },
         { provide: SessionStorageService, useValue: mockSessionStorageService },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              data: {
-                taskAndCaseworkers: {
-                  task: { task: mockTasks[0] }, caseworkers: []
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    data: {
+                        taskAndCaseworkers: {
+                            task: { task: mockTasks[0] }, caseworkers: []
+                        },
+                        ...TaskActionConstants.Reassign
+                    },
+                    params: {
+                        taskId: 'task1111111'
+                    }
                 },
-                ...TaskActionConstants.Reassign
-              },
-              params: {
-                taskId: 'task1111111'
-              }
-            },
-            params: of({ task: mockTasks[0] }),
-            paramMap: of({ selectedPerson: SELECTED_PERSON })
-          }
+                params: of({ task: mockTasks[0] }),
+                paramMap: of({ selectedPerson: SELECTED_PERSON })
+            }
         },
         { provide: InfoMessageCommService, useValue: mockInfoMessageCommService },
         { provide: Router, useValue: mockRouter },
-        { provide: RpxTranslationService, useFactory: rpxTranslationServiceStub }
-      ]
-    }).compileComponents();
+        { provide: RpxTranslationService, useFactory: rpxTranslationServiceStub },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
     fixture = TestBed.createComponent(WrapperComponent);
     wrapper = fixture.componentInstance;
     component = wrapper.appComponentRef;

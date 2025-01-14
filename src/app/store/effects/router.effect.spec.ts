@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { provideMockActions } from '@ngrx/effects/testing';
@@ -8,6 +8,7 @@ import { hot } from 'jasmine-marbles';
 import { AppConfigService } from '../../services/config/configuration.services';
 import { Back, CreateCaseGo, Forward, Go } from '../actions/router.action';
 import * as fromRouterEffects from './router.effect';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('Router Effects', () => {
   let actions$;
@@ -27,24 +28,23 @@ describe('Router Effects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({}),
-        HttpClientTestingModule
-      ],
-      providers: [
+    imports: [StoreModule.forRoot({})],
+    providers: [
         AppConfigService,
         {
-          provide: Location,
-          useValue: LocationMock
+            provide: Location,
+            useValue: LocationMock
         },
         {
-          provide: Router,
-          useValue: RouterMock
+            provide: Router,
+            useValue: RouterMock
         },
         fromRouterEffects.RouterEffects,
-        provideMockActions(() => actions$)
-      ]
-    });
+        provideMockActions(() => actions$),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     store = TestBed.inject(Store);
     spyOnDispatchToStore = spyOn(store, 'dispatch').and.callThrough();
 

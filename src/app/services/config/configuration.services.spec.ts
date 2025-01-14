@@ -1,7 +1,8 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { AppConfigService } from './configuration.services';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('Configuration Service', () => {
   let httpClientSpy: { get: jasmine.Spy };
@@ -9,13 +10,10 @@ describe('Configuration Service', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({}),
-        HttpClientTestingModule
-      ],
-      providers: [AppConfigService],
-      teardown: { destroyAfterEach: false }
-    });
+    teardown: { destroyAfterEach: false },
+    imports: [StoreModule.forRoot({})],
+    providers: [AppConfigService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
   });
 

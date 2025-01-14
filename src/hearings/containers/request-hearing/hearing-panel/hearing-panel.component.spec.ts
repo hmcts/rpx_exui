@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { JudicialUserModel } from '../../../models/judicialUser.model';
 import { LovRefDataModel } from '../../../models/lovRefData.model';
 import { HearingsService } from '../../../services/hearings.service';
 import { HearingPanelComponent } from './hearing-panel.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('HearingPanelComponent', () => {
   let component: HearingPanelComponent;
@@ -279,25 +280,27 @@ describe('HearingPanelComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule],
-      declarations: [HearingPanelComponent, HearingJudgeNamesListComponent, MockRpxTranslatePipe],
-      providers: [
+    declarations: [HearingPanelComponent, HearingJudgeNamesListComponent, MockRpxTranslatePipe],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [ReactiveFormsModule, RouterTestingModule],
+    providers: [
         provideMockStore({ initialState: STATE }),
         { provide: HearingsService, useValue: hearingsService },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              data: {
-                otherPanelRoles: OTHER_PANEL_ROLES,
-                judicialUsers: JUDICAIL_USER_DETAILS
-              }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    data: {
+                        otherPanelRoles: OTHER_PANEL_ROLES,
+                        judicialUsers: JUDICAIL_USER_DETAILS
+                    }
+                }
             }
-          }
-        }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(HearingPanelComponent);
     component = fixture.componentInstance;

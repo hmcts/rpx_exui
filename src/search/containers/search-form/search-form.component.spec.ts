@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
@@ -10,6 +10,7 @@ import { SearchFormControl, SearchFormErrorMessage, SearchStatePersistenceKey } 
 import { SearchParameters } from '../../models';
 import { SearchService } from '../../services/search.service';
 import { SearchFormComponent } from './search-form.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import createSpyObj = jasmine.createSpyObj;
 
 describe('SearchFormComponent', () => {
@@ -37,15 +38,17 @@ describe('SearchFormComponent', () => {
     }]));
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule],
-      declarations: [SearchFormComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [
+    declarations: [SearchFormComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [RouterTestingModule],
+    providers: [
         { provide: FormBuilder, useValue: formBuilder },
         { provide: SearchService, useValue: searchService },
-        { provide: JurisdictionsService, useValue: jurisdictionsService }
-      ]
-    })
+        { provide: JurisdictionsService, useValue: jurisdictionsService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

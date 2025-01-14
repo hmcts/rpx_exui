@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
@@ -10,6 +10,7 @@ import {
   StaffDataFilterService
 } from '../../components/staff-users/services/staff-data-filter/staff-data-filter.service';
 import { StaffUsersComponent } from './staff-users.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('StaffUsersComponent', () => {
   let component: StaffUsersComponent;
@@ -32,19 +33,19 @@ describe('StaffUsersComponent', () => {
     storeMock.pipe.and.returnValue(of([]));
 
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ],
-      declarations: [
+    declarations: [
         StaffUsersComponent
-      ],
-      providers: [
+    ],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [],
+    providers: [
         { provide: StaffDataFilterService, useValue: staffDataFilterServiceMock },
         { provide: InfoMessageCommService, useValue: infoMessageCommMock },
-        { provide: Store, useValue: storeMock }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+        { provide: Store, useValue: storeMock },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

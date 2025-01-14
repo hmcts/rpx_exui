@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
@@ -11,6 +11,7 @@ import { caseFlagsRefData, initialState } from '../../hearing.test.data';
 import { EXUIDisplayStatusEnum } from '../../models/hearings.enum';
 import { HearingsPipesModule } from '../../pipes/hearings.pipes.module';
 import { ListingInformationSummaryComponent } from './listing-information-summary.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ListingInformationSummaryComponent', () => {
   let component: ListingInformationSummaryComponent;
@@ -18,25 +19,27 @@ describe('ListingInformationSummaryComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ListingInformationSummaryComponent, MockRpxTranslatePipe],
-      imports: [RouterTestingModule, HearingsPipesModule, HttpClientTestingModule],
-      providers: [
+    declarations: [ListingInformationSummaryComponent, MockRpxTranslatePipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [RouterTestingModule, HearingsPipesModule],
+    providers: [
         LoadingService,
         provideMockStore({ initialState }),
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              data: {
-                caseFlags: caseFlagsRefData
-              }
-            },
-            fragment: of('point-to-me')
-          }
-        }
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    data: {
+                        caseFlags: caseFlagsRefData
+                    }
+                },
+                fragment: of('point-to-me')
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ListingInformationSummaryComponent);
     component = fixture.componentInstance;

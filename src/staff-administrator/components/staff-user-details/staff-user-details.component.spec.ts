@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -16,6 +16,7 @@ import { StaffAddEditFormService } from '../../services/staff-add-edit-form/staf
 import { StaffDataAccessService } from '../../services/staff-data-access/staff-data-access.service';
 import { StaffStatusComponent } from './staff-status/staff-status.component';
 import { StaffUserDetailsComponent } from './staff-user-details.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
   template: ''
@@ -88,95 +89,94 @@ describe('StaffUserDetailsComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         StaffUserDetailsComponent,
         StaffStatusComponent,
         StubComponent
-      ],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes([
-          { path: 'service-down', component: StubComponent },
-          { path: 'staff/user-details/:id/update', component: StubComponent },
-          { path: 'staff/user-details/:id/copy', component: StubComponent },
-          { path: 'staff/add-user', component: StubComponent }
-        ])
-      ],
-      providers: [
+    ],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [RouterTestingModule.withRoutes([
+            { path: 'service-down', component: StubComponent },
+            { path: 'staff/user-details/:id/update', component: StubComponent },
+            { path: 'staff/user-details/:id/copy', component: StubComponent },
+            { path: 'staff/add-user', component: StubComponent }
+        ])],
+    providers: [
         { provide: StaffDataAccessService, useValue: mockStaffDataAccessService },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              params: {
-                id: caseWorkerId
-              },
-              data: {
-                staffUserDetails: testStaffUserData,
-                services: [
-                  {
-                    key: 'ABC1',
-                    label: 'Service A'
-                  },
-                  {
-                    key: 'BCD2',
-                    label: 'Service B'
-                  },
-                  {
-                    key: 'CDE3',
-                    label: 'Service C'
-                  },
-                  {
-                    key: 'DEF4',
-                    label: 'Service D'
-                  }
-                ],
-                skills: [
-                  {
-                    group: 'ABC1',
-                    options: [
-                      {
-                        key: '1',
-                        label: 'Underwriter'
-                      },
-                      {
-                        key: '2',
-                        label: 'Caseworker'
-                      }
-                    ]
-                  },
-                  {
-                    group: 'BCD2',
-                    options: [
-                      {
-                        key: '3',
-                        label: 'Caseworker'
-                      },
-                      {
-                        key: '4',
-                        label: 'Case manager'
-                      }
-                    ]
-                  },
-                  {
-                    group: 'CDE3',
-                    options: [
-                      {
-                        key: '5',
-                        label: 'Underwriter'
-                      }
-                    ]
-                  }
-                ]
-              }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    params: {
+                        id: caseWorkerId
+                    },
+                    data: {
+                        staffUserDetails: testStaffUserData,
+                        services: [
+                            {
+                                key: 'ABC1',
+                                label: 'Service A'
+                            },
+                            {
+                                key: 'BCD2',
+                                label: 'Service B'
+                            },
+                            {
+                                key: 'CDE3',
+                                label: 'Service C'
+                            },
+                            {
+                                key: 'DEF4',
+                                label: 'Service D'
+                            }
+                        ],
+                        skills: [
+                            {
+                                group: 'ABC1',
+                                options: [
+                                    {
+                                        key: '1',
+                                        label: 'Underwriter'
+                                    },
+                                    {
+                                        key: '2',
+                                        label: 'Caseworker'
+                                    }
+                                ]
+                            },
+                            {
+                                group: 'BCD2',
+                                options: [
+                                    {
+                                        key: '3',
+                                        label: 'Caseworker'
+                                    },
+                                    {
+                                        key: '4',
+                                        label: 'Case manager'
+                                    }
+                                ]
+                            },
+                            {
+                                group: 'CDE3',
+                                options: [
+                                    {
+                                        key: '5',
+                                        label: 'Underwriter'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
             }
-          }
         },
         { provide: StaffAddEditFormService, useValue: mockStaffAddEditFormService },
-        { provide: InfoMessageCommService, useValue: mockMessageService }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+        { provide: InfoMessageCommService, useValue: mockMessageService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

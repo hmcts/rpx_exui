@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, NO_ERRORS_SCHEMA, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { ExclusionNavigationEvent, RoleCategory } from '../../models';
 import { AnswerHeaderText, AnswerLabelText, ExclusionMessageText } from '../../models/enums';
 import { RoleExclusionsService } from '../../services';
 import { DeleteExclusionComponent } from './delete-exclusion.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
   template: `
@@ -45,41 +46,43 @@ describe('DeleteExclusionComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      schemas: [
+    schemas: [
         NO_ERRORS_SCHEMA
-      ],
-      imports: [HttpClientTestingModule],
-      declarations: [AnswersComponent, DeleteExclusionComponent, WrapperComponent],
-      providers: [
+    ],
+    declarations: [AnswersComponent, DeleteExclusionComponent, WrapperComponent],
+    imports: [],
+    providers: [
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              data: {
-                roleExclusions: [
-                  {
-                    added: Date.UTC(2021, 6, 1),
-                    id: exclusionId,
-                    name: 'Judge Rinder',
-                    notes: 'Test exclusion',
-                    actorId: '999999999'
-                  }
-                ]
-              }
-            },
-            queryParamMap: of(convertToParamMap(exclusion))
-          }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    data: {
+                        roleExclusions: [
+                            {
+                                added: Date.UTC(2021, 6, 1),
+                                id: exclusionId,
+                                name: 'Judge Rinder',
+                                notes: 'Test exclusion',
+                                actorId: '999999999'
+                            }
+                        ]
+                    }
+                },
+                queryParamMap: of(convertToParamMap(exclusion))
+            }
         },
         {
-          provide: Router,
-          useValue: routerMock
+            provide: Router,
+            useValue: routerMock
         },
         {
-          provide: RoleExclusionsService,
-          useValue: mockRoleExclusionService
-        }
-      ]
-    })
+            provide: RoleExclusionsService,
+            useValue: mockRoleExclusionService
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 
@@ -173,45 +176,47 @@ describe('DeleteExclusionComponent with no name', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      schemas: [
+    schemas: [
         NO_ERRORS_SCHEMA
-      ],
-      imports: [HttpClientTestingModule],
-      declarations: [AnswersComponent, DeleteExclusionComponent, WrapperComponent],
-      providers: [
+    ],
+    declarations: [AnswersComponent, DeleteExclusionComponent, WrapperComponent],
+    imports: [],
+    providers: [
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              data: {
-                roleExclusions: [
-                  {
-                    added: Date.UTC(2021, 6, 1),
-                    id: exclusionId,
-                    name: null,
-                    notes: 'Test exclusion',
-                    actorId: '999999999'
-                  }
-                ]
-              }
-            },
-            queryParamMap: of(convertToParamMap(exclusion))
-          }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    data: {
+                        roleExclusions: [
+                            {
+                                added: Date.UTC(2021, 6, 1),
+                                id: exclusionId,
+                                name: null,
+                                notes: 'Test exclusion',
+                                actorId: '999999999'
+                            }
+                        ]
+                    }
+                },
+                queryParamMap: of(convertToParamMap(exclusion))
+            }
         },
         {
-          provide: Router,
-          useValue: routerMock
+            provide: Router,
+            useValue: routerMock
         },
         {
-          provide: RoleExclusionsService,
-          useValue: mockRoleExclusionService
+            provide: RoleExclusionsService,
+            useValue: mockRoleExclusionService
         },
         {
-          provide: mockAllocateRoleService,
-          useValue: mockAllocateRoleService
-        }
-      ]
-    })
+            provide: mockAllocateRoleService,
+            useValue: mockAllocateRoleService
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

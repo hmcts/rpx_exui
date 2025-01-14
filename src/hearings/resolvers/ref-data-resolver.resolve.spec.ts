@@ -1,5 +1,5 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -10,6 +10,7 @@ import { HearingCategory } from '../models/hearings.enum';
 import { LovRefDataModel } from '../models/lovRefData.model';
 import { LovRefDataService } from '../services/lov-ref-data.service';
 import { RefDataResolver } from './ref-data-resolver.resolve';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('Ref Data Resolver', () => {
   let lovRefDataService: LovRefDataService;
@@ -30,19 +31,18 @@ describe('Ref Data Resolver', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule.withRoutes([]),
-        HttpClientTestingModule
-      ],
-      providers: [
+    imports: [RouterTestingModule.withRoutes([])],
+    providers: [
         provideMockStore({ initialState }),
         RefDataResolver,
         LovRefDataService,
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: Router, useValue: mockRouter },
-        { provide: SessionStorageService, useValue: mockSessionStorageService }
-      ]
-    });
+        { provide: SessionStorageService, useValue: mockSessionStorageService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     lovRefDataService = TestBed.inject(LovRefDataService) as LovRefDataService;
     mockStore = jasmine.createSpyObj('mockStore', ['pipe']);
   });

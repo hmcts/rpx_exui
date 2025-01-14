@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -16,32 +16,24 @@ import { roleAccessRouting } from './role-access.routes';
 import { RoleExclusionsService } from './services';
 import { effects, reducers } from './store';
 
-@NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    StoreModule.forFeature('role-access', reducers),
-    EffectsModule.forFeature(effects),
-    PipesModule,
-    roleAccessRouting,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ExuiCommonLibModule
-  ],
-  declarations: [...fromContainers.containers, ...fromComponents.components],
-  exports: [
-    fromComponents.ChooseRadioOptionComponent
-  ],
-  providers: [{
-    provide: AbstractAppConfig,
-    useExisting: AppConfig
-  },
-  RoleExclusionsService,
-  CaseworkerDataService,
-  WASupportedJurisdictionsService
-  ]
-})
+@NgModule({ declarations: [...fromContainers.containers, ...fromComponents.components],
+    exports: [
+        fromComponents.ChooseRadioOptionComponent
+    ], imports: [CommonModule,
+        StoreModule.forFeature('role-access', reducers),
+        EffectsModule.forFeature(effects),
+        PipesModule,
+        roleAccessRouting,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ExuiCommonLibModule], providers: [{
+            provide: AbstractAppConfig,
+            useExisting: AppConfig
+        },
+        RoleExclusionsService,
+        CaseworkerDataService,
+        WASupportedJurisdictionsService, provideHttpClient(withInterceptorsFromDi())] })
 /**
  * Entry point for Role Access Module that is also lazy loaded.
  */

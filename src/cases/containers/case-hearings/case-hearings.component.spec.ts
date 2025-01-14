@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,6 +26,7 @@ import { LovRefDataModel } from '../../../hearings/models/lovRefData.model';
 import { LovRefDataService } from '../../../hearings/services/lov-ref-data.service';
 import * as fromHearingStore from '../../../hearings/store';
 import { CaseHearingsComponent } from './case-hearings.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('CaseHearingsComponent', () => {
   let component: CaseHearingsComponent;
@@ -404,40 +405,38 @@ describe('CaseHearingsComponent', () => {
     mockSessionStore = jasmine.createSpyObj<SessionStorageService>('sessionStorageService', ['getItem']);
 
     TestBed.configureTestingModule({
-      declarations: [CaseHearingsComponent, MockRpxTranslatePipe],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
+    declarations: [CaseHearingsComponent, MockRpxTranslatePipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [RouterTestingModule],
+    providers: [
         LoadingService,
         provideMockStore({ initialState }),
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              params: {
-                cid: '1234'
-              }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    params: {
+                        cid: '1234'
+                    }
+                }
             }
-          }
         },
         {
-          provide: Router,
-          useValue: mockRouter
+            provide: Router,
+            useValue: mockRouter
         },
         {
-          provide: LovRefDataService,
-          useValue: mockLovRefDataService
+            provide: LovRefDataService,
+            useValue: mockLovRefDataService
         },
         {
-          provide: SessionStorageService,
-          useValue: mockSessionStore
-        }
-
-      ]
-    }).compileComponents();
+            provide: SessionStorageService,
+            useValue: mockSessionStore
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
     fixture = TestBed.createComponent(CaseHearingsComponent);
     mockStore = TestBed.inject(Store);
     component = fixture.componentInstance;

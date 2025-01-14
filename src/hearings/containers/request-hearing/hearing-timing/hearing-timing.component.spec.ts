@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +19,7 @@ import { HearingTimingComponent } from './hearing-timing.component';
 import { PartyDetailsModel } from '../../../models/partyDetails.model';
 import { SourceOfData } from '../../../../../api/hearings/models/hearings.enum';
 import { HearingsUtils } from '../../../utils/hearings.utils';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
   selector: 'exui-hearing-parties-title',
@@ -70,27 +71,28 @@ describe('HearingTimingComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule,
-        HttpClientTestingModule],
-      declarations: [HearingTimingComponent, MockHearingPartiesComponent, MockRpxTranslatePipe],
-      providers: [
+    declarations: [HearingTimingComponent, MockHearingPartiesComponent, MockRpxTranslatePipe],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [ReactiveFormsModule, RouterTestingModule],
+    providers: [
         provideMockStore({ initialState }),
         { provide: HearingsService, useValue: hearingsService },
         ValidatorsUtils,
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              data: {
-                hearingPriorities: priorities
-              }
-            },
-            fragment: of('point-to-me')
-          }
-        }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    data: {
+                        hearingPriorities: priorities
+                    }
+                },
+                fragment: of('point-to-me')
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
     fixture = TestBed.createComponent(HearingTimingComponent);
     component = fixture.componentInstance;

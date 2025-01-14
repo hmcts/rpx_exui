@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +14,7 @@ import {
 } from '../../../models';
 import * as fromFeature from '../../../store';
 import { ChooseRoleComponent } from './choose-role.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const firstRoleOptions = [{ optionId: 'lead-judge', optionValue: 'Lead judge' },
   { optionId: 'hearing-judge', optionValue: 'Hearing judge' }];
@@ -32,26 +33,25 @@ describe('ChooseRoleComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [ChooseRadioOptionComponent, ChooseRoleComponent],
-      imports: [
-        HttpClientTestingModule,
-        ReactiveFormsModule
-      ],
-      providers: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    declarations: [ChooseRadioOptionComponent, ChooseRoleComponent],
+    imports: [ReactiveFormsModule],
+    providers: [
         { provide: Store, useValue: mockStore },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              queryParams: {
-                roleCategory: 'JUDICIAL'
-              }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    queryParams: {
+                        roleCategory: 'JUDICIAL'
+                    }
+                }
             }
-          }
-        }
-      ]
-    })
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

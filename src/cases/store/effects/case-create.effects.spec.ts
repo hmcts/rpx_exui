@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlertService } from '@hmcts/ccd-case-ui-toolkit';
@@ -8,6 +8,7 @@ import { LoggerService } from '../../../app/services/logger/logger.service';
 import { CreateCaseGo, Go, NewCaseLoadedSuccessfully } from '../../../app/store/actions';
 import { ApplyChange, CaseCreateFilterApply, CreateCaseLoaded, CreateCaseReset } from '../actions/create-case.action';
 import { CaseCreateEffects } from './case-create.effects';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('CaseCreate Effects', () => {
   let actions$;
@@ -17,14 +18,16 @@ describe('CaseCreate Effects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule],
-      providers: [
+    imports: [RouterTestingModule],
+    providers: [
         CaseCreateEffects,
         { provide: AlertService, useValue: mockAlertService },
         provideMockActions(() => actions$),
-        { provide: LoggerService, useValue: mockLogger }
-      ]
-    });
+        { provide: LoggerService, useValue: mockLogger },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
 
     effects = TestBed.inject(CaseCreateEffects);
   });

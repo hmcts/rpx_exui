@@ -1,7 +1,8 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { EnvironmentService } from './environment.service';
 import { DeploymentEnvironmentEnum } from '../../enums/deployment-environment-enum';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 /*
   PROD = 'prod',
@@ -23,96 +24,112 @@ const dummyWindowLocalhost = { location: new URL('http://localhost:3000') };
 describe('EnvironmentService', () => {
   it('should be created', () => {
     TestBed.configureTestingModule({
-      providers: [
+    imports: [],
+    providers: [
         { provide: Window, useValue: dummyWindowAat },
-        EnvironmentService
-      ],
-      imports: [HttpClientTestingModule]
-    });
+        EnvironmentService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     const service = TestBed.inject(EnvironmentService);
     expect(service).toBeTruthy();
   });
 
   it('should detect the prod environment correctly', () => {
     TestBed.configureTestingModule({
-      providers: [
+    imports: [],
+    providers: [
         { provide: Window, useValue: dummyWindowProd },
-        EnvironmentService
-      ],
-      imports: [HttpClientTestingModule]
-    });
+        EnvironmentService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     const service = TestBed.inject(EnvironmentService);
     expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.PROD);
   });
 
   it('should detect the aat environment correctly', () => {
     TestBed.configureTestingModule({
-      providers: [
+    imports: [],
+    providers: [
         { provide: Window, useValue: dummyWindowAat },
-        EnvironmentService
-      ],
-      imports: [HttpClientTestingModule]
-    });
+        EnvironmentService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     const service = TestBed.inject(EnvironmentService);
     expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.AAT);
   });
 
   it('should detect the demo environment correctly', () => {
     TestBed.configureTestingModule({
-      providers: [
+    imports: [],
+    providers: [
         { provide: Window, useValue: dummyWindowDemo },
-        EnvironmentService
-      ],
-      imports: [HttpClientTestingModule]
-    });
+        EnvironmentService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     const service = TestBed.inject(EnvironmentService);
     expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.DEMO);
   });
 
   it('should detect the perftest environment correctly', () => {
     TestBed.configureTestingModule({
-      providers: [
+    imports: [],
+    providers: [
         { provide: Window, useValue: dummyWindowPerftest },
-        EnvironmentService
-      ],
-      imports: [HttpClientTestingModule]
-    });
+        EnvironmentService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     const service = TestBed.inject(EnvironmentService);
     expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.PERFTEST);
   });
 
   it('should detect the ithc environment correctly', () => {
     TestBed.configureTestingModule({
-      providers: [
+    imports: [],
+    providers: [
         { provide: Window, useValue: dummyWindowIthc },
-        EnvironmentService
-      ],
-      imports: [HttpClientTestingModule]
-    });
+        EnvironmentService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     const service = TestBed.inject(EnvironmentService);
     expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.ITHC);
   });
 
   it('should detect the preview environment correctly', () => {
     TestBed.configureTestingModule({
-      providers: [
+    imports: [],
+    providers: [
         { provide: Window, useValue: dummyWindowPreview },
-        EnvironmentService
-      ],
-      imports: [HttpClientTestingModule]
-    });
+        EnvironmentService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     const service = TestBed.inject(EnvironmentService);
     expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.PREVIEW);
   });
 
   it('should detect the local environment correctly', () => {
     TestBed.configureTestingModule({
-      providers: [
+    imports: [],
+    providers: [
         { provide: Window, useValue: dummyWindowLocalhost },
-        EnvironmentService
-      ],
-      imports: [HttpClientTestingModule]
-    });
+        EnvironmentService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     const service = TestBed.inject(EnvironmentService);
     expect(service.getDeploymentEnv()).toBe(DeploymentEnvironmentEnum.LOCAL);
   });

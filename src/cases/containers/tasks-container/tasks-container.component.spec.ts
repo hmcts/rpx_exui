@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
@@ -10,6 +10,7 @@ import { AllocateRoleService } from '../../../role-access/services';
 import { CaseworkerDataService, WorkAllocationCaseService } from '../../../work-allocation/services';
 import { getMockTasks } from '../../../work-allocation/tests/utils.spec';
 import { TasksContainerComponent } from './tasks-container.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const metadataField = {} as CaseField;
 metadataField.id = '[JURISDICTION]';
@@ -122,11 +123,10 @@ describe('TasksContainerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [TaskAlertBannerComponent, TasksContainerComponent],
-      imports: [
-        HttpClientTestingModule
-      ],
-      providers: [
+    declarations: [TaskAlertBannerComponent, TasksContainerComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [],
+    providers: [
         { provide: AlertService, useValue: mockAlertService },
         { provide: WorkAllocationCaseService, useValue: mockWACaseService },
         { provide: CaseworkerDataService, useValue: mockCaseworkerService },
@@ -134,23 +134,24 @@ describe('TasksContainerComponent', () => {
         { provide: FeatureToggleService, useValue: mockFeatureToggleService },
         { provide: LoadingService, useValue: mockLoadingService },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              data: {
-                tasks: {
-                  tasks: getMockTasks(),
-                  caseworkers: null
-                },
-                case: CASE_VIEW
-              },
-              paramMap: convertToParamMap({ cId: '1234567890123456' })
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    data: {
+                        tasks: {
+                            tasks: getMockTasks(),
+                            caseworkers: null
+                        },
+                        case: CASE_VIEW
+                    },
+                    paramMap: convertToParamMap({ cId: '1234567890123456' })
+                }
             }
-          }
-        }
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    })
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

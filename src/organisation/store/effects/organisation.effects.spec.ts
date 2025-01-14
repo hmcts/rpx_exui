@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
@@ -8,6 +8,7 @@ import { LoggerService } from '../../../app/services/logger/logger.service';
 import { OrganisationService } from '../../services';
 import { LoadOrganisation, LoadOrganisationFail, LoadOrganisationSuccess } from '../actions';
 import * as fromOrganisationEffects from './organisation.effects';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('Organisation Effects', () => {
   let actions$;
@@ -22,20 +23,22 @@ describe('Organisation Effects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
+    imports: [],
+    providers: [
         {
-          provide: OrganisationService,
-          useValue: organisationServiceMock
+            provide: OrganisationService,
+            useValue: organisationServiceMock
         },
         {
-          provide: LoggerService,
-          useValue: mockedLoggerService
+            provide: LoggerService,
+            useValue: mockedLoggerService
         },
         fromOrganisationEffects.OrganisationEffects,
-        provideMockActions(() => actions$)
-      ]
-    });
+        provideMockActions(() => actions$),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
 
     effects = TestBed.inject(OrganisationEffects);
     loggerService = TestBed.inject(LoggerService);

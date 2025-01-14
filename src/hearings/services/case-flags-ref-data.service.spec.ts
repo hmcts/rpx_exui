@@ -1,19 +1,19 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { CaseFlagsRefDataService } from './case-flags-ref-data.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('CaseFlagsRefDataService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        StoreModule.forRoot({})
-      ],
-      providers: [
-        CaseFlagsRefDataService
-      ]
-    });
+    imports: [StoreModule.forRoot({})],
+    providers: [
+        CaseFlagsRefDataService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
   });
 
   it('should be created', inject([CaseFlagsRefDataService], (service: CaseFlagsRefDataService) => {

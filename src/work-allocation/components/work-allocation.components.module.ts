@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/material/legacy-autocomplete';
@@ -14,30 +14,23 @@ import { WorkAllocationPipesModule } from '../pipes/work-allocation.pipes.module
 import { CaseworkerDataService, LocationDataService, WASupportedJurisdictionsService } from '../services';
 
 // from containers
-@NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    ExuiCommonLibModule,
-    RouterModule,
-    FormsModule, // TODO: Remove this as it's only needed for testing.
-    PipesModule,
-    WorkAllocationPipesModule,
-    ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatFormFieldModule,
-    MatNativeDateModule,
-    MatInputModule
-  ],
-  declarations: [
-    ...fromComponents.components
-  ],
-  providers: [CaseworkerDataService, LocationDataService, WASupportedJurisdictionsService],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  exports: [
-    ...fromComponents.components
-  ]
-})
+@NgModule({ declarations: [
+        ...fromComponents.components
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    exports: [
+        ...fromComponents.components
+    ], imports: [CommonModule,
+        ExuiCommonLibModule,
+        RouterModule,
+        FormsModule, // TODO: Remove this as it's only needed for testing.
+        PipesModule,
+        WorkAllocationPipesModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatFormFieldModule,
+        MatNativeDateModule,
+        MatInputModule], providers: [CaseworkerDataService, LocationDataService, WASupportedJurisdictionsService, provideHttpClient(withInterceptorsFromDi())] })
 export class WorkAllocationComponentsModule {
 
 }

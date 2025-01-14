@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -11,6 +11,7 @@ import { RoleCategory, SpecificAccessNavigationEvent, SpecificAccessState, Speci
 import { AccessReason, SpecificAccessText } from '../../../models/enums';
 import { DecideSpecificAccessAndGo } from '../../../store';
 import { SpecificAccessReviewComponent } from './specific-access-review.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('SpecificAccessReviewComponent', () => {
   let component: SpecificAccessReviewComponent;
@@ -27,15 +28,17 @@ describe('SpecificAccessReviewComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [SpecificAccessReviewComponent],
-      imports: [ReactiveFormsModule, PipesModule, HttpClientTestingModule],
-      providers: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    declarations: [SpecificAccessReviewComponent],
+    imports: [ReactiveFormsModule, PipesModule],
+    providers: [
         provideMockStore(),
         FormBuilder,
-        { provide: WASupportedJurisdictionsService, useValue: mockSupportedJurisdictionsService }
-      ]
-    })
+        { provide: WASupportedJurisdictionsService, useValue: mockSupportedJurisdictionsService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

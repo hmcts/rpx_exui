@@ -1,6 +1,6 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
@@ -18,35 +18,29 @@ import { CaseworkerDataService, LocationDataService, StaffSupportedJurisdictions
 import { workAllocationRouting } from './work-allocation-feature.routes';
 
 // from containers
-@NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    SharedModule,
-    MatDialogModule,
-    WorkAllocationComponentsModule,
-    PipesModule,
-    workAllocationRouting,
-    CdkTableModule,
-    ExuiCommonLibModule,
-    ReactiveFormsModule,
-    RoleAccessModule,
-    PaginationModule,
-    NgxPaginationModule
-  ],
-  declarations: [...fromContainers.containers],
-  providers: [
-    WorkAllocationTaskService,
-    WorkAllocationAccessGuard,
-    AlertService,
-    BookingService,
-    CaseworkerDataService,
-    LocationDataService,
-    StaffSupportedJurisdictionsService,
-    WASupportedJurisdictionsService,
-    LoadingService,
-    SessionStorageService
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
-})
+@NgModule({ declarations: [...fromContainers.containers],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA], imports: [CommonModule,
+        SharedModule,
+        MatDialogModule,
+        WorkAllocationComponentsModule,
+        PipesModule,
+        workAllocationRouting,
+        CdkTableModule,
+        ExuiCommonLibModule,
+        ReactiveFormsModule,
+        RoleAccessModule,
+        PaginationModule,
+        NgxPaginationModule], providers: [
+        WorkAllocationTaskService,
+        WorkAllocationAccessGuard,
+        AlertService,
+        BookingService,
+        CaseworkerDataService,
+        LocationDataService,
+        StaffSupportedJurisdictionsService,
+        WASupportedJurisdictionsService,
+        LoadingService,
+        SessionStorageService,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class WorkAllocationModule {}

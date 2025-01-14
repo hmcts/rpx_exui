@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { CaseRoleDetails, RoleCategory } from '../../models';
 import { RejectionReasonText } from '../../models/enums/answer-text';
 import { AllocateRoleService } from '../../services';
 import { RejectedRequestViewComponent } from './rejected-request-view.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('RejectedRequestViewComponent', () => {
   let component: RejectedRequestViewComponent;
@@ -25,35 +26,37 @@ describe('RejectedRequestViewComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [RejectedRequestViewComponent],
-      imports: [PipesModule, HttpClientTestingModule],
-      providers: [
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    declarations: [RejectedRequestViewComponent],
+    imports: [PipesModule],
+    providers: [
         { provide: WASupportedJurisdictionsService, useValue: mockSupportedJurisdictionsService },
         { provide: AllocateRoleService, useValue: mockAllocateRoleService },
         { provide: CaseworkerDataService, useValue: mockCaseworkerDataService },
         { provide: Router, useValue: router },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              queryParams: {
-                caseName: 'case name',
-                caseReference: '123456789',
-                roleCategory: RoleCategory.JUDICIAL,
-                jurisdiction: 'IA',
-                // date of role created is actually date rejected, not originally requested
-                dateRejected: '01-01-2020',
-                infoRequired: false,
-                reviewer: 'example',
-                dateSubmitted: '01-01-2019',
-                specificAccessReason: 'I would like access'
-              }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    queryParams: {
+                        caseName: 'case name',
+                        caseReference: '123456789',
+                        roleCategory: RoleCategory.JUDICIAL,
+                        jurisdiction: 'IA',
+                        // date of role created is actually date rejected, not originally requested
+                        dateRejected: '01-01-2020',
+                        infoRequired: false,
+                        reviewer: 'example',
+                        dateSubmitted: '01-01-2019',
+                        specificAccessReason: 'I would like access'
+                    }
+                }
             }
-          }
-        }
-      ]
-    })
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

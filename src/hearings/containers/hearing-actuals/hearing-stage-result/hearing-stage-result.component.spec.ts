@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -11,6 +11,7 @@ import { initialState } from '../../../hearing.test.data';
 import { HearingResult } from '../../../models/hearings.enum';
 import { HearingsService } from '../../../services/hearings.service';
 import { HearingStageResultComponent } from './hearing-stage-result.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('HearingStageResultComponent', () => {
   let component: HearingStageResultComponent;
@@ -63,18 +64,17 @@ describe('HearingStageResultComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [HearingStageResultComponent, MockRpxTranslatePipe],
-      imports: [
-        ReactiveFormsModule,
-        HttpClientTestingModule,
-        RouterTestingModule
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
+    declarations: [HearingStageResultComponent, MockRpxTranslatePipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [ReactiveFormsModule,
+        RouterTestingModule],
+    providers: [
         provideMockStore({ initialState }),
-        { provide: HearingsService, useValue: hearingsService }
-      ]
-    })
+        { provide: HearingsService, useValue: hearingsService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

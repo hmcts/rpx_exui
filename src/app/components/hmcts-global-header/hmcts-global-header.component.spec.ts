@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { UserService } from '../../../app/services/user/user.service';
 import * as fromRoot from '../../../app/store/reducers';
 import * as fromNocStore from '../../../noc/store';
 import { HmctsGlobalHeaderComponent } from './hmcts-global-header.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Pipe({ name: 'rpxTranslate' })
 class RpxTranslateMockPipe implements PipeTransform {
@@ -63,39 +64,38 @@ describe('HmctsGlobalHeaderComponent - with active user', () => {
   beforeEach(waitForAsync(() => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     TestBed.configureTestingModule({
-      declarations: [HmctsGlobalHeaderComponent, RpxTranslateMockPipe],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
+    declarations: [HmctsGlobalHeaderComponent, RpxTranslateMockPipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [RouterTestingModule,
         StoreModule.forRoot({
-          ...fromRoot.reducers,
-          feature: combineReducers(fromNocStore.reducers)
-        })
-      ],
-      providers: [
+            ...fromRoot.reducers,
+            feature: combineReducers(fromNocStore.reducers)
+        })],
+    providers: [
         {
-          provide: Store,
-          useValue: storeMock
+            provide: Store,
+            useValue: storeMock
         },
         {
-          provide: UserService,
-          useValue: {
-            getUserDetails: () => of({
-              userInfo: {
-                roles: ['roleA', 'roleB']
-              }
-            })
-          }
+            provide: UserService,
+            useValue: {
+                getUserDetails: () => of({
+                    userInfo: {
+                        roles: ['roleA', 'roleB']
+                    }
+                })
+            }
         },
         {
-          provide: FeatureToggleService,
-          useValue: {
-            isEnabled: (flag) => of(flags[flag])
-          }
-        }
-      ]
-    })
+            provide: FeatureToggleService,
+            useValue: {
+                isEnabled: (flag) => of(flags[flag])
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 
@@ -427,35 +427,34 @@ describe('HmctsGlobalHeaderComponent - logged out', () => {
   beforeEach(waitForAsync(() => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     TestBed.configureTestingModule({
-      declarations: [HmctsGlobalHeaderComponent, RpxTranslateMockPipe],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
+    declarations: [HmctsGlobalHeaderComponent, RpxTranslateMockPipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [RouterTestingModule,
         StoreModule.forRoot({
-          ...fromRoot.reducers,
-          feature: combineReducers(fromNocStore.reducers)
-        })
-      ],
-      providers: [
+            ...fromRoot.reducers,
+            feature: combineReducers(fromNocStore.reducers)
+        })],
+    providers: [
         {
-          provide: Store,
-          useValue: storeMock
+            provide: Store,
+            useValue: storeMock
         },
         {
-          provide: UserService,
-          useValue: {
-            getUserDetails: () => of({})
-          }
+            provide: UserService,
+            useValue: {
+                getUserDetails: () => of({})
+            }
         },
         {
-          provide: FeatureToggleService,
-          useValue: {
-            isEnabled: (flag) => of(flags[flag])
-          }
-        }
-      ]
-    })
+            provide: FeatureToggleService,
+            useValue: {
+                isEnabled: (flag) => of(flags[flag])
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

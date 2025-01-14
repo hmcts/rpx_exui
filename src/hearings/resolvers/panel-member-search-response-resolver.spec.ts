@@ -1,5 +1,5 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -8,6 +8,7 @@ import { initialState } from '../hearing.test.data';
 import { JudicialUserModel } from '../models/judicialUser.model';
 import { JudicialRefDataService } from '../services/judicial-ref-data.service';
 import { PanelMemberSearchResponseResolver } from './panel-member-search-response-resolver';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('Panel Member Search Response Resolver', () => {
   let judicialRefDataService: JudicialRefDataService;
@@ -15,17 +16,16 @@ describe('Panel Member Search Response Resolver', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule.withRoutes([]),
-        HttpClientTestingModule
-      ],
-      providers: [
+    imports: [RouterTestingModule.withRoutes([])],
+    providers: [
         provideMockStore({ initialState }),
         PanelMemberSearchResponseResolver,
         JudicialRefDataService,
-        { provide: APP_BASE_HREF, useValue: '/' }
-      ]
-    }
+        { provide: APP_BASE_HREF, useValue: '/' },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}
     );
     judicialRefDataService = TestBed.inject(JudicialRefDataService) as JudicialRefDataService;
   });

@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -18,6 +18,7 @@ import {
   LoadUserFromOrgForCaseSuccess
 } from '../actions';
 import * as fromShareCaseEffects from './share-case.effects';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('Share Case Effects', () => {
   let actions$;
@@ -32,23 +33,23 @@ describe('Share Case Effects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({}),
-        HttpClientTestingModule,
+    imports: [StoreModule.forRoot({}),
         RouterTestingModule],
-      providers: [
+    providers: [
         {
-          provide: CaseShareService,
-          useValue: caseShareServiceMock
+            provide: CaseShareService,
+            useValue: caseShareServiceMock
         },
         {
-          provide: Router,
-          useValue: routerMock
+            provide: Router,
+            useValue: routerMock
         },
         fromShareCaseEffects.ShareCaseEffects,
-        provideMockActions(() => actions$)
-      ]
-    });
+        provideMockActions(() => actions$),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     store = TestBed.inject(Store);
     spyOnDispatchToStore = spyOn(store, 'dispatch').and.callThrough();
     effects = TestBed.inject(fromShareCaseEffects.ShareCaseEffects);

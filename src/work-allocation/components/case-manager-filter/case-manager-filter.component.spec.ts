@@ -1,5 +1,5 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -12,6 +12,7 @@ import { CaseManagerFilterComponent } from '..';
 import * as fromStore from '../../../app/store';
 import { LocationDataService, WorkAllocationCaseService } from '../../services';
 import { ALL_LOCATIONS } from '../constants/locations';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
   selector: 'xuilib-generic-filter',
@@ -41,23 +42,22 @@ describe('CaseManagerFilterComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [
-        CdkTableModule,
-        HttpClientTestingModule,
+    declarations: [CaseManagerFilterComponent, MockGenericFilterComponent],
+    imports: [CdkTableModule,
         RouterTestingModule,
-        RpxTranslationModule.forChild()
-      ],
-      declarations: [CaseManagerFilterComponent, MockGenericFilterComponent],
-      providers: [
+        RpxTranslationModule.forChild()],
+    providers: [
         RpxTranslationService, RpxTranslationConfig,
         provideMockStore(),
         { provide: WorkAllocationCaseService, useValue: mockCaseService },
         { provide: LocationDataService, useValue: { getLocations: () => of(ALL_LOCATIONS) } },
         {
-          provide: FilterService, useValue: mockFilterService
-        }
-      ]
-    }).compileComponents();
+            provide: FilterService, useValue: mockFilterService
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
     store = TestBed.inject(Store);
     storePipeMock = spyOn(store, 'pipe');
 

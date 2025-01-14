@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import { ExcludeOption, ExclusionNavigationEvent, ExclusionState } from '../../.
 import * as fromFeature from '../../../store';
 import * as fromContainers from '../../add-exclusion';
 import { AddExclusionHomeComponent } from './add-exclusion-home.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ExclusionHomeComponent', () => {
   let component: AddExclusionHomeComponent;
@@ -35,36 +36,35 @@ describe('ExclusionHomeComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        UtilsModule,
-        RouterTestingModule,
-        HttpClientTestingModule
-      ],
-      schemas: [
+    schemas: [
         NO_ERRORS_SCHEMA
-      ],
-      declarations: [
+    ],
+    declarations: [
         ...fromContainers.containers
-      ],
-      providers: [
+    ],
+    imports: [ReactiveFormsModule,
+        UtilsModule,
+        RouterTestingModule],
+    providers: [
         provideMockStore(),
         {
-          provide: Router,
-          useValue: routerMock
+            provide: Router,
+            useValue: routerMock
         },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              queryParams: {
-                caseId: '111111'
-              }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    queryParams: {
+                        caseId: '111111'
+                    }
+                }
             }
-          }
-        }
-      ]
-    })
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
     store = TestBed.inject(Store);
 

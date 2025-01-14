@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractControl, FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { ACTION } from '../../../models/hearings.enum';
 import { HearingsService } from '../../../services/hearings.service';
 import { LocationsDataService } from '../../../services/locations-data.service';
 import { HearingVenueComponent } from './hearing-venue.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
   selector: 'exui-hearing-parties-title',
@@ -79,22 +80,24 @@ describe('HearingVenueComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule],
-      declarations: [HearingVenueComponent, MockLocationSearchContainerComponent, MockHearingPartiesComponent, MockRpxTranslatePipe],
-      providers: [
+    declarations: [HearingVenueComponent, MockLocationSearchContainerComponent, MockHearingPartiesComponent, MockRpxTranslatePipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [ReactiveFormsModule, RouterTestingModule],
+    providers: [
         provideMockStore({ initialState }),
         { provide: HearingsService, useValue: hearingsService },
         { provide: LocationsDataService, useValue: locationsDataService },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            fragment: of('point-to-me')
-          }
+            provide: ActivatedRoute,
+            useValue: {
+                fragment: of('point-to-me')
+            }
         },
-        FormBuilder
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    })
+        FormBuilder,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
     fixture = TestBed.createComponent(HearingVenueComponent);
     component = fixture.componentInstance;

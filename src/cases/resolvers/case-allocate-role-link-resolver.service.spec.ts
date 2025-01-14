@@ -1,6 +1,6 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -13,16 +13,15 @@ describe('CaseAllocateRoleLinkResolverService', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule.withRoutes([]),
-        HttpClientTestingModule
-      ],
-      providers: [
+    imports: [RouterTestingModule.withRoutes([])],
+    providers: [
         CaseAllocateRoleLinkResolverService,
         { provide: Router, useValue: routerSpy },
-        { provide: APP_BASE_HREF, useValue: '/' }
-      ]
-    });
+        { provide: APP_BASE_HREF, useValue: '/' },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     httpClient = TestBed.inject(HttpClient) as HttpClient;
   }));
 
