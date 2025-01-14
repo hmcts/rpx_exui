@@ -361,6 +361,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@angular-material-components/datetime-picker@npm:^16.0.1":
+  version: 16.0.1
+  resolution: "@angular-material-components/datetime-picker@npm:16.0.1"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  peerDependencies:
+    "@angular/cdk": ^16.0.0
+    "@angular/common": ^16.0.0
+    "@angular/core": ^16.0.0
+    "@angular/forms": ^16.0.0
+    "@angular/material": ^16.0.0
+    "@angular/platform-browser": ^16.0.0
+  checksum: 10/df57c89ce7d3ec5f319bdd321d44c05d4307d920bf7e1dffc4719422a59128dbcc2fefedc2ac81edebd73602802a6a13ecbf6990c39e4b816e354bf243226894
+  languageName: node
+  linkType: hard
+
+"@angular-material-components/moment-adapter@npm:^16.0.1":
+  version: 16.0.1
+  resolution: "@angular-material-components/moment-adapter@npm:16.0.1"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  peerDependencies:
+    "@angular/common": ^16.0.0
+    "@angular/core": ^16.0.0
+    moment: ^2.18.1
+  checksum: 10/5335b53ae0363deeb7c2cb78237825e6070e6526e784572cc4c0b6daf44e9b82763a07bbb318703b0bfba1025ee4a081cb6ee028968c12bbbbe7968828bc8d10
+  languageName: node
+  linkType: hard
+
 "@angular/animations@npm:^18.2.13":
   version: 18.2.13
   resolution: "@angular/animations@npm:18.2.13"
@@ -23591,6 +23620,8 @@ __metadata:
     "@angular-eslint/eslint-plugin-template": "npm:17.5.3"
     "@angular-eslint/schematics": "npm:18"
     "@angular-eslint/template-parser": "npm:17.5.3"
+    "@angular-material-components/datetime-picker": "npm:^16.0.1"
+    "@angular-material-components/moment-adapter": "npm:^16.0.1"
     "@angular/animations": "npm:^18.2.13"
     "@angular/cdk": "npm:^17.3.6"
     "@angular/cli": "npm:^18.2.12"
