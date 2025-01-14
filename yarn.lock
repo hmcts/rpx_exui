@@ -288,7 +288,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-material-components/datetime-picker@npm:16.0.1":
+"@angular-material-components/datetime-picker@npm:^16.0.1":
   version: 16.0.1
   resolution: "@angular-material-components/datetime-picker@npm:16.0.1"
   dependencies:
@@ -22251,7 +22251,7 @@ __metadata:
     "@angular-eslint/eslint-plugin-template": "npm:17.5.3"
     "@angular-eslint/schematics": "npm:17.5.3"
     "@angular-eslint/template-parser": "npm:17.5.3"
-    "@angular-material-components/datetime-picker": "npm:16.0.1"
+    "@angular-material-components/datetime-picker": "npm:^16.0.1"
     "@angular-material-components/moment-adapter": "npm:^16.0.1"
     "@angular/animations": "npm:^17.3.6"
     "@angular/cdk": "npm:^17.3.6"
