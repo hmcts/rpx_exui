@@ -72,6 +72,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/datetime-picker": "^16.0.1",
     "@angular/animations": "^18.2.13",
     "@angular/cdk": "^17.3.6",
     "@angular/common": "^18.2.13",
@@ -166,6 +167,7 @@
     "@angular-eslint/eslint-plugin-template": "17.5.3",
     "@angular-eslint/schematics": "18",
     "@angular-eslint/template-parser": "17.5.3",
+    "@angular-material-components/moment-adapter": "^16.0.1",
     "@angular/cli": "^18.2.12",
     "@angular/compiler-cli": "^18.2.13",
     "@angular/language-service": "~18.2.13",
