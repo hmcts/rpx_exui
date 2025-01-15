@@ -22,7 +22,7 @@ module.exports = defineConfig({
   workers: process.env.FUNCTIONAL_TESTS_WORKERS ? parseInt(process.env.FUNCTIONAL_TESTS_WORKERS, 10) : 1,
 
   reporter: [[process.env.CI ? 'html' : 'list'],
-    ['html', { open: 'never', outputFolder: 'functional-output/tests/playwright-e2e' }]],
+    ['html', { open: 'never', outputFolder: 'functional-output/tests/playwright-e2e-crossbrowser' }]],
 
   projects: [
     {

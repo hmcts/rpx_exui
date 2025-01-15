@@ -12,7 +12,8 @@ import {
   NotAuthorisedComponent,
   PrivacyPolicyComponent,
   ServiceDownComponent,
-  SignedOutComponent
+  SignedOutComponent,
+  ExpiredLoginLinkComponent
 } from './components';
 import { AcceptTcWrapperComponent, LegacyTermsAndConditionsComponent, TermsAndConditionsComponent } from './containers';
 import { AcceptTermsGuard } from './guards/acceptTerms.guard';
@@ -165,6 +166,10 @@ export const ROUTES: Routes = [
   },
   { path: 'service-down', component: ServiceDownComponent },
   { path: 'not-authorised', component: NotAuthorisedComponent },
+  { path: 'expired-login-link',
+    component: ExpiredLoginLinkComponent,
+    data: { title: 'Expired Login Link' }
+  },
   { path: 'media-viewer', component: MediaViewerWrapperComponent },
   {
     path: 'get-help',

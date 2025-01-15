@@ -20,8 +20,8 @@
     "fortifyScan": "./test_codecept/java/gradlew -p test_codecept/java fortifyScan",
     "lint": "yarn lint:ng && yarn lint:node",
     "lint:ng": "ng lint rpx-exui",
-    "lint:node": "yarn eslint api",
-    "lint:test": "yarn eslint test",
+    "lint:node": "cd api && yarn lint",
+    "lint:test": "npx eslint test",
     "ng": "ng",
     "nuke": "rm -rf dist",
     "pact-stub": "$(find . -name pact-stub-service | grep -e 'bin/pact-stub-service$' | head -n 1) ./api/test/pact/pacts/ --port 8080",
@@ -88,14 +88,14 @@
     "@cucumber/cucumber": "^10.8.0",
     "@edium/fsm": "^2.1.2",
     "@faker-js/faker": "^9.2.0",
-    "@hmcts/ccd-case-ui-toolkit": "7.1.23",
+    "@hmcts/ccd-case-ui-toolkit": "7.1.25",
     "@hmcts/ccpay-web-component": "6.2.1",
     "@hmcts/frontend": "0.0.50-alpha",
     "@hmcts/media-viewer": "4.0.9",
     "@hmcts/nodejs-healthcheck": "1.7.0",
     "@hmcts/properties-volume": "^0.0.13",
     "@hmcts/rpx-xui-common-lib": "2.0.30",
-    "@hmcts/rpx-xui-node-lib": "2.29.6",
+    "@hmcts/rpx-xui-node-lib": "2.30.1",
     "@microsoft/applicationinsights-web": "^3.1.0",
     "@ng-idle/core": "^14.0.0",
     "@ng-idle/keepalive": "^14.0.0",
@@ -272,8 +272,8 @@
     "lodash": "^4.17.21",
     "braces": "^3.0.3",
     "ws": "^8.18.0",
-    "axios": "1.7.8",
+    "axios": "1.7.9",
     "webpack": "^5.94.0"
   },
-  "packageManager": "yarn@4.5.3"
+  "packageManager": "yarn@4.6.0"
 }

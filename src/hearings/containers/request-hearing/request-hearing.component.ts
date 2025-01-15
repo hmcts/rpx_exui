@@ -38,8 +38,13 @@ export class RequestHearingComponent implements OnDestroy {
     this.hearingsService.navigateAction(ACTION.BACK);
   }
 
+  public resetFocus(): void {
+    (document.getElementsByClassName('govuk-back-link')[0] as HTMLElement).focus();
+  }
+
   public onContinue(): void {
     this.hearingsService.navigateAction(ACTION.CONTINUE);
+    this.resetFocus();
   }
 
   public submitRequest(action: ACTION): void {

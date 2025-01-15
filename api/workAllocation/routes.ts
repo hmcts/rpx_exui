@@ -30,7 +30,7 @@ const router = Router({ mergeParams: true });
 
 router.use(authInterceptor);
 
-router.use('/caseworker/getUsersByServiceName', getUsersByServiceName);
+router.post('/caseworker/getUsersByServiceName', getUsersByServiceName);
 router.use('/caseworker/location/:locationId/service/:serviceId', getCaseWorkersForLocationAndService);
 router.use('/caseworker/location/:locationId', getAllCaseWorkersForLocation);
 router.use('/caseworker/service/:serviceId', getCaseWorkersForService);
