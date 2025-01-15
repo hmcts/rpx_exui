@@ -5,12 +5,12 @@
       <ul class="govuk-list govuk-error-summary__list">
         <ng-container *ngIf="error.multiple; else one">
           <li *ngFor="let error of error.errors">
-            <a routerLink="." [fragment]="error.name">{{error.error | rpxTranslate}}</a>
+            <a routerLink="." tabindex="0" [fragment]="error.name">{{error.error | rpxTranslate}}</a>
           </li>
         </ng-container>
         <ng-template #one>
           <li >
-            <a routerLink="." [fragment]="error.fieldId">{{error.description | rpxTranslate}}</a>
+            <a routerLink="." tabindex="0" [fragment]="error.fieldId">{{error.description | rpxTranslate}}</a>
           </li>
         </ng-template>
       </ul>
