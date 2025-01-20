@@ -120,6 +120,7 @@ export class HearingAttendanceComponent extends RequestHearingPageFlow implement
       if (!individualPartyIdsInHMC.includes(partyDetailsModel.partyID)) {
         partyDetailsModel = {
           ...partyDetailsModel,
+          partyName: `${partyDetailsModel.individualDetails.firstName} ${partyDetailsModel.individualDetails.lastName}`,
           partyAmendmentStatus: AmendmentLabelStatus.ACTION_NEEDED
         };
         (this.attendanceFormGroup.controls.parties as FormArray).push(this.patchValues(partyDetailsModel) as FormGroup);
