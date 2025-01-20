@@ -7,6 +7,8 @@ import { PartyDetailsModel } from '../models/partyDetails.model';
 import { HearingsUtils } from './hearings.utils';
 import { UnavailabilityRangeModel } from '../models/unavailabilityRange.model';
 import { HearingWindowModel } from '../models/hearingWindow.model';
+import { ServiceHearingValuesModel } from '../models/serviceHearingValues.model';
+import * as moment from 'moment';
 
 describe('HearingsUtils', () => {
   it('should return true if has the right property', () => {
@@ -384,6 +386,7 @@ describe('HearingsUtils', () => {
       expect(HearingsUtils.hasPartyUnavailabilityDatesChanged(party1, party2)).toEqual(true);
     });
   });
+
   describe('Test of change of hearing window dates', () => {
     it('no difference in first date time must be, no change in hearing window found', () => {
       const hearingWindow1: HearingWindowModel = {
@@ -435,6 +438,162 @@ describe('HearingsUtils', () => {
         dateRangeEnd: '2021-12-20T09:00:00.000Z'
       };
       expect(HearingsUtils.hasHearingDatesChanged(hearingWindow1, hearingWindow2)).toEqual(true);
+    });
+  });
+
+  describe('checkHearingPartiesConsistency', () => {
+    it('should return true if SHV contains same partyIDs as HMC', () => {
+      const hearingRequestMainModel: HearingRequestMainModel = {
+        ...initialState.hearings.hearingRequest.hearingRequestMainModel,
+        partyDetails: [{
+          partyID: 'testParty1',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        },
+        {
+          partyID: 'testParty2',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        }]
+      };
+      const serviceHearingValuesModel: ServiceHearingValuesModel = {
+        ...initialState.hearings.hearingValues.serviceHearingValuesModel,
+        parties: [{
+          partyID: 'testParty1',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        },
+        {
+          partyID: 'testParty2',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        }]
+      };
+      expect(
+        HearingsUtils.checkHearingPartiesConsistency(hearingRequestMainModel, serviceHearingValuesModel)
+      ).toBeTruthy();
+    });
+
+    it('should return false if SHV contains no matching partyIDs in HMC', () => {
+      const hearingRequestMainModel: HearingRequestMainModel = {
+        ...initialState.hearings.hearingRequest.hearingRequestMainModel,
+        partyDetails: [{
+          partyID: 'testParty1',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        },
+        {
+          partyID: 'testParty2',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        }]
+      };
+      const serviceHearingValuesModel: ServiceHearingValuesModel = {
+        ...initialState.hearings.hearingValues.serviceHearingValuesModel,
+        parties: [{
+          partyID: 'testParty3',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        },
+        {
+          partyID: 'testParty4',
+          partyType: PartyType.IND,
+          partyRole: 'partyRole'
+        }]
+      };
+      expect(
+        HearingsUtils.checkHearingPartiesConsistency(hearingRequestMainModel, serviceHearingValuesModel)
+      ).toBeFalsy();
+    });
+  });
+  describe('Update the hearing window static data to a future date\'', () => {
+    const mochSHVData = {
+      'hmctsServiceID': 'ABA5',
+      'hmctsInternalCaseName': '1234567812345678 update case internal name',
+      'publicCaseName': 'Case public name',
+      'caseAdditionalSecurityFlag': false,
+      'caseCategories': [
+        {
+          'categoryType': 'caseType',
+          'categoryValue': 'ABA5-PRL',
+          'categoryParent': null
+        },
+        {
+          'categoryType': 'caseSubType',
+          'categoryValue': 'ABA5-PRL',
+          'categoryParent': 'ABA5-PRL'
+        }
+      ],
+      'caseDeepLink': 'https://manage-case-hearings-int.demo.platform.hmcts.net/cases/case-details/1690807693531270#Case File View',
+      'externalCaseReference': '',
+      'caseManagementLocationCode': '283922',
+      'autoListFlag': false,
+      'hearingType': '',
+      'hearingWindow': {
+        'dateRangeStart': '',
+        'dateRangeEnd': '',
+        'firstDateTimeMustBe': '2024-12-18T00:00:00'
+      },
+      'duration': 120,
+      'hearingPriorityType': 'Standard',
+      'numberOfPhysicalAttendees': 0
+    };
+    const mockHMCData = {
+      'requestDetails': {
+        'status': 'LISTED',
+        'timestamp': '2023-11-06T14:01:32.836316',
+        'versionNumber': 1,
+        'hearingRequestID': '2000007311'
+      },
+      'hearingDetails': {
+        'hearingType': 'ABA1-ABC',
+        'hearingWindow': {
+          'dateRangeStart': '2025-12-15T00:00:00',
+          'dateRangeEnd': '2025-12-17T00:00:00',
+          'firstDateTimeMustBe': ''
+        },
+        'duration': 125,
+        'hearingPriorityType': 'ABA1-HPR',
+        'numberOfPhysicalAttendees': 0,
+        'hearingInWelshFlag': false,
+        'hearingLocations': [
+          {
+            'locationType': 'court',
+            'locationId': '827534'
+          }
+        ],
+        'privateHearingRequiredFlag': false,
+        'panelRequirements': {
+          'roleType': [
+            '19',
+            '30'
+          ],
+          'authorisationTypes': [],
+          'authorisationSubType': [],
+          'panelPreferences': [],
+          'panelSpecialisms': []
+        },
+        'hearingIsLinkedFlag': false,
+        'hearingChannels': [
+          'INTER',
+          'VID'
+        ],
+        'autolistFlag': false
+      }
+    };
+    it('SHV static data updated with future dates', () => {
+      const response = mochSHVData;
+      HearingsUtils.resetHearingWindow(response);
+      const expectedYear = new Date().getFullYear();
+      expect(moment(response.hearingWindow.firstDateTimeMustBe).year()).toEqual(expectedYear + 1);
+    });
+
+    it('HMC static data updated with future dates', () => {
+      const response = mockHMCData;
+      HearingsUtils.resetHearingWindow(response);
+      const expectedYear = new Date().getFullYear();
+      expect(moment(response.hearingDetails.hearingWindow.dateRangeStart).year()).toEqual(expectedYear + 1);
+      expect(moment(response.hearingDetails.hearingWindow.dateRangeEnd).year()).toEqual(expectedYear + 1);
     });
   });
 });
