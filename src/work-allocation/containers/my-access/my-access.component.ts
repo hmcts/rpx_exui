@@ -51,15 +51,11 @@ export class MyAccessComponent extends WorkCaseListWrapperComponent {
   public onItemClickHandler(item: Case) {
     if (item.isNew) {
       if (item.role.startsWith('challenged-access')) {
-        CasesService.updateChallengedAccessRequestAttributes(this.httpClient, item.case_id, {
-          isNew: false
-        })
+        CasesService.updateChallengedAccessRequestAttributes(this.httpClient, item.case_id, { isNew: false })
           .pipe(take(1))
           .subscribe(() => item.isNew = false);
       } else if (item.role.startsWith('specific-access') && item.startDate !== 'Pending') {
-        CasesService.updateSpecificAccessRequestAttributes(this.httpClient, item.case_id, {
-          isNew: false
-        })
+        CasesService.updateSpecificAccessRequestAttributes(this.httpClient, item.case_id, { isNew: false })
           .pipe(take(1))
           .subscribe(() => item.isNew = false);
       }

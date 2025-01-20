@@ -34,7 +34,7 @@ class SearchPage {
     this.noResultsNotification = $("ccd-search-result .notification");
     this.searchResultComponent = $('.search-block');
 
-    this.firstResultCaseLink = $("ccd-search-result>table>tbody>tr:nth-of-type(1)>td:nth-of-type(1)>a");
+    this.firstResultCaseLink = $("ccd-search-result>table>tbody>tr:nth-of-type(2)>td:nth-of-type(1)>a");
     this.secondResultCaseLink = $("ccd-search-result>table>tbody>tr:nth-of-type(2)>td:nth-of-type(1)>a");
   }
 
