@@ -3455,12 +3455,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/ccd-case-ui-toolkit@npm:7.1.27":
-  version: 7.1.27
-  resolution: "@hmcts/ccd-case-ui-toolkit@npm:7.1.27"
+"@hmcts/ccd-case-ui-toolkit@npm:7.1.28":
+  version: 7.1.28
+  resolution: "@hmcts/ccd-case-ui-toolkit@npm:7.1.28"
   dependencies:
     tslib: "npm:^2.3.0"
-  checksum: 10/ccee5fad08bad6472ac3f434d2a27efa65ab39139654773401d99a899156fa5c1b9ba4075f2f9172b40956e66e3bc363b8ff6d299931bdd963ac694a73fb7069
+  checksum: 10/e6888e7e6050b8ddd2e290a5f298e3825033e267d6c419acd798765457e3c5a76c413bde205064b5410dc1bb37414f3908af2ce7ca7f84ebab28cfcfa59172b6
   languageName: node
   linkType: hard
 
@@ -6742,11 +6742,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:>=10.0.0":
-  version: 22.10.7
-  resolution: "@types/node@npm:22.10.7"
+  version: 22.10.1
+  resolution: "@types/node@npm:22.10.1"
   dependencies:
     undici-types: "npm:~6.20.0"
-  checksum: 10/64cde1c2f5e5f7d597d3bd462f52c3c2d688a66623eb75d25e1d1d63d384ef553a27100635ad0dbb7d74da517048aa636947863eb624cf85f25d2f22370ce474
+  checksum: 10/c802a526da2f3fa3ccefd00a71244e7cb825329951719e79e8fec62b1dbc2855388c830489770611584665ce10be23c05ed585982038b24924e1ba2c2cce03fd
   languageName: node
   linkType: hard
 
@@ -6758,11 +6758,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^18.17.0":
-  version: 18.19.71
-  resolution: "@types/node@npm:18.19.71"
+  version: 18.19.67
+  resolution: "@types/node@npm:18.19.67"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10/1984ad8850d66cce66469f1b9bf0d0e60574061c5ce7d0088ba51a13b7b56428f7b16de7b154d3a5ca91d52a41c3c6bc564338a8ea4efed93eee0b465230ef3f
+  checksum: 10/7bb1d06cd1483dd02462a3dd2894790e5c27ba0fa4cdd4a3da1062d66ed47b66affaab314aa72b346ff3e5538a74d5c3cb14bb1a634547504a1643679738f494
   languageName: node
   linkType: hard
 
@@ -22271,7 +22271,7 @@ __metadata:
     "@cucumber/cucumber": "npm:^10.8.0"
     "@edium/fsm": "npm:^2.1.2"
     "@faker-js/faker": "npm:^9.2.0"
-    "@hmcts/ccd-case-ui-toolkit": "npm:7.1.27"
+    "@hmcts/ccd-case-ui-toolkit": "npm:7.1.28"
     "@hmcts/ccpay-web-component": "npm:6.2.1"
     "@hmcts/frontend": "npm:0.0.50-alpha"
     "@hmcts/media-viewer": "npm:4.0.9"
