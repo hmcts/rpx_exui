@@ -3360,10 +3360,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:^9.2.0":
-  version: 9.3.0
-  resolution: "@faker-js/faker@npm:9.3.0"
-  checksum: 10/fa0718766dc46dea06602b1acdccdf3714e5a076f02eab6dbe26d7dc421ccc43a2e7e08767f7832de963fa2a273c2d9e5d4a2a504247ea5fba119a713efc145c
+"@faker-js/faker@npm:^9.3.0":
+  version: 9.4.0
+  resolution: "@faker-js/faker@npm:9.4.0"
+  checksum: 10/f9f3c984d941a1e086c97bbf35def701e2d35e0e36e321569a6ac2ae0b7d2b1f2bee868362751c011f0eb917204fd85e53f178b1b2a1775df1670dfb30527a5b
   languageName: node
   linkType: hard
 
@@ -3455,12 +3455,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/ccd-case-ui-toolkit@npm:7.1.27":
-  version: 7.1.27
-  resolution: "@hmcts/ccd-case-ui-toolkit@npm:7.1.27"
+"@hmcts/ccd-case-ui-toolkit@npm:7.1.23-exui-2388-rc2":
+  version: 7.1.23-exui-2388-rc2
+  resolution: "@hmcts/ccd-case-ui-toolkit@npm:7.1.23-exui-2388-rc2"
   dependencies:
     tslib: "npm:^2.3.0"
-  checksum: 10/ccee5fad08bad6472ac3f434d2a27efa65ab39139654773401d99a899156fa5c1b9ba4075f2f9172b40956e66e3bc363b8ff6d299931bdd963ac694a73fb7069
+  checksum: 10/ddf5cd62f585a4be10603cbacdb4d1af5a04faf609b3aee1288b519ffaca8933557509d6fc7e41595327cb51e4bf7ba63c5adb0b68b974fa0bba9cdea27f7986
   languageName: node
   linkType: hard
 
@@ -3483,9 +3483,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/media-viewer@npm:4.0.9":
-  version: 4.0.9
-  resolution: "@hmcts/media-viewer@npm:4.0.9"
+"@hmcts/media-viewer@npm:4.0.9-exui-2388-rc1":
+  version: 4.0.9-exui-2388-rc1
+  resolution: "@hmcts/media-viewer@npm:4.0.9-exui-2388-rc1"
   dependencies:
     "@swimlane/ngx-datatable": "npm:^20.0.0"
     mutable-div: "npm:^2.0.0"
@@ -3504,7 +3504,7 @@ __metadata:
     "@ngrx/router-store": ^17.0.0
     "@ngrx/store": ^17.0.0
     "@ngrx/store-devtools": ^17.0.0
-  checksum: 10/2366868102b9b06f15c1dfc96ffcd0cfd72e51c795c492566d3e438e8b5a80408b5e87586b93fe5331f308eddc5cfab88ac8b8bd9ed69da965ea456557ba4152
+  checksum: 10/6980dd62c98ee6e113919964ebef533865b51170b4bed0c7106e3465273fb3d4fc88b4fcf076c56fbbbbecb0e3e28cb5477deb06b442c8b9beedd8aef6a2911c
   languageName: node
   linkType: hard
 
@@ -22270,11 +22270,11 @@ __metadata:
     "@axe-core/playwright": "npm:^4.9.1"
     "@cucumber/cucumber": "npm:^10.8.0"
     "@edium/fsm": "npm:^2.1.2"
-    "@faker-js/faker": "npm:^9.2.0"
-    "@hmcts/ccd-case-ui-toolkit": "npm:7.1.27"
+    "@faker-js/faker": "npm:^9.3.0"
+    "@hmcts/ccd-case-ui-toolkit": "npm:7.1.23-exui-2388-rc2"
     "@hmcts/ccpay-web-component": "npm:6.2.1"
     "@hmcts/frontend": "npm:0.0.50-alpha"
-    "@hmcts/media-viewer": "npm:4.0.9"
+    "@hmcts/media-viewer": "npm:4.0.9-exui-2388-rc1"
     "@hmcts/nodejs-healthcheck": "npm:1.7.0"
     "@hmcts/properties-volume": "npm:^0.0.13"
     "@hmcts/rpx-xui-common-lib": "npm:2.0.30"
