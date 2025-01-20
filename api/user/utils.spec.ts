@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { CASE_ALLOCATOR_ROLE, LEGAL_OPS_TYPE } from './constants';
-import { getOrganisationRoles, getUserRoleCategory, isCurrentUserCaseAllocator } from './utils';
+import { getOrganisationRoles, getUserRoleCategory, isCurrentUserCaseAllocator, userDetailsValid } from './utils';
 
 describe('user.utils', () => {
   describe('isCurrentUserCaseAllocator without jurisdiction and location', () => {
@@ -146,6 +146,43 @@ describe('user.utils', () => {
         'case-allocator', 'tribunal-caseworker',
         'hmcts-legal-operations', 'task-supervisor'];
       expect(getUserRoleCategory(roles)).to.equal('admin');
+    });
+  });
+
+  describe('userDetailsValid', () => {
+    const mockUserDetails = {
+      given_name: 'judge',
+      email: 'test@ejudiciary.net',
+      family_name: 'user',
+      name: 'judge user',
+      ssoProvider: 'testing-support',
+      uid: '12345-45678-567890',
+      identity: 'id=12345-45678-567890,ou=test-config',
+      roles: [
+        'test-role',
+        'caseworker-role',
+        'judge-role'
+      ],
+      sub: 'test@ejudiciary.net',
+      subname: 'test@ejudiciary.net',
+      iss: 'https://test-url.com?test=1'
+    };
+    it('should ensure user details are valid', () => {
+      expect(userDetailsValid(null)).to.equal(true);
+      expect(userDetailsValid(mockUserDetails)).to.equal(true);
+    });
+
+    it('should set user details to invalid if it has dangerous characters', () => {
+      mockUserDetails.email = '<script>alert("hello")</script>';
+      expect(userDetailsValid(mockUserDetails)).to.equal(false);
+      mockUserDetails.email = 'test@ejudiciary.net';
+    });
+
+    it('should set user details to invalid if iss has dangerous characters', () => {
+      mockUserDetails.iss = '/*http://test-url.com';
+      expect(userDetailsValid(mockUserDetails)).to.equal(false);
+      mockUserDetails.iss = 'http://test-url.com&';
+      expect(userDetailsValid(mockUserDetails)).to.equal(true);
     });
   });
 });
