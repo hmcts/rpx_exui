@@ -167,7 +167,6 @@ describe('HearingAttendanceComponent', () => {
 
     fixture = TestBed.createComponent(HearingAttendanceComponent);
     component = fixture.componentInstance;
-    spyOn(component, 'initialiseFromHearingValues').and.callThrough();
     spyOn(component, 'prepareHearingRequestData').and.callThrough();
     spyOn(component, 'isFormValid').and.callThrough();
     lovRefDataService.getListOfValues.and.returnValue(of([]));
@@ -292,16 +291,6 @@ describe('HearingAttendanceComponent', () => {
     expect(formValid).toEqual(false);
   });
 
-  it('should render parties from the hearingvaluemodel', () => {
-    const store = jasmine.createSpyObj('store', ['pipe', 'dispatch', 'select']);
-    store.select.and.returnValue(of(initialState));
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    component.initialiseFromHearingValues();
-    expect(component.initialiseFromHearingValues).toHaveBeenCalled();
-    expect((component.attendanceFormGroup.controls.parties as FormArray).length).toBeGreaterThan(0);
-  });
-
   it('should not consider the party details from in-memory object for create new hearing request journey', () => {
     component.hearingCondition = {
       mode: 'create'
@@ -321,11 +310,44 @@ describe('HearingAttendanceComponent', () => {
       }
     };
     component.ngOnInit();
-    expect(component.initialiseFromHearingValues).not.toHaveBeenCalled();
     expect(component.attendanceFormGroup.controls.parties.value.length).toEqual(2);
   });
 
   it('should set the party details from in-memory object when viewing or editing existing hearing request', () => {
+    component.attendanceFormGroup.controls.parties = new FormArray([]);
+    component.hearingCondition = {
+      mode: 'view-edit'
+    };
+    component.ngOnInit();
+    expect(component.attendanceFormGroup.controls.parties.value.length).toEqual(1);
+  });
+
+  it('should set the party details from the service values hearing model', () => {
+    const newParty: PartyDetailsModel =
+    {
+      'partyID': 'P5',
+      'partyType': PartyType.IND,
+      'partyRole': 'appellant',
+      'individualDetails': {
+        'title': 'Mr',
+        'firstName': 'Brian',
+        'lastName': 'May',
+        'preferredHearingChannel': 'inPerson',
+        'reasonableAdjustments': [
+          'RA0042',
+          'SM0001'
+        ]
+      },
+      'unavailabilityRanges': [
+        {
+          'unavailableFromDate': '2021-12-10T09:00:00.000Z',
+          'unavailableToDate': '2021-12-31T09:00:00.000Z',
+          'unavailabilityType': UnavailabilityType.ALL_DAY
+        }
+      ]
+    };
+    component.serviceHearingValuesModel.parties.push(newParty);
+
     component.attendanceFormGroup.controls.parties = new FormArray([]);
     component.hearingCondition = {
       mode: 'view-edit'
@@ -339,13 +361,17 @@ describe('HearingAttendanceComponent', () => {
         reasonableAdjustmentChangesRequired: true,
         nonReasonableAdjustmentChangesRequired: false,
         partyDetailsChangesRequired: true,
+        partyDetailsChangesConfirmed: true,
         hearingWindowChangesRequired: true,
         hearingFacilitiesChangesRequired: false,
         hearingUnavailabilityDatesChanged: false
       }
     };
     component.ngOnInit();
-    expect(component.attendanceFormGroup.controls.parties.value.length).toEqual(1);
+    expect(component.attendanceFormGroup.controls.parties.value.length).toEqual(2);
+    expect(component.attendanceFormGroup.controls.parties.value[1].partyID).toEqual('P5');
+    expect(component.attendanceFormGroup.controls.parties.value[1].partyName).toEqual('Brian May');
+    component.serviceHearingValuesModel.parties.pop();
   });
 
   it('should call initialiseFromHearingValuesForAmendments for manual amendments journey with party changes', () => {
@@ -492,7 +518,6 @@ describe('HearingAttendanceComponent', () => {
       expect(component.attendanceFormGroup.controls.estimation.value).toEqual(3);
     });
   });
-
   afterEach(() => {
     fixture.destroy();
   });

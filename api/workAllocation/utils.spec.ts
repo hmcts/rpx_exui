@@ -348,7 +348,7 @@ describe('workAllocation.utils', () => {
         },
         roleName: ['hearing-centre-admin', 'case-manager', 'ctsc', 'tribunal-caseworker',
           'hmcts-legal-operations', 'task-supervisor', 'hmcts-admin',
-          'national-business-centre', 'senior-tribunal-caseworker', 'case-allocator'],
+          'national-business-centre', 'senior-tribunal-caseworker', 'case-allocator', 'regional-centre-admin'],
         validAt: Date.UTC,
         roleType: ['ORGANISATION']
       };
