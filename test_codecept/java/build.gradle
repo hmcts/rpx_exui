@@ -4,7 +4,7 @@ plugins {
 }
 
 sourceCompatibility = 11
-targetCompatibility = 11
+targetCompatibility = 17
 
 // tag::repositories[]
 repositories {
@@ -19,7 +19,7 @@ repositories {
 // tag::dependencies[]
 dependencies {
     testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.4'
-    testImplementation 'com.github.hmcts:fortify-client:1.4.5:all'
+    testImplementation 'com.github.hmcts:fortify-client:1.4.6:all'
 }
 // end::dependencies[]
 
