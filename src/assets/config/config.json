@@ -41,7 +41,10 @@
     "document_data_url": "/documentData/caseref",
     "rd_common_data_api_url": "/refdata/commondata",
     "case_data_store_api_url": "/getLinkedCases",
-    "case_flags_refdata_api_url": "/refdata/commondata/caseflags/service-id=:sid"
+    "case_flags_refdata_api_url": "/refdata/commondata/caseflags/service-id=:sid",
+    "events_to_hide": [
+      "queryManagementRespondQuery"
+    ]
   },
   "urls": {
     "idam": {
