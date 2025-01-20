@@ -134,8 +134,8 @@
             "partyName": "Party4 name",
             "partyRole": "APPL",
             "individualDetails": {
-                "firstName": "Party1 name FN",
-                "lastName": "Party1 name LN",
+                "firstName": "Party4 name FN",
+                "lastName": "Party4 name LN",
                 "interpreterLanguage": "",
                 "reasonableAdjustments": [
                     "RA001"
