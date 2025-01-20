@@ -1,10 +1,14 @@
 import { expect } from 'chai';
 import { LEGAL_OPS_TYPE } from './constants';
-import { getActiveRoleAssignments } from './index';
+import { addUserRolesIfUnique, getActiveRoleAssignments, setUserRoles } from './index';
 import { RoleAssignment } from './interfaces/roleAssignment';
 
 describe('Index', () => {
   let roleAssignments: RoleAssignment[];
+  let mockUserInfo: any;
+  let mockRoleAssignments: RoleAssignment[];
+  let mockReq: any;
+  let mockUserId: string;
 
   beforeEach(() => {
     roleAssignments = [{
@@ -23,6 +27,36 @@ describe('Index', () => {
         jurisdiction: 'IA'
       }
     }];
+    mockUserInfo = { roles: ['caseworker-test', 'caseworker-test2'], roleCategory: null };
+    mockRoleAssignments = [{
+      id: '1',
+      roleCategory: 'ADMIN',
+      roleName: 'test role',
+      roleType: 'ORGANISATION',
+      attributes: {
+        isCaseAllocator: false
+      }
+    },
+    {
+      id: '2',
+      roleCategory: 'ADMIN',
+      roleName: 'test role 2',
+      roleType: 'ORGANISATION',
+      attributes: {
+        isCaseAllocator: false
+      }
+    },
+    {
+      id: '3',
+      roleCategory: 'ADMIN',
+      roleName: 'test role 3',
+      roleType: 'UNIMPORTANT',
+      attributes: {
+        isCaseAllocator: true
+      }
+    }];
+    mockReq = { session: { roleAssignmentResponse: mockRoleAssignments } };
+    mockUserId = '123';
   });
 
   describe('getActiveRoleAssignments', () => {
@@ -84,6 +118,58 @@ describe('Index', () => {
       roleAssignments[0].endTime = new Date(2022, 10, 19);
       const activeRoleAssignments = getActiveRoleAssignments(roleAssignments, filterDate);
       expect(activeRoleAssignments.length).to.equal(0);
+    });
+  });
+
+  describe('setUserRoles', () => {
+    it('should set user roles correctly', async () => {
+      const mockUserRoles = [{
+        roleName: 'test role',
+        roleCategory: 'ADMIN',
+        roleType: 'ORGANISATION',
+        isCaseAllocator: false,
+        beginTime: undefined,
+        endTime: undefined
+      },
+      {
+        roleName: 'test role 2',
+        roleCategory: 'ADMIN',
+        roleType: 'ORGANISATION',
+        isCaseAllocator: false,
+        beginTime: undefined,
+        endTime: undefined
+      },
+      {
+        roleName: 'test role 3',
+        roleCategory: 'ADMIN',
+        roleType: 'UNIMPORTANT',
+        // is case allocator not true because not organisation type
+        isCaseAllocator: false,
+        beginTime: undefined,
+        endTime: undefined
+      }];
+      expect(setUserRoles(mockUserInfo, mockReq, mockUserId)).to.deep.equal(mockUserRoles);
+      expect(mockUserInfo.roleCategory).to.equal('ADMIN');
+      expect(mockUserInfo.roles).to.deep.equal(['caseworker-test', 'caseworker-test2', 'test role', 'test role 2']);
+    });
+  });
+
+  describe('addUserRolesIfUnique', () => {
+    it('should handle an empty list', async () => {
+      addUserRolesIfUnique(mockUserInfo, []);
+      expect(mockUserInfo.roles).to.deep.equal(['caseworker-test', 'caseworker-test2']);
+    });
+
+    it('should add unique user roles', async () => {
+      addUserRolesIfUnique(mockUserInfo, ['test role 1']);
+      expect(mockUserInfo.roles).to.deep.equal(['caseworker-test', 'caseworker-test2', 'test role 1']);
+      addUserRolesIfUnique(mockUserInfo, ['test role 2']);
+      expect(mockUserInfo.roles).to.deep.equal(['caseworker-test', 'caseworker-test2', 'test role 1', 'test role 2']);
+    });
+
+    it('should not add non-unique user roles', async () => {
+      addUserRolesIfUnique(mockUserInfo, ['caseworker-test']);
+      expect(mockUserInfo.roles).to.deep.equal(['caseworker-test', 'caseworker-test2']);
     });
   });
 });
