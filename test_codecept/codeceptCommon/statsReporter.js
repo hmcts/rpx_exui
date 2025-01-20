@@ -151,3 +151,4 @@ class StatsReporter {
 }
 const instance = new StatsReporter();
 module.exports = instance;
+

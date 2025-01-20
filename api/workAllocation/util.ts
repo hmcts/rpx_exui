@@ -366,8 +366,7 @@ export function prepareRoleApiRequest(jurisdictions: string[], locationId?: numb
     // TODO: This should not be hard-coded list
     roleName: ['hearing-centre-admin', 'case-manager', 'ctsc', 'tribunal-caseworker',
       'hmcts-legal-operations', 'task-supervisor', 'hmcts-admin',
-      'national-business-centre', 'senior-tribunal-caseworker', 'case-allocator',
-      'regional-centre-admin'],
+      'national-business-centre', 'senior-tribunal-caseworker', 'case-allocator'],
     roleType: ['ORGANISATION'],
     validAt: Date.UTC
   };

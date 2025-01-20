@@ -108,7 +108,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * Load and Listen for User Details
    */
   public loadAndListenForUserDetails() {
-    this.store.dispatch(new fromRoot.LoadUserDetails(true));
+    this.store.dispatch(new fromRoot.LoadUserDetails());
     const userDetails$ = this.store.pipe(select(fromRoot.getUserDetails));
     const envConfigAndUserDetails$ = combineLatest([this.environmentService.config$, userDetails$]);
     envConfigAndUserDetails$.subscribe((envConfigAndUserDetails) => {

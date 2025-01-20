@@ -3,7 +3,6 @@ import { AccessibilityComponent } from './accessibility/accessibility.component'
 import { CaseReferenceSearchBoxComponent } from './case-reference-search-box/case-reference-search-box.component';
 import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
 import { ErrorMessageComponent } from './error-message/error-message.component';
-import { ExpiredLoginLinkComponent } from './expired-login-link/expired-login-link.component';
 import { GetHelpComponent } from './get-help/get-help.component';
 import { HeaderComponent } from './header/header.component';
 import { HmctsGlobalFooterComponent } from './hmcts-global-footer/hmcts-global-footer.component';
@@ -34,8 +33,7 @@ export const components: any[] = [
   ApplicationRoutingComponent,
   CaseReferenceSearchBoxComponent,
   InfoMessageContainerComponent,
-  InfoMessageComponent,
-  ExpiredLoginLinkComponent
+  InfoMessageComponent
 ];
 
 export * from './hmcts-global-footer/hmcts-global-footer.component';
@@ -55,4 +53,3 @@ export * from './routing/application-routing.component';
 export * from './case-reference-search-box/case-reference-search-box.component';
 export * from '../containers/info-message-container/info-message-container.component';
 export * from './info-message/info-message.component';
-export * from './expired-login-link/expired-login-link.component';

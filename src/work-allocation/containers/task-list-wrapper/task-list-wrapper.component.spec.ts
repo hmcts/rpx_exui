@@ -1,5 +1,5 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { ChangeDetectorRef, Pipe, PipeTransform } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -18,13 +18,6 @@ import { Task } from '../../models/tasks';
 import { CaseworkerDataService, WASupportedJurisdictionsService, WorkAllocationTaskService } from '../../services';
 import { getMockTasks, MockRouter } from '../../tests/utils.spec';
 import { TaskListWrapperComponent } from './task-list-wrapper.component';
-
-@Pipe({ name: 'rpxTranslate' })
-class RpxTranslationMockPipe implements PipeTransform {
-  public transform(value: string): string {
-    return value;
-  }
-}
 
 describe('TaskListWrapperComponent', () => {
   let component: TaskListWrapperComponent;
@@ -67,7 +60,7 @@ describe('TaskListWrapperComponent', () => {
         RouterTestingModule,
         CdkTableModule
       ],
-      declarations: [TaskListComponent, TaskListWrapperComponent, RpxTranslationMockPipe],
+      declarations: [TaskListComponent, TaskListWrapperComponent],
       providers: [
         { provide: ChangeDetectorRef, useValue: mockRef },
         { provide: WorkAllocationTaskService, useValue: mockWorkAllocationService },

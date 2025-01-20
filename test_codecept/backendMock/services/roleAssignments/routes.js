@@ -17,7 +17,8 @@ router.get('/actors/:actorId', (req, res) => {
     // if (!args.standalone) {
     //     roleAssignmentsDefault = { roleAssignmentResponse :[]}
     // }
-    const actorRoles = service.getServiceUsersRolesAssignments(req.headers.authorization.replace('Bearer ', ''))
+
+    const actorRoles = service.getServiceUsersRolesAssignments(req.headers.auth).filter(role => role.actorId === req.params.actorId)
     res.send({ roleAssignmentResponse: actorRoles })
     // userApiData.sendResponse(req, res, "OnUserRoleAssignments1", () => { return roleAssignmentsDefault });
 

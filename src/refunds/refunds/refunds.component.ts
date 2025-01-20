@@ -20,7 +20,7 @@ export class RefundsComponent implements OnInit {
 
   public ngOnInit() {
     // Update the store with the user details
-    this.store.dispatch(new fromRoot.LoadUserDetails(true));
+    this.store.dispatch(new fromRoot.LoadUserDetails());
     const userDetails$ = this.store.pipe(select(fromRoot.getUserDetails));
     userDetails$.subscribe((details) => {
       this.userEmail = details.userInfo.email;
