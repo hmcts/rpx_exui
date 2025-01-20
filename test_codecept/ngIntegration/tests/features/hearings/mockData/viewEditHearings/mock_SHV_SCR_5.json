@@ -21,8 +21,8 @@
     "autoListFlag": false,
     "hearingType": "",
     "hearingWindow": {
-        "dateRangeStart": "2024-12-15T00:00:00",
-        "dateRangeEnd": "2024-12-18T00:00:00",
+        "dateRangeStart": "2025-12-15T00:00:00",
+        "dateRangeEnd": "2025-12-18T00:00:00",
         "firstDateTimeMustBe": ""
     },
     "duration": 120,

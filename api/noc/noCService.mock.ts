@@ -1,5 +1,5 @@
 import * as MockAdapter from 'axios-mock-adapter';
-import * as faker from 'faker/locale/en_GB';
+import { fakerEN_GB as faker } from '@faker-js/faker';
 import { httpMock } from './httpMock';
 import { NoCQuestion } from './models/noCQuestion.interface';
 
@@ -7,7 +7,7 @@ import { NoCQuestion } from './models/noCQuestion.interface';
 export const generator = (schema, min = 1, max) => {
   max = max || min;
   return Array.from({
-    length: faker.random.number({
+    length: faker.number.int({
       min,
       max
     })
@@ -21,7 +21,7 @@ export const generator = (schema, min = 1, max) => {
         entity[key] = innerGen(anySchema[key]);
         return entity;
       }
-      entity[key] = faker.fake(anySchema[key]);
+      entity[key] = faker.helpers.fake(anySchema[key]);
       return entity;
     }, {});
 
