@@ -194,7 +194,7 @@
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/mocha": "^8.0.3",
-    "@types/node": "^18.17.0",
+    "@types/node": "^22.0.0",
     "@types/shortid": "0.0.29",
     "@types/sinon": "^7.0.13",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
