@@ -4,6 +4,7 @@ import { waitForSpinner } from './steps/spinner-steps';
 import { getCaseReferenceFromFirstRow, dealWithShortenedCaseRefLabel } from './steps/table-steps';
 import { confirmNextSteps, confirmTabsVisible, caseDetailsCheck, validateWorkBasketComplexValues, validateWorkbasketInputs } from './steps/test-case';
 import { waitForSpecificResponse } from './helpers/responseListenerHelper';
+import { createCase } from './steps/create-xui-case-poc-steps';
 
 test('Validate next steps drop down', async ({ page }) => {
   const response = waitForSpecificResponse(
@@ -18,7 +19,11 @@ test('Validate next steps drop down', async ({ page }) => {
   await page.getByLabel('Apply filter').click();
   await waitForSpinner(page);
   await expect(page.getByRole('heading', { name: 'Your cases' })).toBeVisible();
-  const firstCaseRef = await getCaseReferenceFromFirstRow(page);
+  let firstCaseRef = await getCaseReferenceFromFirstRow(page);
+  if (firstCaseRef.trim().length === 0) {
+    await createCase(page);
+    firstCaseRef = await getCaseReferenceFromFirstRow(page);
+  }
   await page.getByLabel(`go to case with Case reference:${dealWithShortenedCaseRefLabel(firstCaseRef)}`).click();
   const responseData = await response;
   const expectedData = responseData?.triggers;
@@ -40,7 +45,11 @@ test('Validate tabs are visible', async ({ page }) => {
   await page.getByLabel('Apply filter').click();
   await waitForSpinner(page);
   await expect(page.getByRole('heading', { name: 'Your cases' })).toBeVisible();
-  const firstCaseRef = await getCaseReferenceFromFirstRow(page);
+  let firstCaseRef = await getCaseReferenceFromFirstRow(page);
+  if (firstCaseRef.trim().length === 0) {
+    await createCase(page);
+    firstCaseRef = await getCaseReferenceFromFirstRow(page);
+  }
   await page.getByLabel(`go to case with Case reference:${dealWithShortenedCaseRefLabel(firstCaseRef)}`).click();
   const responseData = await response;
   const expectedData = responseData?.tabs;
@@ -62,7 +71,11 @@ test('Validate tabs details', async ({ page }) => {
   await page.getByLabel('Apply filter').click();
   await waitForSpinner(page);
   await expect(page.getByRole('heading', { name: 'Your cases' })).toBeVisible();
-  const firstCaseRef = await getCaseReferenceFromFirstRow(page);
+  let firstCaseRef = await getCaseReferenceFromFirstRow(page);
+  if (firstCaseRef.trim().length === 0) {
+    await createCase(page);
+    firstCaseRef = await getCaseReferenceFromFirstRow(page);
+  }
   await page.getByLabel(`go to case with Case reference:${dealWithShortenedCaseRefLabel(firstCaseRef)}`).click();
   const responseData = await response;
   const expectedData = responseData;

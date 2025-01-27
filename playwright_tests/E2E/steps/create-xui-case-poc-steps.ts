@@ -1,0 +1,37 @@
+import { test, expect } from '@playwright/test';
+
+export async function createCase(page) {
+  await page.getByRole('link', { name: 'Create case' }).click();
+  await page.getByLabel('Jurisdiction').selectOption('DIVORCE');
+  await page.getByLabel('Case type').selectOption('xuiTestJurisdiction');
+  await page.getByRole('button', { name: 'Start' }).click();
+  await expect(page.getByRole('heading', { name: 'The data on this page will' })).toBeVisible();
+  await page.getByLabel('Male', { exact: true }).check();
+  await page.locator('#Person1_Title').click();
+  await page.locator('#Person1_Title').fill('Mr');
+  await page.locator('#Person1_Title').press('Tab');
+  await page.getByRole('group', { name: 'Person 1 - retained (Optional)' }).getByLabel('First Name (Optional)').fill('Jack');
+  await page.getByRole('group', { name: 'Person 1 - retained (Optional)' }).getByLabel('First Name (Optional)').press('Tab');
+  await page.getByRole('group', { name: 'Person 1 - retained (Optional)' }).getByLabel('Last Name (Optional)').fill('Vaz');
+  await page.getByRole('group', { name: 'Person 1 - retained (Optional)' }).getByLabel('Last Name (Optional)').press('Tab');
+  await page.getByRole('group', { name: 'Person 1 - retained (Optional)' }).getByLabel('Gender (Optional)').selectOption('1: male');
+  await page.getByRole('group', { name: 'Job (Optional)' }).getByLabel('Title (Optional)').click();
+  await page.getByRole('group', { name: 'Job (Optional)' }).getByLabel('Title (Optional)').fill('Musician');
+  await page.getByRole('textbox', { name: 'Description (Optional)' }).click();
+  await page.getByRole('textbox', { name: 'Description (Optional)' }).fill('Guitarist');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.getByRole('heading', { name: 'The data on this page will' })).toBeVisible();
+  await page.getByLabel('Text Field 0').click();
+  await page.getByLabel('Text Field 0').fill('Field');
+  await page.getByLabel('Text Field 0').press('Tab');
+  await page.getByLabel('Text Field 3 (Optional)').fill('Field');
+  await page.getByLabel('Text Field 3 (Optional)').press('Tab');
+  await page.getByLabel('Text Field 1 (Optional)').fill('Field');
+  await page.getByLabel('Text Field 1 (Optional)').press('Tab');
+  await page.getByLabel('Text Field 2 (Optional)').fill('Field');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.getByRole('heading', { name: 'Check your answers' })).toBeVisible();
+  await page.getByRole('button', { name: 'Test submit' }).click();
+  await expect(page.getByText(' has been created.')).toBeVisible();
+  await page.getByRole('link', { name: 'Case list' }).click();
+};
