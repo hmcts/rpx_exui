@@ -6904,10 +6904,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sinon@npm:^7.0.13":
-  version: 7.5.2
-  resolution: "@types/sinon@npm:7.5.2"
-  checksum: 10/66163c371dd84f1c485ae4c60401e4cfdb376974c85d91123dcc8c38334ecc4909c4ae9ffc5008bf0f5212593c7d91f70f460963c01510d2dfe93a689fc8e9ea
+"@types/sinon@npm:^17.0.0":
+  version: 17.0.3
+  resolution: "@types/sinon@npm:17.0.3"
+  dependencies:
+    "@types/sinonjs__fake-timers": "npm:*"
+  checksum: 10/3f82b4a477c0c57fa4f4f4fb7585cb72c2a65a7e41e5271b54edca296c8dc242c2d8e709de7a8f16af8693c87cb3ad9d96981069ae683f7197a1134892035833
+  languageName: node
+  linkType: hard
+
+"@types/sinonjs__fake-timers@npm:*":
+  version: 8.1.5
+  resolution: "@types/sinonjs__fake-timers@npm:8.1.5"
+  checksum: 10/3a0b285fcb8e1eca435266faa27ffff206608b69041022a42857274e44d9305822e85af5e7a43a9fae78d2ab7dc0fcb49f3ae3bda1fa81f0203064dbf5afd4f6
   languageName: node
   linkType: hard
 
@@ -22311,7 +22320,7 @@ __metadata:
     "@types/mocha": "npm:^8.0.3"
     "@types/node": "npm:^18.17.0"
     "@types/shortid": "npm:0.0.29"
-    "@types/sinon": "npm:^7.0.13"
+    "@types/sinon": "npm:^17.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^7.2.0"
     "@typescript-eslint/parser": "npm:^7.2.0"
     accessibility-checker: "npm:^3.1.70"
