@@ -6262,6 +6262,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/applicationinsights-js@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "@types/applicationinsights-js@npm:1.0.9"
+  checksum: 10/c8e7632c9e039f4daff7e634af78f4b6c887bf06170c4058db558653fc2264601f77abb15fa341595a6d13dd669ef1fc171a48d775ccffc2472871483a3d5f97
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.1.14":
   version: 7.20.5
   resolution: "@types/babel__core@npm:7.20.5"
@@ -6336,10 +6343,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/config@npm:^0.0.36":
-  version: 0.0.36
-  resolution: "@types/config@npm:0.0.36"
-  checksum: 10/52e268117eb89d9e51e4592f997b8c9cb9a890161ecdc00c28899c30001f509e596e928867e67592769a49e99d1f3659316d0d208a5a9c24055799fa3e5487bf
+"@types/component-emitter@npm:^1.2.10":
+  version: 1.2.12
+  resolution: "@types/component-emitter@npm:1.2.12"
+  checksum: 10/8a4a5f88c5d2a772c6a365bce2e6941b5e91c0e79754b14e1c2a85af3bc3cb0feaa6362180fcd74428d6b7caba219e90434747af3a1783df6836477a0d1ea9c3
+  languageName: node
+  linkType: hard
+
+"@types/config@npm:^0.0.41":
+  version: 0.0.41
+  resolution: "@types/config@npm:0.0.41"
+  checksum: 10/528eb5e5d60c48cf82a2b0988ee1e5e088472698ad25944131b0ba87b2e3bb0989f3b4d45edb9d49eefcc8bf158c267905c386aaec15857b9fb24be449c3f27c
+
   languageName: node
   linkType: hard
 
@@ -22297,7 +22312,8 @@ __metadata:
     "@stryker-mutator/karma-runner": "npm:^8.0.0"
     "@stryker-mutator/mocha-runner": "npm:^3.0.1"
     "@stryker-mutator/typescript": "npm:^4.0.0"
-    "@types/config": "npm:^0.0.36"
+    "@types/applicationinsights-js": "npm:^1.0.9"
+    "@types/config": "npm:^0.0.41"
     "@types/cookie-parser": "npm:^1.4.2"
     "@types/crypto-js": "npm:^3.1.43"
     "@types/csurf": "npm:^1.11.0"
