@@ -30,7 +30,8 @@ export const initialHearingRequestState: HearingRequestStateData = {
       leadJudgeContractType: null,
       amendReasonCodes: null,
       hearingChannels: [],
-      listingAutoChangeReasonCode: null
+      listingAutoChangeReasonCode: null,
+      isAPanelFlag: false
     },
     caseDetails: {
       hmctsServiceCode: null,

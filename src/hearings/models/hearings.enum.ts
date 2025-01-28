@@ -250,6 +250,7 @@ export enum ACTION {
 export enum ConditionOperator {
   INCLUDE = 'INCLUDE',
   NOT_INCLUDE = 'NOT INCLUDE',
+  EQUALS = 'EQUALS'
 }
 
 export enum CaseFlagType {
@@ -301,6 +302,7 @@ export enum AnswerSource {
   COURT_LOCATION,
   NEED_WELSH,
   NEED_JUDGE,
+  NEED_PANEL,
   JUDGE_NAME,
   JUDICIAL_MEMBERS,
   JUDGE_TYPES,
@@ -413,9 +415,11 @@ export enum HearingScreensEnum {
   REGION_ID = 'regionId',
   HEARING_VENUE = 'hearing-venue',
   HEARING_WELSH = 'hearing-welsh',
+  HEARING_PANEL_REQUIRED = 'hearing-panel-required',
   HEARING_JUDGE = 'hearing-judge',
   HEARING_TIMING = 'hearing-timing',
   HEARING_LINK = 'hearing-link',
   HEARING_PANEL = 'hearing-panel',
+  HEARING_PANEL_SELECTOR = 'hearing-panel-selector',
   HEARING_ADDITIONAL_INSTRUCTIONS = 'hearing-additional-instructions'
 }

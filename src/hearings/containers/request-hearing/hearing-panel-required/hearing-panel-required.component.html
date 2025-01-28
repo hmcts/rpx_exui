@@ -1,0 +1,28 @@
+<xuilib-hmcts-error-summary [errorMessages]="validationErrors" [header]="'There is a problem' | rpxTranslate"></xuilib-hmcts-error-summary>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-form-group">
+      <exui-hearing-parties-title></exui-hearing-parties-title>
+      <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l" for="hearingPanelRequired">{{ 'Do you require a panel for this hearing?' | rpxTranslate }}</label>
+      </h1>
+      <form class="form" [formGroup]="hearingPanelRequiredForm">
+        <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios" id="hearingPanelRequired">
+          <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="hearing_panel_choice_yes" name="hearingPanelRequired" formControlName="hearingPanelRequired" type="radio" [value]="true">
+              <label class="govuk-label govuk-radios__label" for="hearing_panel_choice_yes">
+                {{ 'Yes' | rpxTranslate : null : 'Yes'}}
+              </label>
+          </div>
+          <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="hearing_panel_choice_no" name="hearingPanelRequired" formControlName="hearingPanelRequired" type="radio" [value]="false">
+              <label class="govuk-label govuk-radios__label" for="hearing_panel_choice_no">
+                {{ 'No' | rpxTranslate : null : 'No' }}
+              </label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

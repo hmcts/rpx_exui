@@ -91,6 +91,12 @@
   [hearingInWelshFlagToCompare]="hearingRequestToCompareMainModel.hearingDetails.hearingInWelshFlag"
   (changeEditHearing)="onChange($event)"
 ></exui-language-requirements-section>
+<!-- Hearing panel required -->
+<exui-panel-requirements-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_PANEL_REQUIRED)"
+  [isAPanelFlag]="hearingRequestMainModel.hearingDetails.isAPanelFlag"
+  [isAPanelFlagToCompare]="hearingRequestToCompareMainModel.hearingDetails.isAPanelFlag"
+  (changeEditHearing)="onChange($event)"
+></exui-panel-requirements-section>
 <!-- Judge details -->
 <exui-judge-details-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_JUDGE)"
   [panelRequirements]="hearingRequestMainModel.hearingDetails.panelRequirements"
@@ -99,6 +105,12 @@
   [judicialUsers]="judicialUsers"
   (changeEditHearing)="onChange($event)"
 ></exui-judge-details-section>
+<!-- Panel selector member details -->
+<exui-panel-details-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_PANEL_SELECTOR)"
+  [panelRequirements]="hearingRequestMainModel.hearingDetails.panelRequirements"
+  [panelRolesRefData]="panelRolesRefData"
+  (changeEditHearing)="onChange($event)"
+></exui-panel-details-section>
 <!-- Panel member details -->
 <exui-panel-details-section *ngIf="sectionsToDisplay.includes(hearingScreenEnum.HEARING_PANEL)"
   [panelRequirements]="hearingRequestMainModel.hearingDetails.panelRequirements"

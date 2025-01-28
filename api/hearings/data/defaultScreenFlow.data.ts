@@ -45,7 +45,7 @@ export const DEFAULT_SCREEN_FLOW: ScreenNavigationModel[] = [
       {
         conditionOperator: 'NOT INCLUDE',
         conditionValue: '7',
-        resultValue: 'hearing-judge'
+        resultValue: 'hearing-panel-required'
       }
     ]
   },
@@ -53,6 +53,22 @@ export const DEFAULT_SCREEN_FLOW: ScreenNavigationModel[] = [
     screenName: 'hearing-welsh',
     navigation: [
       {
+        resultValue: 'hearing-panel-required'
+      }
+    ]
+  },
+  {
+    screenName: 'hearing-panel-required',
+    conditionKey: 'isAPanelFlag',
+    navigation: [
+      {
+        conditionOperator: 'EQUALS',
+        conditionValue: true,
+        resultValue: 'hearing-panel-selector'
+      },
+      {
+        conditionOperator: 'EQUALS',
+        conditionValue: false,
         resultValue: 'hearing-judge'
       }
     ]
@@ -61,12 +77,12 @@ export const DEFAULT_SCREEN_FLOW: ScreenNavigationModel[] = [
     screenName: 'hearing-judge',
     navigation: [
       {
-        resultValue: 'hearing-panel'
+        resultValue: 'hearing-timing'
       }
     ]
   },
   {
-    screenName: 'hearing-panel',
+    screenName: 'hearing-panel-selector',
     navigation: [
       {
         resultValue: 'hearing-timing'

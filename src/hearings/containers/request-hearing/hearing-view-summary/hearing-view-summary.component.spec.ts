@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 import { UserDetails } from '../../../../app/models';
 import { MockRpxTranslatePipe } from '../../../../app/shared/test/mock-rpx-translate.pipe';
 import * as fromAppStore from '../../../../app/store';
-import { ACTION } from '../../../../hearings/models/hearings.enum';
+import { ACTION } from '../../../models/hearings.enum';
 import { caseFlagsRefData, initialState } from '../../../hearing.test.data';
 import { HearingsFeatureService } from '../../../services/hearings-feature.service';
 import { HearingsService } from '../../../services/hearings.service';
@@ -24,6 +24,8 @@ describe('HearingViewSummaryComponent', () => {
   let featureToggleServiceMock: any;
   let hearingsFeatureServiceMock: any;
   let routerMock: any;
+  const noPanelRequirementsViewOnlyTemplate = HEARING_VIEW_ONLY_SUMMARY_TEMPLATE.filter((section) => section.sectionHTMLTitle !== '<h2 class="govuk-heading-m">Hearing panel required</h2>');
+  const noPanelRequirementsRequestViewTemplate = HEARING_REQUEST_VIEW_SUMMARY_TEMPLATE.filter((section) => section.sectionHTMLTitle !== '<h2 class="govuk-heading-m">Hearing panel required</h2>');
 
   const USER: UserDetails = {
     canShareCases: true,
@@ -106,7 +108,7 @@ describe('HearingViewSummaryComponent', () => {
 
   it('should set new template if the feature toggle is off and user is not hearing manager', () => {
     component.ngOnInit();
-    expect(component.template).toBe(HEARING_VIEW_ONLY_SUMMARY_TEMPLATE);
+    expect(component.template).toEqual(noPanelRequirementsViewOnlyTemplate);
   });
 
   it('should set new template if the feature toggle is on and user is hearing manager', () => {
@@ -115,7 +117,55 @@ describe('HearingViewSummaryComponent', () => {
     hearingsFeatureServiceMock.isFeatureEnabled.and.returnValue(of(true));
     fixture.detectChanges();
     component.ngOnInit();
-    expect(component.template).toBe(HEARING_REQUEST_VIEW_SUMMARY_TEMPLATE);
+    expect(component.template).toEqual(noPanelRequirementsRequestViewTemplate);
+  });
+
+  it('should remove the Judge Details where isPanelRequired is set to true', () => {
+    const testTemplate = HEARING_REQUEST_VIEW_SUMMARY_TEMPLATE.filter((section) => section.sectionHTMLTitle !== '<h2 class="govuk-heading-m">Judge details</h2>');
+    USER.userInfo.roles.push('hearing-manager');
+    featureToggleServiceMock.isEnabled.and.returnValue(of(true));
+    hearingsFeatureServiceMock.isFeatureEnabled.and.returnValue(of(true));
+    component.hearingRequestMainModel = JSON.parse(JSON.stringify(initialState.hearings.hearingRequest.hearingRequestMainModel));
+    component.hearingRequestMainModel.hearingDetails.isAPanelFlag = true;
+    fixture.detectChanges();
+    component.ngOnInit();
+    expect(component.template).toEqual(testTemplate);
+  });
+
+  it('should remove the Panel Details where isPanelRequired is set to false', () => {
+    const testTemplate = HEARING_REQUEST_VIEW_SUMMARY_TEMPLATE.filter((section) => section.sectionHTMLTitle !== '<h2 class="govuk-heading-m">Panel details</h2>');
+    USER.userInfo.roles.push('hearing-manager');
+    featureToggleServiceMock.isEnabled.and.returnValue(of(true));
+    hearingsFeatureServiceMock.isFeatureEnabled.and.returnValue(of(true));
+    component.hearingRequestMainModel = JSON.parse(JSON.stringify(initialState.hearings.hearingRequest.hearingRequestMainModel));
+    component.hearingRequestMainModel.hearingDetails.isAPanelFlag = false;
+    fixture.detectChanges();
+    component.ngOnInit();
+    expect(component.template).toEqual(testTemplate);
+  });
+
+  it('should remove the Judge Details where isPanelRequired is set to true', () => {
+    const testTemplate = HEARING_VIEW_ONLY_SUMMARY_TEMPLATE.filter((section) => section.sectionHTMLTitle !== '<h2 class="govuk-heading-m">Judge details</h2>');
+    USER.userInfo.roles.push('hearing-viewer');
+    featureToggleServiceMock.isEnabled.and.returnValue(of());
+    hearingsFeatureServiceMock.isFeatureEnabled.and.returnValue(of(false));
+    component.hearingRequestMainModel = JSON.parse(JSON.stringify(initialState.hearings.hearingRequest.hearingRequestMainModel));
+    component.hearingRequestMainModel.hearingDetails.isAPanelFlag = true;
+    fixture.detectChanges();
+    component.ngOnInit();
+    expect(component.template).toEqual(testTemplate);
+  });
+
+  it('should remove the Panel Details where isPanelRequired is set to false', () => {
+    const testTemplate = HEARING_VIEW_ONLY_SUMMARY_TEMPLATE.filter((section) => section.sectionHTMLTitle !== '<h2 class="govuk-heading-m">Panel details</h2>');
+    USER.userInfo.roles.push('hearing-viewer');
+    featureToggleServiceMock.isEnabled.and.returnValue(of());
+    hearingsFeatureServiceMock.isFeatureEnabled.and.returnValue(of(false));
+    component.hearingRequestMainModel = JSON.parse(JSON.stringify(initialState.hearings.hearingRequest.hearingRequestMainModel));
+    component.hearingRequestMainModel.hearingDetails.isAPanelFlag = false;
+    fixture.detectChanges();
+    component.ngOnInit();
+    expect(component.template).toEqual(testTemplate);
   });
 
   it('should navigate to edit hearing page', () => {

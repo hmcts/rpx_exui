@@ -36,7 +36,7 @@ export class RefDataResolver extends ServiceIdResolverResolve {
           const category = route.data.category ? route.data.category as HearingCategory : HearingCategory.HearingPriority;
           if (category === HearingCategory.PanelMemberType) {
             const screenFlow = hearingValues && hearingValues.serviceHearingValuesModel && hearingValues.serviceHearingValuesModel.screenFlow;
-            if (screenFlow && screenFlow.findIndex((screen) => screen.screenName === 'hearing-panel') === -1) {
+            if (screenFlow && !screenFlow.some((screen) => screen.screenName === 'hearing-panel' || screen.screenName === 'hearing-panel-selector')) {
               return of(null);
             }
           }

@@ -160,6 +160,19 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
     isHiddenSource: IsHiddenSource.WELSH_LOCATION
   },
   {
+    sectionHTMLTitle: '<h2 class="govuk-heading-m">Hearing panel required</h2>',
+    screenName: 'hearing-panel-required',
+    answers: [
+      {
+        id: 'needPanel',
+        answerTitle: 'Do you require a panel for this hearing?',
+        answerSource: AnswerSource.NEED_PANEL,
+        changeLink: '/hearings/request/hearing-panel-required#hearingPanelRequired',
+        isAmendedSource: AnswerSource.NEED_PANEL
+      }
+    ]
+  },
+  {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Judge details</h2>',
     screenName: 'hearing-judge',
     answers: [
@@ -199,6 +212,44 @@ export const HEARING_VIEW_EDIT_SUMMARY_TEMPLATE: Section[] = [
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Panel details</h2>',
     screenName: 'hearing-panel',
+    answers: [
+      {
+        id: 'hearingPanel',
+        answerTitle: 'Do you require a panel for this hearing?',
+        answerSource: AnswerSource.HEARING_PANEL,
+        changeLink: '/hearings/request/hearing-panel#specificPanelSelection',
+        isAmendedSource: AnswerSource.HEARING_PANEL
+      },
+      {
+        id: 'panelInclusion',
+        answerTitle: 'Include specific panel members',
+        answerSource: AnswerSource.PANEL_INCLUSION,
+        changeLink: '/hearings/request/hearing-panel#inputSelectPersonInclude',
+        isHiddenSource: IsHiddenSource.PANEL_INCLUSION,
+        isAmendedSource: AnswerSource.PANEL_INCLUSION
+      },
+      {
+        id: 'panelExclusion',
+        answerTitle: 'Exclude specific panel members',
+        answerSource: AnswerSource.PANEL_EXCLUSION,
+        changeLink: '/hearings/request/hearing-panel#inputSelectPersonExclude',
+        isHiddenSource: IsHiddenSource.PANEL_EXCLUSION,
+        isAmendedSource: AnswerSource.PANEL_EXCLUSION
+      },
+      {
+        id: 'panelRoles',
+        answerTitle: 'Select any other panel roles required',
+        answerSource: AnswerSource.PANEL_ROLES,
+        changeLink: '/hearings/request/hearing-panel#specificPanelSelection',
+        isHiddenSource: IsHiddenSource.PANEL_ROLES,
+        isAmendedSource: AnswerSource.PANEL_ROLES
+      }
+    ],
+    isHiddenSource: IsHiddenSource.PANEL_DETAILS_EXCLUSION
+  },
+  {
+    sectionHTMLTitle: '<h2 class="govuk-heading-m">Panel details</h2>',
+    screenName: 'hearing-panel-selector',
     answers: [
       {
         id: 'hearingPanel',

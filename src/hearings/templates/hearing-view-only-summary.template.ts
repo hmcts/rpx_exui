@@ -122,6 +122,15 @@ export const HEARING_VIEW_ONLY_SUMMARY_TEMPLATE: Section[] = [
     ],
     isHiddenSource: IsHiddenSource.WELSH_LOCATION && IsHiddenSource.LISTED_HEARING_VIEWER
   },
+  { sectionHTMLTitle: '<h2 class="govuk-heading-m">Hearing panel required</h2>',
+    answers: [
+      {
+        id: 'needPanel',
+        answerTitle: 'Do you require a panel for this hearing?',
+        answerSource: AnswerSource.NEED_PANEL
+      }
+    ]
+  },
   {
     sectionHTMLTitle: '<h2 class="govuk-heading-m">Judge details</h2>',
     answers: [

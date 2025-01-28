@@ -96,7 +96,7 @@ export class HearingPanelComponent extends RequestHearingPageFlow implements OnI
     const selectedPanelList: JudicialUserModel[] = [];
     const panelRequirements = this.hearingRequestMainModel.hearingDetails.panelRequirements;
     const panelMemberIDs = panelRequirements?.panelPreferences?.filter((preferences) => preferences.memberType === MemberType.PANEL_MEMBER && preferences.requirementType === panelRequirementType).map((preferences) => preferences.memberID);
-    if (panelMemberIDs && panelMemberIDs.length) {
+    if (panelMemberIDs.length) {
       this.personalCodejudgeList.forEach((judgeInfo) => {
         if (panelMemberIDs.includes(judgeInfo.personalCode)) {
           selectedPanelList.push(judgeInfo);

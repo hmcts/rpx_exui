@@ -65,6 +65,22 @@ describe('PageFlow', () => {
       ]
     },
     {
+      screenName: 'hearing-panel-required',
+      conditionKey: 'isAPanelFlag',
+      navigation: [
+        {
+          conditionOperator: 'EQUALS',
+          conditionValue: true,
+          resultValue: 'hearing-panel-selector'
+        },
+        {
+          conditionOperator: 'EQUALS',
+          conditionValue: false,
+          resultValue: 'hearing-judge'
+        }
+      ]
+    },
+    {
       screenName: 'hearing-judge',
       navigation: [
         {
@@ -73,7 +89,7 @@ describe('PageFlow', () => {
       ]
     },
     {
-      screenName: 'hearing-panel',
+      screenName: 'hearing-panel-selector',
       navigation: [
         {
           resultValue: 'hearing-timing'

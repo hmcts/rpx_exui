@@ -1,0 +1,22 @@
+<h2 class="govuk-heading-m">Hearing panel required
+  <exui-amendment-label *ngIf="showAmmended" [displayLabel]="amendmentLabelEnum.AMENDED">
+  </exui-amendment-label>
+</h2>
+<div class="govuk-summary-list govuk-!-margin-bottom-9">
+  <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__key">
+      Do you require a panel for this hearing?
+    </div>
+    <div class="govuk-summary-list__value">
+      {{ isAPanelFlag ? 'Yes' : 'No' }}
+      <exui-amendment-label *ngIf="showAmmended" [displayLabel]="amendmentLabelEnum.AMENDED">
+      </exui-amendment-label>
+    </div>
+    <div class="govuk-summary-list__actions">
+      <a id="needPanel"
+        class="govuk-link"
+        href="javascript:void(0)"
+        (click)="onChange('needWelsh')">Change</a>
+    </div>
+  </div>
+</div>

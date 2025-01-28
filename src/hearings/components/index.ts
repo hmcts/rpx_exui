@@ -15,6 +15,7 @@ import { LinkedHearingsCaseTitleComponent } from './linked-hearings-case-title/l
 import { ListingInformationSummaryComponent } from './listing-information-summary/listing-information-summary.component';
 import { MultiLevelSelectorComponent } from './multi-level-selector/multi-level-selector.component';
 import { PartiesUnavailableDatesComponent } from './parties-unavailable-dates/parties-unavailable-dates.component';
+import { RadioListBuilderComponent } from './radio-list-builder/radio-list-builder.component';
 
 export const components: any[] = [
   CaseFlagsComponent,
@@ -33,7 +34,8 @@ export const components: any[] = [
   LinkedHearingsCaseTitleComponent,
   HearingActualSummarySingleDayComponent,
   WarningAndErrorSectionComponent,
-  AmendmentLabelComponent
+  AmendmentLabelComponent,
+  RadioListBuilderComponent
 ];
 
 export * from '../components/case-flags/case-flags.component';
@@ -51,4 +53,5 @@ export * from '../components/listing-information-summary/listing-information-sum
 export * from '../components/multi-level-selector/multi-level-selector.component';
 export * from '../components/parties-unavailable-dates/parties-unavailable-dates.component';
 export * from './linked-hearings-case-title/linked-hearings-case-title.component';
+export * from '../components/radio-list-builder/radio-list-builder.component';
 

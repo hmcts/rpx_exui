@@ -1,0 +1,60 @@
+<div class="govuk-form-group">
+  <form [formGroup]="formGroup">
+    <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+      <div class="govuk-radios" data-module="govuk-radios">
+        <ng-container *ngFor="let item of data">
+          <div class="govuk-radios__item">
+            <input
+              class="govuk-radios__input"
+              type="radio"
+              [value]="item.key"
+              formControlName="selectedKey"
+              (change)="onRadioChange(item.key)"
+              id="{{item.key}}"
+              name="selectedKey"
+            />
+            <label class="govuk-label govuk-radios__label" for="{{item.key}}">
+              {{ item.value_en }}
+            </label>
+          </div>
+          <ng-container *ngIf="item.child_nodes">
+            <div *ngIf="formGroup.get('selectedKey')?.value === item.key" class="govuk-radios__conditional" id="conditional-{{item.key}}">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="dropdown-name-{{item.key}}">
+                    Choose specialism
+                  </label>
+                  <select
+                    [disabled]="formGroup.get('selectedKey')?.value !== item.key"
+                    formControlName="selectedChildKey"
+                    class="govuk-select"
+                    name="dropdown-name-{{item.key}}"
+                    aria-describedby="dropdown-name-{{item.key}}"
+                    id="dropdown-{{item.key}}"
+                  >
+                    <option value="null" selected>Choose Specialty</option>
+                    <option *ngFor="let child of item.child_nodes" [value]="child.key">
+                    {{ child.value_en }}
+                    </option>
+                  </select>
+                </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </fieldset>
+    <div class="govuk-!-padding-top-3">
+      <button type="button" class="govuk-button govuk-button--secondary" data-module="govuk-button" (click)="addToList()">
+        Include panel member
+      </button>
+    </div>
+  </form>
+</div>
+<!-- Display selected items -->
+<ul class="hmcts-filter-tags selection-container">
+  <li class="location-selection" *ngFor="let item of selectedItems.controls; let i = index">
+    <a class="hmcts-filter__tag" (click)="removeItem(i)" href="javascript:void(0)">
+      {{ getOptionLabel(item.value) }}</a>
+  </li>
+</ul>
+
+

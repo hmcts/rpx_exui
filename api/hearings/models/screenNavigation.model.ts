@@ -1,6 +1,6 @@
 export interface NavigationModel {
   conditionOperator?: string;
-  conditionValue?: string;
+  conditionValue?: string | boolean;
   resultValue: string;
 }
 

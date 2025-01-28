@@ -31,6 +31,7 @@ import { JudicialMembersAnswerConverter } from '../converters/judicial-members.a
 import { LinkedHearingsAnswerConverter } from '../converters/linked-hearings.answer.converter';
 import { NeedJudgeAnswerConverter } from '../converters/need-judge.answer.converter';
 import { NeedWelshAnswerConverter } from '../converters/need-welsh.answer.converter';
+import { NeedPanelAnswerConverter } from '../converters/need-panel.answer.converter';
 import { NumberOfAttendancesAnswerConverter } from '../converters/number-of-attendances-answer.converter';
 import { PanelExclusionAnswerConverter } from '../converters/panel-exclusion.answer.converter';
 import { PanelInclusionAnswerConverter } from '../converters/panel-inclusion.answer.converter';
@@ -132,6 +133,9 @@ export class HearingAnswersPipe implements PipeTransform {
         break;
       case AnswerSource.NEED_WELSH:
         converter = new NeedWelshAnswerConverter();
+        break;
+      case AnswerSource.NEED_PANEL:
+        converter = new NeedPanelAnswerConverter();
         break;
       case AnswerSource.ADDITIONAL_INSTRUCTION:
         converter = new AdditionalInstructionsAnswerConverter();

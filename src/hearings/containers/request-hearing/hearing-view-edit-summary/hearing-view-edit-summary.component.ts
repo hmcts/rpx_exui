@@ -13,6 +13,7 @@ import { RequestHearingPageFlow } from '../request-hearing.page.flow';
 import { Section } from '../../../../hearings/models/section';
 import { ScreenNavigationModel } from '../../../../hearings/models/screenNavigation.model';
 import { HearingResponseError } from '../../../../hearings/models/hearingResponseError.model';
+import { HearingsUtils } from '../../../utils/hearings.utils';
 
 @Component({
   selector: 'exui-hearing-view-edit-summary',
@@ -88,6 +89,7 @@ export class HearingViewEditSummaryComponent extends RequestHearingPageFlow impl
             return tp.screenName.includes(sr.screenName) || tp.screenName.includes('edit-hearing') || tp.screenName.includes('hearing-listing-info');
           });
         });
+        this.template = HearingsUtils.checkTemplateForHearingRequiremnts(this.template, storeData?.hearings?.hearingRequest?.hearingRequestMainModel?.hearingDetails?.isAPanelFlag);
       }
     });
     return this.template;

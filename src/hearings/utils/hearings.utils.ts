@@ -10,6 +10,7 @@ import { LovRefDataModel } from '../models/lovRefData.model';
 import { PartyDetailsModel } from '../models/partyDetails.model';
 import { ServiceHearingValuesModel } from '../models/serviceHearingValues.model';
 import { PartyType } from 'api/hearings/models/hearings.enum';
+import { Section } from '../models/section';
 
 export class HearingsUtils {
   public static hasPropertyAndValue(conditions: HearingConditions, propertyName: string, propertyValue: any): boolean {
@@ -252,5 +253,29 @@ export class HearingsUtils {
     if (input?.hearingDetails?.hearingWindow) {
       HearingsUtils.modifyHearingDetailsYear(input?.hearingDetails?.hearingWindow);
     }
+  }
+
+  public static checkTemplateForHearingRequiremnts(template: Section[], isAPanelFlag: boolean): Section[] {
+    if (isAPanelFlag === null || isAPanelFlag === undefined) {
+      return template.filter((tp: Section) => !tp.sectionHTMLTitle.includes('Hearing panel required'));
+    } else if (isAPanelFlag) {
+      return template.filter((tp: Section) => !tp.sectionHTMLTitle.includes('Judge details'));
+    }
+    return template.filter((tp: Section) => !tp.sectionHTMLTitle.includes('Panel details'));
+  }
+
+  public static checkScreensForHearingRequiremnts(screens: string[], isAPanelFlag: boolean): string[] {
+    if (isAPanelFlag === null || isAPanelFlag === undefined) {
+      return screens.filter((screen: string) => screen !== 'hearing-panel-required');
+    } else if (isAPanelFlag) {
+      if (!screens.includes('hearing-panel')) {
+        screens.push('hearing-panel');
+      }
+      return screens.filter((screen: string) => screen !== 'hearing-judge');
+    }
+    if (!screens.includes('hearing-judge')) {
+      screens.push('hearing-judge');
+    }
+    return screens.filter((screen: string) => screen !== 'hearing-panel');
   }
 }

@@ -11,6 +11,7 @@ import { LanguageRequirementsSectionComponent } from './language-requirements-se
 import { LinkedHearingSectionComponent } from './linked-hearing-section/linked-hearing-section.component';
 import { PanelDetailsSectionComponent } from './panel-details-section/panel-details-section.component';
 import { ParticipantAttendanceSectionComponent } from './participant-attendance-section/participant-attendance-section.component';
+import { PanelRequirementsSectionComponent } from './panel-requirements-section/panel-requirements-section.component';
 
 export const containers: any[] = [
   AdditionalFacilitiesSectionComponent,
@@ -23,6 +24,7 @@ export const containers: any[] = [
   HearingVenueSectionComponent,
   JudgeDetailsSectionComponent,
   LanguageRequirementsSectionComponent,
+  PanelRequirementsSectionComponent,
   LinkedHearingSectionComponent,
   PanelDetailsSectionComponent,
   ParticipantAttendanceSectionComponent

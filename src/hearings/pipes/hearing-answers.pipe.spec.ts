@@ -179,6 +179,13 @@ describe('HearingAnswersPipe', () => {
     expect(result$).toBeObservable(expected);
   });
 
+  it('should transform need panel', () => {
+    const result$ = hearingAnswersPipe.transform(AnswerSource.NEED_PANEL, of(STATE), 0);
+    const needPanel = 'No';
+    const expected = cold('(b|)', { b: needPanel });
+    expect(result$).toBeObservable(expected);
+  });
+
   it('should transform hearing length', () => {
     STATE.hearingRequest.hearingRequestMainModel.hearingDetails.duration = 60;
     const result$ = hearingAnswersPipe.transform(AnswerSource.HEARING_LENGTH, of(STATE), 0);

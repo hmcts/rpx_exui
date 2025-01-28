@@ -2334,7 +2334,8 @@ export const initialState = {
           hearingRequester: null,
           leadJudgeContractType: null,
           amendReasonCodes: null,
-          listingAutoChangeReasonCode: null
+          listingAutoChangeReasonCode: null,
+          isAPanelFlag: false
         },
         caseDetails: {
           hmctsServiceCode: null,

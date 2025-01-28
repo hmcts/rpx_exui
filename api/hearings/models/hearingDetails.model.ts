@@ -23,4 +23,5 @@ export interface HearingDetailsModel {
   hearingChannels: string[];
   hearingLevelParticipantAttendance: string[];
   listingAutoChangeReasonCode: string;
+  isAPanelFlag?: boolean;
 }
