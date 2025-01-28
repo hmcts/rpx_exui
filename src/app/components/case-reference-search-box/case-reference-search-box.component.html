@@ -1,12 +1,12 @@
 <div class="case-reference-container" *ngIf="item">
   <form [formGroup]="formGroup" (submit)="onSubmit()">
-    <label id="case-reference-search" for="caseReference" class="case-reference-search-label">{{'16-digit case reference:' | rpxTranslate}}</label>
+    <label id="case-reference-search" for="exuiCaseReferenceSearch" class="case-reference-search-label">{{'16-digit case reference:' | rpxTranslate}}</label>
     <input class="govuk-input"
       [ngClass]="{'govuk-input--error': decorate16DigitCaseReferenceSearchBoxInHeader}"
       #caseReferenceInput
-      id="caseReference"
-      name="caseReference"
-      formControlName="caseReference"
+      id="exuiCaseReferenceSearch"
+      name="exuiCaseReferenceSearch"
+      formControlName="exuiCaseReferenceSearch"
       type="text"
       spellcheck="false"
       aria-labelledby="case-reference-search">

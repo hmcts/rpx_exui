@@ -68,7 +68,7 @@ describe('CaseReferenceSearchBoxComponent', () => {
 
       mockFormBuilder.group.and.returnValue({
         controls: {
-          caseReference: {
+          exuiCaseReferenceSearch: {
             setValue: setValueSpy
           }
         }
@@ -93,7 +93,7 @@ describe('CaseReferenceSearchBoxComponent', () => {
 
       mockFormBuilder.group.and.returnValue({
         controls: {
-          caseReference: {
+          exuiCaseReferenceSearch: {
             setValue: setValueSpy
           }
         }

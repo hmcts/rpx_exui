@@ -26,7 +26,7 @@ export class CaseReferenceSearchBoxComponent implements OnInit, OnDestroy, After
 
   public formGroup: FormGroup;
   public searchSubscription$: Subscription;
-  private readonly CASE_REF_FIELD = 'caseReference';
+  private readonly CASE_REF_FIELD = 'exuiCaseReferenceSearch';
 
   constructor(
     private readonly store: Store<fromActions.State>,
