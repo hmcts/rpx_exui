@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import {
   CaseNotifier,
   CaseView,
@@ -23,14 +23,14 @@ import { QualifyingQuestion } from '../../models/qualifying-questions/qualifying
 import { RaiseQueryErrorMessage } from '../../models/raise-query-error-message.enum';
 import { select, Store } from '@ngrx/store';
 import * as fromRoot from '../../../app/store';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'exui-query-management-container',
   templateUrl: './query-management-container.component.html',
   styleUrls: ['./query-management-container.component.scss']
 })
-export class QueryManagementContainerComponent implements OnInit {
+export class QueryManagementContainerComponent implements OnInit, OnDestroy {
   private readonly LD_QUALIFYING_QUESTIONS = 'qm-qualifying-questions';
   private readonly RAISE_A_QUERY_NAME = 'Raise a new query';
   public static readonly RAISE_A_QUERY_QUESTION_OPTION = 'raiseAQuery';
@@ -70,6 +70,8 @@ export class QueryManagementContainerComponent implements OnInit {
   public eventTrigger: CaseEventTrigger;
   public eventData: CaseEventTrigger;
   public showContinueButton: boolean = true;
+  private routerEventsSubscription: Subscription;
+  private targetRoutePrefix = '/query-management/query/';
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -108,6 +110,14 @@ export class QueryManagementContainerComponent implements OnInit {
       if (this.queryItemId && this.queryItemId === QueryManagementContainerComponent.RAISE_A_QUERY_QUESTION_OPTION) {
         this.getEventTrigger();
       }
+    }
+
+    this.clearSelectionOnRouteChange();
+  }
+
+  ngOnDestroy(): void {
+    if (this.routerEventsSubscription) {
+      this.routerEventsSubscription.unsubscribe();
     }
   }
 
@@ -294,23 +304,32 @@ export class QueryManagementContainerComponent implements OnInit {
     ]).pipe(
       map(([caseView, caseTypeQualifyingQuestions]: [CaseView, CaseTypeQualifyingQuestions[]]) => {
         this.caseId = caseView.case_id;
-        const qualifyingQuestions: QualifyingQuestion[] = caseTypeQualifyingQuestions[caseView.case_type.id];
-        if (!qualifyingQuestions.map((question) => question.name).includes(this.RAISE_A_QUERY_NAME)) {
-          // Add the default qualifying question to the list if not present
-          qualifyingQuestions.push({
-            name: this.RAISE_A_QUERY_NAME,
-            markdown: '',
-            url: `/query-management/query/${this.caseId}/${QueryManagementContainerComponent.RAISE_A_QUERY_QUESTION_OPTION}`
-          });
-        }
+
+        // Safely access the qualifying questions for the current case type
+        const qualifyingQuestions: QualifyingQuestion[] = caseTypeQualifyingQuestions?.[caseView.case_type.id] || [];
+
+        // Add Extra options to qualifying question
+        this.addExtraOptionsToQualifyingQuestion(qualifyingQuestions, 'Follow-up on an existing query', `/cases/case-details/${this.caseId}#Queries`);
+        this.addExtraOptionsToQualifyingQuestion(qualifyingQuestions, this.RAISE_A_QUERY_NAME, `/query-management/query/${this.caseId}/${QueryManagementContainerComponent.RAISE_A_QUERY_QUESTION_OPTION}`);
+
         return qualifyingQuestions;
       })
     );
   }
 
+  private addExtraOptionsToQualifyingQuestion(qualifyingQuestions: QualifyingQuestion[], name: string, url: string): void {
+    if (!qualifyingQuestions.some((q) => q.name === name)) {
+      qualifyingQuestions.push({
+        name,
+        markdown: '',
+        url
+      });
+    }
+  }
+
   public async goToQueryList(): Promise<void> {
     await this.router.navigate(['cases', 'case-details', this.caseId],
-      { fragment: 'Query Management' }
+      { fragment: 'Queries' }
     );
   }
 
@@ -442,5 +461,16 @@ export class QueryManagementContainerComponent implements OnInit {
 
   private isNonEmptyObject(elem: any): boolean {
     return this.isObject(elem) && Object.keys(elem).length !== 0;
+  }
+
+  private clearSelectionOnRouteChange(): void {
+    this.routerEventsSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        // Check if we navigated off the target route
+        if (!event.url.startsWith(this.targetRoutePrefix)) {
+          this.qualifyingQuestionService.clearQualifyingQuestionSelection();
+        }
+      }
+    });
   }
 }
