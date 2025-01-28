@@ -10,7 +10,7 @@ export enum NoCErrorMap {
 
 export const CASE_REF_DEFAULT_VALIDATION_ERROR = {
   code: 'CASE_REF_DEFAULT_VALIDATION_ERROR',
-  message: 'Enter an online case reference number that exactly matches the case details'
+  message: 'You have either not entered an exact match for the case reference, or the case you are trying to update has not yet been issued. You can retry with a different case number, wait until the case has been issued, or email your local court or Financial Remedy Centre to request the change of legal representative. You should include the 16-digit Financial Remedy case reference in your email.'
 };
 
 export const AFFIRMATION_DEFAULT_DISAGREE_ERROR = {
