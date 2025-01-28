@@ -16913,13 +16913,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"karma-coverage-istanbul-reporter@npm:~2.0.1":
-  version: 2.0.6
-  resolution: "karma-coverage-istanbul-reporter@npm:2.0.6"
+"karma-coverage-istanbul-reporter@npm:~2.1.0":
+  version: 2.1.1
+  resolution: "karma-coverage-istanbul-reporter@npm:2.1.1"
   dependencies:
     istanbul-api: "npm:^2.1.6"
     minimatch: "npm:^3.0.4"
-  checksum: 10/c37b91558933abc2b75d36bef242e8b2b6022b32509ad76d4a8d261ed3a3fa47279acfbdda3c095691d13ec428ffca5b1081fb4e5c104cee7352bdbbcc72e96c
+  checksum: 10/193987f1786e2488c3880f9e7d76da2a990c8f105a40a9a126888a76304a011c3ee0e6805cd9dec310ca0703813c3cec35df01524e5f54328849e169d4726710
   languageName: node
   linkType: hard
 
@@ -22400,7 +22400,7 @@ __metadata:
     karma: "npm:~6.4.2"
     karma-chrome-launcher: "npm:3.1.1"
     karma-coverage: "npm:~2.2.0"
-    karma-coverage-istanbul-reporter: "npm:~2.0.1"
+    karma-coverage-istanbul-reporter: "npm:~2.1.0"
     karma-jasmine: "npm:5.1.0"
     karma-jasmine-html-reporter: "npm:^1.4.0"
     karma-parallel: "npm:^0.3.1"
