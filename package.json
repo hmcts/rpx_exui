@@ -243,7 +243,7 @@
     "protractor-multiple-cucumber-html-reporter-plugin": "1.8.1",
     "puppeteer": "^22.4.1",
     "sass": "^1.66.1",
-    "sinon": "^7.3.2",
+    "sinon": "^19.0.0",
     "sinon-chai": "^3.3.0",
     "sinon-express-mock": "^2.2.0",
     "sonar-scanner": "^3.1.0",
