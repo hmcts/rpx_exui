@@ -31,7 +31,7 @@ Feature: Hearings CR84: Manual update labels
         Then I am on hearings tab page
         Then I see hearings table for "Current and upcoming" in hearings tab page
 
-        When In hearings tab, I click action "View or edit" for hearing "TEST_TYPE" under table "Current and upcoming"
+        When In hearings tab, I click action "View details" for hearing "TEST_TYPE" under table "Current and upcoming"
         Then I validate view hearing page displayed
         Then I validate view hearing page Edit hearing button displayed is "true"
         When In view hearing page, I click Edit hearing button

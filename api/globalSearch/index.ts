@@ -70,8 +70,10 @@ export function generateServices(refDataHMCTS: RefDataHMCTSService[]): HMCTSServ
   const globalSearchServices: HMCTSServiceDetails[] = [];
   globalSearchServiceIdsArray.forEach((serviceId) => {
     // search for the service name based on the globalSearchServiceId
-    const jurisdiction = refDataHMCTS?.length > 0 ? refDataHMCTS.filter((x) => x.ccd_service_name?.toLowerCase() === serviceId.toLowerCase()) : null;
-    if (jurisdiction?.length > 0) {
+    const jurisdiction = refDataHMCTS?.length > 0 ? refDataHMCTS.filter((x) => {
+      return x && (x.ccd_service_name?.toLowerCase() === serviceId.toLowerCase());
+    }) : null;
+    if (jurisdiction && jurisdiction.length > 0) {
       // handle Civil service which has different service_short_description
       if (jurisdiction.length > 1) {
         globalSearchServices.push({ serviceId: jurisdiction[0].ccd_service_name, serviceName: toTitleCase(jurisdiction[0].ccd_service_name) });
