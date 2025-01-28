@@ -17,7 +17,7 @@ const UpdateFlagAddTranslationPage = require('./updateFlagAddTranslationPage')
 class CaseFlagsWorkflow{
 
     constructor(){
-        this.nextButton = element(by.xpath(`//button[contains(text(),'Next')]`))
+        this.nextButton = element(by.xpath(`//button[contains(text(),'Continue')]`))
         this.pages = {
             "Where should this flag be added?" : new SelectFlagLocationPage(),
             "Select flag type" : new SelectFlagTypePage(),

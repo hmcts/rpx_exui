@@ -2,7 +2,7 @@
 
 class SelectFlagTypePage {
     constructor(flagType) {
-        this.container = $('ccd-select-flag-type')
+        this.container = element(by.xpath('//ccd-select-flag-type/div/fieldset'))
 
         this.flagType = flagType;
         this.fieldMapping = {

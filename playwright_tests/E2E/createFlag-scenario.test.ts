@@ -51,14 +51,14 @@ test('Create case flag Add/Update Reasonable adjustment', async ({ page }) => {
   await expect(page.getByText('Applicant (Party 1)')).toBeVisible();
   await expect(page.getByText('Respondent (Party 2)')).toBeVisible();
   await page.getByLabel('Applicant (Party 1)').check();
-  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
   await axeTest(page);
 
   console.log("Select flag type");
   await expect(page.getByRole('heading', { name: 'Select flag type' })).toBeVisible();
   await expect(page.getByText('Reasonable adjustment')).toBeVisible();
   await page.getByLabel('Reasonable adjustment').check();
-  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.getByText(caseId)).toBeVisible();
   await axeTest(page);
 
@@ -71,18 +71,18 @@ test('Create case flag Add/Update Reasonable adjustment', async ({ page }) => {
   await expect(page.getByText('I need to request a certain')).toBeVisible();
   await expect(page.getByText('I need help communicating and')).toBeVisible();
   await expect(page.getByText('Other')).toBeVisible();
-  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.getByRole('heading', { name: 'I need documents in an' })).toBeVisible();
   await expect(page.getByText('Documents in a specified')).toBeVisible();
   await page.getByLabel('Documents in a specified').check();
-  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
   await axeTest(page);
 
   console.log("Add comments for this flag");
   await expect(page.getByText('Add comments for this flag')).toBeVisible();
   await page.getByLabel('Add comments for this flag').click();
   await page.getByLabel('Add comments for this flag').fill('Test auto comment');
-  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.getByText(caseId)).toBeVisible();
   await axeTest(page);
 
