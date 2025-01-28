@@ -15,7 +15,7 @@ jobs:
         with:
           app_id: ${{ secrets.HMCTS_GITHUB_EXUI_APP_ID }}
           private_key: ${{ secrets.HMCTS_GITHUB_EXUI_PRIVATE_KEY }}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ steps.generate-token.outputs.token }}
           ref: master
