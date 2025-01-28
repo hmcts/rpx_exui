@@ -59,7 +59,7 @@ export class HowLinkedHearingsBeHeardComponent implements OnInit, OnDestroy {
     this.sub = this.hearingStore.pipe(select(fromHearingStore.getHearingsFeatureState)).subscribe(
       (state) => {
         this.receivedCases = state.hearingLinks && state.hearingLinks.serviceLinkedCasesWithHearings;
-        this.caseName = state.hearingValues.serviceHearingValuesModel ? state.hearingValues.serviceHearingValuesModel.publicCaseName : '';
+        this.caseName = state?.hearingValues?.serviceHearingValuesModel ? state.hearingValues.serviceHearingValuesModel.hmctsInternalCaseName : '';
         this.hearingsInGroup = state.hearingLinks && state.hearingLinks.linkedHearingGroup && state.hearingLinks.linkedHearingGroup.hearingsInGroup;
         this.groupDetails = state.hearingLinks && state.hearingLinks.linkedHearingGroup && state.hearingLinks.linkedHearingGroup.groupDetails;
         this.hearingLinks = state.hearingLinks;
