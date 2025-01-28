@@ -7676,14 +7676,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"allure-js-commons@npm:^2.11.1":
-  version: 2.15.1
-  resolution: "allure-js-commons@npm:2.15.1"
+"allure-js-commons@npm:^3.0.0":
+  version: 3.0.9
+  resolution: "allure-js-commons@npm:3.0.9"
   dependencies:
     md5: "npm:^2.3.0"
-    properties: "npm:^1.2.1"
-    strip-ansi: "npm:^5.2.0"
-  checksum: 10/ceade5bf806b454cab4d5de4bb21d8ec08514d27fe2a24ad76c566ea2f76214fc25fd2d9c86291bfada52e867587dcb68335719b8089a8dea83bbace9a8b91b9
+  peerDependencies:
+    allure-playwright: 3.0.9
+  peerDependenciesMeta:
+    allure-playwright:
+      optional: true
+  checksum: 10/88aefc68c6f5efe2c3aed6ac3bb4801e51f58a6af0daef4a0497f03e3d445e10625a91bda08cb022b47b429e1d8746cb13babd2166dc666448426610287e5a24
   languageName: node
   linkType: hard
 
@@ -21064,13 +21067,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"properties@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "properties@npm:1.2.1"
-  checksum: 10/f8a4b4210a834e45a4b1af493b87955af8aff1245721a1806bb12e17c7bee0cff4ab5e8d2f96714379d156dce4e89f6ed23d685fb8f53a869a433166e3f12fd6
-  languageName: node
-  linkType: hard
-
 "property-expr@npm:^2.0.4":
   version: 2.0.5
   resolution: "property-expr@npm:2.0.5"
@@ -22315,7 +22311,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.2.0"
     "@typescript-eslint/parser": "npm:^7.2.0"
     accessibility-checker: "npm:^3.1.70"
-    allure-js-commons: "npm:^2.11.1"
+    allure-js-commons: "npm:^3.0.0"
     applicationinsights: "npm:1.8.10"
     axe-html-reporter: "npm:^2.2.3"
     axios: "npm:^1.7.7"
