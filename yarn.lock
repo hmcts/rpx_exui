@@ -6435,10 +6435,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ejs@npm:^2.6.3":
-  version: 2.7.0
-  resolution: "@types/ejs@npm:2.7.0"
-  checksum: 10/96bf395ee42ee7cf1d7a8ed907d8fb97b55371d87b5c8425943a74899fd1a28550543f925b5fca6b8c9fd86713f595de4e4813adf94674873d6d15fbc9cb92bf
+"@types/ejs@npm:^3.0.0":
+  version: 3.1.5
+  resolution: "@types/ejs@npm:3.1.5"
+  checksum: 10/918898fd279108087722c1713e2ddb0c152ab839397946d164db8a18b5bbd732af9746373882a9bcf4843d35c6b191a8f569a7a4e51e90726d24501b39f40367
   languageName: node
   linkType: hard
 
@@ -22301,7 +22301,7 @@ __metadata:
     "@types/cookie-parser": "npm:^1.4.2"
     "@types/crypto-js": "npm:^3.1.43"
     "@types/csurf": "npm:^1.11.0"
-    "@types/ejs": "npm:^2.6.3"
+    "@types/ejs": "npm:^3.0.0"
     "@types/express": "npm:^4.16.1"
     "@types/express-session": "npm:^1.17.0"
     "@types/faker": "npm:^5.1.2"
