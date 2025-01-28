@@ -408,6 +408,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@angular/compiler@npm:9.0.0":
+  version: 9.0.0
+  resolution: "@angular/compiler@npm:9.0.0"
+  peerDependencies:
+    tslib: ^1.10.0
+  checksum: 10/205d172de45978ce71064035bd12fdb482447202d4aecb3707128771531eefab269c93adceeacb0ad9e6095a563f62959b9d4aaf476d4542b14ee0fb5f7fe88f
+  languageName: node
+  linkType: hard
+
 "@angular/compiler@npm:^17.3.6":
   version: 17.3.12
   resolution: "@angular/compiler@npm:17.3.12"
@@ -419,6 +428,17 @@ __metadata:
     "@angular/core":
       optional: true
   checksum: 10/2f4b16f6049377603d48f3790b81f0fa877b88f9fe8e00404448de7f30156f22afa95a7d396a14a16fb9ef9833d96793cabdbecff6c654540ee393e85f8e56e6
+  languageName: node
+  linkType: hard
+
+"@angular/core@npm:9.0.0":
+  version: 9.0.0
+  resolution: "@angular/core@npm:9.0.0"
+  peerDependencies:
+    rxjs: ^6.5.3
+    tslib: ^1.10.0
+    zone.js: ~0.10.2
+  checksum: 10/4e3ff81cfcc0fb0cd07609f6ebc98491a6b352499c9dfa93ea0e11da66dccd95a09cfc9799a850631b866bd5c8cfc61b8d7870c38692a7532a37eb7eabd57537
   languageName: node
   linkType: hard
 
@@ -7833,10 +7853,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"app-root-path@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "app-root-path@npm:2.2.1"
-  checksum: 10/2f7f4dda28672049897ce3aa15be2ea6a488d0516fa7b99d0926d7902d0874e8c235f6147fd6be21f0a92e9ce2699385d9831bf98563fbae141d9ec4dc03c497
+"app-root-path@npm:^3.0.0":
+  version: 3.1.0
+  resolution: "app-root-path@npm:3.1.0"
+  checksum: 10/b4cdab5f7e51ec43fa04c97eca2adedf8e18d6c3dd21cd775b70457c5e71f0441c692a49dcceb426f192640b7393dcd41d85c36ef98ecb7c785a53159c912def
   languageName: node
   linkType: hard
 
@@ -9730,24 +9750,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"codelyzer@npm:^5.1.2":
-  version: 5.2.2
-  resolution: "codelyzer@npm:5.2.2"
+"codelyzer@npm:^6.0.0":
+  version: 6.0.2
+  resolution: "codelyzer@npm:6.0.2"
   dependencies:
-    app-root-path: "npm:^2.2.1"
+    "@angular/compiler": "npm:9.0.0"
+    "@angular/core": "npm:9.0.0"
+    app-root-path: "npm:^3.0.0"
     aria-query: "npm:^3.0.0"
     axobject-query: "npm:2.0.2"
     css-selector-tokenizer: "npm:^0.7.1"
     cssauron: "npm:^1.4.0"
     damerau-levenshtein: "npm:^1.0.4"
+    rxjs: "npm:^6.5.3"
     semver-dsl: "npm:^1.0.1"
     source-map: "npm:^0.5.7"
     sprintf-js: "npm:^1.1.2"
+    tslib: "npm:^1.10.0"
+    zone.js: "npm:~0.10.3"
   peerDependencies:
-    "@angular/compiler": ">=2.3.1 <10.0.0 || >9.0.0-beta <10.0.0 || >9.1.0-beta <10.0.0 || >9.2.0-beta <10.0.0"
-    "@angular/core": ">=2.3.1 <10.0.0 || >9.0.0-beta <10.0.0 || >9.1.0-beta <10.0.0 || >9.2.0-beta <10.0.0"
+    "@angular/compiler": ">=2.3.1 <13.0.0 || ^12.0.0-next || ^12.1.0-next || ^12.2.0-next"
+    "@angular/core": ">=2.3.1 <13.0.0 || ^12.0.0-next || ^12.1.0-next || ^12.2.0-next"
     tslint: ^5.0.0 || ^6.0.0
-  checksum: 10/e5eba726727986b5f4ac3c095363eaed14ff1c4d3ffe47ae9c4a6c1b7c70998bf2b172266a9ad656d54f3f389440b4b980bee12f070f99f4d4d1b51666539004
+  checksum: 10/5624eae6f2d94582bcf4744935736000386e32d313c2210ea1bc338142d89c8852b0210171e6573245d173ec12f2cc363b793e95e5b024431b1aa04fc6a8d320
   languageName: node
   linkType: hard
 
@@ -22326,7 +22351,7 @@ __metadata:
     class-transformer: "npm:^0.5.0"
     codeceptjs: "npm:3.5.6"
     codeceptjs-cucumber-json-reporter: "npm:^1.0.14"
-    codelyzer: "npm:^5.1.2"
+    codelyzer: "npm:^6.0.0"
     compression: "npm:^1.7.4"
     config: "npm:^3.2.5"
     cookie-parser: "npm:^1.4.4"
@@ -22494,7 +22519,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^6.4.0":
+"rxjs@npm:^6.4.0, rxjs@npm:^6.5.3":
   version: 6.6.7
   resolution: "rxjs@npm:6.6.7"
   dependencies:
@@ -24739,7 +24764,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.9.0":
+"tslib@npm:^1.10.0, tslib@npm:^1.9.0":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: 10/7dbf34e6f55c6492637adb81b555af5e3b4f9cc6b998fb440dac82d3b42bdc91560a35a5fb75e20e24a076c651438234da6743d139e4feabf0783f3cdfe1dddb
@@ -26503,6 +26528,13 @@ __metadata:
   version: 3.23.8
   resolution: "zod@npm:3.23.8"
   checksum: 10/846fd73e1af0def79c19d510ea9e4a795544a67d5b34b7e1c4d0425bf6bfd1c719446d94cdfa1721c1987d891321d61f779e8236fde517dc0e524aa851a6eff1
+  languageName: node
+  linkType: hard
+
+"zone.js@npm:~0.10.3":
+  version: 0.10.3
+  resolution: "zone.js@npm:0.10.3"
+  checksum: 10/96c60b17726b45ac371aca7536affe88dc5cec33bc1580d6a9f3213d60727b16207df977920e81629128dd3b025d589f3468686edb7613e96a0ff96474681e6f
   languageName: node
   linkType: hard
 
