@@ -38,7 +38,7 @@ Feature: Hearings CR84: Semi automatic and automatic update labels EUI-8905
         # CAT 1 chnages
         Given I set mock hearing SHV response from file "viewEditHearings/mock_SHV_SCR_1"
 
-        When In hearings tab, I click action "View or edit" for hearing "TEST_TYPE" under table "Current and upcoming"
+        When In hearings tab, I click action "View details" for hearing "TEST_TYPE" under table "Current and upcoming"
         Then I validate view hearing page displayed
         Then I validate view hearing page Edit hearing button displayed is "true"
         When In view hearing page, I click Edit hearing button
@@ -69,7 +69,7 @@ Feature: Hearings CR84: Semi automatic and automatic update labels EUI-8905
         # CAT 1 chnages
         Given I set mock hearing SHV response from file "viewEditHearings/mock_SHV_SCR_2"
 
-        When In hearings tab, I click action "View or edit" for hearing "TEST_TYPE" under table "Current and upcoming"
+        When In hearings tab, I click action "View details" for hearing "TEST_TYPE" under table "Current and upcoming"
         Then I validate view hearing page displayed
         Then I validate view hearing page Edit hearing button displayed is "true"
         When In view hearing page, I click Edit hearing button
@@ -105,7 +105,7 @@ Feature: Hearings CR84: Semi automatic and automatic update labels EUI-8905
         Given I set mock hearing SHV response from file "viewEditHearings/mock_SHV_SCR_3"
 
 
-        When In hearings tab, I click action "View or edit" for hearing "TEST_TYPE" under table "Current and upcoming"
+        When In hearings tab, I click action "View details" for hearing "TEST_TYPE" under table "Current and upcoming"
         Then I validate view hearing page displayed
         Then I validate view hearing page Edit hearing button displayed is "true"
         When In view hearing page, I click Edit hearing button
@@ -137,7 +137,7 @@ Feature: Hearings CR84: Semi automatic and automatic update labels EUI-8905
         # CAT 1 chnages
     Given I set mock hearing SHV response from file "viewEditHearings/mock_SHV_SCR_4"
 
-    When In hearings tab, I click action "View or edit" for hearing "TEST_TYPE" under table "Current and upcoming"
+    When In hearings tab, I click action "View details" for hearing "TEST_TYPE" under table "Current and upcoming"
     Then I validate view hearing page displayed
     Then I validate view hearing page Edit hearing button displayed is "true"
     When In view hearing page, I click Edit hearing button
@@ -276,7 +276,7 @@ Feature: Hearings CR84: Semi automatic and automatic update labels EUI-8905
       Given I set mock hearing HMC response from file "viewEditHearings/mock_HMC_setup_2"
       Given I set mock hearing SHV response from file "viewEditHearings/mock_SHV_SCR_5"
 
-      When In hearings tab, I click action "View or edit" for hearing "TEST_TYPE" under table "Current and upcoming"
+      When In hearings tab, I click action "View details" for hearing "TEST_TYPE" under table "Current and upcoming"
       Then I validate view hearing page displayed
       Then I validate view hearing page Edit hearing button displayed is "true"
       When In view hearing page, I click Edit hearing button
@@ -406,13 +406,13 @@ Feature: Hearings CR84: Semi automatic and automatic update labels EUI-8905
           | Reasonable adjustments   | Party1 name FN updated Party1 name LN      | true              | AMENDED            |
           | Reasonable adjustments   | Party2 name FN Party2 name LN              | true              |                    |
 
-    Scenario: SCR 6: No chnages and no labels (Conditions (3) & (6)) and Scenario 6
+    Scenario: SCR 6: No changes and no labels (Conditions (3) & (6)) and Scenario 6
         When I click tab with label "Hearings" in case details page, to see element with css selector "exui-case-hearings"
         Then I am on hearings tab page
         Then I see hearings table for "Current and upcoming" in hearings tab page
 
 
-        When In hearings tab, I click action "View or edit" for hearing "TEST_TYPE" under table "Current and upcoming"
+        When In hearings tab, I click action "View details" for hearing "TEST_TYPE" under table "Current and upcoming"
         Then I validate view hearing page displayed
         Then I validate view hearing page Edit hearing button displayed is "true"
 

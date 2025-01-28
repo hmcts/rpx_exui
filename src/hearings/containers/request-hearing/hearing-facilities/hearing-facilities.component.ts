@@ -120,19 +120,17 @@ export class HearingFacilitiesComponent extends RequestHearingPageFlow implement
   public prepareHearingRequestData() {
     const facilitiesRequired: string[] = (this.hearingFactilitiesForm.controls['addition-securities'] as FormArray).controls
       .filter((control) => control.value.selected).map((mapControl) => mapControl.value.key);
-    if (facilitiesRequired.length > 0) {
-      this.hearingRequestMainModel = {
-        ...this.hearingRequestMainModel,
-        caseDetails: {
-          ...this.hearingRequestMainModel.caseDetails,
-          caseAdditionalSecurityFlag: this.hearingFactilitiesForm.controls['addition-security-required'].value === 'Yes'
-        },
-        hearingDetails: {
-          ...this.hearingRequestMainModel.hearingDetails,
-          facilitiesRequired
-        }
-      };
-    }
+    this.hearingRequestMainModel = {
+      ...this.hearingRequestMainModel,
+      caseDetails: {
+        ...this.hearingRequestMainModel.caseDetails,
+        caseAdditionalSecurityFlag: this.hearingFactilitiesForm.controls['addition-security-required'].value === 'Yes'
+      },
+      hearingDetails: {
+        ...this.hearingRequestMainModel.hearingDetails,
+        facilitiesRequired
+      }
+    };
     const propertiesUpdatedOnPageVisit = this.hearingsService.propertiesUpdatedOnPageVisit;
     if (this.hearingCondition.mode === Mode.VIEW_EDIT) {
       if (propertiesUpdatedOnPageVisit?.hasOwnProperty('caseFlags') &&
@@ -180,3 +178,4 @@ export class HearingFacilitiesComponent extends RequestHearingPageFlow implement
     }
   }
 }
+

@@ -51,7 +51,7 @@
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
             <h3 class="govuk-fieldset__heading">
               {{ 'Does the hearing need to take place on a specific date?' | rpxTranslate }}
-              <exui-amendment-label id="hearing-specific-dates-label" *ngIf="!hearingWindowChangesConfirmed && hearingWindowChangesRequired"
+              <exui-amendment-label id="hearing-specific-dates-label" *ngIf="!hearingWindowChangesConfirmed && hearingWindowChangesRequired && (dateRangeStartChanged || dateRangeEndChanged || firstDateTimeMustBeChanged)"
                 [displayLabel]="amendmentLabelEnum.ACTION_NEEDED">
               </exui-amendment-label>
             </h3>
