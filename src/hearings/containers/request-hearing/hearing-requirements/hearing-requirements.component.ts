@@ -21,6 +21,7 @@ import { CaseFlagsUtils } from '../../../utils/case-flags.utils';
 import { CaseTypesUtils } from '../../../utils/case-types.utils';
 import { HearingsUtils } from '../../../utils/hearings.utils';
 import { RequestHearingPageFlow } from '../request-hearing.page.flow';
+import * as moment from 'moment';
 
 @Component({
   selector: 'exui-hearing-requirements',
@@ -98,6 +99,8 @@ export class HearingRequirementsComponent extends RequestHearingPageFlow impleme
       hearingWindow = this.serviceHearingValuesModel.hearingWindow;
     }
     const combinedParties: PartyDetailsModel[] = this.combinePartiesWithIndOrOrg(this.serviceHearingValuesModel.parties);
+    const caseSLAStartDate = this.serviceHearingValuesModel.caseSLAStartDate && this.serviceHearingValuesModel.caseSLAStartDate.trim().length > 0 ?
+      this.serviceHearingValuesModel.caseSLAStartDate : moment(new Date()).format('YYYY-MM-DD');
 
     const hearingRequestMainModel: HearingRequestMainModel = {
       hearingDetails: {
@@ -133,7 +136,7 @@ export class HearingRequirementsComponent extends RequestHearingPageFlow impleme
         caseCategories: this.serviceHearingValuesModel.caseCategories,
         caseManagementLocationCode: this.serviceHearingValuesModel.caseManagementLocationCode,
         caserestrictedFlag: this.serviceHearingValuesModel.caserestrictedFlag,
-        caseSLAStartDate: this.serviceHearingValuesModel.caseSLAStartDate,
+        caseSLAStartDate: caseSLAStartDate,
         externalCaseReference: this.serviceHearingValuesModel.externalCaseReference
       },
       partyDetails: combinedParties
