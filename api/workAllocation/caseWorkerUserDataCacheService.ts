@@ -82,7 +82,7 @@ export async function fetchRoleAssignments(cachedUserData: StaffUserDetails[], r
       // cachedUsersWithRoles to ensure rerun if user restarts request early
       const roleApiPath: string = prepareRoleApiUrl(baseRoleAssignmentUrl);
       const jurisdictions = getStaffSupportedJurisdictionsList();
-      const payload = prepareRoleApiRequest(jurisdictions);
+      const payload = prepareRoleApiRequest(jurisdictions, null, true);
       const { data } = await handlePostRoleAssignments(roleApiPath, payload, req);
       const roleAssignments = data.roleAssignmentResponse;
       cachedUsersWithRoles = mapUsersToCachedCaseworkers(cachedUserData, roleAssignments);
@@ -106,7 +106,7 @@ export async function fetchRoleAssignmentsForNewUsers(cachedUserData: StaffUserD
       // cachedUsersWithRoles to ensure rerun if user restarts request early
       const roleApiPath: string = prepareRoleApiUrl(baseRoleAssignmentUrl);
       const jurisdictions = getStaffSupportedJurisdictionsList();
-      const payload = prepareRoleApiRequest(jurisdictions);
+      const payload = prepareRoleApiRequest(jurisdictions, null, true);
       const roleAssignmentHeaders = {
         ...getRequestHeaders(),
         pageNumber: 0,

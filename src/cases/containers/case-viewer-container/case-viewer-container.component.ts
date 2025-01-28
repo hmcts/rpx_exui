@@ -14,6 +14,7 @@ import { WAFeatureConfig } from '../../../work-allocation/models/common/service-
 import { WASupportedJurisdictionsService } from '../../../work-allocation/services';
 import { FeatureVariation } from '../../models/feature-variation.model';
 import { Utils } from '../../utils/utils';
+import { LoggerService } from '../../../app/services/logger/logger.service';
 
 @Component({
   selector: 'exui-case-viewer-container',
@@ -25,6 +26,7 @@ export class CaseViewerContainerComponent implements OnInit {
   public prependedTabs$: Observable<CaseTab[]>;
   public appendedTabs$: Observable<CaseTab[]>;
   public userRoles$: Observable<string[]>;
+  private retryCount: number;
   private waDefaultServiceConfig: any = {
     'configurations': [
       {
@@ -120,6 +122,7 @@ export class CaseViewerContainerComponent implements OnInit {
     private readonly store: Store<fromRoot.State>,
     private readonly featureToggleService: FeatureToggleService,
     private readonly allocateRoleService: AllocateRoleService,
+    private readonly loggerService: LoggerService,
     private readonly waService: WASupportedJurisdictionsService) {
     this.userRoles$ = this.store.pipe(select(fromRoot.getUserDetails)).pipe(
       map((userDetails) => userDetails?.userInfo?.roles)
@@ -141,27 +144,43 @@ export class CaseViewerContainerComponent implements OnInit {
 
   public ngOnInit(): void {
     this.caseDetails = this.route.snapshot.data.case as CaseView;
+    this.retryCount = 0;
     this.allocateRoleService.manageLabellingRoleAssignment(this.caseDetails.case_id).subscribe();
-    this.prependedTabs$ = this.prependedCaseViewTabs();
-    this.appendedTabs$ = this.appendedCaseViewTabs();
+    let noOfUserRoles = 0;
+    this.userRoles$.subscribe((userRoles) => {
+      noOfUserRoles = userRoles?.length ?? 0;
+      if (noOfUserRoles === 0 && this.retryCount < 3) {
+        this.retryCount++;
+        this.loggerService.log('case-viewer-container - userRoles length is null or undefined or 0 so calling LoadUserDetails.  Retry count: ', this.retryCount);
+        this.store.dispatch(new fromRoot.LoadUserDetails(true));
+      } else {
+        this.setPrependedCaseViewTabs();
+        this.setAppendedCaseViewTabs();
+      }
+    });
   }
 
-  private prependedCaseViewTabs(): Observable<CaseTab[]> {
-    return combineLatest([
+  private setPrependedCaseViewTabs(): void {
+    combineLatest([
       this.featureToggleService.getValue(AppConstants.FEATURE_NAMES.waServiceConfig, this.waDefaultServiceConfig),
       this.userRoles$,
       this.waService.getWASupportedJurisdictions(),
       this.featureToggleService.getValue(AppConstants.FEATURE_NAMES.excludedRolesForCaseTabs, [])
     ]).pipe(
-      // @ts-ignore
-      map(([feature, userRoles, supportedServices, excludedRoles]: [WAFeatureConfig, string[]]) =>
-        this.enablePrependedTabs(feature, userRoles, supportedServices, excludedRoles) ? this.prependedTabs : []),
-      catchError(() => this.prependedTabs$ = of([]))
-    );
+      map(([feature, userRoles, supportedServices, excludedRoles]: [WAFeatureConfig, string[], string[], string[]]) =>
+        this.enablePrependedTabs(feature, userRoles, supportedServices, excludedRoles) ? this.prependedTabs : []
+      ),
+      catchError((error) => {
+        this.loggerService.log('case-viewer-container - Error in setPrependedCaseViewTabs', error);
+        return of([]);
+      })
+    ).subscribe((tabs) => {
+      this.prependedTabs$ = of(tabs);
+    });
   }
 
-  private appendedCaseViewTabs(): Observable<CaseTab[]> {
-    return combineLatest([
+  private setAppendedCaseViewTabs(): void {
+    combineLatest([
       this.featureToggleService.getValueOnce<FeatureVariation[]>(AppConstants.FEATURE_NAMES.mcHearingsFeature, []),
       this.userRoles$
     ]).pipe(
@@ -176,6 +195,8 @@ export class CaseViewerContainerComponent implements OnInit {
           userRoles.includes(UserRole.HearingManager);
         return (hasMatchedPermissions && hasHearingRole) ? this.appendedTabs : [];
       })
-    );
+    ).subscribe((tabs) => {
+      this.appendedTabs$ = of(tabs);
+    });
   }
 }

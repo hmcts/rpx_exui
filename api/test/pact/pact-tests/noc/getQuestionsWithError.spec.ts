@@ -81,7 +81,7 @@ describe('getNoCQuestions with error API', () => {
 
 function assertError(error: any) {
   expect(error.status).to.be.equal(400);
-  expect(error.statusText).to.be.equal('Bad Request ');
+  expect(error.statusText).to.be.equal('Bad Request');
   expect(error.data.message).to.be.equal('Case ID has to be a valid 16-digit Luhn number');
   expect(error.data.code).to.be.equal('case-id-invalid');
 }

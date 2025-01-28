@@ -14,7 +14,7 @@ class IdamLogin{
         this.conf = {
             xuiBaseUrl: 'http://localhost:3000',
             idamBaseUrl: 'https://idam-web-public.aat.platform.hmcts.net',
-            idamClientId: 'xuiwebapp',
+            idamClientId: 'xuiwebapp_passport_0_7',
         }
 
         this.authToken = '';
@@ -204,18 +204,19 @@ class IdamLogin{
         const formdata = {
             username: this.username,
         password: this.password,
-        selfRegistrationEnabled: 'false',
+        selfRegistrationEnabled: 'true',
         azureLoginEnabled: 'true',
         mojLoginEnabled: 'true',
         _csrf: this.idamLoginGetResponse.details.csrf
 
         }
-        const cookiesString = `${this.getCookieString(this.idamAuthorizeResponse.details.setCookies)};seen_cookie_message=yes; cookies_policy={"essential":true,"analytics":false,"apm":false}; cookies_preferences_set=false`
+        const cookiesString = `${this.getCookieString(this.idamAuthorizeResponse.details.setCookies)};seen_cookie_message=yes; cookies_policy={"essential":true,"analytics":false,"apm":false}; cookies_preferences_set=false;`
 
 
         const params = new URLSearchParams(formdata);
 
-        const response = await axiosInstance.post(`${this.conf.idamBaseUrl}/login?client_id=${this.conf.idamClientId}&redirect_uri=${this.conf.xuiBaseUrl}/oauth2/callback&state=${this.idamAuthorizeResponse.details.state}&nonce=${this.idamAuthorizeResponse.details.nonce}&response_type=code&scope=profile%20openid%20roles%20manage-user%20create-user%20search-user&prompt=`,
+        
+        const response = await axiosInstance.post(this.idamAuthorizeResponse.details.idamLoginRedirect,
             params,
             {
                 maxRedirects: 0,

@@ -91,7 +91,7 @@ describe('verifyAnswers API', () => {
 });
 function assertError(error: any) {
   expect(error.status).to.be.equal(400);
-  expect(error.statusText).to.be.equal('Bad Request ');
+  expect(error.statusText).to.be.equal('Bad Request');
   expect(error.data.message).to.be.equal('The answers did not match those for any litigant');
   expect(error.data.code).to.be.equal('answers-not-matched-any-litigant');
 }

@@ -93,7 +93,7 @@ describe('submitNoCEvents API', () => {
 });
 function assertError(error: any) {
   expect(error.status).to.be.equal(400);
-  expect(error.statusText).to.be.equal('Bad Request ');
+  expect(error.statusText).to.be.equal('Bad Request');
   expect(error.data.message).to.be.equal('Missing ChangeOrganisationRequest.CaseRoleID [APPLICANT]');
   expect(error.data.code).to.be.equal('missing-cor-case-role-id');
 }

@@ -77,7 +77,7 @@
     "waWorkflowApi": "http://wa-workflow-api-prod.service.core-compute-prod.internal",
     "idam": {
       "idamApiUrl": "https://idam-api.platform.hmcts.net",
-      "idamClientID": "xuiwebapp",
+      "idamClientID": "xuiwebapp_passport_0_7",
       "idamLoginUrl": "https://hmcts-access.service.gov.uk",
       "indexUrl": "/",
       "oauthCallbackUrl": "oauth2/callback",

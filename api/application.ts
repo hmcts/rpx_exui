@@ -1,6 +1,6 @@
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
-import * as csrf from 'csurf';
+import * as csrf from '@dr.pogodin/csurf';
 import * as express from 'express';
 import * as helmet from 'helmet';
 import * as compression from 'compression';
