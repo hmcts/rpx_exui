@@ -6533,10 +6533,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/faker@npm:^5.1.2":
-  version: 5.5.9
-  resolution: "@types/faker@npm:5.5.9"
-  checksum: 10/9152f5a27d26759757ff1f0b807976dc0089e091366bf4640d1e18b741fa0410c01f017c4476958531687a7f532070f38720832795aa5b9039badc3e0ed47d36
+"@types/faker@npm:^6.0.0":
+  version: 6.6.8
+  resolution: "@types/faker@npm:6.6.8"
+  dependencies:
+    faker: "npm:*"
+  checksum: 10/21267dcb169acc9e424018d692c8eb60ff97c5d81d2c02de8f68f3a1f0397d7b7e28117c8b089760cb278ccb313c0d6c28b5a5673bcd56dc81a92e864f31f19d
   languageName: node
   linkType: hard
 
@@ -12991,6 +12993,13 @@ __metadata:
   version: 0.1.8
   resolution: "eyes@npm:0.1.8"
   checksum: 10/58480c1f4c8e80ae9d4147afa0e0cc3403e5a3d1fa9e0c17dd8418f87273762c40ab035919ed407f6ed0992086495b93ff7163eb2a1027f58ae70e3c847d6c08
+  languageName: node
+  linkType: hard
+
+"faker@npm:*":
+  version: 6.6.6
+  resolution: "faker@npm:6.6.6"
+  checksum: 10/bfb0d581ab4d76095f2c6bff213fe1735ce077f0f8df849c144ad26035e105bce1b7a704cc030366338c52e25b636ac097a712426a78c9b8804af78f6f2bffe7
   languageName: node
   linkType: hard
 
@@ -22304,7 +22313,7 @@ __metadata:
     "@types/ejs": "npm:^2.6.3"
     "@types/express": "npm:^4.16.1"
     "@types/express-session": "npm:^1.17.0"
-    "@types/faker": "npm:^5.1.2"
+    "@types/faker": "npm:^6.0.0"
     "@types/global-agent": "npm:^2.1.0"
     "@types/jasmine": "npm:~3.3.8"
     "@types/jasminewd2": "npm:~2.0.3"
