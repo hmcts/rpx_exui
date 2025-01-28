@@ -191,7 +191,7 @@
     "@types/express-session": "^1.17.0",
     "@types/faker": "^5.1.2",
     "@types/global-agent": "^2.1.0",
-    "@types/jasmine": "~3.3.8",
+    "@types/jasmine": "~3.10.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/mocha": "^8.0.3",
     "@types/node": "^18.17.0",

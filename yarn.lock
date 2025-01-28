@@ -6642,10 +6642,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jasmine@npm:~3.3.8":
-  version: 3.3.16
-  resolution: "@types/jasmine@npm:3.3.16"
-  checksum: 10/1e816a46c5c90365311a9462d7baf92ebfb1e3614ded82dbf30e1547027ebc6e125e4f0431f6d082a9193aa2cf76778cb9dd02f8feaa9af19edf6901b5097153
+"@types/jasmine@npm:~3.10.0":
+  version: 3.10.18
+  resolution: "@types/jasmine@npm:3.10.18"
+  checksum: 10/25ae5b329ccf9e99af24164bdbfb461989047a3ab74dbb25ba5f2c27e1985e59106c6a58da18494dd34357bed37a11093b4b83baca3bf46c81fb15a2af55a6f5
   languageName: node
   linkType: hard
 
@@ -22343,7 +22343,7 @@ __metadata:
     "@types/express-session": "npm:^1.17.0"
     "@types/faker": "npm:^5.1.2"
     "@types/global-agent": "npm:^2.1.0"
-    "@types/jasmine": "npm:~3.3.8"
+    "@types/jasmine": "npm:~3.10.0"
     "@types/jasminewd2": "npm:~2.0.3"
     "@types/mocha": "npm:^8.0.3"
     "@types/node": "npm:^18.17.0"
