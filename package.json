@@ -215,7 +215,7 @@
     "eslint": "^8.37.0",
     "jasmine-core": "~3.99.0",
     "jasmine-marbles": "^0.9.1",
-    "jasmine-spec-reporter": "~4.2.1",
+    "jasmine-spec-reporter": "~7.0.0",
     "jsonpath": "^1.1.1",
     "jsonwebtoken": "^9.0.2",
     "karma": "~6.4.2",

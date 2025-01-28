@@ -9813,13 +9813,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"colors@npm:1.1.2":
-  version: 1.1.2
-  resolution: "colors@npm:1.1.2"
-  checksum: 10/56c0bbb26a01c3ed4a29ea89178ef593e7470dab50b9218a9d65dbe52fcb1a8278a7c0cc449d2f17ff1d7a59a93df36f833514c23cc603bb5acbed15d99d1dd6
-  languageName: node
-  linkType: hard
-
 "colors@npm:1.4.0, colors@npm:^1.0.3, colors@npm:^1.1.2, colors@npm:^1.4.0":
   version: 1.4.0
   resolution: "colors@npm:1.4.0"
@@ -15930,12 +15923,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine-spec-reporter@npm:~4.2.1":
-  version: 4.2.1
-  resolution: "jasmine-spec-reporter@npm:4.2.1"
+"jasmine-spec-reporter@npm:~7.0.0":
+  version: 7.0.0
+  resolution: "jasmine-spec-reporter@npm:7.0.0"
   dependencies:
-    colors: "npm:1.1.2"
-  checksum: 10/7c3c5cd188aece1a78163e42f536bd623248571fb360b596dc530eccd455267b0e78070e7c37d4cd0ac5fef4a16c291dddc6f26099e0c829d58fe1a4a82874ab
+    colors: "npm:1.4.0"
+  checksum: 10/69afad4935977c941b4d72fa81cc640d5f22cd35c7797468420d837cb94b469f9e6e767faa4112414511cc64e75ca9c7d641eba7df41e0d41c10b0c9bf4d0508
   languageName: node
   linkType: hard
 
@@ -22357,7 +22350,7 @@ __metadata:
     isomorphic-fetch: "npm:^3.0.0"
     jasmine-core: "npm:~3.99.0"
     jasmine-marbles: "npm:^0.9.1"
-    jasmine-spec-reporter: "npm:~4.2.1"
+    jasmine-spec-reporter: "npm:~7.0.0"
     jsonpath: "npm:^1.1.1"
     jsonwebtoken: "npm:^9.0.2"
     karma: "npm:~6.4.2"
