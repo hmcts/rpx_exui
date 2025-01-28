@@ -228,8 +228,11 @@ export class HearingsUtils {
     const individualHMCPartyIds = individualPartiesInHMC.map((party) => party.partyID);
     const individualPartiesInSHV = serviceHearingValuesModel.parties.filter((party) => party.partyType === PartyType.IND);
     const individualSHVPartyIds = individualPartiesInSHV.map((party) => party.partyID);
-    const contains = individualHMCPartyIds.some((hmcParty) => individualSHVPartyIds.includes(hmcParty));
-    return contains;
+    if (individualHMCPartyIds.length !== 0 && individualSHVPartyIds.length !== 0) {
+      const contains = individualHMCPartyIds.some((hmcParty) => individualSHVPartyIds.includes(hmcParty));
+      return contains;
+    }
+    return true;
   }
 
   public static modifyHearingDetailsYear(hearingDetails: HearingWindowModel): void {
