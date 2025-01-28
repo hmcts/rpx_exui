@@ -14,9 +14,11 @@ import {
   QualifyingQuestionsErrorMessage,
   QueryCreateContext,
   QueryWriteRaiseQueryComponent,
+  ErrorNotifierService,
+  AlertService,
   QueryWriteRespondToQueryComponent
 } from '@hmcts/ccd-case-ui-toolkit';
-import { FeatureToggleService } from '@hmcts/rpx-xui-common-lib';
+import { FeatureToggleService, LoadingService } from '@hmcts/rpx-xui-common-lib';
 import { provideMockStore } from '@ngrx/store/testing';
 import { BehaviorSubject, of, throwError } from 'rxjs';
 import { RaiseQueryErrorMessage } from '../../models/raise-query-error-message.enum';
@@ -169,6 +171,8 @@ describe('QueryManagementContainerComponent', () => {
     }
   ];
 
+  const mockAlertService = jasmine.createSpyObj('alertService', ['error']);
+  const mockErrorNotifierService = jasmine.createSpyObj('ErrorNotifierService', ['announceError']);
   const casesService = jasmine.createSpyObj('casesService', ['caseView', 'getEventTrigger', 'createEvent', 'getCaseViewV2', 'cachedCaseView']);
   const qualifyingQuestionService = jasmine.createSpyObj('qualifyingQuestionService', ['setQualifyingQuestionSelection', 'clearQualifyingQuestionSelection']);
   const mockCaseNotifier = new CaseNotifier(casesService);
@@ -216,7 +220,10 @@ describe('QueryManagementContainerComponent', () => {
         { provide: Router, useValue: mockRouter },
         { provide: Location, useValue: locationMock },
         { provide: CaseNotifier, useValue: mockCaseNotifier },
-        { provide: FeatureToggleService, useValue: mockFeatureToggleService }
+        { provide: FeatureToggleService, useValue: mockFeatureToggleService },
+        { provide: ErrorNotifierService, useValue: mockErrorNotifierService },
+        { provide: AlertService, useValue: mockAlertService },
+        LoadingService
       ]
     }).compileComponents();
   }));
@@ -694,8 +701,7 @@ describe('QueryManagementContainerComponent', () => {
   describe('getEventTrigger', () => {
     it('should handle error correctly when getEventTrigger fails', () => {
       // Mock the service to return an error
-      const errorMock = new Error('Network error');
-      casesService.getEventTrigger.and.returnValue(throwError(() => errorMock));
+      casesService.getEventTrigger.and.returnValue(throwError(() => ({ status: 401 })));
 
       component.queryCreateContext = QueryCreateContext.NEW_QUERY;
       // eslint-disable-next-line dot-notation
@@ -710,6 +716,19 @@ describe('QueryManagementContainerComponent', () => {
         description: 'Something unexpected happened. please try again later.',
         fieldId: 'evenDataError'
       });
+    });
+
+    it('should handle error', () => {
+      // Mock the service to return an error
+      const error = new Error('Network error');
+      casesService.getEventTrigger.and.returnValue(throwError(() => error));
+
+      component.queryCreateContext = QueryCreateContext.NEW_QUERY;
+      // eslint-disable-next-line dot-notation
+      component['getEventTrigger']();
+
+      expect(mockErrorNotifierService.announceError).toHaveBeenCalledWith(error);
+      expect(mockAlertService.error).toHaveBeenCalledWith({ phrase: error.message });
     });
   });
 });

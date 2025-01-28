@@ -467,3 +467,15 @@ button:focus {
     background-color: #ffdd00 !important;
   }
 }
+
+
+/** Error Summary 
+* Make border color consistent with other error messages for HMCTS
+*/
+.query-container .error-summary {
+  border-color: #d4351c;
+
+  &:focus {
+    outline: none;
+  }
+}
