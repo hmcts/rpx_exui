@@ -230,7 +230,7 @@
     "mocha": "^8.1.1",
     "mochawesome": "^6.2.1",
     "mochawesome-merge": "^4.3.0",
-    "mochawesome-report-generator": "^5.1.0",
+    "mochawesome-report-generator": "^6.0.0",
     "ngrx-store-freeze": "^0.2.4",
     "node-fetch": "^2.6.1",
     "node-html-parser": "^6.1.5",
