@@ -213,7 +213,7 @@
     "cucumber-pretty": "^6.0.1",
     "cucumberjs-allure-reporter": "1.0.3",
     "eslint": "^8.37.0",
-    "jasmine-core": "~3.99.0",
+    "jasmine-core": "~5.4.0",
     "jasmine-marbles": "^0.9.1",
     "jasmine-spec-reporter": "~4.2.1",
     "jsonpath": "^1.1.1",
