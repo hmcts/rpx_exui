@@ -6336,10 +6336,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/config@npm:^0.0.36":
-  version: 0.0.36
-  resolution: "@types/config@npm:0.0.36"
-  checksum: 10/52e268117eb89d9e51e4592f997b8c9cb9a890161ecdc00c28899c30001f509e596e928867e67592769a49e99d1f3659316d0d208a5a9c24055799fa3e5487bf
+"@types/config@npm:^3.0.0":
+  version: 3.3.5
+  resolution: "@types/config@npm:3.3.5"
+  checksum: 10/6e8595d00e4df85e3e982f812a3fdfd9a952df11776800b0ddf7893963fc179c684a2d82c84f2160d09e90345bce7cb68a49c95dc864f0c9052019ea2c0e31bb
   languageName: node
   linkType: hard
 
@@ -22297,7 +22297,7 @@ __metadata:
     "@stryker-mutator/karma-runner": "npm:^8.0.0"
     "@stryker-mutator/mocha-runner": "npm:^3.0.1"
     "@stryker-mutator/typescript": "npm:^4.0.0"
-    "@types/config": "npm:^0.0.36"
+    "@types/config": "npm:^3.0.0"
     "@types/cookie-parser": "npm:^1.4.2"
     "@types/crypto-js": "npm:^3.1.43"
     "@types/csurf": "npm:^1.11.0"
