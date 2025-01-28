@@ -9927,6 +9927,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"component-emitter@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "component-emitter@npm:2.0.0"
+  checksum: 10/017715272fcf82203932237260451df4c7c27e32a51a4a291faf6f503d6ef9e8583add993850cb5b98cc0c1b0846ff0c68938ad3ef1d544f9b480a290e74fb4f
+  languageName: node
+  linkType: hard
+
 "compress-commons@npm:^4.1.2":
   version: 4.1.2
   resolution: "compress-commons@npm:4.1.2"
@@ -11818,13 +11825,6 @@ __metadata:
   version: 0.9.3
   resolution: "elkjs@npm:0.9.3"
   checksum: 10/397986e271827a5e13d2722b1883aea3557006d2777be8c34568f8fe743e81f4f71210e4e81b9958f597b0af8e96afaa883d2705eba84a3d5d0973bcb02fa59e
-  languageName: node
-  linkType: hard
-
-"emitter-component@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "emitter-component@npm:1.1.1"
-  checksum: 10/b43814692fb874c1a75c3c417670123ab33961225b73fa680501dbd5d4ab779ef37082570fb64516bf12cedd906842eea0bccbf1d3bc530162e86bafa17d2737
   languageName: node
   linkType: hard
 
@@ -22411,7 +22411,7 @@ __metadata:
     sinon-express-mock: "npm:^2.2.0"
     smoothscroll-polyfill: "npm:^0.4.3"
     sonar-scanner: "npm:^3.1.0"
-    stream: "npm:^0.0.2"
+    stream: "npm:^0.0.3"
     striptags: "npm:^3.1.1"
     terser-webpack-plugin: "npm:^5.3.3"
     ts-enum-util: "npm:4.1.0"
@@ -23731,12 +23731,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stream@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "stream@npm:0.0.2"
+"stream@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "stream@npm:0.0.3"
   dependencies:
-    emitter-component: "npm:^1.1.1"
-  checksum: 10/271dfdd7d25848ff04f644215c0064e38883bcd27239c4a10b3d00e173429949b62b81571862c3eac659c4c93bebdba0f73e0be955a378b1a9280cab2844c6db
+    component-emitter: "npm:^2.0.0"
+  checksum: 10/a40db1ce8def8929c689c98c1644288d4099d34be8e8f72853c7cb8e2bae64e90f5c967f79fd792cdf349d8a3baf38f19d99e7f7ff13c35b4f7c5ae1b78c0115
   languageName: node
   linkType: hard
 
